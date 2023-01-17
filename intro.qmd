@@ -1,0 +1,109 @@
+# Introduction
+
+## Using Spark for exploratory data analysis
+
+### What is Spark?
+
+> From its humble beginnings in the AMPLab at U.C. Berkeley in 2009, Apache Spark has become one of the key big data distributed processing frameworks in the world. Spark can be deployed in various ways, provides native bindings for the Java, Scala, Python, and R programming languages, and supports SQL, streaming data, machine learning, and graph processing. You’ll find it used by banks, telecommunications companies, games companies, governments, and all major tech giants such as Apple, Facebook, IBM, and Microsoft. [ref](https://www.infoworld.com/article/3236869/what-is-apache-spark-the-big-data-platform-that-crushed-hadoop.html)
+
+Databricks provides [an excellent overview](https://databricks.com/spark/about) as well.
+
+
+### Rules of thumb for Spark
+
+We are learning to use Spark as Data Scientists or Analysts that need tools for exploring and analyzing data that pushes the boundaries of our local memory. As we explore this space, we will need to keep in mind a few [rules of thumb](https://en.wikipedia.org/wiki/Rule_of_thumb) that should guide our use of Spark.
+
+#### The Spark APIs let you use your language of preference
+
+You can use Java, Scala, Python, or R to access Spark.  Like [Goldilocks and the Three Bears](https://en.wikipedia.org/wiki/Goldilocks_principle), we want the language that is not 'too hot' or 'too cold' for data science use.  Java is a bit too verbose for day-to-day data science work. Scala is fast but still a little verbose. Python is a little slower but ingrained in the data science community, and R is less easy to implement in a production environment.  
+
+- __pyspark (just right)__: The [pyspark package](https://spark.apache.org/docs/latest/api/python/index.html) looks to be the 'just the right amount' of the Spark APIs.  
+- __sparkR (a little cold)__: [Apache has developed an R package](https://spark.apache.org/docs/latest/sparkr.html) that is the official R connection to Spark.
+- __sparklyr (RStudio's warm-up)__: If you are experienced with the [Tidyverse](https://www.tidyverse.org/), then [RStudio's sparklyr](https://spark.rstudio.com/) could pull you away from pyspark.
+
+You can read a comparison of sparkR and sparklyr [here](https://developpaper.com/deep-comparative-data-science-toolbox-sparkr-vs-sparklyr/).
+
+#### Use DataFrames (ignore RDDs)
+
+For day-to-day data science use, `DataFrame`s are the option you should choose.  
+
+1. Spark has built a framework to optimize Resilient Distributed Dataset (RDD) use when we program with `DataFrame` methods.
+2. Spark internally stores `DataFrame`s in a binary format, so there is no need to serialize and deserialize data as it moves over the cluster.
+
+Databricks provides a [Deep Dive into Spark SQL’s Catalyst Optimizer](https://databricks.com/blog/2015/04/13/deep-dive-into-spark-sqls-catalyst-optimizer.html) and [A Tale of Three Apache Spark APIs: RDDs vs. DataFrames and Datasets](https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html) to help you understand more depth on the relationship between `DataFrame`s.
+
+We pulled the bullets and image below from the Databricks articles.
+
+> - If you want unification and simplification of APIs across Spark Libraries, use DataFrame or Dataset.
+> - If you are an R user, use DataFrames.
+> - If you are a Python user, use DataFrames and resort back to RDDs if you need more control.
+
+![](img/spark_sql_dataframe_rdd.png)
+
+#### Write and Read serialized data formats
+
+The [Apache Parquet](https://databricks.com/glossary/what-is-parquet) format is optimal for most data science applications. It is a serialized columnar format that provides speed and size benefits for big data applications. The following table compares the savings and the speedup obtained by converting data into Parquet from CSV.
+
+| Dataset                              | Size on Amazon S3           | Query Run Time | Data Scanned          | Cost          |
+| ------------------------------------ | --------------------------- | -------------- | --------------------- | ------------- |
+| Data stored as CSV files             | 1 TB                        | 236 seconds    | 1.15 TB               | $5.75         |
+| Data stored in Apache Parquet Format | 130 GB                      | 6.78 seconds   | 2.51 GB               | $0.01         |
+| Savings                              | 87% less when using Parquet | 34x faster     | 99% less data scanned | 99.7% savings |
+
+You could use [Avro with Spark](https://spark.apache.org/docs/latest/sql-data-sources-avro.html) as well.  It is stored in rows, much like a `.csv` file, but is serialized.
+
+## DataBricks
+
+### Navigation
+
+- This file provides a high-level overview of Databricks.
+- The HTML folder contains notebooks that can be imported into Databricks. All HTML files in that folder can be imported individually, or you can use `examples.dbc` to import them all at once.
+
+### The elevator pitches
+
+_Check out these branded videos._
+
+> [It's time for DataBricks!](https://youtu.be/_1QQHv7T9og)
+
+> [Databricks is the AI Company](https://youtu.be/1cJ0XYaARBY)
+
+_Here is a bit more nerdy DS/CS pitch [from their website](https://databricks.com/company/about-us)_
+
+> With origins in academia and the open-source community, Databricks was founded in 2013 by the original creators of Apache Spark™, Delta Lake, and MLflow. As the world’s first and only lakehouse platform in the cloud, Databricks combines the best of data warehouses and data lakes to offer an open and unified platform for data and AI.
+
+> [Introduction to Databricks Unified Data Platform: 5 min demo](https://youtu.be/n-yt_3HvkOI)
+
+### Databricks Community Edition
+
+The [community edition](https://community.cloud.databricks.com/login.html) provides free access to the Databricks environment to see their vision of jupyter notebooks and to work with a Spark environment. The users do not incur any costs while using Databricks.
+
+Read more about the limitations of Community Edition at [this FAQ](https://databricks.com/product/faq/community-edition).
+
+#### Community Edition Setup
+
+1. Create a [community account on Databricks](https://databricks.com/try-databricks)
+2. Login into the [Databricks community edition portal](https://community.cloud.databricks.com/login.html)
+3. Click the compute icon on the left (![](https://github.com/byuibigdata/project_safegraph/blob/main/img/compute_icon.png))
+4. Name your cluster
+5. Create your cluster and then navigate to the libraries tab to install our needed Python packages (for example `gql`, `plotnine`, `altair`). Pandas is already installed.
+
+
+### What is the difference between the Databricks Community Edition and the full Databricks Platform?
+
+> With the Databricks Community Edition, the users will have access to 15GB clusters, a cluster manager and the notebook environment to prototype simple applications, and JDBC / ODBC integrations for BI analysis. The Databricks Community Edition access is not time-limited and users will not incur AWS costs for their cluster usage.
+
+> The full Databricks platform offers production-grade functionality, such as an unlimited number of clusters that easily scale up or down, a job launcher, collaboration, advanced security controls, and expert support. It helps users process data at scale, or build Apache Spark applications in a team setting.
+
+> [Databricks](https://databricks.com/product/faq/community-edition)
+
+### Using Databricks notebooks
+
+- [Watch this video to see a short example of using the platform](https://youtu.be/n-yt_3HvkOI)
+- [Read about the basics of Databricks notebooks](https://subscription.packtpub.com/book/data/9781838647216/2/ch02lvl1sec08/using-azure-databricks-notebooks)
+
+### Key links
+
+- [Sign up for Community Edition](https://databricks.com/try-databricks)
+- [A love-hate relationship with Databricks Notebooks](https://towardsdatascience.com/databricks-notebooks-a-love-hate-relationship-8f73e5b291fb)
+- [Databricks notebooks](https://subscription.packtpub.com/book/data/9781838647216/2/ch02lvl1sec08/using-azure-databricks-notebooks)
+- [Databricks Backstory](https://youtu.be/ThrmPaleEiI)

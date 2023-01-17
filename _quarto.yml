@@ -1,0 +1,30 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Big Data Programming for Data Scientists"
+  author: "J. Hathaway"
+  date: "1/12/2023"
+  search: true
+  repo-url: https://github.com/byuibigdata/bdbook
+  favicon: logo.png
+  twitter-card: true
+  site-url: https://relationalagency.com
+  output-file: "realational_agency"
+  downloads: [pdf]
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+    keep-tex: true
+
+
