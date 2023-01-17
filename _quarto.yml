@@ -8,23 +8,29 @@ book:
   date: "1/12/2023"
   search: true
   repo-url: https://github.com/byuibigdata/bdbook
+  repo-actions: [edit]
+  repo-branch: master
   favicon: logo.png
   twitter-card: true
-  site-url: https://relationalagency.com
-  output-file: "realational_agency"
+  site-url: https://byuibigdata.github.io/bdbook/
+  output-file: "byui_big_data"
   downloads: [pdf]
   chapters:
     - index.qmd
     - intro.qmd
     - references.qmd
 
+comments:
+  hypothesis: true
+
 bibliography: references.bib
 
 format:
   html:
-    theme: cosmo
-  pdf:
-    documentclass: scrreprt
-    keep-tex: true
+    theme: lumen
+
+  # pdf:
+  #   documentclass: scrreprt
+  #   keep-tex: true
 
 
