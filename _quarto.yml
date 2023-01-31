@@ -17,8 +17,25 @@ book:
   downloads: [pdf]
   chapters:
     - index.qmd
-    - intro.qmd
-    - references.qmd
+    - part: introduction.qmd
+      chapters:
+        - intro/bigdata.qmd
+        - intro/tools.qmd
+        - intro/projects.qmd
+        - intro/rules_thumb.qmd
+    - part: databricks.qmd
+      chapters:
+        - databricks/databricks_intro.qmd 
+        - databricks/community_edition.qmd 
+        - databricks/repo_navigation.qmd 
+    - part: spark.qmd
+      chapters:
+        - spark/spark_part_guide.qmd 
+        - spark/spark_intro.qmd
+        - spark/features.qmd
+    - part: docker.qmd
+      chapters:
+        - docker/docker_intro.qmd
 
 comments:
   hypothesis: true
@@ -28,6 +45,11 @@ bibliography: references.bib
 format:
   html:
     theme: lumen
+    code-line-numbers: true
+    code-block-border-left: true
+    code-block-border-bottom: false
+    highlight-style: ayu
+    toc-depth: 3
 
   # pdf:
   #   documentclass: scrreprt

@@ -7,17 +7,101 @@
     "text": "Preface\nThis ‘book’ is primarily a place for the BYU-I data science program to store material used in their Big Data Class."
   },
   {
-    "objectID": "intro.html#using-spark-for-exploratory-data-analysis",
-    "href": "intro.html#using-spark-for-exploratory-data-analysis",
-    "title": "1  Introduction",
-    "section": "1.1 Using Spark for exploratory data analysis",
-    "text": "1.1 Using Spark for exploratory data analysis\n\n1.1.1 What is Spark?\n\nFrom its humble beginnings in the AMPLab at U.C. Berkeley in 2009, Apache Spark has become one of the key big data distributed processing frameworks in the world. Spark can be deployed in various ways, provides native bindings for the Java, Scala, Python, and R programming languages, and supports SQL, streaming data, machine learning, and graph processing. You’ll find it used by banks, telecommunications companies, games companies, governments, and all major tech giants such as Apple, Facebook, IBM, and Microsoft. ref\n\nDatabricks provides an excellent overview as well.\n\n\n1.1.2 Rules of thumb for Spark\nWe are learning to use Spark as Data Scientists or Analysts that need tools for exploring and analyzing data that pushes the boundaries of our local memory. As we explore this space, we will need to keep in mind a few rules of thumb that should guide our use of Spark.\n\n1.1.2.1 The Spark APIs let you use your language of preference\nYou can use Java, Scala, Python, or R to access Spark. Like Goldilocks and the Three Bears, we want the language that is not ‘too hot’ or ‘too cold’ for data science use. Java is a bit too verbose for day-to-day data science work. Scala is fast but still a little verbose. Python is a little slower but ingrained in the data science community, and R is less easy to implement in a production environment.\n\npyspark (just right): The pyspark package looks to be the ‘just the right amount’ of the Spark APIs.\n\nsparkR (a little cold): Apache has developed an R package that is the official R connection to Spark.\nsparklyr (RStudio’s warm-up): If you are experienced with the Tidyverse, then RStudio’s sparklyr could pull you away from pyspark.\n\nYou can read a comparison of sparkR and sparklyr here.\n\n\n1.1.2.2 Use DataFrames (ignore RDDs)\nFor day-to-day data science use, DataFrames are the option you should choose.\n\nSpark has built a framework to optimize Resilient Distributed Dataset (RDD) use when we program with DataFrame methods.\nSpark internally stores DataFrames in a binary format, so there is no need to serialize and deserialize data as it moves over the cluster.\n\nDatabricks provides a Deep Dive into Spark SQL’s Catalyst Optimizer and A Tale of Three Apache Spark APIs: RDDs vs. DataFrames and Datasets to help you understand more depth on the relationship between DataFrames.\nWe pulled the bullets and image below from the Databricks articles.\n\n\nIf you want unification and simplification of APIs across Spark Libraries, use DataFrame or Dataset.\nIf you are an R user, use DataFrames.\nIf you are a Python user, use DataFrames and resort back to RDDs if you need more control.\n\n\n\n\n\n1.1.2.3 Write and Read serialized data formats\nThe Apache Parquet format is optimal for most data science applications. It is a serialized columnar format that provides speed and size benefits for big data applications. The following table compares the savings and the speedup obtained by converting data into Parquet from CSV.\n\n\n\n\n\n\n\n\n\n\nDataset\nSize on Amazon S3\nQuery Run Time\nData Scanned\nCost\n\n\n\n\nData stored as CSV files\n1 TB\n236 seconds\n1.15 TB\n$5.75\n\n\nData stored in Apache Parquet Format\n130 GB\n6.78 seconds\n2.51 GB\n$0.01\n\n\nSavings\n87% less when using Parquet\n34x faster\n99% less data scanned\n99.7% savings\n\n\n\nYou could use Avro with Spark as well. It is stored in rows, much like a .csv file, but is serialized."
+    "objectID": "introduction.html",
+    "href": "introduction.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "As an introduction, we highlight the different elements of data science when using big data."
   },
   {
-    "objectID": "intro.html#databricks",
-    "href": "intro.html#databricks",
-    "title": "1  Introduction",
-    "section": "1.2 DataBricks",
-    "text": "1.2 DataBricks\n\n1.2.1 Navigation\n\nThis file provides a high-level overview of Databricks.\nThe HTML folder contains notebooks that can be imported into Databricks. All HTML files in that folder can be imported individually, or you can use examples.dbc to import them all at once.\n\n\n\n1.2.2 The elevator pitches\nCheck out these branded videos.\n\nIt’s time for DataBricks!\n\n\nDatabricks is the AI Company\n\nHere is a bit more nerdy DS/CS pitch from their website\n\nWith origins in academia and the open-source community, Databricks was founded in 2013 by the original creators of Apache Spark™, Delta Lake, and MLflow. As the world’s first and only lakehouse platform in the cloud, Databricks combines the best of data warehouses and data lakes to offer an open and unified platform for data and AI.\n\n\nIntroduction to Databricks Unified Data Platform: 5 min demo\n\n\n\n1.2.3 Databricks Community Edition\nThe community edition provides free access to the Databricks environment to see their vision of jupyter notebooks and to work with a Spark environment. The users do not incur any costs while using Databricks.\nRead more about the limitations of Community Edition at this FAQ.\n\n1.2.3.1 Community Edition Setup\n\nCreate a community account on Databricks\nLogin into the Databricks community edition portal\nClick the compute icon on the left ()\nName your cluster\nCreate your cluster and then navigate to the libraries tab to install our needed Python packages (for example gql, plotnine, altair). Pandas is already installed.\n\n\n\n\n1.2.4 What is the difference between the Databricks Community Edition and the full Databricks Platform?\n\nWith the Databricks Community Edition, the users will have access to 15GB clusters, a cluster manager and the notebook environment to prototype simple applications, and JDBC / ODBC integrations for BI analysis. The Databricks Community Edition access is not time-limited and users will not incur AWS costs for their cluster usage.\n\n\nThe full Databricks platform offers production-grade functionality, such as an unlimited number of clusters that easily scale up or down, a job launcher, collaboration, advanced security controls, and expert support. It helps users process data at scale, or build Apache Spark applications in a team setting.\n\n\nDatabricks\n\n\n\n1.2.5 Using Databricks notebooks\n\nWatch this video to see a short example of using the platform\nRead about the basics of Databricks notebooks\n\n\n\n1.2.6 Key links\n\nSign up for Community Edition\nA love-hate relationship with Databricks Notebooks\nDatabricks notebooks\nDatabricks Backstory"
+    "objectID": "intro/rules_thumb.html#the-spark-apis-let-you-use-your-language-of-preference",
+    "href": "intro/rules_thumb.html#the-spark-apis-let-you-use-your-language-of-preference",
+    "title": "4  Sark Rules of Thumb",
+    "section": "4.1 The Spark APIs let you use your language of preference",
+    "text": "4.1 The Spark APIs let you use your language of preference\nYou can use Java, Scala, Python, or R to access Spark. Like Goldilocks and the Three Bears, we want the language that is not ‘too hot’ or ‘too cold’ for data science use. Java is a bit too verbose for day-to-day data science work. Scala is fast but still a little verbose. Python is a little slower but ingrained in the data science community, and R is less easy to implement in a production environment.\n\npyspark (just right): The pyspark package looks to be the ‘just the right amount’ of the Spark APIs.\n\nsparkR (a little cold): Apache has developed an R package that is the official R connection to Spark.\nsparklyr (RStudio’s warm-up): If you are experienced with the Tidyverse, then RStudio’s sparklyr could pull you away from pyspark.\n\nYou can read a comparison of sparkR and sparklyr here."
+  },
+  {
+    "objectID": "intro/rules_thumb.html#use-dataframes-ignore-rdds",
+    "href": "intro/rules_thumb.html#use-dataframes-ignore-rdds",
+    "title": "4  Sark Rules of Thumb",
+    "section": "4.2 Use DataFrames (ignore RDDs)",
+    "text": "4.2 Use DataFrames (ignore RDDs)\nFor day-to-day data science use, DataFrames are the option you should choose.\n\nSpark has built a framework to optimize Resilient Distributed Dataset (RDD) use when we program with DataFrame methods.\nSpark internally stores DataFrames in a binary format, so there is no need to serialize and deserialize data as it moves over the cluster.\n\nDatabricks provides a Deep Dive into Spark SQL’s Catalyst Optimizer and A Tale of Three Apache Spark APIs: RDDs vs. DataFrames and Datasets to help you understand more depth on the relationship between DataFrames.\nWe pulled the bullets and image below from the Databricks articles.\n\n\nIf you want unification and simplification of APIs across Spark Libraries, use DataFrame or Dataset.\nIf you are an R user, use DataFrames.\nIf you are a Python user, use DataFrames and resort back to RDDs if you need more control."
+  },
+  {
+    "objectID": "intro/rules_thumb.html#write-and-read-serialized-data-formats",
+    "href": "intro/rules_thumb.html#write-and-read-serialized-data-formats",
+    "title": "4  Sark Rules of Thumb",
+    "section": "4.3 Write and Read serialized data formats",
+    "text": "4.3 Write and Read serialized data formats\nThe Apache Parquet format is optimal for most data science applications. It is a serialized columnar format that provides speed and size benefits for big data applications. The following table compares the savings and the speedup obtained by converting data into Parquet from CSV.\n\n\n\n\n\n\n\n\n\n\nDataset\nSize on Amazon S3\nQuery Run Time\nData Scanned\nCost\n\n\n\n\nData stored as CSV files\n1 TB\n236 seconds\n1.15 TB\n$5.75\n\n\nData stored in Apache Parquet Format\n130 GB\n6.78 seconds\n2.51 GB\n$0.01\n\n\nSavings\n87% less when using Parquet\n34x faster\n99% less data scanned\n99.7% savings\n\n\n\nYou could use Avro with Spark as well. It is stored in rows, much like a .csv file, but is serialized."
+  },
+  {
+    "objectID": "databricks.html",
+    "href": "databricks.html",
+    "title": "Databricks",
+    "section": "",
+    "text": "Databricks provides data scientists and data engineers a unified platform for scalable analytics and data management with almost unlimited storage and compute capacity through the use of Spark."
+  },
+  {
+    "objectID": "databricks/databricks_intro.html#navigation",
+    "href": "databricks/databricks_intro.html#navigation",
+    "title": "5  What is Databricks?",
+    "section": "5.1 Navigation",
+    "text": "5.1 Navigation\n\nThis file provides a high-level overview of Databricks.\nThe HTML folder contains notebooks that can be imported into Databricks. All HTML files in that folder can be imported individually, or you can use examples.dbc to import them all at once."
+  },
+  {
+    "objectID": "databricks/databricks_intro.html#the-elevator-pitches",
+    "href": "databricks/databricks_intro.html#the-elevator-pitches",
+    "title": "5  What is Databricks?",
+    "section": "5.2 The elevator pitches",
+    "text": "5.2 The elevator pitches\nCheck out these branded videos.\n\nIt’s time for DataBricks!\n\n\nDatabricks is the AI Company\n\nHere is a bit more nerdy DS/CS pitch from their website\n\nWith origins in academia and the open-source community, Databricks was founded in 2013 by the original creators of Apache Spark™, Delta Lake, and MLflow. As the world’s first and only lakehouse platform in the cloud, Databricks combines the best of data warehouses and data lakes to offer an open and unified platform for data and AI.\n\n\nIntroduction to Databricks Unified Data Platform: 5 min demo\n\n\n\n\nDatabricks comparison1"
+  },
+  {
+    "objectID": "databricks/community_edition.html#community-edition-setup",
+    "href": "databricks/community_edition.html#community-edition-setup",
+    "title": "6  Databricks Community Edition",
+    "section": "6.1 Community Edition Setup",
+    "text": "6.1 Community Edition Setup\n\nCreate a community account on Databricks\nLogin into the Databricks community edition portal\nClick the compute icon on the left ()\nName your cluster\nCreate your cluster and then navigate to the libraries tab to install our needed Python packages (for example plotnine, altair). Pandas is already installed."
+  },
+  {
+    "objectID": "databricks/community_edition.html#what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform",
+    "href": "databricks/community_edition.html#what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform",
+    "title": "6  Databricks Community Edition",
+    "section": "6.2 What is the difference between the Databricks Community Edition and the full Databricks Platform?",
+    "text": "6.2 What is the difference between the Databricks Community Edition and the full Databricks Platform?\n\nWith the Databricks Community Edition, the users will have access to 15GB clusters, a cluster manager and the notebook environment to prototype simple applications, and JDBC / ODBC integrations for BI analysis. The Databricks Community Edition access is not time-limited and users will not incur AWS costs for their cluster usage.\n\n\nThe full Databricks platform offers production-grade functionality, such as an unlimited number of clusters that easily scale up or down, a job launcher, collaboration, advanced security controls, and expert support. It helps users process data at scale, or build Apache Spark applications in a team setting.\n\n\nDatabricks"
+  },
+  {
+    "objectID": "databricks/community_edition.html#using-databricks-notebooks",
+    "href": "databricks/community_edition.html#using-databricks-notebooks",
+    "title": "6  Databricks Community Edition",
+    "section": "6.3 Using Databricks notebooks",
+    "text": "6.3 Using Databricks notebooks\n\nWatch this video to see a short example of using the platform\nRead about the basics of Databricks notebooks\n\n\n6.3.1 Key links\n\nSign up for Community Edition\nA love-hate relationship with Databricks Notebooks\nDatabricks notebooks\nDatabricks Backstory"
+  },
+  {
+    "objectID": "spark.html#links",
+    "href": "spark.html#links",
+    "title": "Spark",
+    "section": "links",
+    "text": "links\n\nSpark SQL, DataFrames and Datasets Guide\nChapter 4. Spark SQL and DataFrames"
+  },
+  {
+    "objectID": "spark/spark_part_guide.html",
+    "href": "spark/spark_part_guide.html",
+    "title": "8  Using this Spark Guide",
+    "section": "",
+    "text": "Data science programming"
+  },
+  {
+    "objectID": "spark/spark_intro.html#what-is-pyspark",
+    "href": "spark/spark_intro.html#what-is-pyspark",
+    "title": "9  What is Spark?",
+    "section": "9.1 What is PySpark?",
+    "text": "9.1 What is PySpark?\nPySpark supports the integration of Apache Spark and Python as a Python API for Spark. In addition, PySpark, helps you interface with Resilient Distributed Datasets (RDDs) in Apache Spark and Python programming language. PySpark refers to the collection of Python APIs for Spark.3 This book will focus on PySparkSQL and MLlib. Within Databricks we have access to the PySparkSQL methods using the spark object that is available in each notebook. Users of PySpark outside of Databricks would need to create their spark entry point with something like the following\n\nspark = SparkSession \\\n    .builder \\\n    .appName(\"Python Spark SQL basic example\") \\\n    .config(\"spark.some.config.option\", \"some-value\") \\\n    .getOrCreate()"
+  },
+  {
+    "objectID": "spark/features.html",
+    "href": "spark/features.html",
+    "title": "10  Feature Engineering",
+    "section": "",
+    "text": "When working with business data, we often have a database that stores transactions. We will have tables that store credit card transactions, tables that store paycheck transactions, key card tables that store build access transactions, and account tables that store logins or purchase transactions. These transaction tables are usually not at the right level of detail (often called ‘unit of analysis’) for any machine learning or statistical model inference.\nTo build our predictive models, these transaction tables need to be munged into the correct space, time, and variable aggregation. Here are the questions we must work through based on our modeling needs.\n\nWhat is my spatial unit of interest for predictions? What tables/keys do I need to map my transactions to that spatial unit?\n\nWhat is my label/target that I will use for prediction?\nWhat is my temporal unit of interest for feature building?\nWhat features would help predict my label?\n\nHow would we answer the above questions if we wanted to predict the next US county where a temple for the Church of Jesus Christ of Latter-day Saints would be built? First, what tables do we have?\n\npatterns: monthly traffic patterns for each place.\nplaces: Key information about each place.\ncensusmapping: The mapping of places keys to cbg based on the placekeys shown in patterns.\ncensustract_pkmap: The mapping of places keys to census tract based on placekeys in places.\ntract_table: The table that maps tract keys to state and county.\nidaho_temples.csv: A table of temples with a key that maps to tract."
   }
 ]

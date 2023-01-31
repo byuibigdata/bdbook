@@ -1,0 +1,20 @@
+# Feature Engineering
+
+When working with business data, we often have a database that stores transactions. We will have tables that store credit card transactions, tables that store paycheck transactions, key card tables that store build access transactions, and account tables that store logins or purchase transactions. These transaction tables are usually not at the right level of detail (often called _'unit of analysis'_) for any machine learning or statistical model inference. 
+
+To build our predictive models, these transaction tables need to be munged into the correct space, time, and variable aggregation. Here are the questions we must work through based on our modeling needs.
+
+- What is my spatial unit of interest for predictions?   What tables/keys do I need to map my transactions to that spatial unit?   
+- What is my label/target that I will use for prediction?
+- What is my temporal unit of interest for feature building?
+- What features would help predict my label?
+
+How would we answer the above questions if we wanted to predict the next US county where a temple for the Church of Jesus Christ of Latter-day Saints would be built? First, what tables do we have?
+
+1. patterns: monthly traffic patterns for each place.
+2. places: Key information about each place.
+3. censusmapping: The mapping of places keys to cbg based on the placekeys shown in patterns.
+3. censustract_pkmap: The mapping of places keys to census tract based on placekeys in places.
+4. tract_table: The table that maps tract keys to state and county.
+5. idaho_temples.csv: A table of temples with a key that maps to tract.
+

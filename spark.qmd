@@ -1,0 +1,9 @@
+# Spark
+
+[Spark](https://spark.apache.org/) core is the framework that supports big data management and processing. We get access to the Spark core through different language interfaces. We will focus on Pyspark and leverage Spark SQL to access the Spark core. Pyspark gives us access to the DataFrame API which is a Pythonic interpretation of SQL.
+
+
+## links
+
+- [Spark SQL, DataFrames and Datasets Guide](https://spark.apache.org/docs/latest/sql-programming-guide.html)
+- [Chapter 4. Spark SQL and DataFrames](https://www.oreilly.com/library/view/learning-spark-2nd/9781492050032/ch04.html)

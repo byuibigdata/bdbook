@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="J. Hathaway">
-<meta name="dcterms.date" content="2023-01-12">
 
-<title>Big Data Programming for Data Scientists</title>
+<title>Big Data Programming for Data Scientists - 6&nbsp; Databricks Community Edition</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,24 +23,25 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./introduction.html" rel="next">
-<link href="./logo.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../databricks/repo_navigation.html" rel="next">
+<link href="../databricks/databricks_intro.html" rel="prev">
+<link href="../logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -65,8 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script async="" src="https://hypothes.is/embed.js"></script>
 
 
-<meta name="twitter:title" content="Big Data Programming for Data Scientists">
-<meta name="twitter:description" content="This ‘book’ is primarily a place for the BYU-I data science program to store material used in their Big Data Class.">
+<meta name="twitter:title" content="Big Data Programming for Data Scientists - 6&nbsp; Databricks Community Edition">
+<meta name="twitter:description" content="The community edition provides free access to the Databricks environment to see their vision of jupyter notebooks and to work with a Spark environment.">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -76,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Big Data Programming for Data Scientists</h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Databricks Community Edition</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -89,10 +88,10 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Big Data Programming for Data Scientists</a> 
+      <a href="../">Big Data Programming for Data Scientists</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/byuibigdata/bdbook" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
-    <a href="./byui_big_data.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+    <a href="../byui_big_data.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -105,12 +104,12 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">Preface</a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link">Preface</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./introduction.html" class="sidebar-item-text sidebar-link">Introduction</a>
+            <a href="../introduction.html" class="sidebar-item-text sidebar-link">Introduction</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -118,29 +117,29 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro/bigdata.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What is Big Data?</span></a>
+  <a href="../intro/bigdata.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What is Big Data?</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro/tools.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Big Data Tools</span></a>
+  <a href="../intro/tools.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Big Data Tools</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro/projects.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completing Data Projects</span></a>
+  <a href="../intro/projects.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completing Data Projects</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro/rules_thumb.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sark Rules of Thumb</span></a>
+  <a href="../intro/rules_thumb.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sark Rules of Thumb</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./databricks.html" class="sidebar-item-text sidebar-link">Databricks</a>
+            <a href="../databricks.html" class="sidebar-item-text sidebar-link">Databricks</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -148,24 +147,24 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./databricks/databricks_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">What is Databricks?</span></a>
+  <a href="../databricks/databricks_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">What is Databricks?</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./databricks/community_edition.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Databricks Community Edition</span></a>
+  <a href="../databricks/community_edition.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Databricks Community Edition</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./databricks/repo_navigation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Navigating our examples</span></a>
+  <a href="../databricks/repo_navigation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Navigating our examples</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./spark.html" class="sidebar-item-text sidebar-link">Spark</a>
+            <a href="../spark.html" class="sidebar-item-text sidebar-link">Spark</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -173,24 +172,24 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./spark/spark_part_guide.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Using this Spark Guide</span></a>
+  <a href="../spark/spark_part_guide.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Using this Spark Guide</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./spark/spark_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">What is Spark?</span></a>
+  <a href="../spark/spark_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">What is Spark?</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./spark/features.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Feature Engineering</span></a>
+  <a href="../spark/features.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Feature Engineering</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./docker.html" class="sidebar-item-text sidebar-link">Docker</a>
+            <a href="../docker.html" class="sidebar-item-text sidebar-link">Docker</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -198,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./docker/docker_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">What is Docker?</span></a>
+  <a href="../docker/docker_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">What is Docker?</span></a>
   </div>
 </li>
       </ul>
@@ -212,35 +211,28 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#community-edition-setup" id="toc-community-edition-setup" class="nav-link active" data-scroll-target="#community-edition-setup"><span class="toc-section-number">6.1</span>  Community Edition Setup</a></li>
+  <li><a href="#what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform" id="toc-what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform" class="nav-link" data-scroll-target="#what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform"><span class="toc-section-number">6.2</span>  What is the difference between the Databricks Community Edition and the full Databricks Platform?</a></li>
+  <li><a href="#using-databricks-notebooks" id="toc-using-databricks-notebooks" class="nav-link" data-scroll-target="#using-databricks-notebooks"><span class="toc-section-number">6.3</span>  Using Databricks notebooks</a>
+  <ul class="collapse">
+  <li><a href="#key-links" id="toc-key-links" class="nav-link" data-scroll-target="#key-links"><span class="toc-section-number">6.3.1</span>  Key links</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/byuibigdata/bdbook/edit/master/index.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/byuibigdata/bdbook/edit/master/databricks/community_edition.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Big Data Programming for Data Scientists</h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Databricks Community Edition</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>J. Hathaway </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">January 12, 2023</p>
-    </div>
-  </div>
   
     
   </div>
@@ -248,11 +240,47 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>This ‘book’ is primarily a place for the BYU-I data science program to store material used in their Big Data Class.</p>
+<p>The <a href="https://community.cloud.databricks.com/login.html">community edition</a> provides free access to the Databricks environment to see their vision of jupyter notebooks and to work with a Spark environment. The users do not incur any costs while using Databricks.</p>
+<p>Read more about the limitations of Community Edition at <a href="https://databricks.com/product/faq/community-edition">this FAQ</a>.</p>
+<section id="community-edition-setup" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="community-edition-setup"><span class="header-section-number">6.1</span> Community Edition Setup</h2>
+<ol type="1">
+<li>Create a <a href="https://databricks.com/try-databricks">community account on Databricks</a></li>
+<li>Login into the <a href="https://community.cloud.databricks.com/login.html">Databricks community edition portal</a></li>
+<li>Click the compute icon on the left (<img src="https://github.com/byuibigdata/project_safegraph/blob/main/img/compute_icon.png" class="img-fluid">)</li>
+<li>Name your cluster</li>
+<li>Create your cluster and then navigate to the libraries tab to install our needed Python packages (for example <code>plotnine</code>, <code>altair</code>). Pandas is already installed.</li>
+</ol>
+</section>
+<section id="what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform"><span class="header-section-number">6.2</span> What is the difference between the Databricks Community Edition and the full Databricks Platform?</h2>
+<blockquote class="blockquote">
+<p>With the Databricks Community Edition, the users will have access to 15GB clusters, a cluster manager and the notebook environment to prototype simple applications, and JDBC / ODBC integrations for BI analysis. The Databricks Community Edition access is not time-limited and users will not incur AWS costs for their cluster usage.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>The full Databricks platform offers production-grade functionality, such as an unlimited number of clusters that easily scale up or down, a job launcher, collaboration, advanced security controls, and expert support. It helps users process data at scale, or build Apache Spark applications in a team setting.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><a href="https://databricks.com/product/faq/community-edition">Databricks</a></p>
+</blockquote>
+</section>
+<section id="using-databricks-notebooks" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="using-databricks-notebooks"><span class="header-section-number">6.3</span> Using Databricks notebooks</h2>
+<ul>
+<li><a href="https://youtu.be/n-yt_3HvkOI">Watch this video to see a short example of using the platform</a></li>
+<li><a href="https://subscription.packtpub.com/book/data/9781838647216/2/ch02lvl1sec08/using-azure-databricks-notebooks">Read about the basics of Databricks notebooks</a></li>
+</ul>
+<section id="key-links" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="key-links"><span class="header-section-number">6.3.1</span> Key links</h3>
+<ul>
+<li><a href="https://databricks.com/try-databricks">Sign up for Community Edition</a></li>
+<li><a href="https://towardsdatascience.com/databricks-notebooks-a-love-hate-relationship-8f73e5b291fb">A love-hate relationship with Databricks Notebooks</a></li>
+<li><a href="https://subscription.packtpub.com/book/data/9781838647216/2/ch02lvl1sec08/using-azure-databricks-notebooks">Databricks notebooks</a></li>
+<li><a href="https://youtu.be/ThrmPaleEiI">Databricks Backstory</a></li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -391,10 +419,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../databricks/databricks_intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">What is Databricks?</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./introduction.html" class="pagination-link">
-        <span class="nav-page-text">Introduction</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../databricks/repo_navigation.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Navigating our examples</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -1,0 +1,34 @@
+# Databricks Community Edition
+
+The [community edition](https://community.cloud.databricks.com/login.html) provides free access to the Databricks environment to see their vision of jupyter notebooks and to work with a Spark environment. The users do not incur any costs while using Databricks.
+
+Read more about the limitations of Community Edition at [this FAQ](https://databricks.com/product/faq/community-edition).
+
+## Community Edition Setup
+
+1. Create a [community account on Databricks](https://databricks.com/try-databricks)
+2. Login into the [Databricks community edition portal](https://community.cloud.databricks.com/login.html)
+3. Click the compute icon on the left (![](https://github.com/byuibigdata/project_safegraph/blob/main/img/compute_icon.png))
+4. Name your cluster
+5. Create your cluster and then navigate to the libraries tab to install our needed Python packages (for example `plotnine`, `altair`). Pandas is already installed.
+
+
+## What is the difference between the Databricks Community Edition and the full Databricks Platform?
+
+> With the Databricks Community Edition, the users will have access to 15GB clusters, a cluster manager and the notebook environment to prototype simple applications, and JDBC / ODBC integrations for BI analysis. The Databricks Community Edition access is not time-limited and users will not incur AWS costs for their cluster usage.
+
+> The full Databricks platform offers production-grade functionality, such as an unlimited number of clusters that easily scale up or down, a job launcher, collaboration, advanced security controls, and expert support. It helps users process data at scale, or build Apache Spark applications in a team setting.
+
+> [Databricks](https://databricks.com/product/faq/community-edition)
+
+## Using Databricks notebooks
+
+- [Watch this video to see a short example of using the platform](https://youtu.be/n-yt_3HvkOI)
+- [Read about the basics of Databricks notebooks](https://subscription.packtpub.com/book/data/9781838647216/2/ch02lvl1sec08/using-azure-databricks-notebooks)
+
+### Key links
+
+- [Sign up for Community Edition](https://databricks.com/try-databricks)
+- [A love-hate relationship with Databricks Notebooks](https://towardsdatascience.com/databricks-notebooks-a-love-hate-relationship-8f73e5b291fb)
+- [Databricks notebooks](https://subscription.packtpub.com/book/data/9781838647216/2/ch02lvl1sec08/using-azure-databricks-notebooks)
+- [Databricks Backstory](https://youtu.be/ThrmPaleEiI)

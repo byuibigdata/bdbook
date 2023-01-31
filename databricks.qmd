@@ -1,0 +1,3 @@
+# Databricks
+
+Databricks provides data scientists and data engineers a unified platform for scalable analytics and data management with almost unlimited storage and compute capacity through the use of Spark. 

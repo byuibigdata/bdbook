@@ -1,0 +1,3 @@
+# Introduction
+
+As an introduction, we highlight the different elements of data science when using big data.
