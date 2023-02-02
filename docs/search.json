@@ -103,5 +103,40 @@
     "title": "10  Feature Engineering",
     "section": "",
     "text": "When working with business data, we often have a database that stores transactions. We will have tables that store credit card transactions, tables that store paycheck transactions, key card tables that store build access transactions, and account tables that store logins or purchase transactions. These transaction tables are usually not at the right level of detail (often called ‘unit of analysis’) for any machine learning or statistical model inference.\nTo build our predictive models, these transaction tables need to be munged into the correct space, time, and variable aggregation. Here are the questions we must work through based on our modeling needs.\n\nWhat is my spatial unit of interest for predictions? What tables/keys do I need to map my transactions to that spatial unit?\n\nWhat is my label/target that I will use for prediction?\nWhat is my temporal unit of interest for feature building?\nWhat features would help predict my label?\n\nHow would we answer the above questions if we wanted to predict the next US county where a temple for the Church of Jesus Christ of Latter-day Saints would be built? First, what tables do we have?\n\npatterns: monthly traffic patterns for each place.\nplaces: Key information about each place.\ncensusmapping: The mapping of places keys to cbg based on the placekeys shown in patterns.\ncensustract_pkmap: The mapping of places keys to census tract based on placekeys in places.\ntract_table: The table that maps tract keys to state and county.\nidaho_temples.csv: A table of temples with a key that maps to tract."
+  },
+  {
+    "objectID": "spark/features.html#spatial-unit-of-interest-derivation",
+    "href": "spark/features.html#spatial-unit-of-interest-derivation",
+    "title": "10  Feature Engineering",
+    "section": "10.1 Spatial Unit of interest derivation",
+    "text": "10.1 Spatial Unit of interest derivation\nThe tract_table has the county data within it. We can leverage this table to get our unit of analysis table."
+  },
+  {
+    "objectID": "spark/features.html#label-creation",
+    "href": "spark/features.html#label-creation",
+    "title": "10  Feature Engineering",
+    "section": "10.2 Label creation",
+    "text": "10.2 Label creation\nThe idaho_temples.csv has our path to a label. We want to create a 0/1 label for has not/has a temple for each county."
+  },
+  {
+    "objectID": "spark/features.html#feature-creation",
+    "href": "spark/features.html#feature-creation",
+    "title": "10  Feature Engineering",
+    "section": "10.3 Feature Creation",
+    "text": "10.3 Feature Creation\nWe want a clean feature that focuses on chapels for the Church of Jesus Christ of Latter-day Saints. How can we get a list of placekeys that are LDS chapels? Some regular expressions on the name will be helpful. What about day of the week attendance?"
+  },
+  {
+    "objectID": "spark/features.html#temporal-considerations",
+    "href": "spark/features.html#temporal-considerations",
+    "title": "10  Feature Engineering",
+    "section": "10.4 Temporal Considerations",
+    "text": "10.4 Temporal Considerations\nThis data runs over COVID-19 as we have 2019 through 2022."
+  },
+  {
+    "objectID": "spark/features.html#mapping-back-to-my-unity-of-analysis",
+    "href": "spark/features.html#mapping-back-to-my-unity-of-analysis",
+    "title": "10  Feature Engineering",
+    "section": "10.5 Mapping back to my unity of analysis",
+    "text": "10.5 Mapping back to my unity of analysis"
   }
 ]

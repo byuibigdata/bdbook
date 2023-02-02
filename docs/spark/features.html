@@ -207,7 +207,17 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#spatial-unit-of-interest-derivation" id="toc-spatial-unit-of-interest-derivation" class="nav-link active" data-scroll-target="#spatial-unit-of-interest-derivation"><span class="toc-section-number">10.1</span>  Spatial Unit of interest derivation</a></li>
+  <li><a href="#label-creation" id="toc-label-creation" class="nav-link" data-scroll-target="#label-creation"><span class="toc-section-number">10.2</span>  Label creation</a></li>
+  <li><a href="#feature-creation" id="toc-feature-creation" class="nav-link" data-scroll-target="#feature-creation"><span class="toc-section-number">10.3</span>  Feature Creation</a></li>
+  <li><a href="#temporal-considerations" id="toc-temporal-considerations" class="nav-link" data-scroll-target="#temporal-considerations"><span class="toc-section-number">10.4</span>  Temporal Considerations</a></li>
+  <li><a href="#mapping-back-to-my-unity-of-analysis" id="toc-mapping-back-to-my-unity-of-analysis" class="nav-link" data-scroll-target="#mapping-back-to-my-unity-of-analysis"><span class="toc-section-number">10.5</span>  Mapping back to my unity of analysis</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/byuibigdata/bdbook/edit/master/spark/features.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -232,23 +242,41 @@ ul.task-list li input[type="checkbox"] {
 <p>When working with business data, we often have a database that stores transactions. We will have tables that store credit card transactions, tables that store paycheck transactions, key card tables that store build access transactions, and account tables that store logins or purchase transactions. These transaction tables are usually not at the right level of detail (often called <em>‘unit of analysis’</em>) for any machine learning or statistical model inference.</p>
 <p>To build our predictive models, these transaction tables need to be munged into the correct space, time, and variable aggregation. Here are the questions we must work through based on our modeling needs.</p>
 <ul>
-<li>What is my spatial unit of interest for predictions? What tables/keys do I need to map my transactions to that spatial unit?<br>
-</li>
+<li>What is my spatial unit of interest for predictions? How can I munge my tables to create the foundation of the analysis table?</li>
 <li>What is my label/target that I will use for prediction?</li>
-<li>What is my temporal unit of interest for feature building?</li>
 <li>What features would help predict my label?</li>
+<li>What is my temporal unit of interest for feature building?</li>
+<li>What tables/keys do I need to map my transactions to that spatial unit?</li>
 </ul>
 <p>How would we answer the above questions if we wanted to predict the next US county where a temple for the Church of Jesus Christ of Latter-day Saints would be built? First, what tables do we have?</p>
 <ol type="1">
 <li>patterns: monthly traffic patterns for each place.</li>
 <li>places: Key information about each place.</li>
-<li>censusmapping: The mapping of places keys to cbg based on the placekeys shown in patterns.</li>
 <li>censustract_pkmap: The mapping of places keys to census tract based on placekeys in places.</li>
 <li>tract_table: The table that maps tract keys to state and county.</li>
 <li>idaho_temples.csv: A table of temples with a key that maps to tract.</li>
 </ol>
+<section id="spatial-unit-of-interest-derivation" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="spatial-unit-of-interest-derivation"><span class="header-section-number">10.1</span> Spatial Unit of interest derivation</h2>
+<p>The <code>tract_table</code> has the county data within it. We can leverage this table to get our unit of analysis table.</p>
+</section>
+<section id="label-creation" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="label-creation"><span class="header-section-number">10.2</span> Label creation</h2>
+<p>The <code>idaho_temples.csv</code> has our path to a label. We want to create a 0/1 label for has not/has a temple for each county.</p>
+</section>
+<section id="feature-creation" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="feature-creation"><span class="header-section-number">10.3</span> Feature Creation</h2>
+<p>We want a clean feature that focuses on chapels for the Church of Jesus Christ of Latter-day Saints. How can we get a list of <code>placekeys</code> that are LDS chapels? Some regular expressions on the name will be helpful. What about day of the week attendance?</p>
+</section>
+<section id="temporal-considerations" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="temporal-considerations"><span class="header-section-number">10.4</span> Temporal Considerations</h2>
+<p>This data runs over COVID-19 as we have 2019 through 2022.</p>
+</section>
+<section id="mapping-back-to-my-unity-of-analysis" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="mapping-back-to-my-unity-of-analysis"><span class="header-section-number">10.5</span> Mapping back to my unity of analysis</h2>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
