@@ -1,0 +1,39 @@
+# Short Course Training Development
+
+> Learning and training provide leadership and marketing opportunities.
+
+New methods and techniques enter the industry daily in data science and computer science. Even our go-to tools make updates and improvements multiple times a year that require investigation and adaptation. These changes are meant to improve the programmer's capabilities but often come with a learning hurdle. Finding a position with your team or company as an investigator and communicator of improved methods is rewarding. It usually gives you access to senior programmers and can connect you to the new up-and-coming employees at your company. Providing quality training is vital to take advantage of these opportunities.
+
+## Short Course Students
+
+Short course training is much different than the type of training you receive as a student in college. These professional pieces of training are meant to quickly provide an introduction, workable code snippets, and ways to push deeper after one or two hours. We have a small set of learning goals that we focus on to help the students get over the early-stage hurdles of the new technology. Professional short courses are filled with students with years of experience and multiple degrees, so they differ from a new first-year student in an introductory class. However, they are "freshmen" concerning the latest technology you introduce.
+
+These learners will surprise you with the depth of their questions as well as the shallowness of their abilities. You need to be prepared to keep the material simple but have the background knowledge to clearly answer any depth questions that arise. This preparation requires you to have built an experience with the tool that would allow you to teach advanced material on the topic while staying focused on introductory teaching goals.
+
+::: {.column-margin}
+In college courses, our learning experiences are within a classroom that meets multiple times weekly for numerous months. That is often one part of a larger degree where multiple principles are taught beyond the technical tools of a new software package or technique. You have probably experienced a few different teaching styles from your professors. Your short course mustn't be a 60-minute long lecture! Additionally, it is crucial that you take ownership of the material and that you provide clear examples that help the students use the new technology. They wouldn't have come to your short course if they wanted to learn independently. 
+:::
+
+## Short Course Development
+
+### The Goal
+
+Exploring new technology without a guide or instructor is often a non-linear mess. Your experience as the initial explorer is different from what you want to provide to your students. You may explore multiple futile paths while finding a few clear and safe trails to give the best experience. After examining the varied approaches, you will ponder the destination and journey. What is the experience we want the student to have at completion? Is our path short enough to get them to that experience with enough time to enjoy the view?
+
+### The Journey
+
+Now that you can see the end experience, you must use the right tools to help the students navigate the trail. Here are a few fundamental principles.
+
+- Github: Building your material on Github gives all the students rapid access to your training.
+- Purpose/Introduction: Ensure your first few minutes frame the training. There is no need to sneak up on the students. Be direct and tell them the learning goals for your training. This part should take just a few minutes.
+- Overviews: We must present context and details on the new technology. Expect to take time to "lecture" to get your class on the same page of understanding.
+- Activities: These short courses focus on getting new tools into the hands of the student. Make sure you have hands-on activities where the students figure out how to use the tool in a real example. These activities are more than simple copy and paste. You want to give them a chance to think.
+- Working Examples: Make sure you have answers to your activities and other working examples for them to take home. The activities are often quite simple. I like to have one or two more complex examples for them to review after the class.
+- Balance: It is important to balance the overviews and the activities. I ensure that my activities require as much time as any overview presentation material. It is also good to weave the overviews and balance them into shorter 5-10 blocks to provide variety.
+
+### Completion
+
+These short courses are valuable marketing tools. Make sure you have provided your contact information and that your students have references and examples that they can use to push their learning deeper. Think about how your material is organized in your Github repository so that others that find your space can learn and leverage your material without having participated in the course.
+
+## Structuring your Github Repository
+

@@ -1,3 +1,88 @@
 # Using this Spark Guide
 
-Data science programming
+## Data science programming
+
+Each language has their own view on the vocabulary of data munging. However, data science is starting to reach a point where each language is more like a dialect (British, Australian, or US English) than a unique language (Chinese, Finish, English). We are focusing on PySpark while providing dialect maps back to the top three data munging languages.
+
+Our first dialect discussion focuses on how each names the data object upon which we will write munging scripts. R has `data.frame`, Pandas has `DataFrame`, Pyspark has `DataFrame`, and SQL has `TABLE` to describe the rectangular rows and columns that so often represent how data is stored. In this book we will use the general *dataframe* to refer to all of them at once.
+
+Each of these data objects comes with column types or classes which facilitate data munging and analysis. Most of these types are very similar. However, they are not fully interchangable.
+
+## Example Code Snippets
+
+The examples will show the similar code for each of the four most popular data munging languages to help you understand the mapping between each paradigm.
+
+### Observable Example
+
+```{ojs}
+//| echo: false
+viewof language = Inputs.checkbox(
+  ["Tidyverse", "Pandas", "SQL", "Pyspark"], 
+  { value: ["Tidyverse", "Pandas", "Pyspark"], 
+    label: "Display languages:"
+  }
+)
+```
+
+
+```{ojs}
+//| echo: false
+//| output: asis
+language.includes("Pandas")
+
+function checkBox(today, input) {
+    if(today.includes(input)) {
+      return input
+    } 
+  }
+
+
+html`
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<section id=${checkBox(language, "Tidyverse")} class="level4 unnumbered quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<h4 class="unnumbered anchored" data-anchor-id=${checkBox(language, "Tidyverse")}>${checkBox(language, "Tidyverse")}</h4>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource py number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>df.select(<span class="st">"C1"</span>, <span class="st">"C2"</span>, <span class="st">"C3"</span>, <span class="st">"C4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+`
+
+html`
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<section id=${checkBox(language, "Tidyverse")} class="level4 unnumbered quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<h4 class="unnumbered anchored" data-anchor-id=${checkBox(language, "Tidyverse")}>${checkBox(language, "Tidyverse")}</h4>
+</section>
+`
+
+
+```
+
+### Selecting Columns from a *dataframe*
+
+::: {layout-ncol="2"}
+
+#### Pyspark {.unnumbered}
+
+``` py
+df.select("C1", "C2", "C3", "C4")
+```
+
+#### SQL {.unnumbered}
+
+``` sql
+SELECT C1, C2, C3, C4
+FROM df
+```
+
+#### R::Tidyverse {.unnumbered}
+
+``` r
+df |> select(C1, C2, C3, C4)
+```
+
+#### Py::Pandas {.unnumbered}
+
+``` py
+df.filter(items = [C1, C2, C3, C4])
+```
+:::

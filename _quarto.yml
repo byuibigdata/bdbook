@@ -36,6 +36,9 @@ book:
     - part: docker.qmd
       chapters:
         - docker/docker_intro.qmd
+    - part: training.qmd
+      chapters:
+        - training/training_intro.qmd
 
 comments:
   hypothesis: true

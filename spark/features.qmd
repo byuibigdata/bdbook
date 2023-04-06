@@ -30,8 +30,11 @@ The `idaho_temples.csv` has our path to a label.  We want to create a 0/1 label 
 
 We want a clean feature that focuses on chapels for the Church of Jesus Christ of Latter-day Saints.  How can we get a list of `placekeys` that are LDS chapels? Some regular expressions on the name will be helpful. What about day of the week attendance?
 
+What can we do to check the quality of the data.
+
 ## Temporal Considerations
 
 This data runs over COVID-19 as we have 2019 through 2022.
 
-## Mapping back to my unity of analysis
+## Mapping back to my unit of analysis
+

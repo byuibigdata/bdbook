@@ -84,11 +84,18 @@
     "text": "links\n\nSpark SQL, DataFrames and Datasets Guide\nChapter 4. Spark SQL and DataFrames"
   },
   {
-    "objectID": "spark/spark_part_guide.html",
-    "href": "spark/spark_part_guide.html",
+    "objectID": "spark/spark_part_guide.html#data-science-programming",
+    "href": "spark/spark_part_guide.html#data-science-programming",
     "title": "8  Using this Spark Guide",
-    "section": "",
-    "text": "Data science programming"
+    "section": "8.1 Data science programming",
+    "text": "8.1 Data science programming\nEach language has their own view on the vocabulary of data munging. However, data science is starting to reach a point where each language is more like a dialect (British, Australian, or US English) than a unique language (Chinese, Finish, English). We are focusing on PySpark while providing dialect maps back to the top three data munging languages.\nOur first dialect discussion focuses on how each names the data object upon which we will write munging scripts. R has data.frame, Pandas has DataFrame, Pyspark has DataFrame, and SQL has TABLE to describe the rectangular rows and columns that so often represent how data is stored. In this book we will use the general dataframe to refer to all of them at once.\nEach of these data objects comes with column types or classes which facilitate data munging and analysis. Most of these types are very similar. However, they are not fully interchangable."
+  },
+  {
+    "objectID": "spark/spark_part_guide.html#example-code-snippets",
+    "href": "spark/spark_part_guide.html#example-code-snippets",
+    "title": "8  Using this Spark Guide",
+    "section": "8.2 Example Code Snippets",
+    "text": "8.2 Example Code Snippets\nThe examples will show the similar code for each of the four most popular data munging languages to help you understand the mapping between each paradigm.\n\n8.2.1 Observable Example\n\nviewof language = Inputs.checkbox(\n  [\"Tidyverse\", \"Pandas\", \"SQL\", \"Pyspark\"], \n  { value: [\"Tidyverse\", \"Pandas\", \"Pyspark\"], \n    label: \"Display languages:\"\n  }\n)\n\n\n\n\n\n\n\nlanguage.includes(\"Pandas\")\n\n\n\n\n\n\n\nfunction checkBox(today, input) {\n    if(today.includes(input)) {\n      return input\n    } \n  }\n\n\nhtml`\n<div class=\"quarto-layout-panel\">\n<div class=\"quarto-layout-row quarto-layout-valign-top\">\n<section id=${checkBox(language, \"Tidyverse\")} class=\"level4 unnumbered quarto-layout-cell\" style=\"flex-basis: 50.0%;justify-content: center;\">\n<h4 class=\"unnumbered anchored\" data-anchor-id=${checkBox(language, \"Tidyverse\")}>${checkBox(language, \"Tidyverse\")}</h4>\n<div class=\"sourceCode\" id=\"cb8\"><pre class=\"sourceCode numberSource py number-lines code-with-copy\"><code class=\"sourceCode python\"><span id=\"cb8-1\"><a href=\"#cb8-1\"></a>df.select(<span class=\"st\">\"C1\"</span>, <span class=\"st\">\"C2\"</span>, <span class=\"st\">\"C3\"</span>, <span class=\"st\">\"C4\"</span>)</span></code><button title=\"Copy to Clipboard\" class=\"code-copy-button\"><i class=\"bi\"></i></button></pre></div>\n</section>\n`\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nhtml`\n<div class=\"quarto-layout-panel\">\n<div class=\"quarto-layout-row quarto-layout-valign-top\">\n<section id=${checkBox(language, \"Tidyverse\")} class=\"level4 unnumbered quarto-layout-cell\" style=\"flex-basis: 50.0%;justify-content: center;\">\n<h4 class=\"unnumbered anchored\" data-anchor-id=${checkBox(language, \"Tidyverse\")}>${checkBox(language, \"Tidyverse\")}</h4>\n</section>\n`\n\n\n\n\n\n\n\n\n\n\n8.2.2 Selecting Columns from a dataframe\n\n\n\nPyspark\ndf.select(\"C1\", \"C2\", \"C3\", \"C4\")\n\n\nSQL\nSELECT C1, C2, C3, C4\nFROM df\n\n\n\n\nR::Tidyverse\ndf |> select(C1, C2, C3, C4)\n\n\nPy::Pandas\ndf.filter(items = [C1, C2, C3, C4])"
   },
   {
     "objectID": "spark/spark_intro.html#what-is-pyspark",
@@ -96,13 +103,6 @@
     "title": "9  What is Spark?",
     "section": "9.1 What is PySpark?",
     "text": "9.1 What is PySpark?\nPySpark supports the integration of Apache Spark and Python as a Python API for Spark. In addition, PySpark, helps you interface with Resilient Distributed Datasets (RDDs) in Apache Spark and Python programming language. PySpark refers to the collection of Python APIs for Spark.3 This book will focus on PySparkSQL and MLlib. Within Databricks we have access to the PySparkSQL methods using the spark object that is available in each notebook. Users of PySpark outside of Databricks would need to create their spark entry point with something like the following\n\nspark = SparkSession \\\n    .builder \\\n    .appName(\"Python Spark SQL basic example\") \\\n    .config(\"spark.some.config.option\", \"some-value\") \\\n    .getOrCreate()"
-  },
-  {
-    "objectID": "spark/features.html",
-    "href": "spark/features.html",
-    "title": "10  Feature Engineering",
-    "section": "",
-    "text": "When working with business data, we often have a database that stores transactions. We will have tables that store credit card transactions, tables that store paycheck transactions, key card tables that store build access transactions, and account tables that store logins or purchase transactions. These transaction tables are usually not at the right level of detail (often called ‘unit of analysis’) for any machine learning or statistical model inference.\nTo build our predictive models, these transaction tables need to be munged into the correct space, time, and variable aggregation. Here are the questions we must work through based on our modeling needs.\n\nWhat is my spatial unit of interest for predictions? What tables/keys do I need to map my transactions to that spatial unit?\n\nWhat is my label/target that I will use for prediction?\nWhat is my temporal unit of interest for feature building?\nWhat features would help predict my label?\n\nHow would we answer the above questions if we wanted to predict the next US county where a temple for the Church of Jesus Christ of Latter-day Saints would be built? First, what tables do we have?\n\npatterns: monthly traffic patterns for each place.\nplaces: Key information about each place.\ncensusmapping: The mapping of places keys to cbg based on the placekeys shown in patterns.\ncensustract_pkmap: The mapping of places keys to census tract based on placekeys in places.\ntract_table: The table that maps tract keys to state and county.\nidaho_temples.csv: A table of temples with a key that maps to tract."
   },
   {
     "objectID": "spark/features.html#spatial-unit-of-interest-derivation",
@@ -123,7 +123,7 @@
     "href": "spark/features.html#feature-creation",
     "title": "10  Feature Engineering",
     "section": "10.3 Feature Creation",
-    "text": "10.3 Feature Creation\nWe want a clean feature that focuses on chapels for the Church of Jesus Christ of Latter-day Saints. How can we get a list of placekeys that are LDS chapels? Some regular expressions on the name will be helpful. What about day of the week attendance?"
+    "text": "10.3 Feature Creation\nWe want a clean feature that focuses on chapels for the Church of Jesus Christ of Latter-day Saints. How can we get a list of placekeys that are LDS chapels? Some regular expressions on the name will be helpful. What about day of the week attendance?\nWhat can we do to check the quality of the data."
   },
   {
     "objectID": "spark/features.html#temporal-considerations",
@@ -133,10 +133,31 @@
     "text": "10.4 Temporal Considerations\nThis data runs over COVID-19 as we have 2019 through 2022."
   },
   {
-    "objectID": "spark/features.html#mapping-back-to-my-unity-of-analysis",
-    "href": "spark/features.html#mapping-back-to-my-unity-of-analysis",
+    "objectID": "spark/features.html#mapping-back-to-my-unit-of-analysis",
+    "href": "spark/features.html#mapping-back-to-my-unit-of-analysis",
     "title": "10  Feature Engineering",
-    "section": "10.5 Mapping back to my unity of analysis",
-    "text": "10.5 Mapping back to my unity of analysis"
+    "section": "10.5 Mapping back to my unit of analysis",
+    "text": "10.5 Mapping back to my unit of analysis"
+  },
+  {
+    "objectID": "training/training_intro.html#short-course-students",
+    "href": "training/training_intro.html#short-course-students",
+    "title": "12  Short Course Training Development",
+    "section": "12.1 Short Course Students",
+    "text": "12.1 Short Course Students\nShort course training is much different than the type of training you receive as a student in college. These professional pieces of training are meant to quickly provide an introduction, workable code snippets, and ways to push deeper after one or two hours. We have a small set of learning goals that we focus on to help the students get over the early-stage hurdles of the new technology. Professional short courses are filled with students with years of experience and multiple degrees, so they differ from a new first-year student in an introductory class. However, they are “freshmen” concerning the latest technology you introduce.\nThese learners will surprise you with the depth of their questions as well as the shallowness of their abilities. You need to be prepared to keep the material simple but have the background knowledge to clearly answer any depth questions that arise. This preparation requires you to have built an experience with the tool that would allow you to teach advanced material on the topic while staying focused on introductory teaching goals.\n\n\nIn college courses, our learning experiences are within a classroom that meets multiple times weekly for numerous months. That is often one part of a larger degree where multiple principles are taught beyond the technical tools of a new software package or technique. You have probably experienced a few different teaching styles from your professors. Your short course mustn’t be a 60-minute long lecture! Additionally, it is crucial that you take ownership of the material and that you provide clear examples that help the students use the new technology. They wouldn’t have come to your short course if they wanted to learn independently."
+  },
+  {
+    "objectID": "training/training_intro.html#short-course-development",
+    "href": "training/training_intro.html#short-course-development",
+    "title": "12  Short Course Training Development",
+    "section": "12.2 Short Course Development",
+    "text": "12.2 Short Course Development\n\n12.2.1 The Goal\nExploring new technology without a guide or instructor is often a non-linear mess. Your experience as the initial explorer is different from what you want to provide to your students. You may explore multiple futile paths while finding a few clear and safe trails to give the best experience. After examining the varied approaches, you will ponder the destination and journey. What is the experience we want the student to have at completion? Is our path short enough to get them to that experience with enough time to enjoy the view?\n\n\n12.2.2 The Journey\nNow that you can see the end experience, you must use the right tools to help the students navigate the trail. Here are a few fundamental principles.\n\nGithub: Building your material on Github gives all the students rapid access to your training.\nPurpose/Introduction: Ensure your first few minutes frame the training. There is no need to sneak up on the students. Be direct and tell them the learning goals for your training. This part should take just a few minutes.\nOverviews: We must present context and details on the new technology. Expect to take time to “lecture” to get your class on the same page of understanding.\nActivities: These short courses focus on getting new tools into the hands of the student. Make sure you have hands-on activities where the students figure out how to use the tool in a real example. These activities are more than simple copy and paste. You want to give them a chance to think.\nWorking Examples: Make sure you have answers to your activities and other working examples for them to take home. The activities are often quite simple. I like to have one or two more complex examples for them to review after the class.\nBalance: It is important to balance the overviews and the activities. I ensure that my activities require as much time as any overview presentation material. It is also good to weave the overviews and balance them into shorter 5-10 blocks to provide variety.\n\n\n\n12.2.3 Completion\nThese short courses are valuable marketing tools. Make sure you have provided your contact information and that your students have references and examples that they can use to push their learning deeper. Think about how your material is organized in your Github repository so that others that find your space can learn and leverage your material without having participated in the course."
+  },
+  {
+    "objectID": "training/training_intro.html#structuring-your-github-repository",
+    "href": "training/training_intro.html#structuring-your-github-repository",
+    "title": "12  Short Course Training Development",
+    "section": "12.3 Structuring your Github Repository",
+    "text": "12.3 Structuring your Github Repository"
   }
 ]
