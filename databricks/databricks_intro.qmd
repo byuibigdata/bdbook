@@ -1,24 +1,34 @@
 # What is Databricks?
 
-## Navigation
+> For Data Science, Databricks Streamlines the end-to-end data science workflow — from data prep to modeling to sharing insights — with a collaborative and unified data science environment built on an open lakehouse foundation. Get quick access to clean and reliable data, preconfigured compute resources, IDE integration, multi-language support, and built-in advanced visualization tools for maximum flexibility for data analytics teams.   
+> [Databricks website](https://www.databricks.com/product/data-science)
 
-- This file provides a high-level overview of Databricks.
-- The HTML folder contains notebooks that can be imported into Databricks. All HTML files in that folder can be imported individually, or you can use `examples.dbc` to import them all at once.
+![Databricks comparison[^1]](../img/Marketecture-Spark-comp-page.png)
+
+> With origins in academia and the open-source community, Databricks was founded in 2013 by the original creators of Apache Spark™, Delta Lake, and MLflow. As the world’s first and only lakehouse platform in the cloud, Databricks combines the best of data warehouses and data lakes to offer an open and unified platform for data and AI.   
+> [Databricks website](https://databricks.com/company/about-us)
 
 ## The elevator pitches
 
-_Check out these branded videos._
+> - [It's time for DataBricks!](https://youtu.be/_1QQHv7T9og)
+> - [Databricks is the AI Company](https://youtu.be/1cJ0XYaARBY)
+> - [Introduction to Databricks Unified Data Platform: 5 min demo](https://youtu.be/n-yt_3HvkOI)
 
-> [It's time for DataBricks!](https://youtu.be/_1QQHv7T9og)
+## The details
 
-> [Databricks is the AI Company](https://youtu.be/1cJ0XYaARBY)
+### Clean and reliable data
 
-_Here is a bit more nerdy DS/CS pitch [from their website](https://databricks.com/company/about-us)_
+### Preconfigured compute resources
 
-> With origins in academia and the open-source community, Databricks was founded in 2013 by the original creators of Apache Spark™, Delta Lake, and MLflow. As the world’s first and only lakehouse platform in the cloud, Databricks combines the best of data warehouses and data lakes to offer an open and unified platform for data and AI.
+### IDE integration
 
-> [Introduction to Databricks Unified Data Platform: 5 min demo](https://youtu.be/n-yt_3HvkOI)
+Databricks has taken the Jupyter Notebook (`.ipynb`) and the classic notebook interface and built a tool that is highly responsive and usable for data scientists and engineers.
 
-![Databricks comparison[^1]](../img/Marketecture-Spark-comp-page.png)
+### multi-language support
+
+
+### built-in advanced visualization tools
+
+
 
 [^1]: https://www.databricks.com/spark/comparing-databricks-to-apache-spark

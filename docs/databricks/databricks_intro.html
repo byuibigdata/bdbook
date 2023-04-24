@@ -65,7 +65,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 <meta name="twitter:title" content="Big Data Programming for Data Scientists - 5&nbsp; What is Databricks?">
-<meta name="twitter:description" content="Check out these branded videos.">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -226,8 +225,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#navigation" id="toc-navigation" class="nav-link active" data-scroll-target="#navigation"><span class="toc-section-number">5.1</span>  Navigation</a></li>
-  <li><a href="#the-elevator-pitches" id="toc-the-elevator-pitches" class="nav-link" data-scroll-target="#the-elevator-pitches"><span class="toc-section-number">5.2</span>  The elevator pitches</a></li>
+  <li><a href="#the-elevator-pitches" id="toc-the-elevator-pitches" class="nav-link active" data-scroll-target="#the-elevator-pitches"><span class="toc-section-number">5.1</span>  The elevator pitches</a></li>
+  <li><a href="#the-details" id="toc-the-details" class="nav-link" data-scroll-target="#the-details"><span class="toc-section-number">5.2</span>  The details</a>
+  <ul class="collapse">
+  <li><a href="#clean-and-reliable-data" id="toc-clean-and-reliable-data" class="nav-link" data-scroll-target="#clean-and-reliable-data"><span class="toc-section-number">5.2.1</span>  Clean and reliable data</a></li>
+  <li><a href="#preconfigured-compute-resources" id="toc-preconfigured-compute-resources" class="nav-link" data-scroll-target="#preconfigured-compute-resources"><span class="toc-section-number">5.2.2</span>  Preconfigured compute resources</a></li>
+  <li><a href="#ide-integration" id="toc-ide-integration" class="nav-link" data-scroll-target="#ide-integration"><span class="toc-section-number">5.2.3</span>  IDE integration</a></li>
+  <li><a href="#multi-language-support" id="toc-multi-language-support" class="nav-link" data-scroll-target="#multi-language-support"><span class="toc-section-number">5.2.4</span>  multi-language support</a></li>
+  <li><a href="#built-in-advanced-visualization-tools" id="toc-built-in-advanced-visualization-tools" class="nav-link" data-scroll-target="#built-in-advanced-visualization-tools"><span class="toc-section-number">5.2.5</span>  built-in advanced visualization tools</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/byuibigdata/bdbook/edit/master/databricks/databricks_intro.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -251,28 +257,9 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="navigation" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="navigation"><span class="header-section-number">5.1</span> Navigation</h2>
-<ul>
-<li>This file provides a high-level overview of Databricks.</li>
-<li>The HTML folder contains notebooks that can be imported into Databricks. All HTML files in that folder can be imported individually, or you can use <code>examples.dbc</code> to import them all at once.</li>
-</ul>
-</section>
-<section id="the-elevator-pitches" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="the-elevator-pitches"><span class="header-section-number">5.2</span> The elevator pitches</h2>
-<p><em>Check out these branded videos.</em></p>
 <blockquote class="blockquote">
-<p><a href="https://youtu.be/_1QQHv7T9og">It’s time for DataBricks!</a></p>
-</blockquote>
-<blockquote class="blockquote">
-<p><a href="https://youtu.be/1cJ0XYaARBY">Databricks is the AI Company</a></p>
-</blockquote>
-<p><em>Here is a bit more nerdy DS/CS pitch <a href="https://databricks.com/company/about-us">from their website</a></em></p>
-<blockquote class="blockquote">
-<p>With origins in academia and the open-source community, Databricks was founded in 2013 by the original creators of Apache Spark™, Delta Lake, and MLflow. As the world’s first and only lakehouse platform in the cloud, Databricks combines the best of data warehouses and data lakes to offer an open and unified platform for data and AI.</p>
-</blockquote>
-<blockquote class="blockquote">
-<p><a href="https://youtu.be/n-yt_3HvkOI">Introduction to Databricks Unified Data Platform: 5 min demo</a></p>
+<p>For Data Science, Databricks Streamlines the end-to-end data science workflow — from data prep to modeling to sharing insights — with a collaborative and unified data science environment built on an open lakehouse foundation. Get quick access to clean and reliable data, preconfigured compute resources, IDE integration, multi-language support, and built-in advanced visualization tools for maximum flexibility for data analytics teams.<br>
+<a href="https://www.databricks.com/product/data-science">Databricks website</a></p>
 </blockquote>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -280,8 +267,40 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figcaption class="figure-caption">Databricks comparison<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></figcaption><p></p>
 </figure>
 </div>
+<blockquote class="blockquote">
+<p>With origins in academia and the open-source community, Databricks was founded in 2013 by the original creators of Apache Spark™, Delta Lake, and MLflow. As the world’s first and only lakehouse platform in the cloud, Databricks combines the best of data warehouses and data lakes to offer an open and unified platform for data and AI.<br>
+<a href="https://databricks.com/company/about-us">Databricks website</a></p>
+</blockquote>
+<section id="the-elevator-pitches" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="the-elevator-pitches"><span class="header-section-number">5.1</span> The elevator pitches</h2>
+<blockquote class="blockquote">
+<ul>
+<li><a href="https://youtu.be/_1QQHv7T9og">It’s time for DataBricks!</a></li>
+<li><a href="https://youtu.be/1cJ0XYaARBY">Databricks is the AI Company</a></li>
+<li><a href="https://youtu.be/n-yt_3HvkOI">Introduction to Databricks Unified Data Platform: 5 min demo</a></li>
+</ul>
+</blockquote>
+</section>
+<section id="the-details" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="the-details"><span class="header-section-number">5.2</span> The details</h2>
+<section id="clean-and-reliable-data" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="clean-and-reliable-data"><span class="header-section-number">5.2.1</span> Clean and reliable data</h3>
+</section>
+<section id="preconfigured-compute-resources" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="preconfigured-compute-resources"><span class="header-section-number">5.2.2</span> Preconfigured compute resources</h3>
+</section>
+<section id="ide-integration" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="ide-integration"><span class="header-section-number">5.2.3</span> IDE integration</h3>
+<p>Databricks has taken the Jupyter Notebook (<code>.ipynb</code>) and the classic notebook interface and built a tool that is highly responsive and usable for data scientists and engineers.</p>
+</section>
+<section id="multi-language-support" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="multi-language-support"><span class="header-section-number">5.2.4</span> multi-language support</h3>
+</section>
+<section id="built-in-advanced-visualization-tools" class="level3" data-number="5.2.5">
+<h3 data-number="5.2.5" class="anchored" data-anchor-id="built-in-advanced-visualization-tools"><span class="header-section-number">5.2.5</span> built-in advanced visualization tools</h3>
 
 
+</section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>

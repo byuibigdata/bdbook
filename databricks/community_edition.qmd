@@ -6,11 +6,12 @@ Read more about the limitations of Community Edition at [this FAQ](https://datab
 
 ## Community Edition Setup
 
-1. Create a [community account on Databricks](https://databricks.com/try-databricks)
-2. Login into the [Databricks community edition portal](https://community.cloud.databricks.com/login.html)
-3. Click the compute icon on the left (![](https://github.com/byuibigdata/project_safegraph/blob/main/img/compute_icon.png))
-4. Name your cluster
-5. Create your cluster and then navigate to the libraries tab to install our needed Python packages (for example `plotnine`, `altair`). Pandas is already installed.
+1. Create an account at [Try Databricks](https://databricks.com/try-databricks)
+2. After entering your name and information, find the small type link that says `Get started with Community Edition ->` and click.
+3. Login into the [Databricks community edition portal](https://community.cloud.databricks.com/login.html)
+4. Click the compute icon on the left (![](../img/compute_icon.png))
+5. Create and Name your cluster (you will have to do this every time you log in)
+6. Create a notebook and start exploring
 
 
 ## What is the difference between the Databricks Community Edition and the full Databricks Platform?

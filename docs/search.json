@@ -42,25 +42,25 @@
     "text": "Databricks provides data scientists and data engineers a unified platform for scalable analytics and data management with almost unlimited storage and compute capacity through the use of Spark."
   },
   {
-    "objectID": "databricks/databricks_intro.html#navigation",
-    "href": "databricks/databricks_intro.html#navigation",
-    "title": "5  What is Databricks?",
-    "section": "5.1 Navigation",
-    "text": "5.1 Navigation\n\nThis file provides a high-level overview of Databricks.\nThe HTML folder contains notebooks that can be imported into Databricks. All HTML files in that folder can be imported individually, or you can use examples.dbc to import them all at once."
-  },
-  {
     "objectID": "databricks/databricks_intro.html#the-elevator-pitches",
     "href": "databricks/databricks_intro.html#the-elevator-pitches",
     "title": "5  What is Databricks?",
-    "section": "5.2 The elevator pitches",
-    "text": "5.2 The elevator pitches\nCheck out these branded videos.\n\nIt’s time for DataBricks!\n\n\nDatabricks is the AI Company\n\nHere is a bit more nerdy DS/CS pitch from their website\n\nWith origins in academia and the open-source community, Databricks was founded in 2013 by the original creators of Apache Spark™, Delta Lake, and MLflow. As the world’s first and only lakehouse platform in the cloud, Databricks combines the best of data warehouses and data lakes to offer an open and unified platform for data and AI.\n\n\nIntroduction to Databricks Unified Data Platform: 5 min demo\n\n\n\n\nDatabricks comparison1"
+    "section": "5.1 The elevator pitches",
+    "text": "5.1 The elevator pitches\n\n\nIt’s time for DataBricks!\nDatabricks is the AI Company\nIntroduction to Databricks Unified Data Platform: 5 min demo"
+  },
+  {
+    "objectID": "databricks/databricks_intro.html#the-details",
+    "href": "databricks/databricks_intro.html#the-details",
+    "title": "5  What is Databricks?",
+    "section": "5.2 The details",
+    "text": "5.2 The details\n\n5.2.1 Clean and reliable data\n\n\n5.2.2 Preconfigured compute resources\n\n\n5.2.3 IDE integration\nDatabricks has taken the Jupyter Notebook (.ipynb) and the classic notebook interface and built a tool that is highly responsive and usable for data scientists and engineers.\n\n\n5.2.4 multi-language support\n\n\n5.2.5 built-in advanced visualization tools"
   },
   {
     "objectID": "databricks/community_edition.html#community-edition-setup",
     "href": "databricks/community_edition.html#community-edition-setup",
     "title": "6  Databricks Community Edition",
     "section": "6.1 Community Edition Setup",
-    "text": "6.1 Community Edition Setup\n\nCreate a community account on Databricks\nLogin into the Databricks community edition portal\nClick the compute icon on the left ()\nName your cluster\nCreate your cluster and then navigate to the libraries tab to install our needed Python packages (for example plotnine, altair). Pandas is already installed."
+    "text": "6.1 Community Edition Setup\n\nCreate an account at Try Databricks\nAfter entering your name and information, find the small type link that says Get started with Community Edition -> and click.\nLogin into the Databricks community edition portal\nClick the compute icon on the left ()\nCreate and Name your cluster (you will have to do this every time you log in)\nCreate a notebook and start exploring"
   },
   {
     "objectID": "databricks/community_edition.html#what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform",
@@ -75,6 +75,13 @@
     "title": "6  Databricks Community Edition",
     "section": "6.3 Using Databricks notebooks",
     "text": "6.3 Using Databricks notebooks\n\nWatch this video to see a short example of using the platform\nRead about the basics of Databricks notebooks\n\n\n6.3.1 Key links\n\nSign up for Community Edition\nA love-hate relationship with Databricks Notebooks\nDatabricks notebooks\nDatabricks Backstory"
+  },
+  {
+    "objectID": "databricks/repo_navigation.html",
+    "href": "databricks/repo_navigation.html",
+    "title": "7  Navigating our examples",
+    "section": "",
+    "text": "You can download one file that contains all the examples as a .dbc file or download each of these specific .ipynb files.\n\nExample of Notebook Features"
   },
   {
     "objectID": "spark.html#links",
