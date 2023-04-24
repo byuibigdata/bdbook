@@ -51,6 +51,10 @@ format:
     code-line-numbers: true
     code-block-border-left: true
     code-block-border-bottom: false
+    copy-images: yes
+    copy-files:
+      - "/img/*"
+      - "/downloads/*"
     highlight-style: ayu
     toc-depth: 3
 

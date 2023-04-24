@@ -1,5 +1,5 @@
 # Navigating our examples
 
-You can download one file that contains all the examples as a **[`.dbc` file]("/downloads/examples.dbc")** or download each of these specific `.ipynb` files.
+You can download one file that contains all the examples as a **[`.dbc` file](../downloads/examples.dbc)** or download each of these specific `.ipynb` files.
 
-- [Example of Notebook Features]("/downloads/notebooks/example_notebooks.ipynb")
+- [Example of Notebook Features](../downloads/html/example_notebooks.html)
