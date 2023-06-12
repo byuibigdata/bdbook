@@ -1,3 +1,5 @@
 # Preface {.unnumbered}
 
-This 'book' is primarily a place for the BYU-I data science program to store material used in their Big Data Class.
+This 'book' is primarily a place for the BYU-I data science program to store material used in their Big Data Class. It is a work in progress.
+
+![](img/DS460_Banner.png)

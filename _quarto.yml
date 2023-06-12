@@ -25,14 +25,16 @@ book:
         - intro/rules_thumb.qmd
     - part: databricks.qmd
       chapters:
-        - databricks/databricks_intro.qmd 
-        - databricks/community_edition.qmd 
-        - databricks/repo_navigation.qmd 
+        - databricks/databricks_intro.qmd
+        - databricks/community_edition.qmd
+        - databricks/repo_navigation.qmd
     - part: spark.qmd
       chapters:
-        - spark/spark_part_guide.qmd 
+        - spark/spark_part_guide.qmd
         - spark/spark_intro.qmd
-        - spark/features.qmd
+    - part: features.qmd
+      chapters:
+        - features/features_intro.qmd
     - part: docker.qmd
       chapters:
         - docker/docker_intro.qmd
@@ -53,13 +55,11 @@ format:
     code-block-border-bottom: false
     copy-images: yes
     copy-files:
-      - "/img/*"
-      - "/downloads/*"
+      - "img/*"
+      - "downloads/*"
     highlight-style: ayu
     toc-depth: 3
 
   # pdf:
   #   documentclass: scrreprt
   #   keep-tex: true
-
-

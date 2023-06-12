@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Big Data Programming for Data Scientists - 1&nbsp; What is Big Data?</title>
+<title>Big Data Programming for Data Scientists - Feature Engineering</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,25 +23,25 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../intro/tools.html" rel="next">
-<link href="../introduction.html" rel="prev">
-<link href="../logo.png" rel="icon" type="image/png">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./features/features_intro.html" rel="next">
+<link href="./spark/spark_intro.html" rel="prev">
+<link href="./logo.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -64,10 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script async="" src="https://hypothes.is/embed.js"></script>
 
 
-<meta name="twitter:title" content="Big Data Programming for Data Scientists - 1&nbsp; What is Big Data?">
-<meta name="twitter:description" content="">
-<meta name="twitter:image" content="https://byuibigdata.github.io/bdbook/img/truck_tools.jpg">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Big Data Programming for Data Scientists - Feature Engineering">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-sidebar floating">
@@ -79,7 +77,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../introduction.html">Introduction</a></li><li class="breadcrumb-item"><a href="../intro/bigdata.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What is Big Data?</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./features.html">Feature Engineering</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -94,10 +92,10 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Big Data Programming for Data Scientists</a> 
+      <a href="./">Big Data Programming for Data Scientists</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/byuibigdata/bdbook" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="../byui_big_data.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="./byui_big_data.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -110,13 +108,13 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../introduction.html" class="sidebar-item-text sidebar-link">
+            <a href="./introduction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -125,25 +123,25 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../intro/bigdata.html" class="sidebar-item-text sidebar-link active">
+  <a href="./intro/bigdata.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What is Big Data?</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../intro/tools.html" class="sidebar-item-text sidebar-link">
+  <a href="./intro/tools.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Big Data Tools</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../intro/projects.html" class="sidebar-item-text sidebar-link">
+  <a href="./intro/projects.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completing Data Projects</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../intro/rules_thumb.html" class="sidebar-item-text sidebar-link">
+  <a href="./intro/rules_thumb.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sark Rules of Thumb</span></span></a>
   </div>
 </li>
@@ -151,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../databricks.html" class="sidebar-item-text sidebar-link">
+            <a href="./databricks.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Databricks</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -160,19 +158,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../databricks/databricks_intro.html" class="sidebar-item-text sidebar-link">
+  <a href="./databricks/databricks_intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">What is Databricks?</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../databricks/community_edition.html" class="sidebar-item-text sidebar-link">
+  <a href="./databricks/community_edition.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Databricks Community Edition</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../databricks/repo_navigation.html" class="sidebar-item-text sidebar-link">
+  <a href="./databricks/repo_navigation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Navigating our examples</span></span></a>
   </div>
 </li>
@@ -180,7 +178,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../spark.html" class="sidebar-item-text sidebar-link">
+            <a href="./spark.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Spark</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -189,13 +187,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../spark/spark_part_guide.html" class="sidebar-item-text sidebar-link">
+  <a href="./spark/spark_part_guide.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Using this Spark Guide</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../spark/spark_intro.html" class="sidebar-item-text sidebar-link">
+  <a href="./spark/spark_intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">What is Spark?</span></span></a>
   </div>
 </li>
@@ -203,7 +201,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../features.html" class="sidebar-item-text sidebar-link">
+            <a href="./features.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Feature Engineering</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -212,7 +210,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../features/features_intro.html" class="sidebar-item-text sidebar-link">
+  <a href="./features/features_intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Feature Engineering</span></span></a>
   </div>
 </li>
@@ -220,7 +218,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../docker.html" class="sidebar-item-text sidebar-link">
+            <a href="./docker.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Docker</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -229,7 +227,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../docker/docker_intro.html" class="sidebar-item-text sidebar-link">
+  <a href="./docker/docker_intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">What is Docker?</span></span></a>
   </div>
 </li>
@@ -237,7 +235,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../training.html" class="sidebar-item-text sidebar-link">
+            <a href="./training.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Building Trainings</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -246,7 +244,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../training/training_intro.html" class="sidebar-item-text sidebar-link">
+  <a href="./training/training_intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Short Course Training Development</span></span></a>
   </div>
 </li>
@@ -258,23 +256,14 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#note-about-the-class-data" id="toc-note-about-the-class-data" class="nav-link active" data-scroll-target="#note-about-the-class-data"><span class="header-section-number">1.1</span> Note about the class data</a>
-  <ul class="collapse">
-  <li><a href="#dump-truck-analogy" id="toc-dump-truck-analogy" class="nav-link" data-scroll-target="#dump-truck-analogy"><span class="header-section-number">1.1.1</span> Dump truck analogy</a></li>
-  </ul></li>
-  </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/byuibigdata/bdbook/edit/master/intro/bigdata.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What is Big Data?</span></h1>
+<h1 class="title">Feature Engineering</h1>
 </div>
 
 
@@ -289,24 +278,8 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Big data has three key components that signal the inclusion of the word <em>big</em> in front of data. Generally, two of these characteristics would be required.</p>
-<ul>
-<li><strong>Volume:</strong> The size on disk. Modern tools (<a href="https://www.pola.rs/">polars</a> or <a href="https://duckdb.org/">duckdb</a>) and file formats (<a href="https://www.databricks.com/glossary/what-is-parquet">parquet</a> or <a href="https://arrow.apache.org/docs/python/feather.html">feather</a>) provide tools to access and analyze fairly large data products (50’s of Gigs) within Python and R. If you can work with it on your local computer we would not put <em>big</em> in front of <em>data</em>. Currently, 100’s of Gigs would signal big data.</li>
-<li><strong>Variety:</strong> The diversity of data types in your data. We could start with the thought about the number of unique variables you are recording. But variety refers to the complexity and type of those variables. For example, you might have photos, videos, spatial data, time series data, and text documents that each require a novel solution for storage and retrieval for your analysis.</li>
-<li><strong>Velocity:</strong> The speed of data generation that needs to be transformed or analyzed for decision-making. For example, you might be collecting data from a sensor recording data at thousands of observations per second or credit card transactions at the same rate.</li>
-</ul>
-<p>This course will focus on simplified versions of <em>Volume</em> and <em>Velocity</em>. We will work with data too large to process on a typical student computer. Much of the data could also stress your local file system. Our data and project will focus on batch processing toward developing a predictive model. We will not focus on streaming data or real-time decision-making.</p>
-<section id="note-about-the-class-data" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="note-about-the-class-data"><span class="header-section-number">1.1</span> Note about the class data</h2>
-<p>We will limit our data sizes to less than a terabyte in total with the largest tables in the 100 GB range. This is not <em>big data</em> in the sense of the term. However, it is large enough to require a different approach to data analysis than what you have learned in previous courses. We will use the term <em>big data</em> to refer to the data we will use in this course. We will focus on the tools and techniques used on <em>big data</em> for analysis. At times these tools could be slower than some of the modern tools for medium data like polars mentioned above. However, the tools we will use are scalable to much larger data sizes and will be useful for your future work.</p>
-<section id="dump-truck-analogy" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" class="anchored" data-anchor-id="dump-truck-analogy"><span class="header-section-number">1.1.1</span> Dump truck analogy</h3>
-<p>We want to figure out how move and shape data with big data tools. We need to learn to <em>drive</em> the massive mining dump truck imagining the massive loads. When the load is manageable in a small truck, nobody would ever try to drive a mining dump truck down neighborhood roads to help a friend move. You will be tempted to drop into polars or pandas if you focus on the size of the load we will use in the class as the data can get small enough to fit into those packages and routines. Stay firmly in the dump truck and learn to drive it. You will need to drive the dump truck when you get into industry.</p>
-<p><img src="../img/truck_tools.jpg" class="img-fluid"></p>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -544,13 +517,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../introduction.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introduction</span>
+      <a href="./spark/spark_intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">What is Spark?</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../intro/tools.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Big Data Tools</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./features/features_intro.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Feature Engineering</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -558,4 +531,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/byuibigdata/bdbook/edit/master/features.qmd" class="toc-action">Edit this page</a></p></div></div></div></div></footer></body></html>

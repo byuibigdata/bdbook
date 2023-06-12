@@ -1,1 +1,19 @@
 # What is Big Data?
+
+Big data has three key components that signal the inclusion of the word _big_ in front of data.  Generally, two of these characteristics would be required.
+
+- __Volume:__ The size on disk. Modern tools ([polars](https://www.pola.rs/) or [duckdb](https://duckdb.org/)) and file formats ([parquet](https://www.databricks.com/glossary/what-is-parquet) or [feather](https://arrow.apache.org/docs/python/feather.html)) provide tools to access and analyze fairly large data products (50's of Gigs) within Python and R. If you can work with it on your local computer we would not put _big_ in front of _data_.  Currently, 100's of Gigs would signal big data.
+- __Variety:__ The diversity of data types in your data.  We could start with the thought about the number of unique variables you are recording.  But variety refers to the complexity and type of those variables.  For example, you might have photos, videos, spatial data, time series data, and text documents that each require a novel solution for storage and retrieval for your analysis.
+- __Velocity:__ The speed of data generation that needs to be transformed or analyzed for decision-making.   For example, you might be collecting data from a sensor recording data at thousands of observations per second or credit card transactions at the same rate.
+
+This course will focus on simplified versions of _Volume_ and _Velocity_.  We will work with data too large to process on a typical student computer.  Much of the data could also stress your local file system.  Our data and project will focus on batch processing toward developing a predictive model.  We will not focus on streaming data or real-time decision-making.
+
+## Note about the class data
+
+We will limit our data sizes to less than a terabyte in total with the largest tables in the 100 GB range.  This is not _big data_ in the sense of the term.  However, it is large enough to require a different approach to data analysis than what you have learned in previous courses.  We will use the term _big data_ to refer to the data we will use in this course. We will focus on the tools and techniques used on _big data_ for analysis. At times these tools could be slower than some of the modern tools for medium data like polars mentioned above.  However, the tools we will use are scalable to much larger data sizes and will be useful for your future work.
+
+### Dump truck analogy
+
+We want to figure out how move and shape data with big data tools.  We need to learn to _drive_ the massive mining dump truck imagining the massive loads. When the load is manageable in a small truck, nobody would ever try to drive a mining dump truck down neighborhood roads to help a friend move.  You will be tempted to drop into polars or pandas if you focus on the size of the load we will use in the class as the data can get small enough to fit into those packages and routines. Stay firmly in the dump truck and learn to drive it.  You will need to drive the dump truck when you get into industry.
+
+![](../img/truck_tools.jpg)

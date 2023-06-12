@@ -4,14 +4,63 @@
     "href": "index.html",
     "title": "Big Data Programming for Data Scientists",
     "section": "",
-    "text": "Preface\nThis ‘book’ is primarily a place for the BYU-I data science program to store material used in their Big Data Class."
+    "text": "Preface\nThis ‘book’ is primarily a place for the BYU-I data science program to store material used in their Big Data Class. It is a work in progress."
   },
   {
     "objectID": "introduction.html",
     "href": "introduction.html",
     "title": "Introduction",
     "section": "",
-    "text": "As an introduction, we highlight the different elements of data science when using big data."
+    "text": "As an introduction, we highlight the different elements of data science when using big data. This section focuses on high level concepts and descriptions."
+  },
+  {
+    "objectID": "intro/bigdata.html#note-about-the-class-data",
+    "href": "intro/bigdata.html#note-about-the-class-data",
+    "title": "1  What is Big Data?",
+    "section": "1.1 Note about the class data",
+    "text": "1.1 Note about the class data\nWe will limit our data sizes to less than a terabyte in total with the largest tables in the 100 GB range. This is not big data in the sense of the term. However, it is large enough to require a different approach to data analysis than what you have learned in previous courses. We will use the term big data to refer to the data we will use in this course. We will focus on the tools and techniques used on big data for analysis. At times these tools could be slower than some of the modern tools for medium data like polars mentioned above. However, the tools we will use are scalable to much larger data sizes and will be useful for your future work.\n\n1.1.1 Dump truck analogy\nWe want to figure out how move and shape data with big data tools. We need to learn to drive the massive mining dump truck imagining the massive loads. When the load is manageable in a small truck, nobody would ever try to drive a mining dump truck down neighborhood roads to help a friend move. You will be tempted to drop into polars or pandas if you focus on the size of the load we will use in the class as the data can get small enough to fit into those packages and routines. Stay firmly in the dump truck and learn to drive it. You will need to drive the dump truck when you get into industry."
+  },
+  {
+    "objectID": "intro/tools.html#distributed-file-systems",
+    "href": "intro/tools.html#distributed-file-systems",
+    "title": "2  The Big Data Tools",
+    "section": "2.1 Distributed File Systems",
+    "text": "2.1 Distributed File Systems"
+  },
+  {
+    "objectID": "intro/tools.html#memory-efficient-data-structures",
+    "href": "intro/tools.html#memory-efficient-data-structures",
+    "title": "2  The Big Data Tools",
+    "section": "2.2 Memory efficient data structures",
+    "text": "2.2 Memory efficient data structures"
+  },
+  {
+    "objectID": "intro/tools.html#parallel-computing",
+    "href": "intro/tools.html#parallel-computing",
+    "title": "2  The Big Data Tools",
+    "section": "2.3 Parallel computing",
+    "text": "2.3 Parallel computing"
+  },
+  {
+    "objectID": "intro/tools.html#failure-management",
+    "href": "intro/tools.html#failure-management",
+    "title": "2  The Big Data Tools",
+    "section": "2.4 Failure management",
+    "text": "2.4 Failure management"
+  },
+  {
+    "objectID": "intro/tools.html#scalability",
+    "href": "intro/tools.html#scalability",
+    "title": "2  The Big Data Tools",
+    "section": "2.5 Scalability",
+    "text": "2.5 Scalability"
+  },
+  {
+    "objectID": "intro/tools.html#compute-optimization",
+    "href": "intro/tools.html#compute-optimization",
+    "title": "2  The Big Data Tools",
+    "section": "2.6 Compute optimization",
+    "text": "2.6 Compute optimization"
   },
   {
     "objectID": "intro/rules_thumb.html#the-spark-apis-let-you-use-your-language-of-preference",
@@ -56,11 +105,18 @@
     "text": "5.2 The details\n\n5.2.1 Clean and reliable data\n\n\n5.2.2 Preconfigured compute resources\n\n\n5.2.3 IDE integration\nDatabricks has taken the Jupyter Notebook (.ipynb) and the classic notebook interface and built a tool that is highly responsive and usable for data scientists and engineers.\n\n\n5.2.4 multi-language support\n\n\n5.2.5 built-in advanced visualization tools"
   },
   {
+    "objectID": "databricks/databricks_intro.html#footnotes",
+    "href": "databricks/databricks_intro.html#footnotes",
+    "title": "5  What is Databricks?",
+    "section": "",
+    "text": "https://www.databricks.com/spark/comparing-databricks-to-apache-spark↩︎"
+  },
+  {
     "objectID": "databricks/community_edition.html#community-edition-setup",
     "href": "databricks/community_edition.html#community-edition-setup",
     "title": "6  Databricks Community Edition",
     "section": "6.1 Community Edition Setup",
-    "text": "6.1 Community Edition Setup\n\nCreate an account at Try Databricks\nAfter entering your name and information, find the small type link that says Get started with Community Edition -> and click.\nLogin into the Databricks community edition portal\nClick the compute icon on the left ()\nCreate and Name your cluster (you will have to do this every time you log in)\nCreate a notebook and start exploring"
+    "text": "6.1 Community Edition Setup\n\nCreate an account at Try Databricks\nAfter entering your name and information, find the small type link that says Get started with Community Edition -&gt; and click.\nLogin into the Databricks community edition portal\nClick the compute icon on the left ()\nCreate and Name your cluster (you will have to do this every time you log in)\nCreate a notebook and start exploring"
   },
   {
     "objectID": "databricks/community_edition.html#what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform",
@@ -102,7 +158,7 @@
     "href": "spark/spark_part_guide.html#example-code-snippets",
     "title": "8  Using this Spark Guide",
     "section": "8.2 Example Code Snippets",
-    "text": "8.2 Example Code Snippets\nThe examples will show the similar code for each of the four most popular data munging languages to help you understand the mapping between each paradigm.\n\n8.2.1 Observable Example\n\nviewof language = Inputs.checkbox(\n  [\"Tidyverse\", \"Pandas\", \"SQL\", \"Pyspark\"], \n  { value: [\"Tidyverse\", \"Pandas\", \"Pyspark\"], \n    label: \"Display languages:\"\n  }\n)\n\n\n\n\n\n\n\nlanguage.includes(\"Pandas\")\n\n\n\n\n\n\n\nfunction checkBox(today, input) {\n    if(today.includes(input)) {\n      return input\n    } \n  }\n\n\nhtml`\n<div class=\"quarto-layout-panel\">\n<div class=\"quarto-layout-row quarto-layout-valign-top\">\n<section id=${checkBox(language, \"Tidyverse\")} class=\"level4 unnumbered quarto-layout-cell\" style=\"flex-basis: 50.0%;justify-content: center;\">\n<h4 class=\"unnumbered anchored\" data-anchor-id=${checkBox(language, \"Tidyverse\")}>${checkBox(language, \"Tidyverse\")}</h4>\n<div class=\"sourceCode\" id=\"cb8\"><pre class=\"sourceCode numberSource py number-lines code-with-copy\"><code class=\"sourceCode python\"><span id=\"cb8-1\"><a href=\"#cb8-1\"></a>df.select(<span class=\"st\">\"C1\"</span>, <span class=\"st\">\"C2\"</span>, <span class=\"st\">\"C3\"</span>, <span class=\"st\">\"C4\"</span>)</span></code><button title=\"Copy to Clipboard\" class=\"code-copy-button\"><i class=\"bi\"></i></button></pre></div>\n</section>\n`\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nhtml`\n<div class=\"quarto-layout-panel\">\n<div class=\"quarto-layout-row quarto-layout-valign-top\">\n<section id=${checkBox(language, \"Tidyverse\")} class=\"level4 unnumbered quarto-layout-cell\" style=\"flex-basis: 50.0%;justify-content: center;\">\n<h4 class=\"unnumbered anchored\" data-anchor-id=${checkBox(language, \"Tidyverse\")}>${checkBox(language, \"Tidyverse\")}</h4>\n</section>\n`\n\n\n\n\n\n\n\n\n\n\n8.2.2 Selecting Columns from a dataframe\n\n\n\nPyspark\ndf.select(\"C1\", \"C2\", \"C3\", \"C4\")\n\n\nSQL\nSELECT C1, C2, C3, C4\nFROM df\n\n\n\n\nR::Tidyverse\ndf |> select(C1, C2, C3, C4)\n\n\nPy::Pandas\ndf.filter(items = [C1, C2, C3, C4])"
+    "text": "8.2 Example Code Snippets\nThe examples will show the similar code for each of the four most popular data munging languages to help you understand the mapping between each paradigm.\n\n8.2.1 Observable Example\n\nviewof language = Inputs.checkbox(\n  [\"Tidyverse\", \"Pandas\", \"SQL\", \"Pyspark\"], \n  { value: [\"Tidyverse\", \"Pandas\", \"Pyspark\"], \n    label: \"Display languages:\"\n  }\n)\n\n\n\n\n\n\n\nlanguage.includes(\"Pandas\")\n\n\n\n\n\n\n\nfunction checkBox(today, input) {\n    if(today.includes(input)) {\n      return input\n    } \n  }\n\n\nhtml`\n&lt;div class=\"quarto-layout-panel\"&gt;\n&lt;div class=\"quarto-layout-row quarto-layout-valign-top\"&gt;\n&lt;section id=${checkBox(language, \"Tidyverse\")} class=\"level4 unnumbered quarto-layout-cell\" style=\"flex-basis: 50.0%;justify-content: center;\"&gt;\n&lt;h4 class=\"unnumbered anchored\" data-anchor-id=${checkBox(language, \"Tidyverse\")}&gt;${checkBox(language, \"Tidyverse\")}&lt;/h4&gt;\n&lt;div class=\"sourceCode\" id=\"cb8\"&gt;&lt;pre class=\"sourceCode numberSource py number-lines code-with-copy\"&gt;&lt;code class=\"sourceCode python\"&gt;&lt;span id=\"cb8-1\"&gt;&lt;a href=\"#cb8-1\"&gt;&lt;/a&gt;df.select(&lt;span class=\"st\"&gt;\"C1\"&lt;/span&gt;, &lt;span class=\"st\"&gt;\"C2\"&lt;/span&gt;, &lt;span class=\"st\"&gt;\"C3\"&lt;/span&gt;, &lt;span class=\"st\"&gt;\"C4\"&lt;/span&gt;)&lt;/span&gt;&lt;/code&gt;&lt;button title=\"Copy to Clipboard\" class=\"code-copy-button\"&gt;&lt;i class=\"bi\"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/pre&gt;&lt;/div&gt;\n&lt;/section&gt;\n`\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nhtml`\n&lt;div class=\"quarto-layout-panel\"&gt;\n&lt;div class=\"quarto-layout-row quarto-layout-valign-top\"&gt;\n&lt;section id=${checkBox(language, \"Tidyverse\")} class=\"level4 unnumbered quarto-layout-cell\" style=\"flex-basis: 50.0%;justify-content: center;\"&gt;\n&lt;h4 class=\"unnumbered anchored\" data-anchor-id=${checkBox(language, \"Tidyverse\")}&gt;${checkBox(language, \"Tidyverse\")}&lt;/h4&gt;\n&lt;/section&gt;\n`\n\n\n\n\n\n\n\n\n\n\n8.2.2 Selecting Columns from a dataframe\n\n\n\nPyspark\ndf.select(\"C1\", \"C2\", \"C3\", \"C4\")\n\n\nSQL\nSELECT C1, C2, C3, C4\nFROM df\n\n\n\n\nR::Tidyverse\ndf |&gt; select(C1, C2, C3, C4)\n\n\nPy::Pandas\ndf.filter(items = [C1, C2, C3, C4])"
   },
   {
     "objectID": "spark/spark_intro.html#what-is-pyspark",
@@ -112,36 +168,43 @@
     "text": "9.1 What is PySpark?\nPySpark supports the integration of Apache Spark and Python as a Python API for Spark. In addition, PySpark, helps you interface with Resilient Distributed Datasets (RDDs) in Apache Spark and Python programming language. PySpark refers to the collection of Python APIs for Spark.3 This book will focus on PySparkSQL and MLlib. Within Databricks we have access to the PySparkSQL methods using the spark object that is available in each notebook. Users of PySpark outside of Databricks would need to create their spark entry point with something like the following\n\nspark = SparkSession \\\n    .builder \\\n    .appName(\"Python Spark SQL basic example\") \\\n    .config(\"spark.some.config.option\", \"some-value\") \\\n    .getOrCreate()"
   },
   {
-    "objectID": "spark/features.html#spatial-unit-of-interest-derivation",
-    "href": "spark/features.html#spatial-unit-of-interest-derivation",
+    "objectID": "spark/spark_intro.html#footnotes",
+    "href": "spark/spark_intro.html#footnotes",
+    "title": "9  What is Spark?",
+    "section": "",
+    "text": "https://www.infoworld.com/article/3236869/what-is-apache-spark-the-big-data-platform-that-crushed-hadoop.html↩︎\nhttps://databricks.com/spark/about↩︎\nhttps://www.databricks.com/glossary/pyspark↩︎"
+  },
+  {
+    "objectID": "features/features_intro.html#spatial-unit-of-interest-derivation",
+    "href": "features/features_intro.html#spatial-unit-of-interest-derivation",
     "title": "10  Feature Engineering",
     "section": "10.1 Spatial Unit of interest derivation",
     "text": "10.1 Spatial Unit of interest derivation\nThe tract_table has the county data within it. We can leverage this table to get our unit of analysis table."
   },
   {
-    "objectID": "spark/features.html#label-creation",
-    "href": "spark/features.html#label-creation",
+    "objectID": "features/features_intro.html#label-creation",
+    "href": "features/features_intro.html#label-creation",
     "title": "10  Feature Engineering",
     "section": "10.2 Label creation",
     "text": "10.2 Label creation\nThe idaho_temples.csv has our path to a label. We want to create a 0/1 label for has not/has a temple for each county."
   },
   {
-    "objectID": "spark/features.html#feature-creation",
-    "href": "spark/features.html#feature-creation",
+    "objectID": "features/features_intro.html#feature-creation",
+    "href": "features/features_intro.html#feature-creation",
     "title": "10  Feature Engineering",
     "section": "10.3 Feature Creation",
     "text": "10.3 Feature Creation\nWe want a clean feature that focuses on chapels for the Church of Jesus Christ of Latter-day Saints. How can we get a list of placekeys that are LDS chapels? Some regular expressions on the name will be helpful. What about day of the week attendance?\nWhat can we do to check the quality of the data."
   },
   {
-    "objectID": "spark/features.html#temporal-considerations",
-    "href": "spark/features.html#temporal-considerations",
+    "objectID": "features/features_intro.html#temporal-considerations",
+    "href": "features/features_intro.html#temporal-considerations",
     "title": "10  Feature Engineering",
     "section": "10.4 Temporal Considerations",
     "text": "10.4 Temporal Considerations\nThis data runs over COVID-19 as we have 2019 through 2022."
   },
   {
-    "objectID": "spark/features.html#mapping-back-to-my-unit-of-analysis",
-    "href": "spark/features.html#mapping-back-to-my-unit-of-analysis",
+    "objectID": "features/features_intro.html#mapping-back-to-my-unit-of-analysis",
+    "href": "features/features_intro.html#mapping-back-to-my-unit-of-analysis",
     "title": "10  Feature Engineering",
     "section": "10.5 Mapping back to my unit of analysis",
     "text": "10.5 Mapping back to my unit of analysis"

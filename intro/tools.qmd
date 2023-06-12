@@ -1,1 +1,15 @@
 # The Big Data Tools
+
+Memory management, file storage, parallel computing, failure management, and compute optimization are all important aspects of big data. We must find tools that address these issues and allow us to work with data at scale.
+
+## Distributed File Systems
+
+## Memory efficient data structures
+
+## Parallel computing
+
+## Failure management
+
+## Scalability
+
+## Compute optimization
