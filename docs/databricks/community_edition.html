@@ -308,6 +308,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#using-apache-sedona-for-spatial-sql-methods" id="toc-using-apache-sedona-for-spatial-sql-methods" class="nav-link" data-scroll-target="#using-apache-sedona-for-spatial-sql-methods"><span class="header-section-number">6.3</span> Using Apache Sedona for Spatial SQL Methods</a>
   <ul class="collapse">
   <li><a href="#installing-sedona-libraries-for-spark" id="toc-installing-sedona-libraries-for-spark" class="nav-link" data-scroll-target="#installing-sedona-libraries-for-spark"><span class="header-section-number">6.3.1</span> Installing Sedona libraries for Spark</a></li>
+  <li><a href="#starting-your-notebook" id="toc-starting-your-notebook" class="nav-link" data-scroll-target="#starting-your-notebook"><span class="header-section-number">6.3.2</span> Starting your notebook</a></li>
   </ul></li>
   <li><a href="#using-databricks-notebooks" id="toc-using-databricks-notebooks" class="nav-link" data-scroll-target="#using-databricks-notebooks"><span class="header-section-number">6.4</span> Using Databricks notebooks</a>
   <ul class="collapse">
@@ -410,6 +411,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Unfortunately, we must go through these steps each time we start a new compute on our Community edition. It takes a few minutes for all the libraries to install. Once completed, you should see the following (Note: I have installed <code>lets-plot</code> as well, which is unnecessary for Sedona).</p>
 <p><img src="../img/7_libraries_page.png" class="img-fluid"></p>
 </section>
+</section>
+<section id="starting-your-notebook" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="starting-your-notebook"><span class="header-section-number">6.3.2</span> Starting your notebook</h3>
+<p>Your notebooks will need the following code for Sedona to work correctly.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> sedona.register.geo_registrator <span class="im">import</span> SedonaRegistrator</span>
+<span id="cb3-2"><a href="#cb3-2"></a>SedonaRegistrator.registerAll(spark)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="using-databricks-notebooks" class="level2" data-number="6.4">

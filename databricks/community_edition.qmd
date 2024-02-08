@@ -93,6 +93,16 @@ Unfortunately, we must go through these steps each time we start a new compute o
 
 ![](../img/7_libraries_page.png)
 
+### Starting your notebook
+
+Your notebooks will need the following code for Sedona to work correctly.
+
+```python
+from sedona.register.geo_registrator import SedonaRegistrator
+SedonaRegistrator.registerAll(spark)
+```
+
+
 ## Using Databricks notebooks
 
 - [Watch this video to see a short example of using the platform](https://youtu.be/n-yt_3HvkOI)
