@@ -16,11 +16,82 @@ Read more about the limitations of Community Edition at [this FAQ](https://datab
 
 ## What is the difference between the Databricks Community Edition and the full Databricks Platform?
 
-> With the Databricks Community Edition, the users will have access to 15GB clusters, a cluster manager and the notebook environment to prototype simple applications, and JDBC / ODBC integrations for BI analysis. The Databricks Community Edition access is not time-limited and users will not incur AWS costs for their cluster usage.
+> With the Databricks Community Edition, the users will have access to 15GB clusters, a cluster manager, and the notebook environment to prototype simple applications, and JDBC / ODBC integrations for BI analysis. The Databricks Community Edition access is not time-limited, and users will not incur AWS costs for their cluster usage.
 
 > The full Databricks platform offers production-grade functionality, such as an unlimited number of clusters that easily scale up or down, a job launcher, collaboration, advanced security controls, and expert support. It helps users process data at scale, or build Apache Spark applications in a team setting.
 
 > [Databricks](https://databricks.com/product/faq/community-edition)
+
+### Compute resources
+
+The Community Edition will force you to create a new compute if your current compute resource shuts down (you cannot restart it). Cloning an old resource is available; However, any Libraries specified under the `Libraries` tab will not be cloned and must be respecified.
+
+### Local File System and DBFS
+
+The file system is restricted differently than the professional Databricks platform. Once you have enabled DBFS browsing (`click user in top right > select Admin Settings > Workspace settings tab > then enable DBFS File Browser`) you can use the DBFS button that now appears after using the `catalog` navigation to see files stored in the Databricks File System (DBFS).  You should have a `FileStore` folder where uploaded files will appear. After clicking the down arrow to the right of any folder or file, you can select `copy path` and the following popup appears.
+
+![](../img/file_spark_path.png)
+
+The `Spark API Format` works for parsing files using the `spark.read` methods. The `File API Format` should work for packages like Pandas and Polars.  However, the Community edition does not connect the dbfs drive to the main node.  You will need to leverage the `dbutils` package in Databricks to copy the file to a local folder for Pandas and Polars to access the file.
+
+```python
+import polars as pl
+dbfs_path = "dbfs:/FileStore/patterns.parquet"
+driver_path = "file:/databricks/driver/temp_read.parquet"
+dbutils.fs.cp(dbfs_path, driver_path)
+dat = pl.read_parquet("temp_read.parquet")
+```
+
+## Using Apache Sedona for Spatial SQL Methods
+
+> Apache Sedona is a cluster computing system for processing large-scale spatial data. Sedona extends Apache Spark with a set of out-of-the-box distributed Spatial Datasets and Spatial SQL that efficiently load, process, and analyze large-scale spatial data across machines.
+
+> [Apache Sedona](https://sedona.apache.org/1.5.1/)
+
+![](../img/sedona-ecosystem.png)
+
+They have an [installation guide for Databricks](https://sedona.apache.org/1.5.1/setup/databricks/?h=community+ed#community-edition-free-tier) that helps us understand the setup process so that we can leverage spatial SQL with our compute.
+
+### Installing Sedona libraries for Spark
+
+Installing libraries allows us to leverage third-party or custom code in our notebooks and jobs. Python, Java, Scala, and R libraries are available through your compute page's' Libraries' tab. We can upload Java, Scala, and Python libraries and point to external packages in PyPI, Maven, and CRAN repositories.
+
+![](../img/1_libraries_window.png)
+
+#### Installing the Sedona Maven Coordinates
+
+[Apache Maven](https://maven.apache.org/plugins/maven-jar-plugin/) provides access to a database of `.jar` files containing compilation instructions to upgrade your Spark environment. We can navigate to the maven installation location under `libraries` as shown in the picture below. 
+
+![](../img/2_maven.png)
+
+
+Apached Sedona requires two `.jars` for it to work in Databricks.
+
+```bash
+org.apache.sedona:sedona-spark-shaded-3.0_2.12:1.5.1
+org.datasyslab:geotools-wrapper:1.5.1-28.2
+```
+
+The following screen shots exemplify the installation on Community edition.
+
+![](../img/3_sedona_shaded.png)
+
+![](../img/4_geotools.png)
+
+
+#### Installing the Sedona Python packages
+
+We can install Python packages available to the entire Spark environment through the `libraries` page as well.  We need two packages for Apache Sedona - `apache-sedona`, `keplergl==0.3.2`, `pydeck==0.8.0`.  The following charts exemplify this installation on our Community edition.
+
+![](../img/5_apache-sedona_python.png)
+
+![](../img/6_keplergl_python.png)
+
+![](../img/6a_pydeck_python.png)
+
+Unfortunately, we must go through these steps each time we start a new compute on our Community edition.  It takes a few minutes for all the libraries to install.  Once completed, you should see the following (Note: I have installed `lets-plot` as well, which is unnecessary for Sedona).
+
+![](../img/7_libraries_page.png)
 
 ## Using Databricks notebooks
 
