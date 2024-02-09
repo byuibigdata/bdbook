@@ -52,6 +52,12 @@ dat = pl.read_parquet("temp_read.parquet")
 
 They have an [installation guide for Databricks](https://sedona.apache.org/1.5.1/setup/databricks/?h=community+ed#community-edition-free-tier) that helps us understand the setup process so that we can leverage spatial SQL with our compute.
 
+### Compute Configuration
+
+The setup of Apache Sedona depends on the Spark version you select. We have confirmed that the following process works for `12.2 LTS (includes Apache Spark 3.3.2, Scala 2.12)`.
+
+![](../img/0_spark_version.png)
+
 ### Installing Sedona libraries for Spark
 
 Installing libraries allows us to leverage third-party or custom code in our notebooks and jobs. Python, Java, Scala, and R libraries are available through your compute page's' Libraries' tab. We can upload Java, Scala, and Python libraries and point to external packages in PyPI, Maven, and CRAN repositories.

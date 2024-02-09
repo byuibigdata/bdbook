@@ -307,8 +307,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#using-apache-sedona-for-spatial-sql-methods" id="toc-using-apache-sedona-for-spatial-sql-methods" class="nav-link" data-scroll-target="#using-apache-sedona-for-spatial-sql-methods"><span class="header-section-number">6.3</span> Using Apache Sedona for Spatial SQL Methods</a>
   <ul class="collapse">
-  <li><a href="#installing-sedona-libraries-for-spark" id="toc-installing-sedona-libraries-for-spark" class="nav-link" data-scroll-target="#installing-sedona-libraries-for-spark"><span class="header-section-number">6.3.1</span> Installing Sedona libraries for Spark</a></li>
-  <li><a href="#starting-your-notebook" id="toc-starting-your-notebook" class="nav-link" data-scroll-target="#starting-your-notebook"><span class="header-section-number">6.3.2</span> Starting your notebook</a></li>
+  <li><a href="#compute-configuration" id="toc-compute-configuration" class="nav-link" data-scroll-target="#compute-configuration"><span class="header-section-number">6.3.1</span> Compute Configuration</a></li>
+  <li><a href="#installing-sedona-libraries-for-spark" id="toc-installing-sedona-libraries-for-spark" class="nav-link" data-scroll-target="#installing-sedona-libraries-for-spark"><span class="header-section-number">6.3.2</span> Installing Sedona libraries for Spark</a></li>
+  <li><a href="#starting-your-notebook" id="toc-starting-your-notebook" class="nav-link" data-scroll-target="#starting-your-notebook"><span class="header-section-number">6.3.3</span> Starting your notebook</a></li>
   </ul></li>
   <li><a href="#using-databricks-notebooks" id="toc-using-databricks-notebooks" class="nav-link" data-scroll-target="#using-databricks-notebooks"><span class="header-section-number">6.4</span> Using Databricks notebooks</a>
   <ul class="collapse">
@@ -387,12 +388,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </blockquote>
 <p><img src="../img/sedona-ecosystem.png" class="img-fluid"></p>
 <p>They have an <a href="https://sedona.apache.org/1.5.1/setup/databricks/?h=community+ed#community-edition-free-tier">installation guide for Databricks</a> that helps us understand the setup process so that we can leverage spatial SQL with our compute.</p>
-<section id="installing-sedona-libraries-for-spark" class="level3" data-number="6.3.1">
-<h3 data-number="6.3.1" class="anchored" data-anchor-id="installing-sedona-libraries-for-spark"><span class="header-section-number">6.3.1</span> Installing Sedona libraries for Spark</h3>
+<section id="compute-configuration" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="compute-configuration"><span class="header-section-number">6.3.1</span> Compute Configuration</h3>
+<p>The setup of Apache Sedona depends on the Spark version you select. We have confirmed that the following process works for <code>12.2 LTS (includes Apache Spark 3.3.2, Scala 2.12)</code>.</p>
+<p><img src="../img/0_spark_version.png" class="img-fluid"></p>
+</section>
+<section id="installing-sedona-libraries-for-spark" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="installing-sedona-libraries-for-spark"><span class="header-section-number">6.3.2</span> Installing Sedona libraries for Spark</h3>
 <p>Installing libraries allows us to leverage third-party or custom code in our notebooks and jobs. Python, Java, Scala, and R libraries are available through your compute page’s’ Libraries’ tab. We can upload Java, Scala, and Python libraries and point to external packages in PyPI, Maven, and CRAN repositories.</p>
 <p><img src="../img/1_libraries_window.png" class="img-fluid"></p>
-<section id="installing-the-sedona-maven-coordinates" class="level4" data-number="6.3.1.1">
-<h4 data-number="6.3.1.1" class="anchored" data-anchor-id="installing-the-sedona-maven-coordinates"><span class="header-section-number">6.3.1.1</span> Installing the Sedona Maven Coordinates</h4>
+<section id="installing-the-sedona-maven-coordinates" class="level4" data-number="6.3.2.1">
+<h4 data-number="6.3.2.1" class="anchored" data-anchor-id="installing-the-sedona-maven-coordinates"><span class="header-section-number">6.3.2.1</span> Installing the Sedona Maven Coordinates</h4>
 <p><a href="https://maven.apache.org/plugins/maven-jar-plugin/">Apache Maven</a> provides access to a database of <code>.jar</code> files containing compilation instructions to upgrade your Spark environment. We can navigate to the maven installation location under <code>libraries</code> as shown in the picture below.</p>
 <p><img src="../img/2_maven.png" class="img-fluid"></p>
 <p>Apached Sedona requires two <code>.jars</code> for it to work in Databricks.</p>
@@ -402,8 +408,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="../img/3_sedona_shaded.png" class="img-fluid"></p>
 <p><img src="../img/4_geotools.png" class="img-fluid"></p>
 </section>
-<section id="installing-the-sedona-python-packages" class="level4" data-number="6.3.1.2">
-<h4 data-number="6.3.1.2" class="anchored" data-anchor-id="installing-the-sedona-python-packages"><span class="header-section-number">6.3.1.2</span> Installing the Sedona Python packages</h4>
+<section id="installing-the-sedona-python-packages" class="level4" data-number="6.3.2.2">
+<h4 data-number="6.3.2.2" class="anchored" data-anchor-id="installing-the-sedona-python-packages"><span class="header-section-number">6.3.2.2</span> Installing the Sedona Python packages</h4>
 <p>We can install Python packages available to the entire Spark environment through the <code>libraries</code> page as well. We need two packages for Apache Sedona - <code>apache-sedona</code>, <code>keplergl==0.3.2</code>, <code>pydeck==0.8.0</code>. The following charts exemplify this installation on our Community edition.</p>
 <p><img src="../img/5_apache-sedona_python.png" class="img-fluid"></p>
 <p><img src="../img/6_keplergl_python.png" class="img-fluid"></p>
@@ -412,8 +418,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="../img/7_libraries_page.png" class="img-fluid"></p>
 </section>
 </section>
-<section id="starting-your-notebook" class="level3" data-number="6.3.2">
-<h3 data-number="6.3.2" class="anchored" data-anchor-id="starting-your-notebook"><span class="header-section-number">6.3.2</span> Starting your notebook</h3>
+<section id="starting-your-notebook" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="starting-your-notebook"><span class="header-section-number">6.3.3</span> Starting your notebook</h3>
 <p>Your notebooks will need the following code for Sedona to work correctly.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> sedona.register.geo_registrator <span class="im">import</span> SedonaRegistrator</span>
 <span id="cb3-2"><a href="#cb3-2"></a>SedonaRegistrator.registerAll(spark)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
