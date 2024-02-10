@@ -1,5 +1,10 @@
 # Using this Spark Guide
 
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
 ## Data science programming
 
 Each language has its view on the vocabulary of data munging. However, data science is starting to reach a point where each language is more like a dialect (British, Australian, or US English) than a unique language (Chinese, Finish, English). We focus on PySpark while providing dialect maps to a few other data-munging languages.
@@ -13,14 +18,12 @@ Each data object comes with column types or classes that facilitate data munging
 The examples will show code for a few popular data-munging languages to help you understand the mapping between each paradigm.
 
 
-### Observable Example
-
 ```{ojs}
 //| echo: false
 viewof language = Inputs.checkbox(
-  ["Tidyverse", "Pandas", "SQL", "Pyspark"], 
-  { value: ["Tidyverse", "Pandas", "Pyspark"], 
-    label: "Display languages:"
+  ["Tidyverse", "Pandas", "Polars", "SQL", "Pyspark"], 
+  { value: ["Tidyverse", "Pandas", "Polars", "SQL", "Pyspark"], 
+    label: md`__Display languages:__`
   }
 )
 ```
@@ -29,62 +32,49 @@ viewof language = Inputs.checkbox(
 ```{ojs}
 //| echo: false
 //| output: asis
-language.includes("Pandas")
+// https://observablehq.com/@cmudig/editor
+// https://observablehq.com/@regonzalez10/markdown-guide-by-ricardo-gonzalez-with-observable
+// https://observablehq.com/@bcardiff/relative-placement
+// https://observablehq.com/@bcardiff/observable-columns
+import {Editor} from '@cmudig/editor'
+import {makeEditor} from '@cmudig/editor'
+import {makeHl} from '@cmudig/highlighter'
+import {columns} from "@bcardiff/observable-columns"
 
-function checkBox(today, input) {
-    if(today.includes(input)) {
-      return input
-    } 
-  }
+SQL = makeHl('sql')
+PY = makeHl('py')
+R = makeHl('r')
+
+data = FileAttachment("code_snippets.json").json()
+df = data._filter.filter(function(dat){
+    return language.includes(dat._api)
+})
+
+function hl(query, language='js') {
+  const result = md`
+~~~${language}
+${String(query).trim()}
+~~~`;
+
+  result.value = String(query).trim();
+
+  return result;
+}
+
+SQLEditor = makeEditor({language: 'sql', label: 'SQL'})
+PythonEditor = makeEditor({language: 'py', label: 'Python'})
+REditor = makeEditor({language: 'r', label: 'R'})
 
 
-html`
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<section id=${checkBox(language, "Tidyverse")} class="level4 unnumbered quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<h4 class="unnumbered anchored" data-anchor-id=${checkBox(language, "Tidyverse")}>${checkBox(language, "Tidyverse")}</h4>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource py number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>df.select(<span class="st">"C1"</span>, <span class="st">"C2"</span>, <span class="st">"C3"</span>, <span class="st">"C4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-`
 
-html`
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<section id=${checkBox(language, "Tidyverse")} class="level4 unnumbered quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<h4 class="unnumbered anchored" data-anchor-id=${checkBox(language, "Tidyverse")}>${checkBox(language, "Tidyverse")}</h4>
-</section>
-`
 
+md`### Selecting Columns from a *dataframe*`
+
+titles = df.map(d => md`### ${d._api}`)
+// codes = df.map(d => htl.html`<code>${d.code}</code>`)
+codes = df.map(d => hl(d.code, d.language))
+
+columns(titles)
+columns(codes)
 
 ```
-
-
-### Selecting Columns from a *dataframe*
-
-::: {layout-ncol="2"}
-
-#### Pyspark {.unnumbered}
-
-```py
-df.select("C1", "C2", "C3", "C4")
-```
-
-#### SQL {.unnumbered}
-
-```sql
-SELECT C1, C2, C3, C4
-FROM df
-```
-
-#### R::Tidyverse {.unnumbered}
-
-```r
-df |> select(C1, C2, C3, C4)
-```
-
-#### Py::Pandas {.unnumbered}
-
-```py
-df.filter(items = [C1, C2, C3, C4])
-```
-:::

@@ -1,0 +1,28 @@
+{
+    "_filter": [
+    {
+        "_api":"Pandas",
+        "code":"df.filter(items = ['C1', 'C2', 'C3', 'C4'])",
+        "language":"py"
+    },
+    {
+        "_api":"Polars",
+        "code":"df.select('C1', 'C2', 'C3', 'C4')",
+        "language":"py"
+    },
+    {
+        "_api":"Tidyverse",
+        "code":"df |> select(C1, C2, C3, C4)",
+        "language":"r"
+    },
+    {
+        "_api":"SQL",
+        "code":"SELECT C1, C2, C3, C4 FROM df",
+        "language":"sql"
+    },
+    {
+        "_api":"Pyspark",
+        "code":"df.select('C1', 'C2', 'C3', 'C4')",
+        "language":"py"
+    }
+    ]}

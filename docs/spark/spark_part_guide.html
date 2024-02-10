@@ -299,11 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#data-science-programming" id="toc-data-science-programming" class="nav-link active" data-scroll-target="#data-science-programming"><span class="header-section-number">8.1</span> Data science programming</a></li>
-  <li><a href="#example-code-snippets" id="toc-example-code-snippets" class="nav-link" data-scroll-target="#example-code-snippets"><span class="header-section-number">8.2</span> Example Code Snippets</a>
-  <ul class="collapse">
-  <li><a href="#observable-example" id="toc-observable-example" class="nav-link" data-scroll-target="#observable-example"><span class="header-section-number">8.2.1</span> Observable Example</a></li>
-  <li><a href="#selecting-columns-from-a-dataframe" id="toc-selecting-columns-from-a-dataframe" class="nav-link" data-scroll-target="#selecting-columns-from-a-dataframe"><span class="header-section-number">8.2.2</span> Selecting Columns from a <em>dataframe</em></a></li>
-  </ul></li>
+  <li><a href="#example-code-snippets" id="toc-example-code-snippets" class="nav-link" data-scroll-target="#example-code-snippets"><span class="header-section-number">8.2</span> Example Code Snippets</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/byuibigdata/bdbook/edit/master/spark/spark_part_guide.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -327,24 +323,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <section id="data-science-programming" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="data-science-programming"><span class="header-section-number">8.1</span> Data science programming</h2>
-<p>Each language has their own view on the vocabulary of data munging. However, data science is starting to reach a point where each language is more like a dialect (British, Australian, or US English) than a unique language (Chinese, Finish, English). We are focusing on PySpark while providing dialect maps back to the top three data munging languages.</p>
+<p>Each language has its view on the vocabulary of data munging. However, data science is starting to reach a point where each language is more like a dialect (British, Australian, or US English) than a unique language (Chinese, Finish, English). We focus on PySpark while providing dialect maps to a few other data-munging languages.</p>
 <p>Our first dialect discussion focuses on how each names the data object upon which we will write munging scripts. R has <code>data.frame</code>, Pandas has <code>DataFrame</code>, Pyspark has <code>DataFrame</code>, and SQL has <code>TABLE</code> to describe the rectangular rows and columns that so often represent how data is stored. In this book we will use the general <em>dataframe</em> to refer to all of them at once.</p>
-<p>Each of these data objects comes with column types or classes which facilitate data munging and analysis. Most of these types are very similar. However, they are not fully interchangable.</p>
+<p>Each data object comes with column types or classes that facilitate data munging and analysis. Most of these types are very similar. However, they are not fully interchangeable.</p>
 </section>
 <section id="example-code-snippets" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="example-code-snippets"><span class="header-section-number">8.2</span> Example Code Snippets</h2>
-<p>The examples will show the similar code for each of the four most popular data munging languages to help you understand the mapping between each paradigm.</p>
-<section id="observable-example" class="level3" data-number="8.2.1">
-<h3 data-number="8.2.1" class="anchored" data-anchor-id="observable-example"><span class="header-section-number">8.2.1</span> Observable Example</h3>
+<p>The examples will show code for a few popular data-munging languages to help you understand the mapping between each paradigm.</p>
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="18" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 17;"><span id="cb1-18"><a href="#cb1-18"></a>viewof language <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">checkbox</span>(</span>
-<span id="cb1-19"><a href="#cb1-19"></a>  [<span class="st">"Tidyverse"</span><span class="op">,</span> <span class="st">"Pandas"</span><span class="op">,</span> <span class="st">"SQL"</span><span class="op">,</span> <span class="st">"Pyspark"</span>]<span class="op">,</span> </span>
-<span id="cb1-20"><a href="#cb1-20"></a>  { <span class="dt">value</span><span class="op">:</span> [<span class="st">"Tidyverse"</span><span class="op">,</span> <span class="st">"Pandas"</span><span class="op">,</span> <span class="st">"Pyspark"</span>]<span class="op">,</span> </span>
-<span id="cb1-21"><a href="#cb1-21"></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Display languages:"</span></span>
-<span id="cb1-22"><a href="#cb1-22"></a>  }</span>
-<span id="cb1-23"><a href="#cb1-23"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="22" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 21;"><span id="cb1-22"><a href="#cb1-22"></a>viewof language <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">checkbox</span>(</span>
+<span id="cb1-23"><a href="#cb1-23"></a>  [<span class="st">"Tidyverse"</span><span class="op">,</span> <span class="st">"Pandas"</span><span class="op">,</span> <span class="st">"Polars"</span><span class="op">,</span> <span class="st">"SQL"</span><span class="op">,</span> <span class="st">"Pyspark"</span>]<span class="op">,</span> </span>
+<span id="cb1-24"><a href="#cb1-24"></a>  { <span class="dt">value</span><span class="op">:</span> [<span class="st">"Tidyverse"</span><span class="op">,</span> <span class="st">"Pandas"</span><span class="op">,</span> <span class="st">"Polars"</span><span class="op">,</span> <span class="st">"SQL"</span><span class="op">,</span> <span class="st">"Pyspark"</span>]<span class="op">,</span> </span>
+<span id="cb1-25"><a href="#cb1-25"></a>    <span class="dt">label</span><span class="op">:</span> <span class="fu">md</span><span class="vs">`__Display languages:__`</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a>  }</span>
+<span id="cb1-27"><a href="#cb1-27"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="declaration">
 
@@ -352,29 +349,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb2" data-startfrom="31" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 30;"><span id="cb2-31"><a href="#cb2-31"></a>language<span class="op">.</span><span class="fu">includes</span>(<span class="st">"Pandas"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code hidden" id="cb2" data-startfrom="39" data-source-offset="-250"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 38;"><span id="cb2-39"><a href="#cb2-39"></a><span class="im">import</span> {Editor} <span class="im">from</span> <span class="st">'@cmudig/editor'</span></span>
+<span id="cb2-40"><a href="#cb2-40"></a><span class="im">import</span> {makeEditor} <span class="im">from</span> <span class="st">'@cmudig/editor'</span></span>
+<span id="cb2-41"><a href="#cb2-41"></a><span class="im">import</span> {makeHl} <span class="im">from</span> <span class="st">'@cmudig/highlighter'</span></span>
+<span id="cb2-42"><a href="#cb2-42"></a><span class="im">import</span> {columns} <span class="im">from</span> <span class="st">"@bcardiff/observable-columns"</span></span>
+<span id="cb2-43"><a href="#cb2-43"></a></span>
+<span id="cb2-44"><a href="#cb2-44"></a>SQL <span class="op">=</span> <span class="fu">makeHl</span>(<span class="st">'sql'</span>)</span>
+<span id="cb2-45"><a href="#cb2-45"></a>PY <span class="op">=</span> <span class="fu">makeHl</span>(<span class="st">'py'</span>)</span>
+<span id="cb2-46"><a href="#cb2-46"></a>R <span class="op">=</span> <span class="fu">makeHl</span>(<span class="st">'r'</span>)</span>
+<span id="cb2-47"><a href="#cb2-47"></a></span>
+<span id="cb2-48"><a href="#cb2-48"></a>data <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"code_snippets.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span>
+<span id="cb2-49"><a href="#cb2-49"></a>df <span class="op">=</span> data<span class="op">.</span><span class="at">_filter</span><span class="op">.</span><span class="fu">filter</span>(<span class="kw">function</span>(dat){</span>
+<span id="cb2-50"><a href="#cb2-50"></a>    <span class="cf">return</span> language<span class="op">.</span><span class="fu">includes</span>(dat<span class="op">.</span><span class="at">_api</span>)</span>
+<span id="cb2-51"><a href="#cb2-51"></a>})</span>
+<span id="cb2-52"><a href="#cb2-52"></a></span>
+<span id="cb2-53"><a href="#cb2-53"></a><span class="kw">function</span> <span class="fu">hl</span>(query<span class="op">,</span> language<span class="op">=</span><span class="st">'js'</span>) {</span>
+<span id="cb2-54"><a href="#cb2-54"></a>  <span class="kw">const</span> result <span class="op">=</span> <span class="fu">md</span><span class="vs">`</span></span>
+<span id="cb2-55"><a href="#cb2-55"></a><span class="vs">~~~</span><span class="sc">${</span>language<span class="sc">}</span></span>
+<span id="cb2-56"><a href="#cb2-56"></a><span class="sc">${</span><span class="bu">String</span>(query)<span class="op">.</span><span class="fu">trim</span>()<span class="sc">}</span></span>
+<span id="cb2-57"><a href="#cb2-57"></a><span class="vs">~~~`</span><span class="op">;</span></span>
+<span id="cb2-58"><a href="#cb2-58"></a></span>
+<span id="cb2-59"><a href="#cb2-59"></a>  result<span class="op">.</span><span class="at">value</span> <span class="op">=</span> <span class="bu">String</span>(query)<span class="op">.</span><span class="fu">trim</span>()<span class="op">;</span></span>
+<span id="cb2-60"><a href="#cb2-60"></a></span>
+<span id="cb2-61"><a href="#cb2-61"></a>  <span class="cf">return</span> result<span class="op">;</span></span>
+<span id="cb2-62"><a href="#cb2-62"></a>}</span>
+<span id="cb2-63"><a href="#cb2-63"></a></span>
+<span id="cb2-64"><a href="#cb2-64"></a>SQLEditor <span class="op">=</span> <span class="fu">makeEditor</span>({<span class="dt">language</span><span class="op">:</span> <span class="st">'sql'</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">'SQL'</span>})</span>
+<span id="cb2-65"><a href="#cb2-65"></a>PythonEditor <span class="op">=</span> <span class="fu">makeEditor</span>({<span class="dt">language</span><span class="op">:</span> <span class="st">'py'</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">'Python'</span>})</span>
+<span id="cb2-66"><a href="#cb2-66"></a>REditor <span class="op">=</span> <span class="fu">makeEditor</span>({<span class="dt">language</span><span class="op">:</span> <span class="st">'r'</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">'R'</span>})</span>
+<span id="cb2-67"><a href="#cb2-67"></a></span>
+<span id="cb2-68"><a href="#cb2-68"></a></span>
+<span id="cb2-69"><a href="#cb2-69"></a></span>
+<span id="cb2-70"><a href="#cb2-70"></a></span>
+<span id="cb2-71"><a href="#cb2-71"></a><span class="fu">md</span><span class="vs">`### Selecting Columns from a *dataframe*`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
-<div id="ojs-cell-2-1" data-nodetype="expression">
+<div id="ojs-cell-2-1" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
-<div class="sourceCode cell-code hidden" id="cb3" data-startfrom="33" data-source-offset="-29"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 32;"><span id="cb3-33"><a href="#cb3-33"></a><span class="kw">function</span> <span class="fu">checkBox</span>(today<span class="op">,</span> input) {</span>
-<span id="cb3-34"><a href="#cb3-34"></a>    <span class="cf">if</span>(today<span class="op">.</span><span class="fu">includes</span>(input)) {</span>
-<span id="cb3-35"><a href="#cb3-35"></a>      <span class="cf">return</span> input</span>
-<span id="cb3-36"><a href="#cb3-36"></a>    } </span>
-<span id="cb3-37"><a href="#cb3-37"></a>  }</span>
-<span id="cb3-38"><a href="#cb3-38"></a></span>
-<span id="cb3-39"><a href="#cb3-39"></a></span>
-<span id="cb3-40"><a href="#cb3-40"></a><span class="fu">html</span><span class="vs">`</span></span>
-<span id="cb3-41"><a href="#cb3-41"></a><span class="vs">&lt;div class="quarto-layout-panel"&gt;</span></span>
-<span id="cb3-42"><a href="#cb3-42"></a><span class="vs">&lt;div class="quarto-layout-row quarto-layout-valign-top"&gt;</span></span>
-<span id="cb3-43"><a href="#cb3-43"></a><span class="vs">&lt;section id=</span><span class="sc">${</span><span class="fu">checkBox</span>(language<span class="op">,</span> <span class="st">"Tidyverse"</span>)<span class="sc">}</span><span class="vs"> class="level4 unnumbered quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;"&gt;</span></span>
-<span id="cb3-44"><a href="#cb3-44"></a><span class="vs">&lt;h4 class="unnumbered anchored" data-anchor-id=</span><span class="sc">${</span><span class="fu">checkBox</span>(language<span class="op">,</span> <span class="st">"Tidyverse"</span>)<span class="sc">}</span><span class="vs">&gt;</span><span class="sc">${</span><span class="fu">checkBox</span>(language<span class="op">,</span> <span class="st">"Tidyverse"</span>)<span class="sc">}</span><span class="vs">&lt;/h4&gt;</span></span>
-<span id="cb3-45"><a href="#cb3-45"></a><span class="vs">&lt;div class="sourceCode" id="cb8"&gt;&lt;pre class="sourceCode numberSource py number-lines code-with-copy"&gt;&lt;code class="sourceCode python"&gt;&lt;span id="cb8-1"&gt;&lt;a href="#cb8-1"&gt;&lt;/a&gt;df.select(&lt;span class="st"&gt;"C1"&lt;/span&gt;, &lt;span class="st"&gt;"C2"&lt;/span&gt;, &lt;span class="st"&gt;"C3"&lt;/span&gt;, &lt;span class="st"&gt;"C4"&lt;/span&gt;)&lt;/span&gt;&lt;/code&gt;&lt;button title="Copy to Clipboard" class="code-copy-button"&gt;&lt;i class="bi"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/pre&gt;&lt;/div&gt;</span></span>
-<span id="cb3-46"><a href="#cb3-46"></a><span class="vs">&lt;/section&gt;</span></span>
-<span id="cb3-47"><a href="#cb3-47"></a><span class="vs">`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-2-2" data-nodetype="declaration">
@@ -384,60 +398,130 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<div id="ojs-cell-2-3" data-nodetype="expression">
+<div id="ojs-cell-2-3" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
-<div class="sourceCode cell-code hidden" id="cb4" data-startfrom="49" data-source-offset="-917"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 48;"><span id="cb4-49"><a href="#cb4-49"></a><span class="fu">html</span><span class="vs">`</span></span>
-<span id="cb4-50"><a href="#cb4-50"></a><span class="vs">&lt;div class="quarto-layout-panel"&gt;</span></span>
-<span id="cb4-51"><a href="#cb4-51"></a><span class="vs">&lt;div class="quarto-layout-row quarto-layout-valign-top"&gt;</span></span>
-<span id="cb4-52"><a href="#cb4-52"></a><span class="vs">&lt;section id=</span><span class="sc">${</span><span class="fu">checkBox</span>(language<span class="op">,</span> <span class="st">"Tidyverse"</span>)<span class="sc">}</span><span class="vs"> class="level4 unnumbered quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;"&gt;</span></span>
-<span id="cb4-53"><a href="#cb4-53"></a><span class="vs">&lt;h4 class="unnumbered anchored" data-anchor-id=</span><span class="sc">${</span><span class="fu">checkBox</span>(language<span class="op">,</span> <span class="st">"Tidyverse"</span>)<span class="sc">}</span><span class="vs">&gt;</span><span class="sc">${</span><span class="fu">checkBox</span>(language<span class="op">,</span> <span class="st">"Tidyverse"</span>)<span class="sc">}</span><span class="vs">&lt;/h4&gt;</span></span>
-<span id="cb4-54"><a href="#cb4-54"></a><span class="vs">&lt;/section&gt;</span></span>
-<span id="cb4-55"><a href="#cb4-55"></a><span class="vs">`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
-<div id="ojs-cell-2-4" data-nodetype="expression">
+<div id="ojs-cell-2-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-11" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-12" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-13" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-14" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="sourceCode cell-code hidden" id="cb3" data-startfrom="73" data-source-offset="-996"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 72;"><span id="cb3-73"><a href="#cb3-73"></a>titles <span class="op">=</span> df<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> <span class="fu">md</span><span class="vs">`### </span><span class="sc">${</span>d<span class="op">.</span><span class="at">_api</span><span class="sc">}</span><span class="vs">`</span>)</span>
+<span id="cb3-74"><a href="#cb3-74"></a><span class="co">// codes = df.map(d =&gt; htl.html`&lt;code&gt;${d.code}&lt;/code&gt;`)</span></span>
+<span id="cb3-75"><a href="#cb3-75"></a>codes <span class="op">=</span> df<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> <span class="fu">hl</span>(d<span class="op">.</span><span class="at">code</span><span class="op">,</span> d<span class="op">.</span><span class="at">language</span>))</span>
+<span id="cb3-76"><a href="#cb3-76"></a></span>
+<span id="cb3-77"><a href="#cb3-77"></a><span class="fu">columns</span>(titles)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-15" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-16" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-17" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="sourceCode cell-code hidden" id="cb4" data-startfrom="78" data-source-offset="-1154"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 77;"><span id="cb4-78"><a href="#cb4-78"></a><span class="fu">columns</span>(codes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-18" data-nodetype="expression">
 
 </div>
 </div>
 </div>
 </div>
-</section>
-<section id="selecting-columns-from-a-dataframe" class="level3" data-number="8.2.2">
-<h3 data-number="8.2.2" class="anchored" data-anchor-id="selecting-columns-from-a-dataframe"><span class="header-section-number">8.2.2</span> Selecting Columns from a <em>dataframe</em></h3>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<section id="pyspark" class="level4 unnumbered quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<h4 class="unnumbered anchored" data-anchor-id="pyspark">Pyspark</h4>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource py number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>df.select(<span class="st">"C1"</span>, <span class="st">"C2"</span>, <span class="st">"C3"</span>, <span class="st">"C4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="sql" class="level4 unnumbered quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<h4 class="unnumbered anchored" data-anchor-id="sql">SQL</h4>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">SELECT</span> C1, C2, C3, C4</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">FROM</span> df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<section id="rtidyverse" class="level4 unnumbered quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<h4 class="unnumbered anchored" data-anchor-id="rtidyverse">R::Tidyverse</h4>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>df <span class="sc">|&gt;</span> <span class="fu">select</span>(C1, C2, C3, C4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="pypandas" class="level4 unnumbered quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<h4 class="unnumbered anchored" data-anchor-id="pypandas">Py::Pandas</h4>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource py number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>df.<span class="bu">filter</span>(items <span class="op">=</span> [C1, C2, C3, C4])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</div>
-</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
 <script type="ojs-module-contents">
-{"contents":[{"methodName":"interpret","cellName":"ojs-cell-1","inline":false,"source":"viewof language = Inputs.checkbox(\n  [\"Tidyverse\", \"Pandas\", \"SQL\", \"Pyspark\"], \n  { value: [\"Tidyverse\", \"Pandas\", \"Pyspark\"], \n    label: \"Display languages:\"\n  }\n)\n"},{"methodName":"interpret","cellName":"ojs-cell-2","inline":false,"source":"language.includes(\"Pandas\")\n\nfunction checkBox(today, input) {\n    if(today.includes(input)) {\n      return input\n    } \n  }\n\n\nhtml`\n<div class=\"quarto-layout-panel\">\n<div class=\"quarto-layout-row quarto-layout-valign-top\">\n<section id=${checkBox(language, \"Tidyverse\")} class=\"level4 unnumbered quarto-layout-cell\" style=\"flex-basis: 50.0%;justify-content: center;\">\n<h4 class=\"unnumbered anchored\" data-anchor-id=${checkBox(language, \"Tidyverse\")}>${checkBox(language, \"Tidyverse\")}</h4>\n<div class=\"sourceCode\" id=\"cb8\"><pre class=\"sourceCode numberSource py number-lines code-with-copy\"><code class=\"sourceCode python\"><span id=\"cb8-1\"><a href=\"#cb8-1\"></a>df.select(<span class=\"st\">\"C1\"</span>, <span class=\"st\">\"C2\"</span>, <span class=\"st\">\"C3\"</span>, <span class=\"st\">\"C4\"</span>)</span></code><button title=\"Copy to Clipboard\" class=\"code-copy-button\"><i class=\"bi\"></i></button></pre></div>\n</section>\n`\n\nhtml`\n<div class=\"quarto-layout-panel\">\n<div class=\"quarto-layout-row quarto-layout-valign-top\">\n<section id=${checkBox(language, \"Tidyverse\")} class=\"level4 unnumbered quarto-layout-cell\" style=\"flex-basis: 50.0%;justify-content: center;\">\n<h4 class=\"unnumbered anchored\" data-anchor-id=${checkBox(language, \"Tidyverse\")}>${checkBox(language, \"Tidyverse\")}</h4>\n</section>\n`\n\n\n"},{"methodName":"interpretQuiet","source":"shinyInput('language')"}]}
+{"contents":[{"methodName":"interpret","cellName":"ojs-cell-1","inline":false,"source":"viewof language = Inputs.checkbox(\n  [\"Tidyverse\", \"Pandas\", \"Polars\", \"SQL\", \"Pyspark\"], \n  { value: [\"Tidyverse\", \"Pandas\", \"Polars\", \"SQL\", \"Pyspark\"], \n    label: md`__Display languages:__`\n  }\n)\n"},{"methodName":"interpret","cellName":"ojs-cell-2","inline":false,"source":"// https://observablehq.com/@cmudig/editor\n// https://observablehq.com/@regonzalez10/markdown-guide-by-ricardo-gonzalez-with-observable\n// https://observablehq.com/@bcardiff/relative-placement\n// https://observablehq.com/@bcardiff/observable-columns\nimport {Editor} from '@cmudig/editor'\nimport {makeEditor} from '@cmudig/editor'\nimport {makeHl} from '@cmudig/highlighter'\nimport {columns} from \"@bcardiff/observable-columns\"\n\nSQL = makeHl('sql')\nPY = makeHl('py')\nR = makeHl('r')\n\ndata = FileAttachment(\"code_snippets.json\").json()\ndf = data._filter.filter(function(dat){\n    return language.includes(dat._api)\n})\n\nfunction hl(query, language='js') {\n  const result = md`\n~~~${language}\n${String(query).trim()}\n~~~`;\n\n  result.value = String(query).trim();\n\n  return result;\n}\n\nSQLEditor = makeEditor({language: 'sql', label: 'SQL'})\nPythonEditor = makeEditor({language: 'py', label: 'Python'})\nREditor = makeEditor({language: 'r', label: 'R'})\n\n\n\n\nmd`### Selecting Columns from a *dataframe*`\n\ntitles = df.map(d => md`### ${d._api}`)\n// codes = df.map(d => htl.html`<code>${d.code}</code>`)\ncodes = df.map(d => hl(d.code, d.language))\n\ncolumns(titles)\ncolumns(codes)\n\n"},{"methodName":"interpretQuiet","source":"shinyInput('language')"}]}
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
