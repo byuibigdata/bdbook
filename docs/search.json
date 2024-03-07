@@ -168,73 +168,101 @@
     "text": "8.2 Example Code Snippets\nThe examples will show code for a few popular data-munging languages to help you understand the mapping between each paradigm.\n\nviewof language = Inputs.checkbox(\n  [\"Tidyverse\", \"Pandas\", \"Polars\", \"SQL\", \"Pyspark\"], \n  { value: [\"Tidyverse\", \"Pandas\", \"Polars\", \"SQL\", \"Pyspark\"], \n    label: md`__Display languages:__`\n  }\n)\n\n\n\n\n\n\n\nimport {Editor} from '@cmudig/editor'\nimport {makeEditor} from '@cmudig/editor'\nimport {makeHl} from '@cmudig/highlighter'\nimport {columns} from \"@bcardiff/observable-columns\"\n\nSQL = makeHl('sql')\nPY = makeHl('py')\nR = makeHl('r')\n\ndata = FileAttachment(\"code_snippets.json\").json()\ndf = data._filter.filter(function(dat){\n    return language.includes(dat._api)\n})\n\nfunction hl(query, language='js') {\n  const result = md`\n~~~${language}\n${String(query).trim()}\n~~~`;\n\n  result.value = String(query).trim();\n\n  return result;\n}\n\nSQLEditor = makeEditor({language: 'sql', label: 'SQL'})\nPythonEditor = makeEditor({language: 'py', label: 'Python'})\nREditor = makeEditor({language: 'r', label: 'R'})\n\n\n\n\nmd`### Selecting Columns from a *dataframe*`\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntitles = df.map(d =&gt; md`### ${d._api}`)\n// codes = df.map(d =&gt; htl.html`&lt;code&gt;${d.code}&lt;/code&gt;`)\ncodes = df.map(d =&gt; hl(d.code, d.language))\n\ncolumns(titles)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ncolumns(codes)"
   },
   {
+    "objectID": "spark/aggregations.html#group-by",
+    "href": "spark/aggregations.html#group-by",
+    "title": "9  Aggregated calculations",
+    "section": "9.1 GROUP BY",
+    "text": "9.1 GROUP BY\nWhen using ‘GROUP BY’ functions or methods in the varied languages of data science, the resulting table’s observational unit (row) is defined by the levels of the variable used in the ‘GROUP BY’ argument. We move from many rows to fewer rows, as shown in the two leftmost tables of the above image.\n\n9.1.1 Language-specific help files\n\nSQL: GROUP BY\ndplyr: group_by()\nPandas: df.groupby()\nPolars: df.group_by()\nPyspark: df.groupBy()\n\nThe GROUP BY methods of each language are combined with their respective calculation process.\n\nSQL: calcluated fields\ndplyr: summarize() and read their window example\nPandas: .agg()\nPolars: .agg()\nPyspark: .agg()\n\n\n\n9.1.2 Examples\nThe following two examples result in an average and standard deviation for each section.\n\n\n\nSection\naverage\nsd\n\n\n\n\n1\n90\nnan\n\n\n2\n80\n7.07107\n\n\n3\n86\n18.2483\n\n\n\n\n9.1.2.1 Pyspark\ndf.groupBy('Section').agg(\n  F.mean('Score').alias(\"average\"),\n  F.stddev_samp('Score').alias(\"sd\")\n)\n\n\n9.1.2.2 SQL\nSELECT\n  Section,\n  MEAN(Score),\n  STDDEV_SAMP(Score)\nFROM df\nGROUP BY Section"
+  },
+  {
+    "objectID": "spark/aggregations.html#window",
+    "href": "spark/aggregations.html#window",
+    "title": "9  Aggregated calculations",
+    "section": "9.2 Window",
+    "text": "9.2 Window\n\nAt its core, a window function calculates a return value for every input row of a table based on a group of rows, called the Frame. Every input row can have a unique frame associated with it. This characteristic of window functions makes them more powerful than other functions and allows users to express various data processing tasks that are hard (if not impossible) to be expressed without window functions in a concise way. ref\n\n\n9.2.1 Language-specific help files\n\nSQL: OVER(PARTITION BY ) or this reference\ndplyr: mutate()\nPandas: transform()\nPolars: .over()\nPyspark: .over() with pyspark.sql.Window() and this Databricks guide\n\n\n\n9.2.2 Examples\nHere are example calculations using Pyspark and SQL. Using the example table above, we want to create the following table.\nAnd we want the following table.\n\n\n\nSection\nStudent\nScore\nrank\nmin\n\n\n\n\n1\na\n90\n1\n90\n\n\n2\nb\n85\n1\n75\n\n\n2\nc\n75\n2\n75\n\n\n3\nd\n95\n2\n65\n\n\n3\ne\n65\n3\n65\n\n\n3\nf\n98\n1\n65\n\n\n\n\n9.2.2.1 Pyspark\nfrom pyspark.sql import Window\nimport pyspark.sql.functions as F\n\nwindow_order = Window.partitionBy('Section').orderBy(F.col('Score').desc())\nwindow = Window.partitionBy('Section')\n\ndf.withColumn(\"rank\", F.rank().over(window_order)) \\\n  .withColumn(\"min\", F.min('Score').over(window)) \\\n  .sort('Student') \\\n  .show()\n\n\n9.2.2.2 SQL\nThen, we can use the following SQL command.\nSELECT Section, Student, Score, \n  RANK(Score) OVER (PARTITION BY Section ORDER BY Score) as rank,\n  MIN(Score) OVER (PARTITION BY SECTION) as min\nFROM df\n\n\n\n9.2.3 Describing Window calculations\nI especially like TMichel’s response that has the highest vote. Although the second response by KARTHICK seems to be the best answer to this specific question. Here is how TMichel explains the Window method in Pyspark (with minor edits by me).\nHere is a dissection of the details of a Window example in Pyspark.\nUsing collect_list() and groupBy() will result in an unordered list of values. Depending on how your data is partitioned, Spark will append values to your list as soon as it finds a row in the group. The order then depends on how Spark plans your aggregation over the executors.\nAssume we have the following data.\n\n\n\nid\ndate\nvalue\n\n\n\n\n1\n2014-01-03\n10\n\n\n1\n2014-01-04\n5\n\n\n1\n2014-01-05\n15\n\n\n1\n2014-01-06\n20\n\n\n2\n2014-02-10\n100\n\n\n2\n2014-03-11\n500\n\n\n2\n2014-04-15\n1500\n\n\n\nA Window function allows you to control that situation, grouping rows by a specific value so you can operate over each of the resultant groups:\nw = Window.partitionBy('id').orderBy('date')\n\npartitionBy() - you want groups/partitions of rows with the same id\norderBy() - you want each row in the group to be sorted by date\n\nThe defined Window scope (rows with the same id, sorted by date) then frames the collect_list operation.\nF.collect_list('value').over(w)\nAt this point, the dataframe has a created a new column sorted_list with an ordered list of values, sorted by date.\n\n\n\nid\ndate\nvalue\nsorted_list\n\n\n\n\n1\n2014-01-03\n10\n[10, 5, 15, 20]\n\n\n1\n2014-01-04\n5\n[10, 5, 15, 20]\n\n\n1\n2014-01-05\n15\n[10, 5, 15, 20]\n\n\n1\n2014-01-06\n20\n[10, 5, 15, 20]\n\n\n2\n2014-02-10\n100\n[100, 500, 1500]\n\n\n2\n2014-03-11\n500\n[100, 500, 1500]\n\n\n2\n2014-04-15\n1500\n[100, 500, 1500]"
+  },
+  {
+    "objectID": "spark/aggregations.html#example-data",
+    "href": "spark/aggregations.html#example-data",
+    "title": "9  Aggregated calculations",
+    "section": "9.3 Example Data",
+    "text": "9.3 Example Data\nfrom pyspark.sql import functions as F\ndate_data = [\n    (1, \"2014-01-03\", 10 ), \\\n    (1, \"2014-01-04\", 5), \\\n    (1, \"2014-01-05\", 15), \\\n    (1, \"2014-01-06\", 20), \\\n    (2, \"2014-02-10\", 100), \\\n    (2, \"2014-03-11\", 500), \\\n    (2, \"2014-04-15\", 1500)  \n]\ndate_columns = [\"id\", \"date\", \"value\"]\ndf_date = spark.createDataFrame(data = date_data, schema = date_columns)\\\n        .withColumn(\"date\", F.to_date(\"date\"))\n\nstudent_data = [\n    (1, \"a\", 90), \\\n    (2, \"b\", 85), \\\n    (2, \"c\", 75), \\\n    (3, \"d\", 95), \\\n    (3, \"e\", 65), \\\n    (3, \"f\", 98) \\\n\n]\n\nstudent_columns = [\"Section\", \"Student\", \"Score\"]\ndf = spark.createDataFrame(data = student_data, schema = student_columns)"
+  },
+  {
+    "objectID": "spark/aggregations.html#references",
+    "href": "spark/aggregations.html#references",
+    "title": "9  Aggregated calculations",
+    "section": "9.4 References",
+    "text": "9.4 References\n\nHow orderBy affects Window.partitionBy in Pyspark dataframe? - Stack Overflow\nPySpark Window Functions - Spark By {Examples}\nIntroducing Window Functions in Spark SQL | Databricks Blog\nSpark Window Function - PySpark – KnockData – Everything About Data\nPython pandas equivalent to R groupby mutate - Stack Overflow\nSpark Window Functions with Examples - Spark By {Examples}"
+  },
+  {
     "objectID": "spark/spark_intro.html#what-is-pyspark",
     "href": "spark/spark_intro.html#what-is-pyspark",
-    "title": "9  What is Spark?",
-    "section": "9.1 What is PySpark?",
-    "text": "9.1 What is PySpark?\nPySpark supports the integration of Apache Spark and Python as a Python API for Spark. In addition, PySpark, helps you interface with Resilient Distributed Datasets (RDDs) in Apache Spark and Python programming language. PySpark refers to the collection of Python APIs for Spark.3 This book will focus on PySparkSQL and MLlib. Within Databricks we have access to the PySparkSQL methods using the spark object that is available in each notebook. Users of PySpark outside of Databricks would need to create their spark entry point with something like the following\n\nspark = SparkSession \\\n    .builder \\\n    .appName(\"Python Spark SQL basic example\") \\\n    .config(\"spark.some.config.option\", \"some-value\") \\\n    .getOrCreate()"
+    "title": "10  What is Spark?",
+    "section": "10.1 What is PySpark?",
+    "text": "10.1 What is PySpark?\nPySpark supports the integration of Apache Spark and Python as a Python API for Spark. In addition, PySpark, helps you interface with Resilient Distributed Datasets (RDDs) in Apache Spark and Python programming language. PySpark refers to the collection of Python APIs for Spark.3 This book will focus on PySparkSQL and MLlib. Within Databricks we have access to the PySparkSQL methods using the spark object that is available in each notebook. Users of PySpark outside of Databricks would need to create their spark entry point with something like the following\n\nspark = SparkSession \\\n    .builder \\\n    .appName(\"Python Spark SQL basic example\") \\\n    .config(\"spark.some.config.option\", \"some-value\") \\\n    .getOrCreate()"
   },
   {
     "objectID": "spark/spark_intro.html#footnotes",
     "href": "spark/spark_intro.html#footnotes",
-    "title": "9  What is Spark?",
+    "title": "10  What is Spark?",
     "section": "",
     "text": "https://www.infoworld.com/article/3236869/what-is-apache-spark-the-big-data-platform-that-crushed-hadoop.html↩︎\nhttps://databricks.com/spark/about↩︎\nhttps://www.databricks.com/glossary/pyspark↩︎"
   },
   {
     "objectID": "features/features_intro.html#spatial-unit-of-interest-derivation",
     "href": "features/features_intro.html#spatial-unit-of-interest-derivation",
-    "title": "10  Feature Engineering",
-    "section": "10.1 Spatial Unit of interest derivation",
-    "text": "10.1 Spatial Unit of interest derivation\nThe tract_table has the county data within it. We can leverage this table to get our unit of analysis table."
+    "title": "11  Feature Engineering",
+    "section": "11.1 Spatial Unit of interest derivation",
+    "text": "11.1 Spatial Unit of interest derivation\nThe tract_table has the county data within it. We can leverage this table to get our unit of analysis table."
   },
   {
     "objectID": "features/features_intro.html#label-creation",
     "href": "features/features_intro.html#label-creation",
-    "title": "10  Feature Engineering",
-    "section": "10.2 Label creation",
-    "text": "10.2 Label creation\nThe idaho_temples.csv has our path to a label. We want to create a 0/1 label for has not/has a temple for each county."
+    "title": "11  Feature Engineering",
+    "section": "11.2 Label creation",
+    "text": "11.2 Label creation\nThe idaho_temples.csv has our path to a label. We want to create a 0/1 label for has not/has a temple for each county."
   },
   {
     "objectID": "features/features_intro.html#feature-creation",
     "href": "features/features_intro.html#feature-creation",
-    "title": "10  Feature Engineering",
-    "section": "10.3 Feature Creation",
-    "text": "10.3 Feature Creation\nWe want a clean feature that focuses on chapels for the Church of Jesus Christ of Latter-day Saints. How can we get a list of placekeys that are LDS chapels? Some regular expressions on the name will be helpful. What about day of the week attendance?\nWhat can we do to check the quality of the data."
+    "title": "11  Feature Engineering",
+    "section": "11.3 Feature Creation",
+    "text": "11.3 Feature Creation\nWe want a clean feature that focuses on chapels for the Church of Jesus Christ of Latter-day Saints. How can we get a list of placekeys that are LDS chapels? Some regular expressions on the name will be helpful. What about day of the week attendance?\nWhat can we do to check the quality of the data."
   },
   {
     "objectID": "features/features_intro.html#temporal-considerations",
     "href": "features/features_intro.html#temporal-considerations",
-    "title": "10  Feature Engineering",
-    "section": "10.4 Temporal Considerations",
-    "text": "10.4 Temporal Considerations\nThis data runs over COVID-19 as we have 2019 through 2022."
+    "title": "11  Feature Engineering",
+    "section": "11.4 Temporal Considerations",
+    "text": "11.4 Temporal Considerations\nThis data runs over COVID-19 as we have 2019 through 2022."
   },
   {
     "objectID": "features/features_intro.html#mapping-back-to-my-unit-of-analysis",
     "href": "features/features_intro.html#mapping-back-to-my-unit-of-analysis",
-    "title": "10  Feature Engineering",
-    "section": "10.5 Mapping back to my unit of analysis",
-    "text": "10.5 Mapping back to my unit of analysis"
+    "title": "11  Feature Engineering",
+    "section": "11.5 Mapping back to my unit of analysis",
+    "text": "11.5 Mapping back to my unit of analysis"
   },
   {
     "objectID": "training/training_intro.html#short-course-students",
     "href": "training/training_intro.html#short-course-students",
-    "title": "12  Short Course Training Development",
-    "section": "12.1 Short Course Students",
-    "text": "12.1 Short Course Students\nShort course training is much different than the type of training you receive as a student in college. These professional pieces of training are meant to quickly provide an introduction, workable code snippets, and ways to push deeper after one or two hours. We have a small set of learning goals that we focus on to help the students get over the early-stage hurdles of the new technology. Professional short courses are filled with students with years of experience and multiple degrees, so they differ from a new first-year student in an introductory class. However, they are “freshmen” concerning the latest technology you introduce.\nThese learners will surprise you with the depth of their questions as well as the shallowness of their abilities. You need to be prepared to keep the material simple but have the background knowledge to clearly answer any depth questions that arise. This preparation requires you to have built an experience with the tool that would allow you to teach advanced material on the topic while staying focused on introductory teaching goals.\n\n\nIn college courses, our learning experiences are within a classroom that meets multiple times weekly for numerous months. That is often one part of a larger degree where multiple principles are taught beyond the technical tools of a new software package or technique. You have probably experienced a few different teaching styles from your professors. Your short course mustn’t be a 60-minute long lecture! Additionally, it is crucial that you take ownership of the material and that you provide clear examples that help the students use the new technology. They wouldn’t have come to your short course if they wanted to learn independently."
+    "title": "13  Short Course Training Development",
+    "section": "13.1 Short Course Students",
+    "text": "13.1 Short Course Students\nShort course training is much different than the type of training you receive as a student in college. These professional pieces of training are meant to quickly provide an introduction, workable code snippets, and ways to push deeper after one or two hours. We have a small set of learning goals that we focus on to help the students get over the early-stage hurdles of the new technology. Professional short courses are filled with students with years of experience and multiple degrees, so they differ from a new first-year student in an introductory class. However, they are “freshmen” concerning the latest technology you introduce.\nThese learners will surprise you with the depth of their questions as well as the shallowness of their abilities. You need to be prepared to keep the material simple but have the background knowledge to clearly answer any depth questions that arise. This preparation requires you to have built an experience with the tool that would allow you to teach advanced material on the topic while staying focused on introductory teaching goals.\n\n\nIn college courses, our learning experiences are within a classroom that meets multiple times weekly for numerous months. That is often one part of a larger degree where multiple principles are taught beyond the technical tools of a new software package or technique. You have probably experienced a few different teaching styles from your professors. Your short course mustn’t be a 60-minute long lecture! Additionally, it is crucial that you take ownership of the material and that you provide clear examples that help the students use the new technology. They wouldn’t have come to your short course if they wanted to learn independently."
   },
   {
     "objectID": "training/training_intro.html#short-course-development",
     "href": "training/training_intro.html#short-course-development",
-    "title": "12  Short Course Training Development",
-    "section": "12.2 Short Course Development",
-    "text": "12.2 Short Course Development\n\n12.2.1 The Goal\nExploring new technology without a guide or instructor is often a non-linear mess. Your experience as the initial explorer is different from what you want to provide to your students. You may explore multiple futile paths while finding a few clear and safe trails to give the best experience. After examining the varied approaches, you will ponder the destination and journey. What is the experience we want the student to have at completion? Is our path short enough to get them to that experience with enough time to enjoy the view?\n\n\n12.2.2 The Journey\nNow that you can see the end experience, you must use the right tools to help the students navigate the trail. Here are a few fundamental principles.\n\nGithub: Building your material on Github gives all the students rapid access to your training.\nPurpose/Introduction: Ensure your first few minutes frame the training. There is no need to sneak up on the students. Be direct and tell them the learning goals for your training. This part should take just a few minutes.\nOverviews: We must present context and details on the new technology. Expect to take time to “lecture” to get your class on the same page of understanding.\nActivities: These short courses focus on getting new tools into the hands of the student. Make sure you have hands-on activities where the students figure out how to use the tool in a real example. These activities are more than simple copy and paste. You want to give them a chance to think.\nWorking Examples: Make sure you have answers to your activities and other working examples for them to take home. The activities are often quite simple. I like to have one or two more complex examples for them to review after the class.\nBalance: It is important to balance the overviews and the activities. I ensure that my activities require as much time as any overview presentation material. It is also good to weave the overviews and balance them into shorter 5-10 blocks to provide variety.\n\n\n\n12.2.3 Completion\nThese short courses are valuable marketing tools. Make sure you have provided your contact information and that your students have references and examples that they can use to push their learning deeper. Think about how your material is organized in your Github repository so that others that find your space can learn and leverage your material without having participated in the course."
+    "title": "13  Short Course Training Development",
+    "section": "13.2 Short Course Development",
+    "text": "13.2 Short Course Development\n\n13.2.1 The Goal\nExploring new technology without a guide or instructor is often a non-linear mess. Your experience as the initial explorer is different from what you want to provide to your students. You may explore multiple futile paths while finding a few clear and safe trails to give the best experience. After examining the varied approaches, you will ponder the destination and journey. What is the experience we want the student to have at completion? Is our path short enough to get them to that experience with enough time to enjoy the view?\n\n\n13.2.2 The Journey\nNow that you can see the end experience, you must use the right tools to help the students navigate the trail. Here are a few fundamental principles.\n\nGithub: Building your material on Github gives all the students rapid access to your training.\nPurpose/Introduction: Ensure your first few minutes frame the training. There is no need to sneak up on the students. Be direct and tell them the learning goals for your training. This part should take just a few minutes.\nOverviews: We must present context and details on the new technology. Expect to take time to “lecture” to get your class on the same page of understanding.\nActivities: These short courses focus on getting new tools into the hands of the student. Make sure you have hands-on activities where the students figure out how to use the tool in a real example. These activities are more than simple copy and paste. You want to give them a chance to think.\nWorking Examples: Make sure you have answers to your activities and other working examples for them to take home. The activities are often quite simple. I like to have one or two more complex examples for them to review after the class.\nBalance: It is important to balance the overviews and the activities. I ensure that my activities require as much time as any overview presentation material. It is also good to weave the overviews and balance them into shorter 5-10 blocks to provide variety.\n\n\n\n13.2.3 Completion\nThese short courses are valuable marketing tools. Make sure you have provided your contact information and that your students have references and examples that they can use to push their learning deeper. Think about how your material is organized in your Github repository so that others that find your space can learn and leverage your material without having participated in the course."
   },
   {
     "objectID": "training/training_intro.html#structuring-your-github-repository",
     "href": "training/training_intro.html#structuring-your-github-repository",
-    "title": "12  Short Course Training Development",
-    "section": "12.3 Structuring your Github Repository",
-    "text": "12.3 Structuring your Github Repository"
+    "title": "13  Short Course Training Development",
+    "section": "13.3 Structuring your Github Repository",
+    "text": "13.3 Structuring your Github Repository"
   }
 ]

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Big Data Programming for Data Scientists - 9&nbsp; What is Spark?</title>
+<title>Big Data Programming for Data Scientists - 10&nbsp; What is Spark?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../features.html" rel="next">
-<link href="../spark/spark_part_guide.html" rel="prev">
+<link href="../spark/aggregations.html" rel="prev">
 <link href="../logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script async="" src="https://hypothes.is/embed.js"></script>
 
 
-<meta name="twitter:title" content="Big Data Programming for Data Scientists - 9&nbsp; What is Spark?">
+<meta name="twitter:title" content="Big Data Programming for Data Scientists - 10&nbsp; What is Spark?">
 <meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://byuibigdata.github.io/bdbook/img/spark_ecosystem.png">
 <meta name="twitter:image-height" content="408">
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../spark.html">Spark</a></li><li class="breadcrumb-item"><a href="../spark/spark_intro.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">What is Spark?</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../spark.html">Spark</a></li><li class="breadcrumb-item"><a href="../spark/spark_intro.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">What is Spark?</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -232,8 +232,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../spark/aggregations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Aggregated calculations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../spark/spark_intro.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">What is Spark?</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">What is Spark?</span></span></a>
   </div>
 </li>
       </ul>
@@ -250,7 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../features/features_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Feature Engineering</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Feature Engineering</span></span></a>
   </div>
 </li>
       </ul>
@@ -267,7 +273,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../docker/docker_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">What is Docker?</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">What is Docker?</span></span></a>
   </div>
 </li>
       </ul>
@@ -284,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../training/training_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Short Course Training Development</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Short Course Training Development</span></span></a>
   </div>
 </li>
       </ul>
@@ -299,7 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-is-pyspark" id="toc-what-is-pyspark" class="nav-link active" data-scroll-target="#what-is-pyspark"><span class="header-section-number">9.1</span> What is PySpark?</a></li>
+  <li><a href="#what-is-pyspark" id="toc-what-is-pyspark" class="nav-link active" data-scroll-target="#what-is-pyspark"><span class="header-section-number">10.1</span> What is PySpark?</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/byuibigdata/bdbook/edit/master/spark/spark_intro.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -308,7 +314,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">What is Spark?</span></h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">What is Spark?</span></h1>
 </div>
 
 
@@ -326,16 +332,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p>From its humble beginnings in the AMPLab at U.C. Berkeley in 2009, Apache Spark has become one of the key big data distributed processing frameworks in the world. Spark can be deployed in various ways, provides native bindings for the Java, Scala, Python, and R programming languages, and supports SQL, streaming data, machine learning, and graph processing. You’ll find it used by banks, telecommunications companies, games companies, governments, and all major tech giants such as Apple, Facebook, IBM, and Microsoft.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 </blockquote>
-<p>The following image (<a href="#fig-sparkEco">Figure&nbsp;<span>9.1</span></a>) highlights the Spark Core and Spark Ecosystem. The Spark Core is the underlying execution platform for Spark that all other functionality is leverages. With in-memory computing capabilities it delivers speed and a generalized execution strategy to support a wide variety of applications. Spark SQL and Spark DataFrames provide data scientists, analysts, and general business intelligence users interactive SQL queries for exploring and munging data. These structured data processing modules provide a programming abstraction that can act as distributed SQL query engine and provide seamless integration with the entire Spark ecosystem (e.g., integrating SQL query processing with machine learning). We will not focus on Streaming or GraphX in this book.</p>
+<p>The following image (<a href="#fig-sparkEco">Figure&nbsp;<span>10.1</span></a>) highlights the Spark Core and Spark Ecosystem. The Spark Core is the underlying execution platform for Spark that all other functionality is leverages. With in-memory computing capabilities it delivers speed and a generalized execution strategy to support a wide variety of applications. Spark SQL and Spark DataFrames provide data scientists, analysts, and general business intelligence users interactive SQL queries for exploring and munging data. These structured data processing modules provide a programming abstraction that can act as distributed SQL query engine and provide seamless integration with the entire Spark ecosystem (e.g., integrating SQL query processing with machine learning). We will not focus on Streaming or GraphX in this book.</p>
 <div id="fig-sparkEco" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="../img/spark_ecosystem.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;9.1: Spark Ecosystem Diagram</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;10.1: Spark Ecosystem Diagram</figcaption>
 </figure>
 </div>
 <p>Apache Spark is 100% open source, hosted at the vendor-independent Apache Software Foundation. Many of the orriginal Spark developers founded Databricks in 2013. Databricks is fully committed to maintaining this open development model. Together with the Spark community, Databricks continues to contribute heavily to the Apache Spark project, through both development and community evangelism.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<section id="what-is-pyspark" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="what-is-pyspark"><span class="header-section-number">9.1</span> What is PySpark?</h2>
+<section id="what-is-pyspark" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="what-is-pyspark"><span class="header-section-number">10.1</span> What is PySpark?</h2>
 <p>PySpark supports the integration of Apache Spark and Python as a Python API for Spark. In addition, PySpark, helps you interface with Resilient Distributed Datasets (RDDs) in Apache Spark and Python programming language. PySpark refers to the collection of Python APIs for Spark.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> This book will focus on PySparkSQL and MLlib. Within Databricks we have access to the PySparkSQL methods using the <code>spark</code> object that is available in each notebook. Users of PySpark outside of Databricks would need to create their <code>spark</code> entry point with something like the following</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a>spark <span class="op">=</span> SparkSession <span class="op">\</span></span>
@@ -592,8 +598,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../spark/spark_part_guide.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Using this Spark Guide</span></span>
+      <a href="../spark/aggregations.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Aggregated calculations</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

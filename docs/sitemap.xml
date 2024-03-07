@@ -2,78 +2,82 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://byuibigdata.github.io/bdbook/index.html</loc>
-    <lastmod>2024-02-10T22:41:43.228Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.312Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/introduction.html</loc>
-    <lastmod>2024-02-10T22:41:43.231Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.315Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/intro/bigdata.html</loc>
-    <lastmod>2024-02-10T22:41:43.234Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.318Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/intro/tools.html</loc>
-    <lastmod>2024-02-10T22:41:43.236Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.320Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/intro/projects.html</loc>
-    <lastmod>2024-02-10T22:41:43.239Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.324Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/intro/rules_thumb.html</loc>
-    <lastmod>2024-02-10T22:41:43.243Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.327Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/databricks.html</loc>
-    <lastmod>2024-02-10T22:41:43.245Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.330Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/databricks/databricks_intro.html</loc>
-    <lastmod>2024-02-10T22:41:43.248Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.333Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/databricks/community_edition.html</loc>
-    <lastmod>2024-02-10T22:41:43.253Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.337Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/databricks/repo_navigation.html</loc>
-    <lastmod>2024-02-10T22:41:43.255Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.339Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/spark.html</loc>
-    <lastmod>2024-02-10T22:41:43.258Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.343Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/spark/spark_part_guide.html</loc>
-    <lastmod>2024-02-10T22:41:43.264Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.348Z</lastmod>
+  </url>
+  <url>
+    <loc>https://byuibigdata.github.io/bdbook/spark/aggregations.html</loc>
+    <lastmod>2024-03-07T18:05:55.356Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/spark/spark_intro.html</loc>
-    <lastmod>2024-02-10T22:41:43.267Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.359Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/features.html</loc>
-    <lastmod>2024-02-10T22:41:43.269Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.363Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/features/features_intro.html</loc>
-    <lastmod>2024-02-10T22:41:43.272Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.366Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/docker.html</loc>
-    <lastmod>2024-02-10T22:41:43.275Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.368Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/docker/docker_intro.html</loc>
-    <lastmod>2024-02-10T22:41:43.277Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.371Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/training.html</loc>
-    <lastmod>2024-02-10T22:41:43.280Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.373Z</lastmod>
   </url>
   <url>
     <loc>https://byuibigdata.github.io/bdbook/training/training_intro.html</loc>
-    <lastmod>2024-02-10T22:41:43.283Z</lastmod>
+    <lastmod>2024-03-07T18:05:55.376Z</lastmod>
   </url>
 </urlset>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Big Data Programming for Data Scientists - 10&nbsp; Feature Engineering</title>
+<title>Big Data Programming for Data Scientists - 11&nbsp; Feature Engineering</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
 <script async="" src="https://hypothes.is/embed.js"></script>
 
 
-<meta name="twitter:title" content="Big Data Programming for Data Scientists - 10&nbsp; Feature Engineering">
+<meta name="twitter:title" content="Big Data Programming for Data Scientists - 11&nbsp; Feature Engineering">
 <meta name="twitter:description" content="">
 <meta name="twitter:card" content="summary">
 </head>
@@ -79,7 +79,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../features.html">Feature Engineering</a></li><li class="breadcrumb-item"><a href="../features/features_intro.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Feature Engineering</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../features.html">Feature Engineering</a></li><li class="breadcrumb-item"><a href="../features/features_intro.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Feature Engineering</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -195,8 +195,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../spark/aggregations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Aggregated calculations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../spark/spark_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">What is Spark?</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">What is Spark?</span></span></a>
   </div>
 </li>
       </ul>
@@ -213,7 +219,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../features/features_intro.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Feature Engineering</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Feature Engineering</span></span></a>
   </div>
 </li>
       </ul>
@@ -230,7 +236,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../docker/docker_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">What is Docker?</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">What is Docker?</span></span></a>
   </div>
 </li>
       </ul>
@@ -247,7 +253,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../training/training_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Short Course Training Development</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Short Course Training Development</span></span></a>
   </div>
 </li>
       </ul>
@@ -262,11 +268,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#spatial-unit-of-interest-derivation" id="toc-spatial-unit-of-interest-derivation" class="nav-link active" data-scroll-target="#spatial-unit-of-interest-derivation"><span class="header-section-number">10.1</span> Spatial Unit of interest derivation</a></li>
-  <li><a href="#label-creation" id="toc-label-creation" class="nav-link" data-scroll-target="#label-creation"><span class="header-section-number">10.2</span> Label creation</a></li>
-  <li><a href="#feature-creation" id="toc-feature-creation" class="nav-link" data-scroll-target="#feature-creation"><span class="header-section-number">10.3</span> Feature Creation</a></li>
-  <li><a href="#temporal-considerations" id="toc-temporal-considerations" class="nav-link" data-scroll-target="#temporal-considerations"><span class="header-section-number">10.4</span> Temporal Considerations</a></li>
-  <li><a href="#mapping-back-to-my-unit-of-analysis" id="toc-mapping-back-to-my-unit-of-analysis" class="nav-link" data-scroll-target="#mapping-back-to-my-unit-of-analysis"><span class="header-section-number">10.5</span> Mapping back to my unit of analysis</a></li>
+  <li><a href="#spatial-unit-of-interest-derivation" id="toc-spatial-unit-of-interest-derivation" class="nav-link active" data-scroll-target="#spatial-unit-of-interest-derivation"><span class="header-section-number">11.1</span> Spatial Unit of interest derivation</a></li>
+  <li><a href="#label-creation" id="toc-label-creation" class="nav-link" data-scroll-target="#label-creation"><span class="header-section-number">11.2</span> Label creation</a></li>
+  <li><a href="#feature-creation" id="toc-feature-creation" class="nav-link" data-scroll-target="#feature-creation"><span class="header-section-number">11.3</span> Feature Creation</a></li>
+  <li><a href="#temporal-considerations" id="toc-temporal-considerations" class="nav-link" data-scroll-target="#temporal-considerations"><span class="header-section-number">11.4</span> Temporal Considerations</a></li>
+  <li><a href="#mapping-back-to-my-unit-of-analysis" id="toc-mapping-back-to-my-unit-of-analysis" class="nav-link" data-scroll-target="#mapping-back-to-my-unit-of-analysis"><span class="header-section-number">11.5</span> Mapping back to my unit of analysis</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/byuibigdata/bdbook/edit/master/features/features_intro.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -275,7 +281,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Feature Engineering</span></h1>
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Feature Engineering</span></h1>
 </div>
 
 
@@ -307,25 +313,25 @@ ul.task-list li input[type="checkbox"] {
 <li>tract_table: The table that maps tract keys to state and county.</li>
 <li>idaho_temples.csv: A table of temples with a key that maps to tract.</li>
 </ol>
-<section id="spatial-unit-of-interest-derivation" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="spatial-unit-of-interest-derivation"><span class="header-section-number">10.1</span> Spatial Unit of interest derivation</h2>
+<section id="spatial-unit-of-interest-derivation" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="spatial-unit-of-interest-derivation"><span class="header-section-number">11.1</span> Spatial Unit of interest derivation</h2>
 <p>The <code>tract_table</code> has the county data within it. We can leverage this table to get our unit of analysis table.</p>
 </section>
-<section id="label-creation" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="label-creation"><span class="header-section-number">10.2</span> Label creation</h2>
+<section id="label-creation" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="label-creation"><span class="header-section-number">11.2</span> Label creation</h2>
 <p>The <code>idaho_temples.csv</code> has our path to a label. We want to create a 0/1 label for has not/has a temple for each county.</p>
 </section>
-<section id="feature-creation" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="feature-creation"><span class="header-section-number">10.3</span> Feature Creation</h2>
+<section id="feature-creation" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="feature-creation"><span class="header-section-number">11.3</span> Feature Creation</h2>
 <p>We want a clean feature that focuses on chapels for the Church of Jesus Christ of Latter-day Saints. How can we get a list of <code>placekeys</code> that are LDS chapels? Some regular expressions on the name will be helpful. What about day of the week attendance?</p>
 <p>What can we do to check the quality of the data.</p>
 </section>
-<section id="temporal-considerations" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="temporal-considerations"><span class="header-section-number">10.4</span> Temporal Considerations</h2>
+<section id="temporal-considerations" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="temporal-considerations"><span class="header-section-number">11.4</span> Temporal Considerations</h2>
 <p>This data runs over COVID-19 as we have 2019 through 2022.</p>
 </section>
-<section id="mapping-back-to-my-unit-of-analysis" class="level2" data-number="10.5">
-<h2 data-number="10.5" class="anchored" data-anchor-id="mapping-back-to-my-unit-of-analysis"><span class="header-section-number">10.5</span> Mapping back to my unit of analysis</h2>
+<section id="mapping-back-to-my-unit-of-analysis" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="mapping-back-to-my-unit-of-analysis"><span class="header-section-number">11.5</span> Mapping back to my unit of analysis</h2>
 
 
 </section>

@@ -31,6 +31,7 @@ book:
     - part: spark.qmd
       chapters:
         - spark/spark_part_guide.qmd
+        - spark/aggregations.qmd
         - spark/spark_intro.qmd
     - part: features.qmd
       chapters:

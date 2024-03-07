@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Big Data Programming for Data Scientists - 12&nbsp; Short Course Training Development</title>
+<title>Big Data Programming for Data Scientists - 13&nbsp; Short Course Training Development</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +64,7 @@ ul.task-list li input[type="checkbox"] {
 <script async="" src="https://hypothes.is/embed.js"></script>
 
 
-<meta name="twitter:title" content="Big Data Programming for Data Scientists - 12&nbsp; Short Course Training Development">
+<meta name="twitter:title" content="Big Data Programming for Data Scientists - 13&nbsp; Short Course Training Development">
 <meta name="twitter:description" content="">
 <meta name="twitter:card" content="summary">
 </head>
@@ -78,7 +78,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../training.html">Building Trainings</a></li><li class="breadcrumb-item"><a href="../training/training_intro.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Short Course Training Development</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../training.html">Building Trainings</a></li><li class="breadcrumb-item"><a href="../training/training_intro.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Short Course Training Development</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -194,8 +194,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../spark/aggregations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Aggregated calculations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../spark/spark_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">What is Spark?</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">What is Spark?</span></span></a>
   </div>
 </li>
       </ul>
@@ -212,7 +218,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../features/features_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Feature Engineering</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Feature Engineering</span></span></a>
   </div>
 </li>
       </ul>
@@ -229,7 +235,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../docker/docker_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">What is Docker?</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">What is Docker?</span></span></a>
   </div>
 </li>
       </ul>
@@ -246,7 +252,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../training/training_intro.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Short Course Training Development</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Short Course Training Development</span></span></a>
   </div>
 </li>
       </ul>
@@ -261,14 +267,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#short-course-students" id="toc-short-course-students" class="nav-link active" data-scroll-target="#short-course-students"><span class="header-section-number">12.1</span> Short Course Students</a></li>
-  <li><a href="#short-course-development" id="toc-short-course-development" class="nav-link" data-scroll-target="#short-course-development"><span class="header-section-number">12.2</span> Short Course Development</a>
+  <li><a href="#short-course-students" id="toc-short-course-students" class="nav-link active" data-scroll-target="#short-course-students"><span class="header-section-number">13.1</span> Short Course Students</a></li>
+  <li><a href="#short-course-development" id="toc-short-course-development" class="nav-link" data-scroll-target="#short-course-development"><span class="header-section-number">13.2</span> Short Course Development</a>
   <ul class="collapse">
-  <li><a href="#the-goal" id="toc-the-goal" class="nav-link" data-scroll-target="#the-goal"><span class="header-section-number">12.2.1</span> The Goal</a></li>
-  <li><a href="#the-journey" id="toc-the-journey" class="nav-link" data-scroll-target="#the-journey"><span class="header-section-number">12.2.2</span> The Journey</a></li>
-  <li><a href="#completion" id="toc-completion" class="nav-link" data-scroll-target="#completion"><span class="header-section-number">12.2.3</span> Completion</a></li>
+  <li><a href="#the-goal" id="toc-the-goal" class="nav-link" data-scroll-target="#the-goal"><span class="header-section-number">13.2.1</span> The Goal</a></li>
+  <li><a href="#the-journey" id="toc-the-journey" class="nav-link" data-scroll-target="#the-journey"><span class="header-section-number">13.2.2</span> The Journey</a></li>
+  <li><a href="#completion" id="toc-completion" class="nav-link" data-scroll-target="#completion"><span class="header-section-number">13.2.3</span> Completion</a></li>
   </ul></li>
-  <li><a href="#structuring-your-github-repository" id="toc-structuring-your-github-repository" class="nav-link" data-scroll-target="#structuring-your-github-repository"><span class="header-section-number">12.3</span> Structuring your Github Repository</a></li>
+  <li><a href="#structuring-your-github-repository" id="toc-structuring-your-github-repository" class="nav-link" data-scroll-target="#structuring-your-github-repository"><span class="header-section-number">13.3</span> Structuring your Github Repository</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/byuibigdata/bdbook/edit/master/training/training_intro.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -277,7 +283,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Short Course Training Development</span></h1>
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Short Course Training Development</span></h1>
 </div>
 
 
@@ -296,22 +302,22 @@ ul.task-list li input[type="checkbox"] {
 <p>Learning and training provide leadership and marketing opportunities.</p>
 </blockquote>
 <p>New methods and techniques enter the industry daily in data science and computer science. Even our go-to tools make updates and improvements multiple times a year that require investigation and adaptation. These changes are meant to improve the programmer’s capabilities but often come with a learning hurdle. Finding a position with your team or company as an investigator and communicator of improved methods is rewarding. It usually gives you access to senior programmers and can connect you to the new up-and-coming employees at your company. Providing quality training is vital to take advantage of these opportunities.</p>
-<section id="short-course-students" class="level2 page-columns page-full" data-number="12.1">
-<h2 data-number="12.1" class="anchored" data-anchor-id="short-course-students"><span class="header-section-number">12.1</span> Short Course Students</h2>
+<section id="short-course-students" class="level2 page-columns page-full" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="short-course-students"><span class="header-section-number">13.1</span> Short Course Students</h2>
 <p>Short course training is much different than the type of training you receive as a student in college. These professional pieces of training are meant to quickly provide an introduction, workable code snippets, and ways to push deeper after one or two hours. We have a small set of learning goals that we focus on to help the students get over the early-stage hurdles of the new technology. Professional short courses are filled with students with years of experience and multiple degrees, so they differ from a new first-year student in an introductory class. However, they are “freshmen” concerning the latest technology you introduce.</p>
 <p>These learners will surprise you with the depth of their questions as well as the shallowness of their abilities. You need to be prepared to keep the material simple but have the background knowledge to clearly answer any depth questions that arise. This preparation requires you to have built an experience with the tool that would allow you to teach advanced material on the topic while staying focused on introductory teaching goals.</p>
 
 <div class="no-row-height column-margin column-container"><div class="">
 <p>In college courses, our learning experiences are within a classroom that meets multiple times weekly for numerous months. That is often one part of a larger degree where multiple principles are taught beyond the technical tools of a new software package or technique. You have probably experienced a few different teaching styles from your professors. Your short course mustn’t be a 60-minute long lecture! Additionally, it is crucial that you take ownership of the material and that you provide clear examples that help the students use the new technology. They wouldn’t have come to your short course if they wanted to learn independently.</p>
 </div></div></section>
-<section id="short-course-development" class="level2" data-number="12.2">
-<h2 data-number="12.2" class="anchored" data-anchor-id="short-course-development"><span class="header-section-number">12.2</span> Short Course Development</h2>
-<section id="the-goal" class="level3" data-number="12.2.1">
-<h3 data-number="12.2.1" class="anchored" data-anchor-id="the-goal"><span class="header-section-number">12.2.1</span> The Goal</h3>
+<section id="short-course-development" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="short-course-development"><span class="header-section-number">13.2</span> Short Course Development</h2>
+<section id="the-goal" class="level3" data-number="13.2.1">
+<h3 data-number="13.2.1" class="anchored" data-anchor-id="the-goal"><span class="header-section-number">13.2.1</span> The Goal</h3>
 <p>Exploring new technology without a guide or instructor is often a non-linear mess. Your experience as the initial explorer is different from what you want to provide to your students. You may explore multiple futile paths while finding a few clear and safe trails to give the best experience. After examining the varied approaches, you will ponder the destination and journey. What is the experience we want the student to have at completion? Is our path short enough to get them to that experience with enough time to enjoy the view?</p>
 </section>
-<section id="the-journey" class="level3" data-number="12.2.2">
-<h3 data-number="12.2.2" class="anchored" data-anchor-id="the-journey"><span class="header-section-number">12.2.2</span> The Journey</h3>
+<section id="the-journey" class="level3" data-number="13.2.2">
+<h3 data-number="13.2.2" class="anchored" data-anchor-id="the-journey"><span class="header-section-number">13.2.2</span> The Journey</h3>
 <p>Now that you can see the end experience, you must use the right tools to help the students navigate the trail. Here are a few fundamental principles.</p>
 <ul>
 <li>Github: Building your material on Github gives all the students rapid access to your training.</li>
@@ -322,13 +328,13 @@ ul.task-list li input[type="checkbox"] {
 <li>Balance: It is important to balance the overviews and the activities. I ensure that my activities require as much time as any overview presentation material. It is also good to weave the overviews and balance them into shorter 5-10 blocks to provide variety.</li>
 </ul>
 </section>
-<section id="completion" class="level3" data-number="12.2.3">
-<h3 data-number="12.2.3" class="anchored" data-anchor-id="completion"><span class="header-section-number">12.2.3</span> Completion</h3>
+<section id="completion" class="level3" data-number="13.2.3">
+<h3 data-number="13.2.3" class="anchored" data-anchor-id="completion"><span class="header-section-number">13.2.3</span> Completion</h3>
 <p>These short courses are valuable marketing tools. Make sure you have provided your contact information and that your students have references and examples that they can use to push their learning deeper. Think about how your material is organized in your Github repository so that others that find your space can learn and leverage your material without having participated in the course.</p>
 </section>
 </section>
-<section id="structuring-your-github-repository" class="level2" data-number="12.3">
-<h2 data-number="12.3" class="anchored" data-anchor-id="structuring-your-github-repository"><span class="header-section-number">12.3</span> Structuring your Github Repository</h2>
+<section id="structuring-your-github-repository" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="structuring-your-github-repository"><span class="header-section-number">13.3</span> Structuring your Github Repository</h2>
 
 
 </section>
