@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -286,12 +320,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#example-data" id="toc-example-data" class="nav-link active" data-scroll-target="#example-data"><span class="header-section-number">12.1</span> Example Data</a>
+  <li><a href="#exploring-spatial-munging" id="toc-exploring-spatial-munging" class="nav-link active" data-scroll-target="#exploring-spatial-munging"><span class="header-section-number">12.1</span> Exploring spatial munging</a></li>
+  <li><a href="#example-data" id="toc-example-data" class="nav-link" data-scroll-target="#example-data"><span class="header-section-number">12.2</span> Example Data</a>
   <ul class="collapse">
-  <li><a href="#transactions_daily.parquet" id="toc-transactions_daily.parquet" class="nav-link" data-scroll-target="#transactions_daily.parquet"><span class="header-section-number">12.1.1</span> transactions_daily.parquet</a></li>
-  <li><a href="#transactions_store.parquet" id="toc-transactions_store.parquet" class="nav-link" data-scroll-target="#transactions_store.parquet"><span class="header-section-number">12.1.2</span> transactions_store.parquet</a></li>
-  <li><a href="#stores.parquet" id="toc-stores.parquet" class="nav-link" data-scroll-target="#stores.parquet"><span class="header-section-number">12.1.3</span> stores.parquet</a></li>
+  <li><a href="#transactions_daily.parquet" id="toc-transactions_daily.parquet" class="nav-link" data-scroll-target="#transactions_daily.parquet"><span class="header-section-number">12.2.1</span> transactions_daily.parquet</a></li>
+  <li><a href="#transactions_store.parquet" id="toc-transactions_store.parquet" class="nav-link" data-scroll-target="#transactions_store.parquet"><span class="header-section-number">12.2.2</span> transactions_store.parquet</a></li>
+  <li><a href="#stores.parquet" id="toc-stores.parquet" class="nav-link" data-scroll-target="#stores.parquet"><span class="header-section-number">12.2.3</span> stores.parquet</a></li>
+  <li><a href="#data-downloads" id="toc-data-downloads" class="nav-link" data-scroll-target="#data-downloads"><span class="header-section-number">12.2.4</span> Data downloads</a></li>
+  <li><a href="#data-munging-challenge" id="toc-data-munging-challenge" class="nav-link" data-scroll-target="#data-munging-challenge"><span class="header-section-number">12.2.5</span> Data Munging Challenge</a></li>
   </ul></li>
+  <li><a href="#exploring-spatial-modeling" id="toc-exploring-spatial-modeling" class="nav-link" data-scroll-target="#exploring-spatial-modeling"><span class="header-section-number">12.3</span> Exploring spatial modeling</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/byuibigdata/bdbook/edit/master/features/features_temporal.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -321,8 +359,16 @@ ul.task-list li input[type="checkbox"] {
 <p>Additionally, time series data also opens introduces complexities with highly correlated observations. When dealing with time series data, we need to account for the temporal dependencies and autocorrelation present in the data. This often requires creating lag features, rolling statistics, and other time-based features to capture the underlying patterns and trends.</p>
 <p>One common approach is to create lag features, which are simply the values of a variable at previous time steps. For example, if we are predicting sales, we might include the sales from the previous day, week, or month as features. Another approach is to calculate rolling statistics, such as the rolling mean or standard deviation, to capture the trends and variability over time.</p>
 <p>Additionally, we need to be mindful of the potential for data leakage, where information from the future is used to predict the past. This can lead to overly optimistic performance estimates and poor generalization to new data. To avoid this, we should ensure that our feature engineering and model evaluation processes respect the temporal order of the data.</p>
-<section id="example-data" class="level2" data-number="12.1">
-<h2 data-number="12.1" class="anchored" data-anchor-id="example-data"><span class="header-section-number">12.1</span> Example Data</h2>
+<section id="exploring-spatial-munging" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="exploring-spatial-munging"><span class="header-section-number">12.1</span> Exploring spatial munging</h2>
+<p>Alakh Sethi has a fun post on <a href="https://www.analyticsvidhya.com/blog/2020/06/feature-engineering-guide-data-science-hackathons/">Feature engineering</a> that highlights some great thoughts about temporal data and feature engineering.</p>
+<blockquote class="blockquote">
+<p><strong>Peeking (into the future) is the “original sin” of feature engineering.</strong> It refers to using information about the future (or information which would not yet be known by us) to engineer a piece of data. This can be obvious, like using next_12_months_returns. However, it’s most often quite subtle, like using the mean or standard deviation across the full-time period to normalize data points (which implicitly leaks future information into our features). The test is whether you would be able to get the exact same value if you were calculating the data point at that point in time rather than today.</p>
+<p><strong>Be honest about what you would have known at the time, not just what had happened at the time.</strong> For instance, short borrowing data is reported by exchanges with a considerable time lag. You would want to stamp the feature with the date on which you would have known it.</p>
+</blockquote>
+</section>
+<section id="example-data" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="example-data"><span class="header-section-number">12.2</span> Example Data</h2>
 <p>We will use some data about grocery stores in South America. The data includes daily transactions, store metadata, and promotional information. This dataset will help us understand how different factors influence sales and transactions at various stores. It is based on a Kaggle competion<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p>Let’s take a look at the datasets we have:</p>
 <ul>
@@ -331,8 +377,8 @@ ul.task-list li input[type="checkbox"] {
 <li><code>stores.parquet</code>: Contains metadata about each store, including location and type.</li>
 </ul>
 <p>We will use these datasets to demonstrate feature engineering techniques for building predictive models.</p>
-<section id="transactions_daily.parquet" class="level3" data-number="12.1.1">
-<h3 data-number="12.1.1" class="anchored" data-anchor-id="transactions_daily.parquet"><span class="header-section-number">12.1.1</span> transactions_daily.parquet</h3>
+<section id="transactions_daily.parquet" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="transactions_daily.parquet"><span class="header-section-number">12.2.1</span> transactions_daily.parquet</h3>
 <p>The primary data, comprising time series of features <code>store_nbr</code>, <code>family</code>, and <code>onpromotion</code> as well as the target <code>sales</code>.</p>
 <ul>
 <li><code>store_nbr</code>: identifies the store at which the products are sold.</li>
@@ -341,23 +387,245 @@ ul.task-list li input[type="checkbox"] {
 <li><code>onpromotion</code>: gives the total number of items in a product family that were being promoted at a store at a given date.</li>
 </ul>
 </section>
-<section id="transactions_store.parquet" class="level3" data-number="12.1.2">
-<h3 data-number="12.1.2" class="anchored" data-anchor-id="transactions_store.parquet"><span class="header-section-number">12.1.2</span> transactions_store.parquet</h3>
+<section id="transactions_store.parquet" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="transactions_store.parquet"><span class="header-section-number">12.2.2</span> transactions_store.parquet</h3>
 <p>The total transactions by day for each store.</p>
 <ul>
 <li><code>store_nbr</code>: The store number.</li>
 <li><code>transactions</code>: The total number of transactions for that day.</li>
 </ul>
 </section>
-<section id="stores.parquet" class="level3" data-number="12.1.3">
-<h3 data-number="12.1.3" class="anchored" data-anchor-id="stores.parquet"><span class="header-section-number">12.1.3</span> stores.parquet</h3>
+<section id="stores.parquet" class="level3" data-number="12.2.3">
+<h3 data-number="12.2.3" class="anchored" data-anchor-id="stores.parquet"><span class="header-section-number">12.2.3</span> stores.parquet</h3>
 <p>Store metadata, including <code>city</code>, <code>state</code>, <code>type</code>, and <code>cluster</code>.</p>
 <ul>
 <li><code>cluster</code>: is a grouping of similar stores.</li>
 </ul>
-
-
 </section>
+<section id="data-downloads" class="level3" data-number="12.2.4">
+<h3 data-number="12.2.4" class="anchored" data-anchor-id="data-downloads"><span class="header-section-number">12.2.4</span> Data downloads</h3>
+<ul>
+<li><a href="stores.parquet">stores.parquet</a></li>
+<li><a href="transactions_daily.parquet">transactions_daily.parquet</a></li>
+</ul>
+</section>
+<section id="data-munging-challenge" class="level3" data-number="12.2.5">
+<h3 data-number="12.2.5" class="anchored" data-anchor-id="data-munging-challenge"><span class="header-section-number">12.2.5</span> Data Munging Challenge</h3>
+<p>Let’s explore how to build temporal features with a walk through some feature engineering using the grocery store data.</p>
+<p><a href="https://medium.com/towards-data-science/time-series-machine-learning-regression-framework-9ea33929009a">Pourya’s article in Toward’s Data Science</a> provides some simple examples of timeseries feature engineering that we will use with our data.</p>
+<p>We can start with our <code>transactions_daily.parquet</code> data.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">from</span> lets_plot <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>LetsPlot.setup_html()</span>
+<span id="cb1-4"><a href="#cb1-4"></a>daily <span class="op">=</span> pl.read_parquet(<span class="st">"transactions_daily.parquet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now let’s create move our daily transactions date to weekly summaries for each store and product family with the following new columns.</p>
+<ul>
+<li><code>week_of_year</code></li>
+<li><code>year</code></li>
+<li><code>min_date</code> in the week of year by year.</li>
+<li><code>max_date</code> in the week of year by year.</li>
+<li><code>total_sales</code> for that week.</li>
+<li><code>prediction_day</code> or the day we define as the <em>NOW</em> that devides historical knowledge and future <em>‘unkowns’</em>.</li>
+</ul>
+<p>After we create our weekly data, we can answer the following questions.</p>
+<ul>
+<li>What day do weeks of the year start on?</li>
+<li>What is wrong with the date 2013-12-31?</li>
+<li>What is wrong with the date 2017-01-01?</li>
+<li>Can you fix this issue with weeks and years?</li>
+</ul>
+<p>Ok. Now that we have created our proper weekly data,</p>
+<ul>
+<li>Can you create the following table for 2017 SEAFOOD?</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 9%">
+<col style="width: 4%">
+<col style="width: 9%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 11%">
+<col style="width: 13%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">store_nbr</th>
+<th style="text-align: left;">family</th>
+<th style="text-align: right;">week_of_year</th>
+<th style="text-align: right;">year</th>
+<th style="text-align: left;">prediction_day</th>
+<th style="text-align: left;">min_date</th>
+<th style="text-align: left;">max_date</th>
+<th style="text-align: right;">num_days_in_week</th>
+<th style="text-align: right;">1_week_behind_sales</th>
+<th style="text-align: right;">1_week_ahead_sales</th>
+<th style="text-align: right;">2_week_ahead_sales</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">54</td>
+<td style="text-align: left;">SEAFOOD</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">2016</td>
+<td style="text-align: left;">2016-11-06</td>
+<td style="text-align: left;">2016-11-07</td>
+<td style="text-align: left;">2016-11-13</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">54</td>
+<td style="text-align: left;">SEAFOOD</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">2016</td>
+<td style="text-align: left;">2016-11-13</td>
+<td style="text-align: left;">2016-11-14</td>
+<td style="text-align: left;">2016-11-20</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">54</td>
+<td style="text-align: left;">SEAFOOD</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">2016</td>
+<td style="text-align: left;">2016-11-20</td>
+<td style="text-align: left;">2016-11-21</td>
+<td style="text-align: left;">2016-11-27</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">54</td>
+<td style="text-align: left;">SEAFOOD</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">2016</td>
+<td style="text-align: left;">2016-11-27</td>
+<td style="text-align: left;">2016-11-28</td>
+<td style="text-align: left;">2016-12-04</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">54</td>
+<td style="text-align: left;">SEAFOOD</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">2016</td>
+<td style="text-align: left;">2016-12-04</td>
+<td style="text-align: left;">2016-12-05</td>
+<td style="text-align: left;">2016-12-11</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">54</td>
+<td style="text-align: left;">SEAFOOD</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">2016</td>
+<td style="text-align: left;">2016-12-11</td>
+<td style="text-align: left;">2016-12-12</td>
+<td style="text-align: left;">2016-12-18</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">54</td>
+<td style="text-align: left;">SEAFOOD</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">2016</td>
+<td style="text-align: left;">2016-12-18</td>
+<td style="text-align: left;">2016-12-19</td>
+<td style="text-align: left;">2016-12-24</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">54</td>
+<td style="text-align: left;">SEAFOOD</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">2016</td>
+<td style="text-align: left;">2016-12-25</td>
+<td style="text-align: left;">2016-12-26</td>
+<td style="text-align: left;">2016-12-31</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">54</td>
+<td style="text-align: left;">SEAFOOD</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">2016</td>
+<td style="text-align: left;">2015-12-31</td>
+<td style="text-align: left;">2016-01-01</td>
+<td style="text-align: left;">2016-01-03</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">12</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Which column would be our <code>y</code> value or <code>target</code> if we were predicting what we will sell in the next seven days?</li>
+<li>Can you build a new <code>y</code> that is the lagged difference? The column would be the difference in sales from the week we just completed to the sales seven days in the future.</li>
+<li>Can you build a new <code>feature</code> that is the difference in percent of sales for the year comparing the most recently completed week with it’s sister week in the previous year?</li>
+<li>How correlated is this new <code>feature</code> with our <code>target</code>?</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Try before you pry
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Explore the example <a href="data/feature_engineer.py">script</a></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="exploring-spatial-modeling" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="exploring-spatial-modeling"><span class="header-section-number">12.3</span> Exploring spatial modeling</h2>
+<ul>
+<li><a href="https://medium.com/towards-data-science/time-series-machine-learning-regression-framework-9ea33929009a">Time Series Machine Learning Regression Framework | by Pourya | TDS Archive | Medium</a></li>
+<li><a href="https://medium.com/@soumyachess1496/cross-validation-in-time-series-566ae4981ce4">Cross Validation in Time Series. Cross Validation: | by Soumya Shrivastava | Medium</a></li>
+<li><a href="https://medium.com/towards-data-science/how-not-to-use-machine-learning-for-time-series-forecasting-avoiding-the-pitfalls-19f9d7adf424">How (not) to use Machine Learning for time series forecasting: Avoiding the pitfalls | by Vegard Flovik | Towards Data Science | Medium</a></li>
+<li><a href="https://www.kdnuggets.com/2020/03/machine-learning-time-series-forecasting-sequel.html">How (not) to use Machine Learning for time series forecasting: The sequel - KDnuggets</a></li>
+<li><a href="https://www.databricks.com/blog/2021/04/06/fine-grained-time-series-forecasting-at-scale-with-facebook-prophet-and-apache-spark-updated-for-spark-3.html">Fine-Grained Time Series Forecasting With Facebook Prophet Updated for Apache Spark - The Databricks Blog</a></li>
+<li><a href="https://stats.stackexchange.com/questions/14099/using-k-fold-cross-validation-for-time-series-model-selection">modeling - Using k-fold cross-validation for time-series model selection - Cross Validated</a></li>
+<li><a href="https://robjhyndman.com/hyndsight/tscv/">Cross-validation for time series – Rob J Hyndman</a></li>
+<li><a href="https://otexts.com/fpp2/accuracy.html">3.4 Evaluating forecast accuracy | Forecasting: Principles&nbsp;and&nbsp;Practice (2nd&nbsp;ed)</a></li>
+<li><a href="https://github.com/time-series-foundation-models/lag-llama">time-series-foundation-models/lag-llama: Lag-Llama: Towards Foundation Models for Probabilistic Time Series Forecasting</a></li>
+</ul>
+
+
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>

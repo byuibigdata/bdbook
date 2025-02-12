@@ -351,11 +351,11 @@
     ]
   },
   {
-    "objectID": "features/features_intro.html",
-    "href": "features/features_intro.html",
+    "objectID": "features/features_intro.html#footnotes",
+    "href": "features/features_intro.html#footnotes",
     "title": "11  Feature Engineering",
     "section": "",
-    "text": "When working with business data, we often have a database that stores transactions. We will have tables that store credit card transactions, tables that store paycheck transactions, key card tables that store build access transactions, and account tables that store logins or purchase transactions. These transaction tables are usually not at the right level of detail (often called ‘unit of analysis’) for any machine learning or statistical model inference.\nTo build our predictive models, these transaction tables need to be munged into the correct space, time, and variable aggregation. Here are the questions we must work through based on our modeling needs.\n\nWhat is my spatial unit of interest for predictions? How can I munge my tables to create the foundation of the analysis table?\nWhat is my label/target that I will use for prediction?\nWhat features would help predict my label?\nWhat is my temporal unit of interest for feature building?\nWhat tables/keys do I need to map my transactions to that spatial unit?\n\n\n\n\nfeature diagram with spatial, variable, and temporal",
+    "text": "How to create useful features for Machine Learning↩︎\nNon-Mathematical Feature Engineering techniques for Data Science | Sachin Joglekar’s blog↩︎",
     "crumbs": [
       "Feature Engineering",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Feature Engineering</span>"
@@ -366,7 +366,18 @@
     "href": "features/features_temporal.html",
     "title": "12  Temporal Features",
     "section": "",
-    "text": "12.1 Example Data\nWe will use some data about grocery stores in South America. The data includes daily transactions, store metadata, and promotional information. This dataset will help us understand how different factors influence sales and transactions at various stores. It is based on a Kaggle competion1\nLet’s take a look at the datasets we have:\nWe will use these datasets to demonstrate feature engineering techniques for building predictive models.",
+    "text": "12.1 Exploring spatial munging\nAlakh Sethi has a fun post on Feature engineering that highlights some great thoughts about temporal data and feature engineering.",
+    "crumbs": [
+      "Feature Engineering",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Temporal Features</span>"
+    ]
+  },
+  {
+    "objectID": "features/features_temporal.html#exploring-spatial-munging",
+    "href": "features/features_temporal.html#exploring-spatial-munging",
+    "title": "12  Temporal Features",
+    "section": "",
+    "text": "Peeking (into the future) is the “original sin” of feature engineering. It refers to using information about the future (or information which would not yet be known by us) to engineer a piece of data. This can be obvious, like using next_12_months_returns. However, it’s most often quite subtle, like using the mean or standard deviation across the full-time period to normalize data points (which implicitly leaks future information into our features). The test is whether you would be able to get the exact same value if you were calculating the data point at that point in time rather than today.\nBe honest about what you would have known at the time, not just what had happened at the time. For instance, short borrowing data is reported by exchanges with a considerable time lag. You would want to stamp the feature with the date on which you would have known it.",
     "crumbs": [
       "Feature Engineering",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Temporal Features</span>"
@@ -376,8 +387,19 @@
     "objectID": "features/features_temporal.html#example-data",
     "href": "features/features_temporal.html#example-data",
     "title": "12  Temporal Features",
-    "section": "",
-    "text": "transactions_daily.parquet: Contains daily sales data for each store and product family.\ntransactions_store.parquet: Contains the total number of transactions per day for each store.\nstores.parquet: Contains metadata about each store, including location and type.\n\n\n\n12.1.1 transactions_daily.parquet\nThe primary data, comprising time series of features store_nbr, family, and onpromotion as well as the target sales.\n\nstore_nbr: identifies the store at which the products are sold.\nfamily: identifies the type of product sold.\nsales: gives the total sales for a product family at a particular store at a given date. Fractional values are possible since products can be sold in fractional units (1.5 kg of cheese, for instance, as opposed to 1 bag of chips).\nonpromotion: gives the total number of items in a product family that were being promoted at a store at a given date.\n\n\n\n12.1.2 transactions_store.parquet\nThe total transactions by day for each store.\n\nstore_nbr: The store number.\ntransactions: The total number of transactions for that day.\n\n\n\n12.1.3 stores.parquet\nStore metadata, including city, state, type, and cluster.\n\ncluster: is a grouping of similar stores.",
+    "section": "12.2 Example Data",
+    "text": "12.2 Example Data\nWe will use some data about grocery stores in South America. The data includes daily transactions, store metadata, and promotional information. This dataset will help us understand how different factors influence sales and transactions at various stores. It is based on a Kaggle competion1\nLet’s take a look at the datasets we have:\n\ntransactions_daily.parquet: Contains daily sales data for each store and product family.\ntransactions_store.parquet: Contains the total number of transactions per day for each store.\nstores.parquet: Contains metadata about each store, including location and type.\n\nWe will use these datasets to demonstrate feature engineering techniques for building predictive models.\n\n12.2.1 transactions_daily.parquet\nThe primary data, comprising time series of features store_nbr, family, and onpromotion as well as the target sales.\n\nstore_nbr: identifies the store at which the products are sold.\nfamily: identifies the type of product sold.\nsales: gives the total sales for a product family at a particular store at a given date. Fractional values are possible since products can be sold in fractional units (1.5 kg of cheese, for instance, as opposed to 1 bag of chips).\nonpromotion: gives the total number of items in a product family that were being promoted at a store at a given date.\n\n\n\n12.2.2 transactions_store.parquet\nThe total transactions by day for each store.\n\nstore_nbr: The store number.\ntransactions: The total number of transactions for that day.\n\n\n\n12.2.3 stores.parquet\nStore metadata, including city, state, type, and cluster.\n\ncluster: is a grouping of similar stores.\n\n\n\n12.2.4 Data downloads\n\nstores.parquet\ntransactions_daily.parquet\n\n\n\n12.2.5 Data Munging Challenge\nLet’s explore how to build temporal features with a walk through some feature engineering using the grocery store data.\nPourya’s article in Toward’s Data Science provides some simple examples of timeseries feature engineering that we will use with our data.\nWe can start with our transactions_daily.parquet data.\nimport polars as pl\nfrom lets_plot import *\nLetsPlot.setup_html()\ndaily = pl.read_parquet(\"transactions_daily.parquet\")\nNow let’s create move our daily transactions date to weekly summaries for each store and product family with the following new columns.\n\nweek_of_year\nyear\nmin_date in the week of year by year.\nmax_date in the week of year by year.\ntotal_sales for that week.\nprediction_day or the day we define as the NOW that devides historical knowledge and future ‘unkowns’.\n\nAfter we create our weekly data, we can answer the following questions.\n\nWhat day do weeks of the year start on?\nWhat is wrong with the date 2013-12-31?\nWhat is wrong with the date 2017-01-01?\nCan you fix this issue with weeks and years?\n\nOk. Now that we have created our proper weekly data,\n\nCan you create the following table for 2017 SEAFOOD?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nstore_nbr\nfamily\nweek_of_year\nyear\nprediction_day\nmin_date\nmax_date\nnum_days_in_week\n1_week_behind_sales\n1_week_ahead_sales\n2_week_ahead_sales\n\n\n\n\n54\nSEAFOOD\n45\n2016\n2016-11-06\n2016-11-07\n2016-11-13\n7\n9\n3\n19\n\n\n54\nSEAFOOD\n46\n2016\n2016-11-13\n2016-11-14\n2016-11-20\n7\n3\n19\n5\n\n\n54\nSEAFOOD\n47\n2016\n2016-11-20\n2016-11-21\n2016-11-27\n7\n19\n5\n8\n\n\n54\nSEAFOOD\n48\n2016\n2016-11-27\n2016-11-28\n2016-12-04\n7\n5\n8\n10\n\n\n54\nSEAFOOD\n49\n2016\n2016-12-04\n2016-12-05\n2016-12-11\n7\n8\n10\n10\n\n\n54\nSEAFOOD\n50\n2016\n2016-12-11\n2016-12-12\n2016-12-18\n7\n10\n10\n6\n\n\n54\nSEAFOOD\n51\n2016\n2016-12-18\n2016-12-19\n2016-12-24\n6\n10\n6\n5\n\n\n54\nSEAFOOD\n52\n2016\n2016-12-25\n2016-12-26\n2016-12-31\n6\n6\n5\n4\n\n\n54\nSEAFOOD\n53\n2016\n2015-12-31\n2016-01-01\n2016-01-03\n3\n5\n4\n12\n\n\n\n\nWhich column would be our y value or target if we were predicting what we will sell in the next seven days?\nCan you build a new y that is the lagged difference? The column would be the difference in sales from the week we just completed to the sales seven days in the future.\nCan you build a new feature that is the difference in percent of sales for the year comparing the most recently completed week with it’s sister week in the previous year?\nHow correlated is this new feature with our target?\n\n\n\n\n\n\n\nTry before you pry\n\n\n\n\n\nExplore the example script",
+    "crumbs": [
+      "Feature Engineering",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Temporal Features</span>"
+    ]
+  },
+  {
+    "objectID": "features/features_temporal.html#exploring-spatial-modeling",
+    "href": "features/features_temporal.html#exploring-spatial-modeling",
+    "title": "12  Temporal Features",
+    "section": "12.3 Exploring spatial modeling",
+    "text": "12.3 Exploring spatial modeling\n\nTime Series Machine Learning Regression Framework | by Pourya | TDS Archive | Medium\nCross Validation in Time Series. Cross Validation: | by Soumya Shrivastava | Medium\nHow (not) to use Machine Learning for time series forecasting: Avoiding the pitfalls | by Vegard Flovik | Towards Data Science | Medium\nHow (not) to use Machine Learning for time series forecasting: The sequel - KDnuggets\nFine-Grained Time Series Forecasting With Facebook Prophet Updated for Apache Spark - The Databricks Blog\nmodeling - Using k-fold cross-validation for time-series model selection - Cross Validated\nCross-validation for time series – Rob J Hyndman\n3.4 Evaluating forecast accuracy | Forecasting: Principles and Practice (2nd ed)\ntime-series-foundation-models/lag-llama: Lag-Llama: Towards Foundation Models for Probabilistic Time Series Forecasting",
     "crumbs": [
       "Feature Engineering",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Temporal Features</span>"

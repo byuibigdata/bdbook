@@ -364,7 +364,7 @@ Figure&nbsp;10.1: Spark Ecosystem Diagram
 <section id="what-is-pyspark" class="level2" data-number="10.1">
 <h2 data-number="10.1" class="anchored" data-anchor-id="what-is-pyspark"><span class="header-section-number">10.1</span> What is PySpark?</h2>
 <p>PySpark supports the integration of Apache Spark and Python as a Python API for Spark. In addition, PySpark, helps you interface with Resilient Distributed Datasets (RDDs) in Apache Spark and Python programming language. PySpark refers to the collection of Python APIs for Spark.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> This book will focus on PySparkSQL and MLlib. Within Databricks we have access to the PySparkSQL methods using the <code>spark</code> object that is available in each notebook. Users of PySpark outside of Databricks would need to create their <code>spark</code> entry point with something like the following</p>
-<div id="6656c377" class="cell" data-execution_count="1">
+<div id="29c9ba3d" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a>spark <span class="op">=</span> SparkSession <span class="op">\</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a>    .builder <span class="op">\</span></span>
 <span id="cb1-3"><a href="#cb1-3"></a>    .appName(<span class="st">"Python Spark SQL basic example"</span>) <span class="op">\</span></span>

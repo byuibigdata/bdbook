@@ -1,9 +1,13 @@
 project:
   type: book
   output-dir: docs
+resources: 
+  - "features/data/*.parquet"
+  - "features/data/feature_engineer.py"
 
 book:
   title: "Big Data Programming for Data Scientists"
+  
   author: "J. Hathaway"
   date: "1/12/2023"
   search: true
