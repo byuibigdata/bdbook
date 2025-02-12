@@ -36,6 +36,7 @@ book:
     - part: features.qmd
       chapters:
         - features/features_intro.qmd
+        - features/features_temporal.qmd
     - part: docker.qmd
       chapters:
         - docker/docker_intro.qmd

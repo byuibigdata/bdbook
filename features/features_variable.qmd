@@ -1,0 +1,7 @@
+# Variable Features
+
+[Non-Mathematical Feature Engineering techniques for Data Science | Sachin Joglekar's blog](https://codesachin.wordpress.com/2016/06/25/non-mathematical-feature-engineering-techniques-for-data-science/)
+
+[Best Practices for Feature Engineering](https://elitedatascience.com/feature-engineering-best-practices)
+
+[K-Fold Target Encoding. One-hot-encoding, label-encoding… | by Pourya | Medium](https://medium.com/@pouryaayria/k-fold-target-encoding-dfe9a594874b)

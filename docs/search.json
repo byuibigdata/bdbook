@@ -4,265 +4,478 @@
     "href": "index.html",
     "title": "Big Data Programming for Data Scientists",
     "section": "",
-    "text": "Preface\nThis ‘book’ is primarily a place for the BYU-I data science program to store material used in their Big Data Class. It is a work in progress."
+    "text": "Preface\nThis ‘book’ is primarily a place for the BYU-I data science program to store material used in their Big Data Class. It is a work in progress.",
+    "crumbs": [
+      "Preface"
+    ]
   },
   {
-    "objectID": "introduction.html",
-    "href": "introduction.html",
-    "title": "Introduction",
+    "objectID": "intro/bigdata.html",
+    "href": "intro/bigdata.html",
+    "title": "1  What is Big Data?",
     "section": "",
-    "text": "As an introduction, we highlight the different elements of data science when using big data. This section focuses on high level concepts and descriptions."
+    "text": "1.1 Note about the class data\nWe will limit our data sizes to less than a terabyte in total with the largest tables in the 100 GB range. This is not big data in the sense of the term. However, it is large enough to require a different approach to data analysis than what you have learned in previous courses. We will use the term big data to refer to the data we will use in this course. We will focus on the tools and techniques used on big data for analysis. At times these tools could be slower than some of the modern tools for medium data like polars mentioned above. However, the tools we will use are scalable to much larger data sizes and will be useful for your future work.",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What is Big Data?</span>"
+    ]
   },
   {
     "objectID": "intro/bigdata.html#note-about-the-class-data",
     "href": "intro/bigdata.html#note-about-the-class-data",
     "title": "1  What is Big Data?",
-    "section": "1.1 Note about the class data",
-    "text": "1.1 Note about the class data\nWe will limit our data sizes to less than a terabyte in total with the largest tables in the 100 GB range. This is not big data in the sense of the term. However, it is large enough to require a different approach to data analysis than what you have learned in previous courses. We will use the term big data to refer to the data we will use in this course. We will focus on the tools and techniques used on big data for analysis. At times these tools could be slower than some of the modern tools for medium data like polars mentioned above. However, the tools we will use are scalable to much larger data sizes and will be useful for your future work.\n\n1.1.1 Dump truck analogy\nWe want to figure out how move and shape data with big data tools. We need to learn to drive the massive mining dump truck imagining the massive loads. When the load is manageable in a small truck, nobody would ever try to drive a mining dump truck down neighborhood roads to help a friend move. You will be tempted to drop into polars or pandas if you focus on the size of the load we will use in the class as the data can get small enough to fit into those packages and routines. Stay firmly in the dump truck and learn to drive it. You will need to drive the dump truck when you get into industry."
+    "section": "",
+    "text": "1.1.1 Dump truck analogy\nWe want to figure out how move and shape data with big data tools. We need to learn to drive the massive mining dump truck imagining the massive loads. When the load is manageable in a small truck, nobody would ever try to drive a mining dump truck down neighborhood roads to help a friend move. You will be tempted to drop into polars or pandas if you focus on the size of the load we will use in the class as the data can get small enough to fit into those packages and routines. Stay firmly in the dump truck and learn to drive it. You will need to drive the dump truck when you get into industry.",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What is Big Data?</span>"
+    ]
   },
   {
-    "objectID": "intro/tools.html#distributed-file-systems",
-    "href": "intro/tools.html#distributed-file-systems",
+    "objectID": "intro/tools.html",
+    "href": "intro/tools.html",
     "title": "2  The Big Data Tools",
-    "section": "2.1 Distributed File Systems",
-    "text": "2.1 Distributed File Systems"
+    "section": "",
+    "text": "2.1 Distributed File Systems",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>The Big Data Tools</span>"
+    ]
   },
   {
     "objectID": "intro/tools.html#memory-efficient-data-structures",
     "href": "intro/tools.html#memory-efficient-data-structures",
     "title": "2  The Big Data Tools",
     "section": "2.2 Memory efficient data structures",
-    "text": "2.2 Memory efficient data structures"
+    "text": "2.2 Memory efficient data structures",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>The Big Data Tools</span>"
+    ]
   },
   {
     "objectID": "intro/tools.html#parallel-computing",
     "href": "intro/tools.html#parallel-computing",
     "title": "2  The Big Data Tools",
     "section": "2.3 Parallel computing",
-    "text": "2.3 Parallel computing"
+    "text": "2.3 Parallel computing",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>The Big Data Tools</span>"
+    ]
   },
   {
     "objectID": "intro/tools.html#failure-management",
     "href": "intro/tools.html#failure-management",
     "title": "2  The Big Data Tools",
     "section": "2.4 Failure management",
-    "text": "2.4 Failure management"
+    "text": "2.4 Failure management",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>The Big Data Tools</span>"
+    ]
   },
   {
     "objectID": "intro/tools.html#scalability",
     "href": "intro/tools.html#scalability",
     "title": "2  The Big Data Tools",
     "section": "2.5 Scalability",
-    "text": "2.5 Scalability"
+    "text": "2.5 Scalability",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>The Big Data Tools</span>"
+    ]
   },
   {
     "objectID": "intro/tools.html#compute-optimization",
     "href": "intro/tools.html#compute-optimization",
     "title": "2  The Big Data Tools",
     "section": "2.6 Compute optimization",
-    "text": "2.6 Compute optimization"
+    "text": "2.6 Compute optimization",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>The Big Data Tools</span>"
+    ]
+  },
+  {
+    "objectID": "intro/rules_thumb.html",
+    "href": "intro/rules_thumb.html",
+    "title": "4  Sark Rules of Thumb",
+    "section": "",
+    "text": "4.1 The Spark APIs let you use your language of preference\nYou can use Java, Scala, Python, or R to access Spark. Like Goldilocks and the Three Bears, we want the language that is not ‘too hot’ or ‘too cold’ for data science use. Java is a bit too verbose for day-to-day data science work. Scala is fast but still a little verbose. Python is a little slower but ingrained in the data science community, and R is less easy to implement in a production environment.\nYou can read a comparison of sparkR and sparklyr here.",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Sark Rules of Thumb</span>"
+    ]
   },
   {
     "objectID": "intro/rules_thumb.html#the-spark-apis-let-you-use-your-language-of-preference",
     "href": "intro/rules_thumb.html#the-spark-apis-let-you-use-your-language-of-preference",
     "title": "4  Sark Rules of Thumb",
-    "section": "4.1 The Spark APIs let you use your language of preference",
-    "text": "4.1 The Spark APIs let you use your language of preference\nYou can use Java, Scala, Python, or R to access Spark. Like Goldilocks and the Three Bears, we want the language that is not ‘too hot’ or ‘too cold’ for data science use. Java is a bit too verbose for day-to-day data science work. Scala is fast but still a little verbose. Python is a little slower but ingrained in the data science community, and R is less easy to implement in a production environment.\n\npyspark (just right): The pyspark package looks to be the ‘just the right amount’ of the Spark APIs.\n\nsparkR (a little cold): Apache has developed an R package that is the official R connection to Spark.\nsparklyr (RStudio’s warm-up): If you are experienced with the Tidyverse, then RStudio’s sparklyr could pull you away from pyspark.\n\nYou can read a comparison of sparkR and sparklyr here."
+    "section": "",
+    "text": "pyspark (just right): The pyspark package looks to be the ‘just the right amount’ of the Spark APIs.\n\nsparkR (a little cold): Apache has developed an R package that is the official R connection to Spark.\nsparklyr (RStudio’s warm-up): If you are experienced with the Tidyverse, then RStudio’s sparklyr could pull you away from pyspark.",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Sark Rules of Thumb</span>"
+    ]
   },
   {
     "objectID": "intro/rules_thumb.html#use-dataframes-ignore-rdds",
     "href": "intro/rules_thumb.html#use-dataframes-ignore-rdds",
     "title": "4  Sark Rules of Thumb",
     "section": "4.2 Use DataFrames (ignore RDDs)",
-    "text": "4.2 Use DataFrames (ignore RDDs)\nFor day-to-day data science use, DataFrames are the option you should choose.\n\nSpark has built a framework to optimize Resilient Distributed Dataset (RDD) use when we program with DataFrame methods.\nSpark internally stores DataFrames in a binary format, so there is no need to serialize and deserialize data as it moves over the cluster.\n\nDatabricks provides a Deep Dive into Spark SQL’s Catalyst Optimizer and A Tale of Three Apache Spark APIs: RDDs vs. DataFrames and Datasets to help you understand more depth on the relationship between DataFrames.\nWe pulled the bullets and image below from the Databricks articles.\n\n\nIf you want unification and simplification of APIs across Spark Libraries, use DataFrame or Dataset.\nIf you are an R user, use DataFrames.\nIf you are a Python user, use DataFrames and resort back to RDDs if you need more control."
+    "text": "4.2 Use DataFrames (ignore RDDs)\nFor day-to-day data science use, DataFrames are the option you should choose.\n\nSpark has built a framework to optimize Resilient Distributed Dataset (RDD) use when we program with DataFrame methods.\nSpark internally stores DataFrames in a binary format, so there is no need to serialize and deserialize data as it moves over the cluster.\n\nDatabricks provides a Deep Dive into Spark SQL’s Catalyst Optimizer and A Tale of Three Apache Spark APIs: RDDs vs. DataFrames and Datasets to help you understand more depth on the relationship between DataFrames.\nWe pulled the bullets and image below from the Databricks articles.\n\n\nIf you want unification and simplification of APIs across Spark Libraries, use DataFrame or Dataset.\nIf you are an R user, use DataFrames.\nIf you are a Python user, use DataFrames and resort back to RDDs if you need more control.",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Sark Rules of Thumb</span>"
+    ]
   },
   {
     "objectID": "intro/rules_thumb.html#write-and-read-serialized-data-formats",
     "href": "intro/rules_thumb.html#write-and-read-serialized-data-formats",
     "title": "4  Sark Rules of Thumb",
     "section": "4.3 Write and Read serialized data formats",
-    "text": "4.3 Write and Read serialized data formats\nThe Apache Parquet format is optimal for most data science applications. It is a serialized columnar format that provides speed and size benefits for big data applications. The following table compares the savings and the speedup obtained by converting data into Parquet from CSV.\n\n\n\n\n\n\n\n\n\n\nDataset\nSize on Amazon S3\nQuery Run Time\nData Scanned\nCost\n\n\n\n\nData stored as CSV files\n1 TB\n236 seconds\n1.15 TB\n$5.75\n\n\nData stored in Apache Parquet Format\n130 GB\n6.78 seconds\n2.51 GB\n$0.01\n\n\nSavings\n87% less when using Parquet\n34x faster\n99% less data scanned\n99.7% savings\n\n\n\nYou could use Avro with Spark as well. It is stored in rows, much like a .csv file, but is serialized."
+    "text": "4.3 Write and Read serialized data formats\nThe Apache Parquet format is optimal for most data science applications. It is a serialized columnar format that provides speed and size benefits for big data applications. The following table compares the savings and the speedup obtained by converting data into Parquet from CSV.\n\n\n\n\n\n\n\n\n\n\nDataset\nSize on Amazon S3\nQuery Run Time\nData Scanned\nCost\n\n\n\n\nData stored as CSV files\n1 TB\n236 seconds\n1.15 TB\n$5.75\n\n\nData stored in Apache Parquet Format\n130 GB\n6.78 seconds\n2.51 GB\n$0.01\n\n\nSavings\n87% less when using Parquet\n34x faster\n99% less data scanned\n99.7% savings\n\n\n\nYou could use Avro with Spark as well. It is stored in rows, much like a .csv file, but is serialized.",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Sark Rules of Thumb</span>"
+    ]
   },
   {
-    "objectID": "databricks.html",
-    "href": "databricks.html",
-    "title": "Databricks",
+    "objectID": "databricks/databricks_intro.html",
+    "href": "databricks/databricks_intro.html",
+    "title": "5  What is Databricks?",
     "section": "",
-    "text": "Databricks provides data scientists and data engineers a unified platform for scalable analytics and data management with almost unlimited storage and compute capacity through the use of Spark."
+    "text": "5.1 The elevator pitches",
+    "crumbs": [
+      "Databricks",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>What is Databricks?</span>"
+    ]
   },
   {
     "objectID": "databricks/databricks_intro.html#the-elevator-pitches",
     "href": "databricks/databricks_intro.html#the-elevator-pitches",
     "title": "5  What is Databricks?",
-    "section": "5.1 The elevator pitches",
-    "text": "5.1 The elevator pitches\n\n\nIt’s time for DataBricks!\nDatabricks is the AI Company\nIntroduction to Databricks Unified Data Platform: 5 min demo"
+    "section": "",
+    "text": "It’s time for DataBricks!\nDatabricks is the AI Company\nIntroduction to Databricks Unified Data Platform: 5 min demo",
+    "crumbs": [
+      "Databricks",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>What is Databricks?</span>"
+    ]
   },
   {
     "objectID": "databricks/databricks_intro.html#the-details",
     "href": "databricks/databricks_intro.html#the-details",
     "title": "5  What is Databricks?",
     "section": "5.2 The details",
-    "text": "5.2 The details\n\n5.2.1 Clean and reliable data\n\n\n5.2.2 Preconfigured compute resources\n\n\n5.2.3 IDE integration\nDatabricks has taken the Jupyter Notebook (.ipynb) and the classic notebook interface and built a tool that is highly responsive and usable for data scientists and engineers.\n\n\n5.2.4 multi-language support\n\n\n5.2.5 built-in advanced visualization tools"
+    "text": "5.2 The details\n\n5.2.1 Clean and reliable data\n\n\n5.2.2 Preconfigured compute resources\n\n\n5.2.3 IDE integration\nDatabricks has taken the Jupyter Notebook (.ipynb) and the classic notebook interface and built a tool that is highly responsive and usable for data scientists and engineers.\n\n\n5.2.4 multi-language support\n\n\n5.2.5 built-in advanced visualization tools",
+    "crumbs": [
+      "Databricks",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>What is Databricks?</span>"
+    ]
   },
   {
     "objectID": "databricks/databricks_intro.html#footnotes",
     "href": "databricks/databricks_intro.html#footnotes",
     "title": "5  What is Databricks?",
     "section": "",
-    "text": "https://www.databricks.com/spark/comparing-databricks-to-apache-spark↩︎"
+    "text": "https://www.databricks.com/spark/comparing-databricks-to-apache-spark↩︎",
+    "crumbs": [
+      "Databricks",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>What is Databricks?</span>"
+    ]
+  },
+  {
+    "objectID": "databricks/community_edition.html",
+    "href": "databricks/community_edition.html",
+    "title": "6  Databricks Community Edition",
+    "section": "",
+    "text": "6.1 Community Edition Setup",
+    "crumbs": [
+      "Databricks",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Databricks Community Edition</span>"
+    ]
   },
   {
     "objectID": "databricks/community_edition.html#community-edition-setup",
     "href": "databricks/community_edition.html#community-edition-setup",
     "title": "6  Databricks Community Edition",
-    "section": "6.1 Community Edition Setup",
-    "text": "6.1 Community Edition Setup\n\nCreate an account at Try Databricks\nAfter entering your name and information, find the small type link that says Get started with Community Edition -&gt; and click.\nLogin into the Databricks community edition portal\nClick the compute icon on the left ()\nCreate and Name your cluster (you will have to do this every time you log in)\nCreate a notebook and start exploring"
+    "section": "",
+    "text": "Create an account at Try Databricks\nAfter entering your name and information, find the small type link that says Get started with Community Edition -&gt; and click.\nLogin into the Databricks community edition portal\nClick the compute icon on the left ()\nCreate and Name your cluster (you will have to do this every time you log in)\nCreate a notebook and start exploring",
+    "crumbs": [
+      "Databricks",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Databricks Community Edition</span>"
+    ]
   },
   {
     "objectID": "databricks/community_edition.html#what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform",
     "href": "databricks/community_edition.html#what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform",
     "title": "6  Databricks Community Edition",
     "section": "6.2 What is the difference between the Databricks Community Edition and the full Databricks Platform?",
-    "text": "6.2 What is the difference between the Databricks Community Edition and the full Databricks Platform?\n\nWith the Databricks Community Edition, the users will have access to 15GB clusters, a cluster manager, and the notebook environment to prototype simple applications, and JDBC / ODBC integrations for BI analysis. The Databricks Community Edition access is not time-limited, and users will not incur AWS costs for their cluster usage.\n\n\nThe full Databricks platform offers production-grade functionality, such as an unlimited number of clusters that easily scale up or down, a job launcher, collaboration, advanced security controls, and expert support. It helps users process data at scale, or build Apache Spark applications in a team setting.\n\n\nDatabricks\n\n\n6.2.1 Compute resources\nThe Community Edition will force you to create a new compute if your current compute resource shuts down (you cannot restart it). Cloning an old resource is available; However, any Libraries specified under the Libraries tab will not be cloned and must be respecified.\n\n\n6.2.2 Local File System and DBFS\nThe file system is restricted differently than the professional Databricks platform. Once you have enabled DBFS browsing (click user in top right &gt; select Admin Settings &gt; Workspace settings tab &gt; then enable DBFS File Browser) you can use the DBFS button that now appears after using the catalog navigation to see files stored in the Databricks File System (DBFS). You should have a FileStore folder where uploaded files will appear. After clicking the down arrow to the right of any folder or file, you can select copy path and the following popup appears.\n\nThe Spark API Format works for parsing files using the spark.read methods. The File API Format should work for packages like Pandas and Polars. However, the Community edition does not connect the dbfs drive to the main node. You will need to leverage the dbutils package in Databricks to copy the file to a local folder for Pandas and Polars to access the file.\nimport polars as pl\ndbfs_path = \"dbfs:/FileStore/patterns.parquet\"\ndriver_path = \"file:/databricks/driver/temp_read.parquet\"\ndbutils.fs.cp(dbfs_path, driver_path)\ndat = pl.read_parquet(\"temp_read.parquet\")"
+    "text": "6.2 What is the difference between the Databricks Community Edition and the full Databricks Platform?\n\nWith the Databricks Community Edition, the users will have access to 15GB clusters, a cluster manager, and the notebook environment to prototype simple applications, and JDBC / ODBC integrations for BI analysis. The Databricks Community Edition access is not time-limited, and users will not incur AWS costs for their cluster usage.\n\n\nThe full Databricks platform offers production-grade functionality, such as an unlimited number of clusters that easily scale up or down, a job launcher, collaboration, advanced security controls, and expert support. It helps users process data at scale, or build Apache Spark applications in a team setting.\n\n\nDatabricks\n\n\n6.2.1 Compute resources\nThe Community Edition will force you to create a new compute if your current compute resource shuts down (you cannot restart it). Cloning an old resource is available; However, any Libraries specified under the Libraries tab will not be cloned and must be respecified.\n\n\n6.2.2 Local File System and DBFS\nThe file system is restricted differently than the professional Databricks platform. Once you have enabled DBFS browsing (click user in top right &gt; select Admin Settings &gt; Workspace settings tab &gt; then enable DBFS File Browser) you can use the DBFS button that now appears after using the catalog navigation to see files stored in the Databricks File System (DBFS). You should have a FileStore folder where uploaded files will appear. After clicking the down arrow to the right of any folder or file, you can select copy path and the following popup appears.\n\nThe Spark API Format works for parsing files using the spark.read methods. The File API Format should work for packages like Pandas and Polars. However, the Community edition does not connect the dbfs drive to the main node. You will need to leverage the dbutils package in Databricks to copy the file to a local folder for Pandas and Polars to access the file.\nimport polars as pl\ndbfs_path = \"dbfs:/FileStore/patterns.parquet\"\ndriver_path = \"file:/databricks/driver/temp_read.parquet\"\ndbutils.fs.cp(dbfs_path, driver_path)\ndat = pl.read_parquet(\"temp_read.parquet\")",
+    "crumbs": [
+      "Databricks",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Databricks Community Edition</span>"
+    ]
   },
   {
     "objectID": "databricks/community_edition.html#using-apache-sedona-for-spatial-sql-methods",
     "href": "databricks/community_edition.html#using-apache-sedona-for-spatial-sql-methods",
     "title": "6  Databricks Community Edition",
     "section": "6.3 Using Apache Sedona for Spatial SQL Methods",
-    "text": "6.3 Using Apache Sedona for Spatial SQL Methods\n\nApache Sedona is a cluster computing system for processing large-scale spatial data. Sedona extends Apache Spark with a set of out-of-the-box distributed Spatial Datasets and Spatial SQL that efficiently load, process, and analyze large-scale spatial data across machines.\n\n\nApache Sedona\n\n\nThey have an installation guide for Databricks that helps us understand the setup process so that we can leverage spatial SQL with our compute.\n\n6.3.1 Compute Configuration\nThe setup of Apache Sedona depends on the Spark version you select. We have confirmed that the following process works for 12.2 LTS (includes Apache Spark 3.3.2, Scala 2.12).\n\n\n\n6.3.2 Installing Sedona libraries for Spark\nInstalling libraries allows us to leverage third-party or custom code in our notebooks and jobs. Python, Java, Scala, and R libraries are available through your compute page’s’ Libraries’ tab. We can upload Java, Scala, and Python libraries and point to external packages in PyPI, Maven, and CRAN repositories.\n\n\n6.3.2.1 Installing the Sedona Maven Coordinates\nApache Maven provides access to a database of .jar files containing compilation instructions to upgrade your Spark environment. We can navigate to the maven installation location under libraries as shown in the picture below.\n\nApached Sedona requires two .jars for it to work in Databricks.\norg.apache.sedona:sedona-spark-shaded-3.0_2.12:1.5.1\norg.datasyslab:geotools-wrapper:1.5.1-28.2\nThe following screen shots exemplify the installation on Community edition.\n\n\n\n\n6.3.2.2 Installing the Sedona Python packages\nWe can install Python packages available to the entire Spark environment through the libraries page as well. We need two packages for Apache Sedona - apache-sedona, keplergl==0.3.2, pydeck==0.8.0. The following charts exemplify this installation on our Community edition.\n\n\n\nUnfortunately, we must go through these steps each time we start a new compute on our Community edition. It takes a few minutes for all the libraries to install. Once completed, you should see the following (Note: I have installed lets-plot as well, which is unnecessary for Sedona).\n\n\n\n\n6.3.3 Starting your notebook\nYour notebooks will need the following code for Sedona to work correctly.\nfrom sedona.register.geo_registrator import SedonaRegistrator\nSedonaRegistrator.registerAll(spark)"
+    "text": "6.3 Using Apache Sedona for Spatial SQL Methods\n\nApache Sedona is a cluster computing system for processing large-scale spatial data. Sedona extends Apache Spark with a set of out-of-the-box distributed Spatial Datasets and Spatial SQL that efficiently load, process, and analyze large-scale spatial data across machines.\n\n\nApache Sedona\n\n\nThey have an installation guide for Databricks that helps us understand the setup process so that we can leverage spatial SQL with our compute.\n\n6.3.1 Compute Configuration\nThe setup of Apache Sedona depends on the Spark version you select. We have confirmed that the following process works for 12.2 LTS (includes Apache Spark 3.3.2, Scala 2.12).\n\n\n\n6.3.2 Installing Sedona libraries for Spark\nInstalling libraries allows us to leverage third-party or custom code in our notebooks and jobs. Python, Java, Scala, and R libraries are available through your compute page’s’ Libraries’ tab. We can upload Java, Scala, and Python libraries and point to external packages in PyPI, Maven, and CRAN repositories.\n\n\n6.3.2.1 Installing the Sedona Maven Coordinates\nApache Maven provides access to a database of .jar files containing compilation instructions to upgrade your Spark environment. We can navigate to the maven installation location under libraries as shown in the picture below.\n\nApached Sedona requires two .jars for it to work in Databricks.\norg.apache.sedona:sedona-spark-shaded-3.0_2.12:1.5.1\norg.datasyslab:geotools-wrapper:1.5.1-28.2\nThe following screen shots exemplify the installation on Community edition.\n\n\n\n\n6.3.2.2 Installing the Sedona Python packages\nWe can install Python packages available to the entire Spark environment through the libraries page as well. We need two packages for Apache Sedona - apache-sedona, keplergl==0.3.2, pydeck==0.8.0. The following charts exemplify this installation on our Community edition.\n\n\n\nUnfortunately, we must go through these steps each time we start a new compute on our Community edition. It takes a few minutes for all the libraries to install. Once completed, you should see the following (Note: I have installed lets-plot as well, which is unnecessary for Sedona).\n\n\n\n\n6.3.3 Starting your notebook\nYour notebooks will need the following code for Sedona to work correctly.\nfrom sedona.register.geo_registrator import SedonaRegistrator\nSedonaRegistrator.registerAll(spark)",
+    "crumbs": [
+      "Databricks",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Databricks Community Edition</span>"
+    ]
   },
   {
     "objectID": "databricks/community_edition.html#using-databricks-notebooks",
     "href": "databricks/community_edition.html#using-databricks-notebooks",
     "title": "6  Databricks Community Edition",
     "section": "6.4 Using Databricks notebooks",
-    "text": "6.4 Using Databricks notebooks\n\nWatch this video to see a short example of using the platform\nRead about the basics of Databricks notebooks\n\n\n6.4.1 Key links\n\nSign up for Community Edition\nA love-hate relationship with Databricks Notebooks\nDatabricks notebooks\nDatabricks Backstory"
+    "text": "6.4 Using Databricks notebooks\n\nWatch this video to see a short example of using the platform\nRead about the basics of Databricks notebooks\n\n\n6.4.1 Key links\n\nSign up for Community Edition\nA love-hate relationship with Databricks Notebooks\nDatabricks notebooks\nDatabricks Backstory",
+    "crumbs": [
+      "Databricks",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Databricks Community Edition</span>"
+    ]
   },
   {
     "objectID": "databricks/repo_navigation.html",
     "href": "databricks/repo_navigation.html",
     "title": "7  Navigating our examples",
     "section": "",
-    "text": "You can download one file that contains all the examples as a .dbc file or download each of these specific .ipynb files.\n\nExample of Notebook Features"
+    "text": "You can download one file that contains all the examples as a .dbc file or download each of these specific .ipynb files.\n\nExample of Notebook Features",
+    "crumbs": [
+      "Databricks",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Navigating our examples</span>"
+    ]
   },
   {
-    "objectID": "spark.html#links",
-    "href": "spark.html#links",
-    "title": "Spark",
-    "section": "links",
-    "text": "links\n\nSpark SQL, DataFrames and Datasets Guide\nChapter 4. Spark SQL and DataFrames"
-  },
-  {
-    "objectID": "spark/spark_part_guide.html#data-science-programming",
-    "href": "spark/spark_part_guide.html#data-science-programming",
+    "objectID": "spark/spark_part_guide.html",
+    "href": "spark/spark_part_guide.html",
     "title": "8  Using this Spark Guide",
-    "section": "8.1 Data science programming",
-    "text": "8.1 Data science programming\nEach language has its view on the vocabulary of data munging. However, data science is starting to reach a point where each language is more like a dialect (British, Australian, or US English) than a unique language (Chinese, Finish, English). We focus on PySpark while providing dialect maps to a few other data-munging languages.\nOur first dialect discussion focuses on how each names the data object upon which we will write munging scripts. R has data.frame, Pandas has DataFrame, Pyspark has DataFrame, and SQL has TABLE to describe the rectangular rows and columns that so often represent how data is stored. In this book we will use the general dataframe to refer to all of them at once.\nEach data object comes with column types or classes that facilitate data munging and analysis. Most of these types are very similar. However, they are not fully interchangeable."
+    "section": "",
+    "text": "8.1 Data science programming\nEach language has its view on the vocabulary of data munging. However, data science is starting to reach a point where each language is more like a dialect (British, Australian, or US English) than a unique language (Chinese, Finish, English). We focus on PySpark while providing dialect maps to a few other data-munging languages.\nOur first dialect discussion focuses on how each names the data object upon which we will write munging scripts. R has data.frame, Pandas has DataFrame, Pyspark has DataFrame, and SQL has TABLE to describe the rectangular rows and columns that so often represent how data is stored. In this book we will use the general dataframe to refer to all of them at once.\nEach data object comes with column types or classes that facilitate data munging and analysis. Most of these types are very similar. However, they are not fully interchangeable.",
+    "crumbs": [
+      "Spark",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Using this Spark Guide</span>"
+    ]
   },
   {
     "objectID": "spark/spark_part_guide.html#example-code-snippets",
     "href": "spark/spark_part_guide.html#example-code-snippets",
     "title": "8  Using this Spark Guide",
     "section": "8.2 Example Code Snippets",
-    "text": "8.2 Example Code Snippets\nThe examples will show code for a few popular data-munging languages to help you understand the mapping between each paradigm.\n\nviewof language = Inputs.checkbox(\n  [\"Tidyverse\", \"Pandas\", \"Polars\", \"SQL\", \"Pyspark\"], \n  { value: [\"Tidyverse\", \"Pandas\", \"Polars\", \"SQL\", \"Pyspark\"], \n    label: md`__Display languages:__`\n  }\n)\n\n\n\n\n\n\n\nimport {Editor} from '@cmudig/editor'\nimport {makeEditor} from '@cmudig/editor'\nimport {makeHl} from '@cmudig/highlighter'\nimport {columns} from \"@bcardiff/observable-columns\"\n\nSQL = makeHl('sql')\nPY = makeHl('py')\nR = makeHl('r')\n\ndata = FileAttachment(\"code_snippets.json\").json()\ndf = data._filter.filter(function(dat){\n    return language.includes(dat._api)\n})\n\nfunction hl(query, language='js') {\n  const result = md`\n~~~${language}\n${String(query).trim()}\n~~~`;\n\n  result.value = String(query).trim();\n\n  return result;\n}\n\nSQLEditor = makeEditor({language: 'sql', label: 'SQL'})\nPythonEditor = makeEditor({language: 'py', label: 'Python'})\nREditor = makeEditor({language: 'r', label: 'R'})\n\n\n\n\nmd`### Selecting Columns from a *dataframe*`\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntitles = df.map(d =&gt; md`### ${d._api}`)\n// codes = df.map(d =&gt; htl.html`&lt;code&gt;${d.code}&lt;/code&gt;`)\ncodes = df.map(d =&gt; hl(d.code, d.language))\n\ncolumns(titles)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ncolumns(codes)"
+    "text": "8.2 Example Code Snippets\nThe examples will show code for a few popular data-munging languages to help you understand the mapping between each paradigm.\n\nviewof language = Inputs.checkbox(\n  [\"Tidyverse\", \"Pandas\", \"Polars\", \"SQL\", \"Pyspark\"], \n  { value: [\"Tidyverse\", \"Pandas\", \"Polars\", \"SQL\", \"Pyspark\"], \n    label: md`__Display languages:__`\n  }\n)\n\n\n\n\n\n\n\nimport {Editor} from '@cmudig/editor'\nimport {makeEditor} from '@cmudig/editor'\nimport {makeHl} from '@cmudig/highlighter'\nimport {columns} from \"@bcardiff/observable-columns\"\n\nSQL = makeHl('sql')\nPY = makeHl('py')\nR = makeHl('r')\n\ndata = FileAttachment(\"code_snippets.json\").json()\ndf = data._filter.filter(function(dat){\n    return language.includes(dat._api)\n})\n\nfunction hl(query, language='js') {\n  const result = md`\n~~~${language}\n${String(query).trim()}\n~~~`;\n\n  result.value = String(query).trim();\n\n  return result;\n}\n\nSQLEditor = makeEditor({language: 'sql', label: 'SQL'})\nPythonEditor = makeEditor({language: 'py', label: 'Python'})\nREditor = makeEditor({language: 'r', label: 'R'})\n\n\n\n\nmd`### Selecting Columns from a *dataframe*`\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntitles = df.map(d =&gt; md`### ${d._api}`)\n// codes = df.map(d =&gt; htl.html`&lt;code&gt;${d.code}&lt;/code&gt;`)\ncodes = df.map(d =&gt; hl(d.code, d.language))\n\ncolumns(titles)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ncolumns(codes)",
+    "crumbs": [
+      "Spark",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Using this Spark Guide</span>"
+    ]
+  },
+  {
+    "objectID": "spark/aggregations.html",
+    "href": "spark/aggregations.html",
+    "title": "9  Aggregated calculations",
+    "section": "",
+    "text": "9.1 GROUP BY\nWhen using ‘GROUP BY’ functions or methods in the varied languages of data science, the resulting table’s observational unit (row) is defined by the levels of the variable used in the ‘GROUP BY’ argument. We move from many rows to fewer rows, as shown in the two leftmost tables of the above image.",
+    "crumbs": [
+      "Spark",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Aggregated calculations</span>"
+    ]
   },
   {
     "objectID": "spark/aggregations.html#group-by",
     "href": "spark/aggregations.html#group-by",
     "title": "9  Aggregated calculations",
-    "section": "9.1 GROUP BY",
-    "text": "9.1 GROUP BY\nWhen using ‘GROUP BY’ functions or methods in the varied languages of data science, the resulting table’s observational unit (row) is defined by the levels of the variable used in the ‘GROUP BY’ argument. We move from many rows to fewer rows, as shown in the two leftmost tables of the above image.\n\n9.1.1 Language-specific help files\n\nSQL: GROUP BY\ndplyr: group_by()\nPandas: df.groupby()\nPolars: df.group_by()\nPyspark: df.groupBy()\n\nThe GROUP BY methods of each language are combined with their respective calculation process.\n\nSQL: calcluated fields\ndplyr: summarize() and read their window example\nPandas: .agg()\nPolars: .agg()\nPyspark: .agg()\n\n\n\n9.1.2 Examples\nThe following two examples result in an average and standard deviation for each section.\n\n\n\nSection\naverage\nsd\n\n\n\n\n1\n90\nnan\n\n\n2\n80\n7.07107\n\n\n3\n86\n18.2483\n\n\n\n\n9.1.2.1 Pyspark\ndf.groupBy('Section').agg(\n  F.mean('Score').alias(\"average\"),\n  F.stddev_samp('Score').alias(\"sd\")\n)\n\n\n9.1.2.2 SQL\nSELECT\n  Section,\n  MEAN(Score),\n  STDDEV_SAMP(Score)\nFROM df\nGROUP BY Section"
+    "section": "",
+    "text": "9.1.1 Language-specific help files\n\nSQL: GROUP BY\ndplyr: group_by()\nPandas: df.groupby()\nPolars: df.group_by()\nPyspark: df.groupBy()\n\nThe GROUP BY methods of each language are combined with their respective calculation process.\n\nSQL: calcluated fields\ndplyr: summarize() and read their window example\nPandas: .agg()\nPolars: .agg()\nPyspark: .agg()\n\n\n\n9.1.2 Examples\nThe following two examples result in an average and standard deviation for each section.\n\n\n\nSection\naverage\nsd\n\n\n\n\n1\n90\nnan\n\n\n2\n80\n7.07107\n\n\n3\n86\n18.2483\n\n\n\n\n9.1.2.1 Pyspark\ndf.groupBy('Section').agg(\n  F.mean('Score').alias(\"average\"),\n  F.stddev_samp('Score').alias(\"sd\")\n)\n\n\n9.1.2.2 SQL\nSELECT\n  Section,\n  MEAN(Score),\n  STDDEV_SAMP(Score)\nFROM df\nGROUP BY Section",
+    "crumbs": [
+      "Spark",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Aggregated calculations</span>"
+    ]
   },
   {
     "objectID": "spark/aggregations.html#window",
     "href": "spark/aggregations.html#window",
     "title": "9  Aggregated calculations",
     "section": "9.2 Window",
-    "text": "9.2 Window\n\nAt its core, a window function calculates a return value for every input row of a table based on a group of rows, called the Frame. Every input row can have a unique frame associated with it. This characteristic of window functions makes them more powerful than other functions and allows users to express various data processing tasks that are hard (if not impossible) to be expressed without window functions in a concise way. ref\n\n\n9.2.1 Language-specific help files\n\nSQL: OVER(PARTITION BY ) or this reference\ndplyr: mutate()\nPandas: transform()\nPolars: .over()\nPyspark: .over() with pyspark.sql.Window() and this Databricks guide\n\n\n\n9.2.2 Examples\nHere are example calculations using Pyspark and SQL. Using the example table above, we want to create the following table.\nAnd we want the following table.\n\n\n\nSection\nStudent\nScore\nrank\nmin\n\n\n\n\n1\na\n90\n1\n90\n\n\n2\nb\n85\n1\n75\n\n\n2\nc\n75\n2\n75\n\n\n3\nd\n95\n2\n65\n\n\n3\ne\n65\n3\n65\n\n\n3\nf\n98\n1\n65\n\n\n\n\n9.2.2.1 Pyspark\nfrom pyspark.sql import Window\nimport pyspark.sql.functions as F\n\nwindow_order = Window.partitionBy('Section').orderBy(F.col('Score').desc())\nwindow = Window.partitionBy('Section')\n\ndf.withColumn(\"rank\", F.rank().over(window_order)) \\\n  .withColumn(\"min\", F.min('Score').over(window)) \\\n  .sort('Student') \\\n  .show()\n\n\n9.2.2.2 SQL\nThen, we can use the following SQL command.\nSELECT Section, Student, Score, \n  RANK(Score) OVER (PARTITION BY Section ORDER BY Score) as rank,\n  MIN(Score) OVER (PARTITION BY SECTION) as min\nFROM df\n\n\n\n9.2.3 Describing Window calculations\nI especially like TMichel’s response that has the highest vote. Although the second response by KARTHICK seems to be the best answer to this specific question. Here is how TMichel explains the Window method in Pyspark (with minor edits by me).\nHere is a dissection of the details of a Window example in Pyspark.\nUsing collect_list() and groupBy() will result in an unordered list of values. Depending on how your data is partitioned, Spark will append values to your list as soon as it finds a row in the group. The order then depends on how Spark plans your aggregation over the executors.\nAssume we have the following data.\n\n\n\nid\ndate\nvalue\n\n\n\n\n1\n2014-01-03\n10\n\n\n1\n2014-01-04\n5\n\n\n1\n2014-01-05\n15\n\n\n1\n2014-01-06\n20\n\n\n2\n2014-02-10\n100\n\n\n2\n2014-03-11\n500\n\n\n2\n2014-04-15\n1500\n\n\n\nA Window function allows you to control that situation, grouping rows by a specific value so you can operate over each of the resultant groups:\nw = Window.partitionBy('id').orderBy('date')\n\npartitionBy() - you want groups/partitions of rows with the same id\norderBy() - you want each row in the group to be sorted by date\n\nThe defined Window scope (rows with the same id, sorted by date) then frames the collect_list operation.\nF.collect_list('value').over(w)\nAt this point, the dataframe has a created a new column sorted_list with an ordered list of values, sorted by date.\n\n\n\nid\ndate\nvalue\nsorted_list\n\n\n\n\n1\n2014-01-03\n10\n[10, 5, 15, 20]\n\n\n1\n2014-01-04\n5\n[10, 5, 15, 20]\n\n\n1\n2014-01-05\n15\n[10, 5, 15, 20]\n\n\n1\n2014-01-06\n20\n[10, 5, 15, 20]\n\n\n2\n2014-02-10\n100\n[100, 500, 1500]\n\n\n2\n2014-03-11\n500\n[100, 500, 1500]\n\n\n2\n2014-04-15\n1500\n[100, 500, 1500]"
+    "text": "9.2 Window\n\nAt its core, a window function calculates a return value for every input row of a table based on a group of rows, called the Frame. Every input row can have a unique frame associated with it. This characteristic of window functions makes them more powerful than other functions and allows users to express various data processing tasks that are hard (if not impossible) to be expressed without window functions in a concise way. ref\n\n\n9.2.1 Language-specific help files\n\nSQL: OVER(PARTITION BY ) or this reference\ndplyr: mutate()\nPandas: transform()\nPolars: .over()\nPyspark: .over() with pyspark.sql.Window() and this Databricks guide\n\n\n\n9.2.2 Examples\nHere are example calculations using Pyspark and SQL. Using the example table above, we want to create the following table.\nAnd we want the following table.\n\n\n\nSection\nStudent\nScore\nrank\nmin\n\n\n\n\n1\na\n90\n1\n90\n\n\n2\nb\n85\n1\n75\n\n\n2\nc\n75\n2\n75\n\n\n3\nd\n95\n2\n65\n\n\n3\ne\n65\n3\n65\n\n\n3\nf\n98\n1\n65\n\n\n\n\n9.2.2.1 Pyspark\nfrom pyspark.sql import Window\nimport pyspark.sql.functions as F\n\nwindow_order = Window.partitionBy('Section').orderBy(F.col('Score').desc())\nwindow = Window.partitionBy('Section')\n\ndf.withColumn(\"rank\", F.rank().over(window_order)) \\\n  .withColumn(\"min\", F.min('Score').over(window)) \\\n  .sort('Student') \\\n  .show()\n\n\n9.2.2.2 SQL\nThen, we can use the following SQL command.\nSELECT Section, Student, Score, \n  RANK(Score) OVER (PARTITION BY Section ORDER BY Score) as rank,\n  MIN(Score) OVER (PARTITION BY SECTION) as min\nFROM df\n\n\n\n9.2.3 Describing Window calculations\nI especially like TMichel’s response that has the highest vote. Although the second response by KARTHICK seems to be the best answer to this specific question. Here is how TMichel explains the Window method in Pyspark (with minor edits by me).\nHere is a dissection of the details of a Window example in Pyspark.\nUsing collect_list() and groupBy() will result in an unordered list of values. Depending on how your data is partitioned, Spark will append values to your list as soon as it finds a row in the group. The order then depends on how Spark plans your aggregation over the executors.\nAssume we have the following data.\n\n\n\nid\ndate\nvalue\n\n\n\n\n1\n2014-01-03\n10\n\n\n1\n2014-01-04\n5\n\n\n1\n2014-01-05\n15\n\n\n1\n2014-01-06\n20\n\n\n2\n2014-02-10\n100\n\n\n2\n2014-03-11\n500\n\n\n2\n2014-04-15\n1500\n\n\n\nA Window function allows you to control that situation, grouping rows by a specific value so you can operate over each of the resultant groups:\nw = Window.partitionBy('id').orderBy('date')\n\npartitionBy() - you want groups/partitions of rows with the same id\norderBy() - you want each row in the group to be sorted by date\n\nThe defined Window scope (rows with the same id, sorted by date) then frames the collect_list operation.\nF.collect_list('value').over(w)\nAt this point, the dataframe has a created a new column sorted_list with an ordered list of values, sorted by date.\n\n\n\nid\ndate\nvalue\nsorted_list\n\n\n\n\n1\n2014-01-03\n10\n[10, 5, 15, 20]\n\n\n1\n2014-01-04\n5\n[10, 5, 15, 20]\n\n\n1\n2014-01-05\n15\n[10, 5, 15, 20]\n\n\n1\n2014-01-06\n20\n[10, 5, 15, 20]\n\n\n2\n2014-02-10\n100\n[100, 500, 1500]\n\n\n2\n2014-03-11\n500\n[100, 500, 1500]\n\n\n2\n2014-04-15\n1500\n[100, 500, 1500]",
+    "crumbs": [
+      "Spark",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Aggregated calculations</span>"
+    ]
   },
   {
     "objectID": "spark/aggregations.html#example-data",
     "href": "spark/aggregations.html#example-data",
     "title": "9  Aggregated calculations",
     "section": "9.3 Example Data",
-    "text": "9.3 Example Data\nfrom pyspark.sql import functions as F\ndate_data = [\n    (1, \"2014-01-03\", 10 ), \\\n    (1, \"2014-01-04\", 5), \\\n    (1, \"2014-01-05\", 15), \\\n    (1, \"2014-01-06\", 20), \\\n    (2, \"2014-02-10\", 100), \\\n    (2, \"2014-03-11\", 500), \\\n    (2, \"2014-04-15\", 1500)  \n]\ndate_columns = [\"id\", \"date\", \"value\"]\ndf_date = spark.createDataFrame(data = date_data, schema = date_columns)\\\n        .withColumn(\"date\", F.to_date(\"date\"))\n\nstudent_data = [\n    (1, \"a\", 90), \\\n    (2, \"b\", 85), \\\n    (2, \"c\", 75), \\\n    (3, \"d\", 95), \\\n    (3, \"e\", 65), \\\n    (3, \"f\", 98) \\\n\n]\n\nstudent_columns = [\"Section\", \"Student\", \"Score\"]\ndf = spark.createDataFrame(data = student_data, schema = student_columns)"
+    "text": "9.3 Example Data\nfrom pyspark.sql import functions as F\ndate_data = [\n    (1, \"2014-01-03\", 10 ), \\\n    (1, \"2014-01-04\", 5), \\\n    (1, \"2014-01-05\", 15), \\\n    (1, \"2014-01-06\", 20), \\\n    (2, \"2014-02-10\", 100), \\\n    (2, \"2014-03-11\", 500), \\\n    (2, \"2014-04-15\", 1500)  \n]\ndate_columns = [\"id\", \"date\", \"value\"]\ndf_date = spark.createDataFrame(data = date_data, schema = date_columns)\\\n        .withColumn(\"date\", F.to_date(\"date\"))\n\nstudent_data = [\n    (1, \"a\", 90), \\\n    (2, \"b\", 85), \\\n    (2, \"c\", 75), \\\n    (3, \"d\", 95), \\\n    (3, \"e\", 65), \\\n    (3, \"f\", 98) \\\n\n]\n\nstudent_columns = [\"Section\", \"Student\", \"Score\"]\ndf = spark.createDataFrame(data = student_data, schema = student_columns)",
+    "crumbs": [
+      "Spark",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Aggregated calculations</span>"
+    ]
   },
   {
     "objectID": "spark/aggregations.html#references",
     "href": "spark/aggregations.html#references",
     "title": "9  Aggregated calculations",
     "section": "9.4 References",
-    "text": "9.4 References\n\nHow orderBy affects Window.partitionBy in Pyspark dataframe? - Stack Overflow\nPySpark Window Functions - Spark By {Examples}\nIntroducing Window Functions in Spark SQL | Databricks Blog\nSpark Window Function - PySpark – KnockData – Everything About Data\nPython pandas equivalent to R groupby mutate - Stack Overflow\nSpark Window Functions with Examples - Spark By {Examples}"
+    "text": "9.4 References\n\nHow orderBy affects Window.partitionBy in Pyspark dataframe? - Stack Overflow\nPySpark Window Functions - Spark By {Examples}\nIntroducing Window Functions in Spark SQL | Databricks Blog\nSpark Window Function - PySpark – KnockData – Everything About Data\nPython pandas equivalent to R groupby mutate - Stack Overflow\nSpark Window Functions with Examples - Spark By {Examples}",
+    "crumbs": [
+      "Spark",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Aggregated calculations</span>"
+    ]
   },
   {
-    "objectID": "spark/spark_intro.html#what-is-pyspark",
-    "href": "spark/spark_intro.html#what-is-pyspark",
+    "objectID": "spark/spark_intro.html",
+    "href": "spark/spark_intro.html",
     "title": "10  What is Spark?",
-    "section": "10.1 What is PySpark?",
-    "text": "10.1 What is PySpark?\nPySpark supports the integration of Apache Spark and Python as a Python API for Spark. In addition, PySpark, helps you interface with Resilient Distributed Datasets (RDDs) in Apache Spark and Python programming language. PySpark refers to the collection of Python APIs for Spark.3 This book will focus on PySparkSQL and MLlib. Within Databricks we have access to the PySparkSQL methods using the spark object that is available in each notebook. Users of PySpark outside of Databricks would need to create their spark entry point with something like the following\n\nspark = SparkSession \\\n    .builder \\\n    .appName(\"Python Spark SQL basic example\") \\\n    .config(\"spark.some.config.option\", \"some-value\") \\\n    .getOrCreate()"
+    "section": "",
+    "text": "10.1 What is PySpark?\nPySpark supports the integration of Apache Spark and Python as a Python API for Spark. In addition, PySpark, helps you interface with Resilient Distributed Datasets (RDDs) in Apache Spark and Python programming language. PySpark refers to the collection of Python APIs for Spark.3 This book will focus on PySparkSQL and MLlib. Within Databricks we have access to the PySparkSQL methods using the spark object that is available in each notebook. Users of PySpark outside of Databricks would need to create their spark entry point with something like the following\nspark = SparkSession \\\n    .builder \\\n    .appName(\"Python Spark SQL basic example\") \\\n    .config(\"spark.some.config.option\", \"some-value\") \\\n    .getOrCreate()",
+    "crumbs": [
+      "Spark",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>What is Spark?</span>"
+    ]
   },
   {
     "objectID": "spark/spark_intro.html#footnotes",
     "href": "spark/spark_intro.html#footnotes",
     "title": "10  What is Spark?",
     "section": "",
-    "text": "https://www.infoworld.com/article/3236869/what-is-apache-spark-the-big-data-platform-that-crushed-hadoop.html↩︎\nhttps://databricks.com/spark/about↩︎\nhttps://www.databricks.com/glossary/pyspark↩︎"
+    "text": "https://www.infoworld.com/article/3236869/what-is-apache-spark-the-big-data-platform-that-crushed-hadoop.html↩︎\nhttps://databricks.com/spark/about↩︎\nhttps://www.databricks.com/glossary/pyspark↩︎",
+    "crumbs": [
+      "Spark",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>What is Spark?</span>"
+    ]
   },
   {
-    "objectID": "features/features_intro.html#spatial-unit-of-interest-derivation",
-    "href": "features/features_intro.html#spatial-unit-of-interest-derivation",
+    "objectID": "features/features_intro.html",
+    "href": "features/features_intro.html",
     "title": "11  Feature Engineering",
-    "section": "11.1 Spatial Unit of interest derivation",
-    "text": "11.1 Spatial Unit of interest derivation\nThe tract_table has the county data within it. We can leverage this table to get our unit of analysis table."
+    "section": "",
+    "text": "When working with business data, we often have a database that stores transactions. We will have tables that store credit card transactions, tables that store paycheck transactions, key card tables that store build access transactions, and account tables that store logins or purchase transactions. These transaction tables are usually not at the right level of detail (often called ‘unit of analysis’) for any machine learning or statistical model inference.\nTo build our predictive models, these transaction tables need to be munged into the correct space, time, and variable aggregation. Here are the questions we must work through based on our modeling needs.\n\nWhat is my spatial unit of interest for predictions? How can I munge my tables to create the foundation of the analysis table?\nWhat is my label/target that I will use for prediction?\nWhat features would help predict my label?\nWhat is my temporal unit of interest for feature building?\nWhat tables/keys do I need to map my transactions to that spatial unit?\n\n\n\n\nfeature diagram with spatial, variable, and temporal",
+    "crumbs": [
+      "Feature Engineering",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
   },
   {
-    "objectID": "features/features_intro.html#label-creation",
-    "href": "features/features_intro.html#label-creation",
-    "title": "11  Feature Engineering",
-    "section": "11.2 Label creation",
-    "text": "11.2 Label creation\nThe idaho_temples.csv has our path to a label. We want to create a 0/1 label for has not/has a temple for each county."
+    "objectID": "features/features_temporal.html",
+    "href": "features/features_temporal.html",
+    "title": "12  Temporal Features",
+    "section": "",
+    "text": "12.1 Example Data\nWe will use some data about grocery stores in South America. The data includes daily transactions, store metadata, and promotional information. This dataset will help us understand how different factors influence sales and transactions at various stores. It is based on a Kaggle competion1\nLet’s take a look at the datasets we have:\nWe will use these datasets to demonstrate feature engineering techniques for building predictive models.",
+    "crumbs": [
+      "Feature Engineering",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Temporal Features</span>"
+    ]
   },
   {
-    "objectID": "features/features_intro.html#feature-creation",
-    "href": "features/features_intro.html#feature-creation",
-    "title": "11  Feature Engineering",
-    "section": "11.3 Feature Creation",
-    "text": "11.3 Feature Creation\nWe want a clean feature that focuses on chapels for the Church of Jesus Christ of Latter-day Saints. How can we get a list of placekeys that are LDS chapels? Some regular expressions on the name will be helpful. What about day of the week attendance?\nWhat can we do to check the quality of the data."
+    "objectID": "features/features_temporal.html#example-data",
+    "href": "features/features_temporal.html#example-data",
+    "title": "12  Temporal Features",
+    "section": "",
+    "text": "transactions_daily.parquet: Contains daily sales data for each store and product family.\ntransactions_store.parquet: Contains the total number of transactions per day for each store.\nstores.parquet: Contains metadata about each store, including location and type.\n\n\n\n12.1.1 transactions_daily.parquet\nThe primary data, comprising time series of features store_nbr, family, and onpromotion as well as the target sales.\n\nstore_nbr: identifies the store at which the products are sold.\nfamily: identifies the type of product sold.\nsales: gives the total sales for a product family at a particular store at a given date. Fractional values are possible since products can be sold in fractional units (1.5 kg of cheese, for instance, as opposed to 1 bag of chips).\nonpromotion: gives the total number of items in a product family that were being promoted at a store at a given date.\n\n\n\n12.1.2 transactions_store.parquet\nThe total transactions by day for each store.\n\nstore_nbr: The store number.\ntransactions: The total number of transactions for that day.\n\n\n\n12.1.3 stores.parquet\nStore metadata, including city, state, type, and cluster.\n\ncluster: is a grouping of similar stores.",
+    "crumbs": [
+      "Feature Engineering",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Temporal Features</span>"
+    ]
   },
   {
-    "objectID": "features/features_intro.html#temporal-considerations",
-    "href": "features/features_intro.html#temporal-considerations",
-    "title": "11  Feature Engineering",
-    "section": "11.4 Temporal Considerations",
-    "text": "11.4 Temporal Considerations\nThis data runs over COVID-19 as we have 2019 through 2022."
+    "objectID": "features/features_temporal.html#footnotes",
+    "href": "features/features_temporal.html#footnotes",
+    "title": "12  Temporal Features",
+    "section": "",
+    "text": "Alexis Cook, DanB, inversion, and Ryan Holbrook. Store Sales - Time Series Forecasting. https://kaggle.com/competitions/store-sales-time-series-forecasting, 2021. Kaggle.↩︎",
+    "crumbs": [
+      "Feature Engineering",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Temporal Features</span>"
+    ]
   },
   {
-    "objectID": "features/features_intro.html#mapping-back-to-my-unit-of-analysis",
-    "href": "features/features_intro.html#mapping-back-to-my-unit-of-analysis",
-    "title": "11  Feature Engineering",
-    "section": "11.5 Mapping back to my unit of analysis",
-    "text": "11.5 Mapping back to my unit of analysis"
+    "objectID": "training/training_intro.html",
+    "href": "training/training_intro.html",
+    "title": "14  Short Course Training Development",
+    "section": "",
+    "text": "14.1 Short Course Students\nShort course training is much different than the type of training you receive as a student in college. These professional pieces of training are meant to quickly provide an introduction, workable code snippets, and ways to push deeper after one or two hours. We have a small set of learning goals that we focus on to help the students get over the early-stage hurdles of the new technology. Professional short courses are filled with students with years of experience and multiple degrees, so they differ from a new first-year student in an introductory class. However, they are “freshmen” concerning the latest technology you introduce.\nThese learners will surprise you with the depth of their questions as well as the shallowness of their abilities. You need to be prepared to keep the material simple but have the background knowledge to clearly answer any depth questions that arise. This preparation requires you to have built an experience with the tool that would allow you to teach advanced material on the topic while staying focused on introductory teaching goals.",
+    "crumbs": [
+      "Building Trainings",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Short Course Training Development</span>"
+    ]
   },
   {
     "objectID": "training/training_intro.html#short-course-students",
     "href": "training/training_intro.html#short-course-students",
-    "title": "13  Short Course Training Development",
-    "section": "13.1 Short Course Students",
-    "text": "13.1 Short Course Students\nShort course training is much different than the type of training you receive as a student in college. These professional pieces of training are meant to quickly provide an introduction, workable code snippets, and ways to push deeper after one or two hours. We have a small set of learning goals that we focus on to help the students get over the early-stage hurdles of the new technology. Professional short courses are filled with students with years of experience and multiple degrees, so they differ from a new first-year student in an introductory class. However, they are “freshmen” concerning the latest technology you introduce.\nThese learners will surprise you with the depth of their questions as well as the shallowness of their abilities. You need to be prepared to keep the material simple but have the background knowledge to clearly answer any depth questions that arise. This preparation requires you to have built an experience with the tool that would allow you to teach advanced material on the topic while staying focused on introductory teaching goals.\n\n\nIn college courses, our learning experiences are within a classroom that meets multiple times weekly for numerous months. That is often one part of a larger degree where multiple principles are taught beyond the technical tools of a new software package or technique. You have probably experienced a few different teaching styles from your professors. Your short course mustn’t be a 60-minute long lecture! Additionally, it is crucial that you take ownership of the material and that you provide clear examples that help the students use the new technology. They wouldn’t have come to your short course if they wanted to learn independently."
+    "title": "14  Short Course Training Development",
+    "section": "",
+    "text": "In college courses, our learning experiences are within a classroom that meets multiple times weekly for numerous months. That is often one part of a larger degree where multiple principles are taught beyond the technical tools of a new software package or technique. You have probably experienced a few different teaching styles from your professors. Your short course mustn’t be a 60-minute long lecture! Additionally, it is crucial that you take ownership of the material and that you provide clear examples that help the students use the new technology. They wouldn’t have come to your short course if they wanted to learn independently.",
+    "crumbs": [
+      "Building Trainings",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Short Course Training Development</span>"
+    ]
   },
   {
     "objectID": "training/training_intro.html#short-course-development",
     "href": "training/training_intro.html#short-course-development",
-    "title": "13  Short Course Training Development",
-    "section": "13.2 Short Course Development",
-    "text": "13.2 Short Course Development\n\n13.2.1 The Goal\nExploring new technology without a guide or instructor is often a non-linear mess. Your experience as the initial explorer is different from what you want to provide to your students. You may explore multiple futile paths while finding a few clear and safe trails to give the best experience. After examining the varied approaches, you will ponder the destination and journey. What is the experience we want the student to have at completion? Is our path short enough to get them to that experience with enough time to enjoy the view?\n\n\n13.2.2 The Journey\nNow that you can see the end experience, you must use the right tools to help the students navigate the trail. Here are a few fundamental principles.\n\nGithub: Building your material on Github gives all the students rapid access to your training.\nPurpose/Introduction: Ensure your first few minutes frame the training. There is no need to sneak up on the students. Be direct and tell them the learning goals for your training. This part should take just a few minutes.\nOverviews: We must present context and details on the new technology. Expect to take time to “lecture” to get your class on the same page of understanding.\nActivities: These short courses focus on getting new tools into the hands of the student. Make sure you have hands-on activities where the students figure out how to use the tool in a real example. These activities are more than simple copy and paste. You want to give them a chance to think.\nWorking Examples: Make sure you have answers to your activities and other working examples for them to take home. The activities are often quite simple. I like to have one or two more complex examples for them to review after the class.\nBalance: It is important to balance the overviews and the activities. I ensure that my activities require as much time as any overview presentation material. It is also good to weave the overviews and balance them into shorter 5-10 blocks to provide variety.\n\n\n\n13.2.3 Completion\nThese short courses are valuable marketing tools. Make sure you have provided your contact information and that your students have references and examples that they can use to push their learning deeper. Think about how your material is organized in your Github repository so that others that find your space can learn and leverage your material without having participated in the course."
+    "title": "14  Short Course Training Development",
+    "section": "14.2 Short Course Development",
+    "text": "14.2 Short Course Development\n\n14.2.1 The Goal\nExploring new technology without a guide or instructor is often a non-linear mess. Your experience as the initial explorer is different from what you want to provide to your students. You may explore multiple futile paths while finding a few clear and safe trails to give the best experience. After examining the varied approaches, you will ponder the destination and journey. What is the experience we want the student to have at completion? Is our path short enough to get them to that experience with enough time to enjoy the view?\n\n\n14.2.2 The Journey\nNow that you can see the end experience, you must use the right tools to help the students navigate the trail. Here are a few fundamental principles.\n\nGithub: Building your material on Github gives all the students rapid access to your training.\nPurpose/Introduction: Ensure your first few minutes frame the training. There is no need to sneak up on the students. Be direct and tell them the learning goals for your training. This part should take just a few minutes.\nOverviews: We must present context and details on the new technology. Expect to take time to “lecture” to get your class on the same page of understanding.\nActivities: These short courses focus on getting new tools into the hands of the student. Make sure you have hands-on activities where the students figure out how to use the tool in a real example. These activities are more than simple copy and paste. You want to give them a chance to think.\nWorking Examples: Make sure you have answers to your activities and other working examples for them to take home. The activities are often quite simple. I like to have one or two more complex examples for them to review after the class.\nBalance: It is important to balance the overviews and the activities. I ensure that my activities require as much time as any overview presentation material. It is also good to weave the overviews and balance them into shorter 5-10 blocks to provide variety.\n\n\n\n14.2.3 Completion\nThese short courses are valuable marketing tools. Make sure you have provided your contact information and that your students have references and examples that they can use to push their learning deeper. Think about how your material is organized in your Github repository so that others that find your space can learn and leverage your material without having participated in the course.",
+    "crumbs": [
+      "Building Trainings",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Short Course Training Development</span>"
+    ]
   },
   {
     "objectID": "training/training_intro.html#structuring-your-github-repository",
     "href": "training/training_intro.html#structuring-your-github-repository",
-    "title": "13  Short Course Training Development",
-    "section": "13.3 Structuring your Github Repository",
-    "text": "13.3 Structuring your Github Repository"
+    "title": "14  Short Course Training Development",
+    "section": "14.3 Structuring your Github Repository",
+    "text": "14.3 Structuring your Github Repository",
+    "crumbs": [
+      "Building Trainings",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Short Course Training Development</span>"
+    ]
+  },
+  {
+    "objectID": "introduction.html",
+    "href": "introduction.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "As an introduction, we highlight the different elements of data science when using big data. This section focuses on high level concepts and descriptions.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "databricks.html",
+    "href": "databricks.html",
+    "title": "Databricks",
+    "section": "",
+    "text": "Databricks provides data scientists and data engineers a unified platform for scalable analytics and data management with almost unlimited storage and compute capacity through the use of Spark.",
+    "crumbs": [
+      "Databricks"
+    ]
+  },
+  {
+    "objectID": "spark.html",
+    "href": "spark.html",
+    "title": "Spark",
+    "section": "",
+    "text": "links",
+    "crumbs": [
+      "Spark"
+    ]
+  },
+  {
+    "objectID": "spark.html#links",
+    "href": "spark.html#links",
+    "title": "Spark",
+    "section": "",
+    "text": "Spark SQL, DataFrames and Datasets Guide\nChapter 4. Spark SQL and DataFrames",
+    "crumbs": [
+      "Spark"
+    ]
   }
 ]

@@ -1,0 +1,75 @@
+# Temporal Features
+
+Feature engineering with data that requires predictions into the future from a fixed moment that leverages all the present and past known within the data create complicated wrangling problems. As we move through our historical data to create training data that respect the division between past, present, and future we are faced with the unique challenge that our features and target value can often be identical measures only differentiated by past and future.
+
+Additionally, time series data also opens introduces complexities with highly correlated observations. When dealing with time series data, we need to account for the temporal dependencies and autocorrelation present in the data. This often requires creating lag features, rolling statistics, and other time-based features to capture the underlying patterns and trends.
+
+One common approach is to create lag features, which are simply the values of a variable at previous time steps. For example, if we are predicting sales, we might include the sales from the previous day, week, or month as features. Another approach is to calculate rolling statistics, such as the rolling mean or standard deviation, to capture the trends and variability over time.
+
+Additionally, we need to be mindful of the potential for data leakage, where information from the future is used to predict the past. This can lead to overly optimistic performance estimates and poor generalization to new data. To avoid this, we should ensure that our feature engineering and model evaluation processes respect the temporal order of the data.
+
+## Example Data
+
+We will use some data about grocery stores in South America. The data includes daily transactions, store metadata, and promotional information. This dataset will help us understand how different factors influence sales and transactions at various stores. It is based on a Kaggle competion[^1]
+
+Let's take a look at the datasets we have:
+
+- `transactions_daily.parquet`: Contains daily sales data for each store and product family.
+- `transactions_store.parquet`: Contains the total number of transactions per day for each store.
+- `stores.parquet`: Contains metadata about each store, including location and type.
+
+We will use these datasets to demonstrate feature engineering techniques for building predictive models.
+
+### transactions_daily.parquet
+
+The primary data, comprising time series of features `store_nbr`, `family`, and `onpromotion` as well as the target `sales`.
+
+- `store_nbr`: identifies the store at which the products are sold.
+- `family`: identifies the type of product sold.
+- `sales`:  gives the total sales for a product family at a particular store at a given date. Fractional values are possible since products can be sold in fractional units (1.5 kg of cheese, for instance, as opposed to 1 bag of chips).
+- `onpromotion`:  gives the total number of items in a product family that were being promoted at a store at a given date.
+
+### transactions_store.parquet
+
+The total transactions by day for each store.
+
+- `store_nbr`: The store number.
+- `transactions`: The total number of transactions for that day.
+
+### stores.parquet
+
+Store metadata, including `city`, `state`, `type`, and `cluster`.
+
+- `cluster`: is a grouping of similar stores.
+
+## Exploring spatial munging
+
+Alakh Sethi has a fun post on [Feature engineering](https://www.analyticsvidhya.com/blog/2020/06/feature-engineering-guide-data-science-hackathons/) that highlights some great thoughts about temporal data and feature engineering.
+
+> __Peeking (into the future) is the “original sin” of feature engineering.__ It refers to using information about the future (or information which would not yet be known by us) to engineer a piece of data. This can be obvious, like using next_12_months_returns. However, it’s most often quite subtle, like using the mean or standard deviation across the full-time period to normalize data points (which implicitly leaks future information into our features). The test is whether you would be able to get the exact same value if you were calculating the data point at that point in time rather than today.
+> 
+> __Be honest about what you would have known at the time, not just what had happened at the time.__ For instance, short borrowing data is reported by exchanges with a considerable time lag. You would want to stamp the feature with the date on which you would have known it.
+
+Let's explore how to build temporal features with a walk through some feature engineering using the grocery store data.
+
+[Pourya's article in Toward's Data Science](https://medium.com/towards-data-science/time-series-machine-learning-regression-framework-9ea33929009a) provides some simple examples of timeseries feature engineering that we will use with our data.
+
+
+
+
+
+## Exploring spatial modeling
+
+- [Time Series Machine Learning Regression Framework | by Pourya | TDS Archive | Medium](https://medium.com/towards-data-science/time-series-machine-learning-regression-framework-9ea33929009a)
+- [Cross Validation in Time Series. Cross Validation: | by Soumya Shrivastava | Medium](https://medium.com/@soumyachess1496/cross-validation-in-time-series-566ae4981ce4)
+- [How (not) to use Machine Learning for time series forecasting: Avoiding the pitfalls | by Vegard Flovik | Towards Data Science | Medium](https://medium.com/towards-data-science/how-not-to-use-machine-learning-for-time-series-forecasting-avoiding-the-pitfalls-19f9d7adf424)
+- [How (not) to use Machine Learning for time series forecasting: The sequel - KDnuggets](https://www.kdnuggets.com/2020/03/machine-learning-time-series-forecasting-sequel.html)
+- [Fine-Grained Time Series Forecasting With Facebook Prophet Updated for Apache Spark - The Databricks Blog](https://www.databricks.com/blog/2021/04/06/fine-grained-time-series-forecasting-at-scale-with-facebook-prophet-and-apache-spark-updated-for-spark-3.html)
+- [modeling - Using k-fold cross-validation for time-series model selection - Cross Validated](https://stats.stackexchange.com/questions/14099/using-k-fold-cross-validation-for-time-series-model-selection)
+- [Cross-validation for time series – Rob J Hyndman](https://robjhyndman.com/hyndsight/tscv/)
+- [3.4 Evaluating forecast accuracy | Forecasting: Principles and Practice (2nd ed)](https://otexts.com/fpp2/accuracy.html)
+- [time-series-foundation-models/lag-llama: Lag-Llama: Towards Foundation Models for Probabilistic Time Series Forecasting](https://github.com/time-series-foundation-models/lag-llama)
+
+
+
+[^1]: Alexis Cook, DanB, inversion, and Ryan Holbrook. Store Sales - Time Series Forecasting. https://kaggle.com/competitions/store-sales-time-series-forecasting, 2021. Kaggle.
