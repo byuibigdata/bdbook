@@ -355,10 +355,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Feature engineering with data that requires predictions into the future from a fixed moment that leverages all the present and past known within the data create complicated wrangling problems. As we move through our historical data to create training data that respect the division between past, present, and future we are faced with the unique challenge that our features and target value can often be identical measures only differentiated by past and future.</p>
-<p>Additionally, time series data also opens introduces complexities with highly correlated observations. When dealing with time series data, we need to account for the temporal dependencies and autocorrelation present in the data. This often requires creating lag features, rolling statistics, and other time-based features to capture the underlying patterns and trends.</p>
-<p>One common approach is to create lag features, which are simply the values of a variable at previous time steps. For example, if we are predicting sales, we might include the sales from the previous day, week, or month as features. Another approach is to calculate rolling statistics, such as the rolling mean or standard deviation, to capture the trends and variability over time.</p>
-<p>Additionally, we need to be mindful of the potential for data leakage, where information from the future is used to predict the past. This can lead to overly optimistic performance estimates and poor generalization to new data. To avoid this, we should ensure that our feature engineering and model evaluation processes respect the temporal order of the data.</p>
+<p>Feature engineering with data that requires predictions into the future from a fixed moment that leverages all the present and past known within the data creates complicated wrangling problems. As we move through our historical data to create training data that respects the division between past, present, and future we face a unique challenge that our features and target value can often be identical measures only differentiated by our defintion of the present or <strong>NOW</strong>.</p>
+<p>Additionally, time series data also introduces complexities with highly correlated observations. When dealing with time series data, we need to account for the temporal dependencies and autocorrelation present in the data. Our feature engineering often requires creating lag features, rolling statistics, and other time-based features to capture the underlying patterns and trends.</p>
+<p>Lag features are simply the values of a variable at previous time steps. For example, if we are predicting sales, we might include the sales from the previous day, week, or month as features. Another approach is to calculate rolling statistics, such as the rolling mean or standard deviation, to capture the trends and variability over time.</p>
+<p>We need to be mindful of the potential for data leakage, where information from the future is used to predict the past. This can lead to overly optimistic performance estimates and poor generalization to new data. To avoid this, we should ensure that our feature engineering and model evaluation processes respect the temporal order of the data.</p>
 <section id="exploring-spatial-munging" class="level2" data-number="12.1">
 <h2 data-number="12.1" class="anchored" data-anchor-id="exploring-spatial-munging"><span class="header-section-number">12.1</span> Exploring spatial munging</h2>
 <p>Alakh Sethi has a fun post on <a href="https://www.analyticsvidhya.com/blog/2020/06/feature-engineering-guide-data-science-hackathons/">Feature engineering</a> that highlights some great thoughts about temporal data and feature engineering.</p>
@@ -418,7 +418,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">from</span> lets_plot <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb1-3"><a href="#cb1-3"></a>LetsPlot.setup_html()</span>
 <span id="cb1-4"><a href="#cb1-4"></a>daily <span class="op">=</span> pl.read_parquet(<span class="st">"transactions_daily.parquet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now let’s create move our daily transactions date to weekly summaries for each store and product family with the following new columns.</p>
+<p>Starting with the <code>date</code> column, let’s move our daily transactions to weekly summaries for each store and product family with the following new columns.</p>
 <ul>
 <li><code>week_of_year</code></li>
 <li><code>year</code></li>
@@ -587,12 +587,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+<p>Notice how time is moving along columns and rows. As we move down rows we are moving into the future. In the columns, we would have one column (in our example we have two potential columns) that is in the future which would be used as the foundation (or the actual) target (<code>y</code>) variable. The remaining time-based columns would be summaries of intervals or points in the history of the point of estimation.</p>
 <ul>
 <li>Which column would be our <code>y</code> value or <code>target</code> if we were predicting what we will sell in the next seven days?</li>
+<li>How do the three date columns (<code>prediction_day</code>, <code>min_date</code>, <code>max_date</code>) relate to our <code>target</code> variable.</li>
 <li>Can you build a new <code>y</code> that is the lagged difference? The column would be the difference in sales from the week we just completed to the sales seven days in the future.</li>
 <li>Can you build a new <code>feature</code> that is the difference in percent of sales for the year comparing the most recently completed week with it’s sister week in the previous year?</li>
 <li>How correlated is this new <code>feature</code> with our <code>target</code>?</li>
 </ul>
+<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*h6HaTi1DKsNqEUjdECQV0A.png" class="img-fluid"></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -605,7 +608,9 @@ Try before you pry
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Explore the example <a href="data/feature_engineer.py">script</a></p>
+<ul>
+<li>Explore the example <a href="data/feature_engineer.py">Polars script</a></li>
+</ul>
 </div>
 </div>
 </div>

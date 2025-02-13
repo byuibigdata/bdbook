@@ -1,12 +1,12 @@
 # Temporal Features
 
-Feature engineering with data that requires predictions into the future from a fixed moment that leverages all the present and past known within the data create complicated wrangling problems. As we move through our historical data to create training data that respect the division between past, present, and future we are faced with the unique challenge that our features and target value can often be identical measures only differentiated by past and future.
+Feature engineering with data that requires predictions into the future from a fixed moment that leverages all the present and past known within the data creates complicated wrangling problems. As we move through our historical data to create training data that respects the division between past, present, and future we face a unique challenge that our features and target value can often be identical measures only differentiated by our defintion of the present or __NOW__.
 
-Additionally, time series data also opens introduces complexities with highly correlated observations. When dealing with time series data, we need to account for the temporal dependencies and autocorrelation present in the data. This often requires creating lag features, rolling statistics, and other time-based features to capture the underlying patterns and trends.
+Additionally, time series data also introduces complexities with highly correlated observations. When dealing with time series data, we need to account for the temporal dependencies and autocorrelation present in the data. Our feature engineering often requires creating lag features, rolling statistics, and other time-based features to capture the underlying patterns and trends.
 
-One common approach is to create lag features, which are simply the values of a variable at previous time steps. For example, if we are predicting sales, we might include the sales from the previous day, week, or month as features. Another approach is to calculate rolling statistics, such as the rolling mean or standard deviation, to capture the trends and variability over time.
+Lag features are simply the values of a variable at previous time steps. For example, if we are predicting sales, we might include the sales from the previous day, week, or month as features. Another approach is to calculate rolling statistics, such as the rolling mean or standard deviation, to capture the trends and variability over time.
 
-Additionally, we need to be mindful of the potential for data leakage, where information from the future is used to predict the past. This can lead to overly optimistic performance estimates and poor generalization to new data. To avoid this, we should ensure that our feature engineering and model evaluation processes respect the temporal order of the data.
+We need to be mindful of the potential for data leakage, where information from the future is used to predict the past. This can lead to overly optimistic performance estimates and poor generalization to new data. To avoid this, we should ensure that our feature engineering and model evaluation processes respect the temporal order of the data.
 
 ## Exploring spatial munging
 
@@ -70,7 +70,7 @@ LetsPlot.setup_html()
 daily = pl.read_parquet("transactions_daily.parquet")
 ```
 
-Now let's create move our daily transactions date to weekly summaries for each store and product family with the following new columns.
+Starting with the `date` column, let's move our daily transactions to weekly summaries for each store and product family with the following new columns.
 
 - `week_of_year`
 - `year`
@@ -102,14 +102,19 @@ Ok. Now that we have created our proper weekly data,
 |          54 | SEAFOOD  |             52 |   2016 | 2016-12-25     | 2016-12-26 | 2016-12-31 |                  6 |                     6 |                    5 |                    4 |
 |          54 | SEAFOOD  |             53 |   2016 | 2015-12-31     | 2016-01-01 | 2016-01-03 |                  3 |                     5 |                    4 |                   12 |
 
+Notice how time is moving along columns and rows. As we move down rows we are moving into the future.  In the columns, we would have one column (in our example we have two potential columns) that is in the future which would be used as the foundation (or the actual) target (`y`) variable. The remaining time-based columns would be summaries of intervals or points in the history of the point of estimation.
+
 - Which column would be our `y` value or `target` if we were predicting what we will sell in the next seven days?
+- How do the three date columns (`prediction_day`, `min_date`, `max_date`) relate to our `target` variable.
 - Can you build a new `y` that is the lagged difference? The column would be the difference in sales from the week we just completed to the sales seven days in the future.
 - Can you build a new `feature` that is the difference in percent of sales for the year comparing the most recently completed week with it's sister week in the previous year?
 - How correlated is this new `feature` with our `target`?
 
+![](https://miro.medium.com/v2/resize:fit:720/format:webp/1*h6HaTi1DKsNqEUjdECQV0A.png)
+
 ::: {.callout-tip collapse="true"}
 ## Try before you pry
-Explore the example [script](data/feature_engineer.py)
+- Explore the example [Polars script](data/feature_engineer.py)
 :::
 
 
@@ -124,7 +129,6 @@ Explore the example [script](data/feature_engineer.py)
 - [Cross-validation for time series – Rob J Hyndman](https://robjhyndman.com/hyndsight/tscv/)
 - [3.4 Evaluating forecast accuracy | Forecasting: Principles and Practice (2nd ed)](https://otexts.com/fpp2/accuracy.html)
 - [time-series-foundation-models/lag-llama: Lag-Llama: Towards Foundation Models for Probabilistic Time Series Forecasting](https://github.com/time-series-foundation-models/lag-llama)
-
 
 
 [^1]: Alexis Cook, DanB, inversion, and Ryan Holbrook. Store Sales - Time Series Forecasting. https://kaggle.com/competitions/store-sales-time-series-forecasting, 2021. Kaggle.
