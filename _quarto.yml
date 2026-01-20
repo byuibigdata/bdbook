@@ -30,7 +30,7 @@ book:
     - part: databricks.qmd
       chapters:
         - databricks/databricks_intro.qmd
-        - databricks/community_edition.qmd
+        - databricks/free_edition.qmd
         - databricks/repo_navigation.qmd
     - part: spark.qmd
       chapters:

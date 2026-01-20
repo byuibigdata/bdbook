@@ -1,0 +1,4 @@
+environment_version: '4'
+dependencies:
+  - polars==1.37.1
+  - lets-plot==4.8.0

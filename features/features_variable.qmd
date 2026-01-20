@@ -1,5 +1,8 @@
 # Variable Features
 
+Add things from slack direct message to me about window and partition by.
+
+
 [Non-Mathematical Feature Engineering techniques for Data Science | Sachin Joglekar's blog](https://codesachin.wordpress.com/2016/06/25/non-mathematical-feature-engineering-techniques-for-data-science/)
 
 [Best Practices for Feature Engineering](https://elitedatascience.com/feature-engineering-best-practices)

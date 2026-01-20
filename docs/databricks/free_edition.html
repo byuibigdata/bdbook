@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; Databricks Community Edition – Big Data Programming for Data Scientists</title>
+<title>6&nbsp; Databricks Free Edition – Big Data Programming for Data Scientists</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </script>
 
 
-<meta name="twitter:title" content="6&nbsp; Databricks Community Edition – Big Data Programming for Data Scientists">
+<meta name="twitter:title" content="6&nbsp; Databricks Free Edition – Big Data Programming for Data Scientists">
 <meta name="twitter:description" content="">
 <meta name="twitter:card" content="summary">
 </head>
@@ -125,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../databricks.html">Databricks</a></li><li class="breadcrumb-item"><a href="../databricks/community_edition.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Databricks Community Edition</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../databricks.html">Databricks</a></li><li class="breadcrumb-item"><a href="../databricks/free_edition.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Databricks Free Edition</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -212,8 +212,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../databricks/community_edition.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Databricks Community Edition</span></span></a>
+  <a href="../databricks/free_edition.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Databricks Free Edition</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -320,31 +320,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#community-edition-setup" id="toc-community-edition-setup" class="nav-link active" data-scroll-target="#community-edition-setup"><span class="header-section-number">6.1</span> Community Edition Setup</a></li>
-  <li><a href="#what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform" id="toc-what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform" class="nav-link" data-scroll-target="#what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform"><span class="header-section-number">6.2</span> What is the difference between the Databricks Community Edition and the full Databricks Platform?</a>
+  <li><a href="#free-edition-setup" id="toc-free-edition-setup" class="nav-link active" data-scroll-target="#free-edition-setup"><span class="header-section-number">6.1</span> Free Edition Setup</a>
   <ul class="collapse">
-  <li><a href="#compute-resources" id="toc-compute-resources" class="nav-link" data-scroll-target="#compute-resources"><span class="header-section-number">6.2.1</span> Compute resources</a></li>
-  <li><a href="#local-file-system-and-dbfs" id="toc-local-file-system-and-dbfs" class="nav-link" data-scroll-target="#local-file-system-and-dbfs"><span class="header-section-number">6.2.2</span> Local File System and DBFS</a></li>
+  <li><a href="#next-stage-setup" id="toc-next-stage-setup" class="nav-link" data-scroll-target="#next-stage-setup"><span class="header-section-number">6.1.1</span> Next Stage Setup</a></li>
   </ul></li>
-  <li><a href="#using-apache-sedona-for-spatial-sql-methods" id="toc-using-apache-sedona-for-spatial-sql-methods" class="nav-link" data-scroll-target="#using-apache-sedona-for-spatial-sql-methods"><span class="header-section-number">6.3</span> Using Apache Sedona for Spatial SQL Methods</a>
+  <li><a href="#using-databricks-notebooks" id="toc-using-databricks-notebooks" class="nav-link" data-scroll-target="#using-databricks-notebooks"><span class="header-section-number">6.2</span> Using Databricks notebooks</a>
   <ul class="collapse">
-  <li><a href="#compute-configuration" id="toc-compute-configuration" class="nav-link" data-scroll-target="#compute-configuration"><span class="header-section-number">6.3.1</span> Compute Configuration</a></li>
-  <li><a href="#installing-sedona-libraries-for-spark" id="toc-installing-sedona-libraries-for-spark" class="nav-link" data-scroll-target="#installing-sedona-libraries-for-spark"><span class="header-section-number">6.3.2</span> Installing Sedona libraries for Spark</a></li>
-  <li><a href="#starting-your-notebook" id="toc-starting-your-notebook" class="nav-link" data-scroll-target="#starting-your-notebook"><span class="header-section-number">6.3.3</span> Starting your notebook</a></li>
-  </ul></li>
-  <li><a href="#using-databricks-notebooks" id="toc-using-databricks-notebooks" class="nav-link" data-scroll-target="#using-databricks-notebooks"><span class="header-section-number">6.4</span> Using Databricks notebooks</a>
-  <ul class="collapse">
-  <li><a href="#key-links" id="toc-key-links" class="nav-link" data-scroll-target="#key-links"><span class="header-section-number">6.4.1</span> Key links</a></li>
+  <li><a href="#key-links" id="toc-key-links" class="nav-link" data-scroll-target="#key-links"><span class="header-section-number">6.2.1</span> Key links</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/byuibigdata/bdbook/edit/master/databricks/community_edition.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/byuibigdata/bdbook/edit/master/databricks/free_edition.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../databricks.html">Databricks</a></li><li class="breadcrumb-item"><a href="../databricks/community_edition.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Databricks Community Edition</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../databricks.html">Databricks</a></li><li class="breadcrumb-item"><a href="../databricks/free_edition.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Databricks Free Edition</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Databricks Community Edition</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Databricks Free Edition</span></h1>
 </div>
 
 
@@ -361,103 +353,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>The <a href="https://community.cloud.databricks.com/login.html">community edition</a> provides free access to the Databricks environment to see their vision of jupyter notebooks and to work with a Spark environment. The users do not incur any costs while using Databricks.</p>
-<p>Read more about the limitations of Community Edition at <a href="https://databricks.com/product/faq/community-edition">this FAQ</a>.</p>
-<section id="community-edition-setup" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="community-edition-setup"><span class="header-section-number">6.1</span> Community Edition Setup</h2>
+<p>The <a href="https://docs.databricks.com/aws/en/getting-started/free-edition">Databricks Free Edition</a> provides free access to the Databricks serverless environment to see their vision of jupyter notebooks and to work with a Spark environment. The users do not incur any costs while using Databricks Free Edition.</p>
+<p>Read more about the limitations of Free Edition at <a href="https://docs.databricks.com/aws/en/getting-started/free-edition-limitations">this FAQ</a>. Of note,</p>
+<ul>
+<li>Max of 5 concurrent job tasks per account</li>
+<li>To control long-running queries, serverless notebooks have a default execution timeout of 2.5 hours. You may be able to <a href="https://docs.databricks.com/aws/en/spark/conf#serverless">modify this limit</a>.</li>
+<li>If you exceed your quota, your workspace’s compute resources will be shut down and unavailable for the rest of the day (and in extreme cases, the rest of the month).</li>
+<li>R and Scala are not supported</li>
+<li>Free Edition accounts may not be used for commercial purposes.</li>
+<li><a href="https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-behavior#sizing-and-cluster-provisioning">2x-small defintion</a></li>
+</ul>
+<section id="free-edition-setup" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="free-edition-setup"><span class="header-section-number">6.1</span> Free Edition Setup</h2>
 <ol type="1">
-<li>Create an account at <a href="https://databricks.com/try-databricks">Try Databricks</a></li>
-<li>After entering your name and information, find the small type link that says <code>Get started with Community Edition -&gt;</code> and click.</li>
-<li>Login into the <a href="https://community.cloud.databricks.com/login.html">Databricks community edition portal</a></li>
-<li>Click the compute icon on the left (<img src="../img/compute_icon.png" class="img-fluid">)</li>
-<li>Create and Name your cluster (you will have to do this every time you log in)</li>
+<li>Create an account at <a href="https://login.databricks.com/?intent=SIGN_UP&amp;provider=DB_FREE_TIER">Databricks Free Edition</a></li>
+<li>Please use your university email (BYU-I emails can used with Google or Microsoft).</li>
 <li>Create a notebook and start exploring</li>
 </ol>
-</section>
-<section id="what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="what-is-the-difference-between-the-databricks-community-edition-and-the-full-databricks-platform"><span class="header-section-number">6.2</span> What is the difference between the Databricks Community Edition and the full Databricks Platform?</h2>
+<section id="next-stage-setup" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="next-stage-setup"><span class="header-section-number">6.1.1</span> Next Stage Setup</h3>
+<section id="serverless-cluster-setup" class="level4" data-number="6.1.1.1">
+<h4 data-number="6.1.1.1" class="anchored" data-anchor-id="serverless-cluster-setup"><span class="header-section-number">6.1.1.1</span> Serverless Cluster Setup</h4>
+<p>You can configure your serverless cluster using a databricks yml file. Below is an example of a <a href="databricks.yml"><code>databricks.yml</code></a> file that can be used to set up a cluster with Polars and Lets-Plot libraries.</p>
 <blockquote class="blockquote">
-<p>With the Databricks Community Edition, the users will have access to 15GB clusters, a cluster manager, and the notebook environment to prototype simple applications, and JDBC / ODBC integrations for BI analysis. The Databricks Community Edition access is not time-limited, and users will not incur AWS costs for their cluster usage.</p>
+<p>User Icon (Top Right) -&gt; Settings -&gt; Workspace admin -&gt; Compute -&gt; Workspace base environments for serverless compute -&gt; Manage -&gt; Create</p>
 </blockquote>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">environment_version:</span> <span class="st">'4'</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="ex">dependencies:</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="ex">-</span> polars==1.37.1</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="ex">-</span> lets-plot==4.8.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="managing-users-in-your-free-edition-workspace" class="level4" data-number="6.1.1.2">
+<h4 data-number="6.1.1.2" class="anchored" data-anchor-id="managing-users-in-your-free-edition-workspace"><span class="header-section-number">6.1.1.2</span> Managing Users in your Free Edition Workspace</h4>
+<p>I recommend creating a team workspace and a personal workspace for your experience. One team member will need to create a Free Edition account and then set up the team workspace. Once the team workspace is created, additional users can be added. That user can then invite their own <code>.byu.edu</code> email to the team workspace.</p>
 <blockquote class="blockquote">
-<p>The full Databricks platform offers production-grade functionality, such as an unlimited number of clusters that easily scale up or down, a job launcher, collaboration, advanced security controls, and expert support. It helps users process data at scale, or build Apache Spark applications in a team setting.</p>
+<p>User Icon (Top Right) -&gt; Settings -&gt; Workspace admin -&gt; Identity and access -&gt; Users -&gt; Manage -&gt; Add user -&gt; Invite user by email</p>
 </blockquote>
-<blockquote class="blockquote">
-<p><a href="https://databricks.com/product/faq/community-edition">Databricks</a></p>
-</blockquote>
-<section id="compute-resources" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="compute-resources"><span class="header-section-number">6.2.1</span> Compute resources</h3>
-<p>The Community Edition will force you to create a new compute if your current compute resource shuts down (you cannot restart it). Cloning an old resource is available; However, any Libraries specified under the <code>Libraries</code> tab will not be cloned and must be respecified.</p>
+<p>This should allow your team to work together in the same Free Edition workspace.</p>
 </section>
-<section id="local-file-system-and-dbfs" class="level3" data-number="6.2.2">
-<h3 data-number="6.2.2" class="anchored" data-anchor-id="local-file-system-and-dbfs"><span class="header-section-number">6.2.2</span> Local File System and DBFS</h3>
-<p>The file system is restricted differently than the professional Databricks platform. Once you have enabled DBFS browsing (<code>click user in top right &gt; select Admin Settings &gt; Workspace settings tab &gt; then enable DBFS File Browser</code>) you can use the DBFS button that now appears after using the <code>catalog</code> navigation to see files stored in the Databricks File System (DBFS). You should have a <code>FileStore</code> folder where uploaded files will appear. After clicking the down arrow to the right of any folder or file, you can select <code>copy path</code> and the following popup appears.</p>
-<p><img src="../img/file_spark_path.png" class="img-fluid"></p>
-<p>The <code>Spark API Format</code> works for parsing files using the <code>spark.read</code> methods. The <code>File API Format</code> should work for packages like Pandas and Polars. However, the Community edition does not connect the dbfs drive to the main node. You will need to leverage the <code>dbutils</code> package in Databricks to copy the file to a local folder for Pandas and Polars to access the file.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
-<span id="cb1-2"><a href="#cb1-2"></a>dbfs_path <span class="op">=</span> <span class="st">"dbfs:/FileStore/patterns.parquet"</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a>driver_path <span class="op">=</span> <span class="st">"file:/databricks/driver/temp_read.parquet"</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>dbutils.fs.cp(dbfs_path, driver_path)</span>
-<span id="cb1-5"><a href="#cb1-5"></a>dat <span class="op">=</span> pl.read_parquet(<span class="st">"temp_read.parquet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="spatial-setup" class="level4" data-number="6.1.1.3">
+<h4 data-number="6.1.1.3" class="anchored" data-anchor-id="spatial-setup"><span class="header-section-number">6.1.1.3</span> Spatial Setup</h4>
+<p>Databricks Free Edition does not support libraries that require native code compilation, so spatial libraries such as Geopandas and Shapely will not work. However, they do provide spatial sql functions that can be imported for use in Pyspark or used with Spark SQL.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Example of using spatial functions in Databricks Free Edition</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># Import spatial functions for Pyspark</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="im">from</span> pyspark.databricks.sql <span class="im">import</span> functions <span class="im">as</span> dbf</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># dbf.st_distance()</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># Example of using spatial functions in Spark SQL</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>examp <span class="op">=</span> spark.sql(<span class="st">"SELECT st_distance(st_geomfromtext('POINT Z (0 0 310)'),st_geomfromtext('LINESTRING(-10 20,20 10)')) as dist"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="using-apache-sedona-for-spatial-sql-methods" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="using-apache-sedona-for-spatial-sql-methods"><span class="header-section-number">6.3</span> Using Apache Sedona for Spatial SQL Methods</h2>
-<blockquote class="blockquote">
-<p>Apache Sedona is a cluster computing system for processing large-scale spatial data. Sedona extends Apache Spark with a set of out-of-the-box distributed Spatial Datasets and Spatial SQL that efficiently load, process, and analyze large-scale spatial data across machines.</p>
-</blockquote>
-<blockquote class="blockquote">
-<p><a href="https://sedona.apache.org/1.5.1/">Apache Sedona</a></p>
-</blockquote>
-<p><img src="../img/sedona-ecosystem.png" class="img-fluid"></p>
-<p>They have an <a href="https://sedona.apache.org/1.5.1/setup/databricks/?h=community+ed#community-edition-free-tier">installation guide for Databricks</a> that helps us understand the setup process so that we can leverage spatial SQL with our compute.</p>
-<section id="compute-configuration" class="level3" data-number="6.3.1">
-<h3 data-number="6.3.1" class="anchored" data-anchor-id="compute-configuration"><span class="header-section-number">6.3.1</span> Compute Configuration</h3>
-<p>The setup of Apache Sedona depends on the Spark version you select. We have confirmed that the following process works for <code>12.2 LTS (includes Apache Spark 3.3.2, Scala 2.12)</code>.</p>
-<p><img src="../img/0_spark_version.png" class="img-fluid"></p>
 </section>
-<section id="installing-sedona-libraries-for-spark" class="level3" data-number="6.3.2">
-<h3 data-number="6.3.2" class="anchored" data-anchor-id="installing-sedona-libraries-for-spark"><span class="header-section-number">6.3.2</span> Installing Sedona libraries for Spark</h3>
-<p>Installing libraries allows us to leverage third-party or custom code in our notebooks and jobs. Python, Java, Scala, and R libraries are available through your compute page’s’ Libraries’ tab. We can upload Java, Scala, and Python libraries and point to external packages in PyPI, Maven, and CRAN repositories.</p>
-<p><img src="../img/1_libraries_window.png" class="img-fluid"></p>
-<section id="installing-the-sedona-maven-coordinates" class="level4" data-number="6.3.2.1">
-<h4 data-number="6.3.2.1" class="anchored" data-anchor-id="installing-the-sedona-maven-coordinates"><span class="header-section-number">6.3.2.1</span> Installing the Sedona Maven Coordinates</h4>
-<p><a href="https://maven.apache.org/plugins/maven-jar-plugin/">Apache Maven</a> provides access to a database of <code>.jar</code> files containing compilation instructions to upgrade your Spark environment. We can navigate to the maven installation location under <code>libraries</code> as shown in the picture below.</p>
-<p><img src="../img/2_maven.png" class="img-fluid"></p>
-<p>Apached Sedona requires two <code>.jars</code> for it to work in Databricks.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">org.apache.sedona:sedona-spark-shaded-3.0_2.12:1.5.1</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="ex">org.datasyslab:geotools-wrapper:1.5.1-28.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The following screen shots exemplify the installation on Community edition.</p>
-<p><img src="../img/3_sedona_shaded.png" class="img-fluid"></p>
-<p><img src="../img/4_geotools.png" class="img-fluid"></p>
-</section>
-<section id="installing-the-sedona-python-packages" class="level4" data-number="6.3.2.2">
-<h4 data-number="6.3.2.2" class="anchored" data-anchor-id="installing-the-sedona-python-packages"><span class="header-section-number">6.3.2.2</span> Installing the Sedona Python packages</h4>
-<p>We can install Python packages available to the entire Spark environment through the <code>libraries</code> page as well. We need two packages for Apache Sedona - <code>apache-sedona</code>, <code>keplergl==0.3.2</code>, <code>pydeck==0.8.0</code>. The following charts exemplify this installation on our Community edition.</p>
-<p><img src="../img/5_apache-sedona_python.png" class="img-fluid"></p>
-<p><img src="../img/6_keplergl_python.png" class="img-fluid"></p>
-<p><img src="../img/6a_pydeck_python.png" class="img-fluid"></p>
-<p>Unfortunately, we must go through these steps each time we start a new compute on our Community edition. It takes a few minutes for all the libraries to install. Once completed, you should see the following (Note: I have installed <code>lets-plot</code> as well, which is unnecessary for Sedona).</p>
-<p><img src="../img/7_libraries_page.png" class="img-fluid"></p>
-</section>
-</section>
-<section id="starting-your-notebook" class="level3" data-number="6.3.3">
-<h3 data-number="6.3.3" class="anchored" data-anchor-id="starting-your-notebook"><span class="header-section-number">6.3.3</span> Starting your notebook</h3>
-<p>Your notebooks will need the following code for Sedona to work correctly.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> sedona.register.geo_registrator <span class="im">import</span> SedonaRegistrator</span>
-<span id="cb3-2"><a href="#cb3-2"></a>SedonaRegistrator.registerAll(spark)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</section>
-<section id="using-databricks-notebooks" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="using-databricks-notebooks"><span class="header-section-number">6.4</span> Using Databricks notebooks</h2>
+<section id="using-databricks-notebooks" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="using-databricks-notebooks"><span class="header-section-number">6.2</span> Using Databricks notebooks</h2>
 <ul>
 <li><a href="https://youtu.be/n-yt_3HvkOI">Watch this video to see a short example of using the platform</a></li>
 <li><a href="https://subscription.packtpub.com/book/data/9781838647216/2/ch02lvl1sec08/using-azure-databricks-notebooks">Read about the basics of Databricks notebooks</a></li>
 </ul>
-<section id="key-links" class="level3" data-number="6.4.1">
-<h3 data-number="6.4.1" class="anchored" data-anchor-id="key-links"><span class="header-section-number">6.4.1</span> Key links</h3>
+<section id="key-links" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="key-links"><span class="header-section-number">6.2.1</span> Key links</h3>
 <ul>
-<li><a href="https://databricks.com/try-databricks">Sign up for Community Edition</a></li>
 <li><a href="https://towardsdatascience.com/databricks-notebooks-a-love-hate-relationship-8f73e5b291fb">A love-hate relationship with Databricks Notebooks</a></li>
 <li><a href="https://subscription.packtpub.com/book/data/9781838647216/2/ch02lvl1sec08/using-azure-databricks-notebooks">Databricks notebooks</a></li>
 <li><a href="https://youtu.be/ThrmPaleEiI">Databricks Backstory</a></li>
@@ -905,4 +861,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/byuibigdata/bdbook/edit/master/databricks/community_edition.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/byuibigdata/bdbook/edit/master/databricks/free_edition.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

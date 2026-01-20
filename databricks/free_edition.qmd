@@ -1,0 +1,70 @@
+# Databricks Free Edition
+
+The [Databricks Free Edition](https://docs.databricks.com/aws/en/getting-started/free-edition) provides free access to the Databricks serverless environment to see their vision of jupyter notebooks and to work with a Spark environment. The users do not incur any costs while using Databricks Free Edition.
+
+
+Read more about the limitations of Free Edition at [this FAQ](https://docs.databricks.com/aws/en/getting-started/free-edition-limitations). Of note,
+
+- Max of 5 concurrent job tasks per account
+- To control long-running queries, serverless notebooks have a default execution timeout of 2.5 hours. You may be able to [modify this limit](https://docs.databricks.com/aws/en/spark/conf#serverless).
+- If you exceed your quota, your workspace's compute resources will be shut down and unavailable for the rest of the day (and in extreme cases, the rest of the month).
+- R and Scala are not supported
+- Free Edition accounts may not be used for commercial purposes.
+- [2x-small defintion](https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-behavior#sizing-and-cluster-provisioning)
+
+## Free Edition Setup
+
+1. Create an account at [Databricks Free Edition](https://login.databricks.com/?intent=SIGN_UP&provider=DB_FREE_TIER)
+2. Please use your university email (BYU-I emails can used with Google or Microsoft).
+3. Create a notebook and start exploring
+
+### Next Stage Setup
+
+#### Serverless Cluster Setup
+
+You can configure your serverless cluster using a databricks yml file. Below is an example of a [`databricks.yml`](databricks.yml) file that can be used to set up a cluster with Polars and Lets-Plot libraries.
+
+> User Icon (Top Right) -> Settings -> Workspace admin -> Compute -> Workspace base environments for serverless compute -> Manage -> Create
+
+```bash
+environment_version: '4'
+dependencies:
+  - polars==1.37.1
+  - lets-plot==4.8.0
+```
+
+#### Managing Users in your Free Edition Workspace
+
+I recommend creating a team workspace and a personal workspace for your experience. One team member will need to create a Free Edition account and then set up the team workspace. Once the team workspace is created, additional users can be added. That user can then invite their own `.byu.edu` email to the team workspace.
+
+> User Icon (Top Right) -> Settings -> Workspace admin -> Identity and access -> Users -> Manage -> Add user -> Invite user by email
+
+This should allow your team to work together in the same Free Edition workspace.
+
+
+#### Spatial Setup
+
+Databricks Free Edition does not support libraries that require native code compilation, so spatial libraries such as Geopandas and Shapely will not work. However, they do provide spatial sql functions that can be imported for use in Pyspark or used with Spark SQL.
+
+```python
+# Example of using spatial functions in Databricks Free Edition
+
+# Import spatial functions for Pyspark
+from pyspark.databricks.sql import functions as dbf
+# dbf.st_distance()
+
+# Example of using spatial functions in Spark SQL
+examp = spark.sql("SELECT st_distance(st_geomfromtext('POINT Z (0 0 310)'),st_geomfromtext('LINESTRING(-10 20,20 10)')) as dist")
+
+```
+
+## Using Databricks notebooks
+
+- [Watch this video to see a short example of using the platform](https://youtu.be/n-yt_3HvkOI)
+- [Read about the basics of Databricks notebooks](https://subscription.packtpub.com/book/data/9781838647216/2/ch02lvl1sec08/using-azure-databricks-notebooks)
+
+### Key links
+
+- [A love-hate relationship with Databricks Notebooks](https://towardsdatascience.com/databricks-notebooks-a-love-hate-relationship-8f73e5b291fb)
+- [Databricks notebooks](https://subscription.packtpub.com/book/data/9781838647216/2/ch02lvl1sec08/using-azure-databricks-notebooks)
+- [Databricks Backstory](https://youtu.be/ThrmPaleEiI)

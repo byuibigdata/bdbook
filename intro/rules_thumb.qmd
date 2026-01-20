@@ -28,7 +28,7 @@ We pulled the bullets and image below from the Databricks articles.
 > - If you are an R user, use DataFrames.
 > - If you are a Python user, use DataFrames and resort back to RDDs if you need more control.
 
-![](img/spark_sql_dataframe_rdd.png)
+![](../img/spark_sql_dataframe_rdd.png)
 
 ## Write and Read serialized data formats
 
