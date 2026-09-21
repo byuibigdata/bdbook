@@ -1,0 +1,10 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/day01_welcome.html",
+      "/day02_data_tools.html",
+      "/day03_databricks.html"
+    ]
+  }
+]

@@ -1,0 +1,20 @@
+/*-- scss:rules --*/
+
+// The index page is HTML, not revealjs; _brand.yml supplies colors and fonts.
+
+h2 {
+  border-bottom: 3px solid #F59625;
+  padding-bottom: 0.2em;
+  display: inline-block;
+}
+
+.quarto-listing-table th {
+  background: #022F4A;
+  color: #fff;
+  font-family: "Fira Code", monospace;
+  font-weight: 500;
+}
+
+.quarto-listing-table a {
+  font-weight: 600;
+}
