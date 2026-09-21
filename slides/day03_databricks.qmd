@@ -1,0 +1,208 @@
+---
+title: "Databricks Setup and Team Time"
+subtitle: "Day 3: Schedule, questions, Databricks Free Edition, and your proposal"
+author: "J. Hathaway"
+# Update these each semester.
+class-repo: "https://github.com/byuibigdata/FA26_hathaway"
+class-workspace: "https://dbc-fa6abe00-d916.cloud.databricks.com/?o=7474652027639734"
+wrangling-due: "9/24"
+learning-plan-due: "9/25"
+proposal-due: "9/29"
+---
+
+## Today
+
+1. The schedule
+2. Questions on the church data
+3. Databricks Free Edition: three workspaces
+4. Load the semester data and find it in the catalog
+5. Team time on your proposal
+
+## What's due
+
+| Assignment | Due | Where |
+|---|---|---|
+| Data wrangling & visualization challenge | **{{< meta wrangling-due >}}** | GitHub pull request + Canvas |
+| Learning Plan 1 | **{{< meta learning-plan-due >}}** | Canvas |
+| Project proposal & unit of analysis | **{{< meta proposal-due >}}** | Team folder on GitHub + Canvas |
+
+- The full list of challenges and dates is in the [class repository]({{< meta class-repo >}}).
+- Keep tracking your hours in [Harvest](https://byui.harvestapp.com/).
+
+# Questions on the church data
+
+## Your questions {.dark background-color="#022F4A"}
+
+**What's slowing you down on the wrangling and visualization challenge?**
+
+<br>
+
+[Reading the data · nested columns · picking a chart · the report format]{.orange}
+
+## Nested columns
+
+Many `patterns` columns are **lists of key/value pairs**. Explode the list into rows, then unnest the pairs into columns:
+
+```python
+devices = (patterns
+    .select("placekey", "device_type")
+    .explode("device_type")
+    .unnest("device_type"))
+```
+
+| placekey | key | value |
+|---|---|---|
+| 222-223@8g7-2n2-td9 | android | 4 |
+| 222-223@8g7-2n2-td9 | ios | 5 |
+
+The same pattern works for `related_same_day_brand`, `popularity_by_day`, and the other key/value columns.
+
+# Databricks Free Edition
+
+## What it is
+
+::: {.columns}
+::: {.column width="50%"}
+- A free, serverless Databricks workspace
+- Spark notebooks with no clusters to manage
+- The same platform companies pay for
+- [Sign up here](https://www.databricks.com/learn/free-edition)
+:::
+::: {.column width="50%"}
+::: {.card}
+[Limits to know]{.card-title}
+
+- Notebooks time out after **2.5 hours**
+- Go over quota and compute **shuts off** for the day
+- Python and SQL only (no R or Scala)
+- No commercial use
+:::
+:::
+:::
+
+## Three workspaces
+
+::: {.columns}
+::: {.column width="33%"}
+::: {.card}
+[1. Class]{.card-title}
+
+One workspace for all of us.
+
+[Open the class workspace]({{< meta class-workspace >}})
+:::
+:::
+::: {.column width="33%"}
+::: {.card}
+[2. Team]{.card-title}
+
+Your whole team in one workspace, so you share notebooks and data.
+
+**One teammate creates it.**
+:::
+:::
+::: {.column width="33%"}
+::: {.card}
+[3. Personal]{.card-title}
+
+Your own space to experiment and practice.
+
+**You create it.**
+:::
+:::
+:::
+
+## Set up your personal workspace
+
+1. Go to [Databricks Free Edition](https://www.databricks.com/learn/free-edition) and sign up.
+2. Use your **university email**. BYU-I emails can sign in with Google or Microsoft.
+3. Create a notebook to confirm it works.
+
+## Set up your team workspace
+
+1. **One teammate** creates a new Free Edition account for the team.
+2. That teammate invites everyone else:
+
+[User icon (top right) → Settings → Workspace admin → Identity and access → Users → Manage → Add user → Invite user by email]{style="font-family:'Fira Code';font-size:0.65em;color:#426A8A;display:block;margin:0.4em 0 0.8em"}
+
+3. Everyone accepts the invite and opens the same workspace.
+
+::: {.takeaway}
+**Do this today, before you leave.** You'll need it for the proposal.
+:::
+
+# Load the semester data
+
+## One notebook loads everything
+
+1. Download `load_semester_data.html` from **Slack**.
+2. In Databricks, open **Workspace** → **Import** and choose the file.
+3. Attach the notebook to **Serverless** compute and click **Run all**.
+4. Wait **8 to 12 minutes**. The last cell shows a summary. Every row should say `ok`.
+
+[Safe to re-run: anything already loaded is skipped. If a row says `FAILED`, run it once more, then post in Slack.]{.muted style="font-size:0.75em"}
+
+## What gets loaded
+
+| Data | Where it lands |
+|---|---|
+| Church places and patterns (the challenge data) | Volume: `pattern_places/pattern_places_data/` |
+| C-Store, Idaho, 167 stores (**small**) | Tables: `cstore_snippet.*` |
+| C-Store, five states, 240 stores (**medium**) | Tables: `cstore_sample.*` |
+| Census block-group tables | Tables: `census.*` |
+| Maverik patterns | Volume: `default/data/other/` |
+
+Start on **small** while you build and test. Move to **medium** when it works.
+
+## Finding it in the catalog
+
+::: {.columns}
+::: {.column width="45%"}
+Click **Catalog** in the left sidebar. Data is organized in three levels:
+
+```text
+workspace          ← catalog
+├── cstore_snippet ← schema
+│   ├── cstore_stores     ← table
+│   └── cstore_payments
+├── census
+└── pattern_places
+    └── pattern_places_data ← volume
+```
+:::
+::: {.column width="55%"}
+- A **table** has a schema you can query by name.
+- A **volume** holds files, like our Parquet files.
+- Click a table to see its **columns**, **sample data**, and **details**.
+- Names follow `catalog.schema.table`.
+:::
+:::
+
+## Reading it in a notebook
+
+```python
+# A table, by its three-level name
+stores = spark.table("workspace.cstore_snippet.cstore_stores")
+
+# A file in a volume, by its path
+places = spark.read.parquet(
+    "/Volumes/workspace/pattern_places/pattern_places_data/places.parquet")
+
+display(stores)
+```
+
+Use these exact names and paths. **Don't move or rename the data**, so everyone's code runs the same way.
+
+# Team time
+
+## Build your proposal {.dark background-color="#022F4A"}
+
+Due **{{< meta proposal-due >}}**. No more than two pages or 5 to 8 slides:
+
+1. Team member names and majors
+2. The business need and why it's valuable
+3. The data format, with some descriptive visuals
+4. How you'll use ML/AI in the application
+5. What counts as a successful product
+
+[Start by exploring `cstore_snippet` in your team workspace.]{.orange}

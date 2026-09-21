@@ -1,6 +1,7 @@
 project:
   type: book
   output-dir: docs
+  post-render: render_slides.py
 resources: 
   - "features/data/*.parquet"
   - "features/data/feature_engineer.py"

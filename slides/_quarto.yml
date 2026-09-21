@@ -1,0 +1,28 @@
+# Separate Quarto project for class slides. The book ignores this folder
+# (book projects only render the chapters listed in ../_quarto.yml).
+#   quarto render slides          # build all decks into docs/slides/
+#   quarto preview slides/x.qmd   # live preview one deck
+# Colors, fonts, and logos come from _brand.yml; extra styling in ds460.scss.
+# Decks build into slides/_site (so they share one site_libs folder), then
+# sync_output.py copies _site into ../docs/slides.
+project:
+  type: website
+  output-dir: _site
+  post-render: sync_output.py
+
+format:
+  revealjs:
+    theme: [default, ds460.scss]
+    logo: DS460_Hex.png
+    footer: "DS 460 · Big Data Programming & Analytics"
+    slide-number: c/t
+    code-line-numbers: true
+    highlight-style: ayu
+    transition: fade
+    transition-speed: fast
+
+title-slide-attributes:
+  data-background-color: "#022F4A"
+  data-background-image: DS460_Hex.png
+  data-background-size: "20%"
+  data-background-position: "90% 50%"

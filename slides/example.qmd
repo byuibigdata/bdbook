@@ -1,0 +1,24 @@
+---
+title: "Example Slides"
+subtitle: "Big Data Programming for Data Scientists"
+author: "J. Hathaway"
+---
+
+## A slide
+
+- Bullet one
+- Bullet two
+
+## Some code
+
+```python
+df.groupBy("team").agg(F.avg("points"))
+```
+
+## Speaker notes
+
+Press `s` in the browser to open the speaker view.
+
+::: {.notes}
+These notes only show in the speaker view.
+:::

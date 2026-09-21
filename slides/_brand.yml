@@ -1,0 +1,57 @@
+# DS 460 brand for class slides, derived from DS460_Banner.png and DS460_Hex.png.
+# Quarto applies this automatically to every deck in slides/.
+# See brand-guide.qmd for how to use it.
+meta:
+  name: "DS 460: Big Data Programming & Analytics"
+
+logo:
+  images:
+    hex: DS460_Hex.png
+    banner: DS460_Banner.png
+  small: hex
+  medium: hex
+  large: banner
+
+color:
+  palette:
+    summit-navy: "#022F4A"   # darkest mountain shadow
+    ridge-blue: "#426A8A"    # mid mountain / cloud shadow
+    slate: "#263D46"         # hex arrows, SQL wordmark
+    teal: "#4D93AC"          # API/APP icon accents
+    sky-ice: "#BDD3E5"       # hex badge fill
+    mist: "#D2DADB"          # banner title panel
+    cloud: "#F4F7F9"         # light surface
+    spark-orange: "#D5773C"  # PySpark wordmark
+    course-orange: "#F59625" # "DS 460" label
+    ink: "#111111"           # banner title text
+  foreground: ink
+  background: "#FFFFFF"
+  primary: summit-navy
+  secondary: ridge-blue
+  tertiary: teal
+  info: teal
+  warning: course-orange
+  danger: spark-orange
+  light: cloud
+  dark: summit-navy
+
+typography:
+  fonts:
+    - family: Fira Code
+      source: google
+      weight: [400, 500, 600, 700]
+    - family: Open Sans
+      source: google
+      weight: [400, 600, 700]
+      style: [normal, italic]
+  base:
+    family: Open Sans
+    line-height: 1.35
+  headings:
+    family: Fira Code
+    weight: 600
+    color: summit-navy
+  monospace:
+    family: Fira Code
+  link:
+    color: ridge-blue

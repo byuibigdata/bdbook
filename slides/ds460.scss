@@ -1,0 +1,221 @@
+/*-- scss:defaults --*/
+
+// Mirrors the palette in _brand.yml so rules below can use it.
+$ds-summit-navy: #022F4A;
+$ds-ridge-blue: #426A8A;
+$ds-slate: #263D46;
+$ds-teal: #4D93AC;
+$ds-sky-ice: #BDD3E5;
+$ds-mist: #D2DADB;
+$ds-cloud: #F4F7F9;
+$ds-spark-orange: #D5773C;
+$ds-course-orange: #F59625;
+$ds-ink: #111111;
+
+$presentation-font-size-root: 34px;
+$presentation-h1-font-size: 2.3em;
+$presentation-h2-font-size: 1.45em;
+$presentation-h3-font-size: 1.1em;
+$code-block-bg: $ds-cloud;
+$code-block-border-color: $ds-spark-orange;
+$code-color: $ds-slate;
+
+/*-- scss:rules --*/
+
+// Content slide headings: navy mono text with a short orange rule underneath.
+.reveal .slides section h2 {
+  letter-spacing: -0.01em;
+  padding-bottom: 0.25em;
+  margin-bottom: 0.6em;
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 2.2em;
+    height: 0.14em;
+    background: $ds-course-orange;
+    border-radius: 2px;
+  }
+}
+
+.reveal .slides section h3 {
+  color: $ds-ridge-blue;
+}
+
+.reveal strong {
+  color: $ds-summit-navy;
+}
+
+.reveal ul li::marker {
+  color: $ds-spark-orange;
+}
+
+// Title slide (background color is set in _quarto.yml).
+#title-slide {
+  text-align: left;
+  .title {
+    color: #fff;
+    font-size: 2.1em;
+    line-height: 1.15;
+    max-width: 68%;
+  }
+  .subtitle {
+    color: $ds-course-orange;
+    font-family: "Fira Code", monospace;
+    font-weight: 500;
+    font-size: 1.05em;
+    margin-top: 0.4em;
+    max-width: 68%;
+  }
+  .quarto-title-authors {
+    justify-content: flex-start;
+  }
+  .quarto-title-author {
+    padding-left: 0;
+  }
+  .quarto-title-authors,
+  .quarto-title-author-name,
+  .date {
+    color: $ds-sky-ice;
+    font-size: 0.8em;
+  }
+}
+
+// Section slides: `# Part name` headings.
+.reveal .slides section h1 {
+  color: $ds-summit-navy;
+  border-left: 0.18em solid $ds-course-orange;
+  padding-left: 0.5em;
+}
+
+// Dark slides: `## Title {.dark background-color="#022F4A"}`.
+.reveal .slides section.dark {
+  color: #fff;
+  h1, h2, h3, strong { color: #fff; }
+  h1 { border-left-color: $ds-course-orange; }
+  a { color: $ds-course-orange; }
+  code:not(pre code) { background: rgba(255, 255, 255, 0.12); color: #fff; }
+}
+
+// Inline code.
+.reveal code:not(pre code) {
+  background: $ds-cloud;
+  color: $ds-slate;
+  padding: 0.05em 0.3em;
+  border-radius: 4px;
+}
+
+// Code blocks: light surface, orange accent on the left.
+.reveal div.sourceCode {
+  border: none;
+  border-left: 5px solid $ds-spark-orange;
+  border-radius: 4px;
+  background: $ds-cloud;
+}
+
+// Tables.
+.reveal table {
+  font-size: 0.75em;
+  th {
+    background: $ds-summit-navy;
+    color: #fff;
+    font-family: "Fira Code", monospace;
+    font-weight: 500;
+  }
+  tbody tr:nth-child(even) { background: $ds-cloud; }
+}
+
+// Helper classes.
+.orange { color: $ds-course-orange; }
+.spark  { color: $ds-spark-orange; }
+.navy   { color: $ds-summit-navy; }
+.teal   { color: $ds-teal; }
+.muted  { color: $ds-ridge-blue; }
+
+// A light card: ::: {.card} ... :::
+.reveal .card {
+  background: $ds-cloud;
+  border-top: 5px solid $ds-teal;
+  border-radius: 6px;
+  padding: 0.6em 0.8em;
+  font-size: 0.85em;
+}
+// Cards side by side in columns share one height.
+.reveal .columns:has(> .column > .card) {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5em;
+  margin-bottom: 0.8em;
+}
+.reveal .column:has(> .card) {
+  display: flex;
+  flex-direction: column;
+}
+.reveal .column > .card {
+  flex: 1;
+}
+
+// Card heading: [Title]{.card-title} (a ### heading inside a div would
+// become its own reveal.js slide).
+.reveal .card .card-title {
+  display: block;
+  font-family: "Fira Code", monospace;
+  font-weight: 600;
+  color: $ds-ridge-blue;
+  font-size: 0.9em;
+  margin-bottom: 0.3em;
+}
+
+// A key takeaway: ::: {.takeaway} ... :::
+.reveal .takeaway {
+  background: $ds-summit-navy;
+  color: #fff;
+  border-left: 8px solid $ds-course-orange;
+  border-radius: 4px;
+  padding: 0.6em 0.9em;
+  strong { color: $ds-course-orange; }
+}
+
+// Palette swatches: ::: {.swatches} of ::: {.swatch} blocks.
+.reveal .swatches {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.7em 0.8em;
+  font-size: 0.5em;
+  line-height: 1.3;
+  .chip {
+    display: block;
+    height: 2.4em;
+    border-radius: 6px;
+    margin-bottom: 0.35em;
+  }
+  p { margin: 0; }
+}
+
+// A big number: [42 TB]{.stat}
+.reveal .stat {
+  display: block;
+  font-family: "Fira Code", monospace;
+  font-weight: 700;
+  font-size: 2.2em;
+  line-height: 1;
+  white-space: nowrap;
+  color: $ds-spark-orange;
+}
+
+// Footer and slide number.
+.reveal .footer {
+  color: $ds-ridge-blue;
+  font-family: "Fira Code", monospace;
+  font-size: 0.45em;
+}
+.reveal .slide-number {
+  color: $ds-ridge-blue;
+  background: transparent;
+  font-family: "Fira Code", monospace;
+}
+.reveal .slide-logo {
+  max-height: 1.6em !important;
+}

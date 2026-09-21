@@ -2,3 +2,5 @@
 .DS_Store
 features/data/csv/
 features/data/lets-plot-images/
+slides/.quarto/
+slides/_site/
