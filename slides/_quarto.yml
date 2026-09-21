@@ -14,7 +14,7 @@ format:
   revealjs:
     theme: [default, ds460.scss]
     logo: DS460_Hex.png
-    footer: "DS 460 · Big Data Programming & Analytics"
+    footer: "[DS 460 · Big Data Programming & Analytics](index.html)"
     slide-number: c/t
     code-line-numbers: true
     highlight-style: ayu
