@@ -91,263 +91,25 @@
     "text": "Build your proposal\nDue 9/29. No more than two pages or 5 to 8 slides:\n\nTeam member names and majors\nThe business need and why it’s valuable\nThe data format, with some descriptive visuals\nHow you’ll use ML/AI in the application\nWhat counts as a successful product\n\nStart by exploring cstore_snippet in your team workspace."
   },
   {
-    "objectID": "day01_welcome.html#today",
-    "href": "day01_welcome.html#today",
-    "title": "Welcome to DS 460",
-    "section": "Today",
-    "text": "Today\n\nWhat you’ll be able to do by the end of the semester\nHow the class runs: like a start-up, not a lecture\nHow you’ll learn: on purpose, with some confusion\nHow you’re graded: four competencies and a letter\nWhat to do this week\n\n\nEverything here comes from the course guide: github.com/byuibigdata/course_guide"
+    "objectID": "example.html#a-slide",
+    "href": "example.html#a-slide",
+    "title": "Example Slides",
+    "section": "A slide",
+    "text": "A slide\n\nBullet one\nBullet two"
   },
   {
-    "objectID": "day01_welcome.html#by-the-end-of-the-semester-youll-be-able-to",
-    "href": "day01_welcome.html#by-the-end-of-the-semester-youll-be-able-to",
-    "title": "Welcome to DS 460",
-    "section": "By the end of the semester, you’ll be able to",
-    "text": "By the end of the semester, you’ll be able to\n\nExplore and interpret distributed data at scale in business contexts, using Databricks and PySpark.\nImplement the pipeline, from API ingestion through feature engineering to a containerized app.\nPresent data-informed arguments for technical team decisions.\nIdentify the differences and benefits of current industry tools for big data storage and analysis."
+    "objectID": "example.html#some-code",
+    "href": "example.html#some-code",
+    "title": "Example Slides",
+    "section": "Some code",
+    "text": "Some code\ndf.groupBy(\"team\").agg(F.avg(\"points\"))"
   },
   {
-    "objectID": "day01_welcome.html#the-tools",
-    "href": "day01_welcome.html#the-tools",
-    "title": "Welcome to DS 460",
-    "section": "The tools",
-    "text": "The tools\n\n\n\nData\nPolarsPySparkSpark SQL\n\n\n\nPlatforms\nDatabricksGoogle Cloud (GCP)Docker\n\n\n\nCollaboration\ngitGitHubStreamlit or Marimo apps\n\n\nWe’ll use git and GitHub in almost everything: team work, trainings, and submissions."
-  },
-  {
-    "objectID": "day01_welcome.html#is-this-a-data-engineering-course",
-    "href": "day01_welcome.html#is-this-a-data-engineering-course",
-    "title": "Welcome to DS 460",
-    "section": "Is this a data engineering course?",
-    "text": "Is this a data engineering course?\n\n\n\nData engineer\nBig client, small change.\nBuilds pipelines and tools used by thousands. Refines systems every day. Talks mostly with IT and CS.\n\n\n\nData scientist\nSmall client, big change.\nServes tens of people in management. Proposes new methods and data sources. Talks mostly with the business.\n\n\nWe use data engineering tools, but for data science: helping management make decisions."
-  },
-  {
-    "objectID": "day01_welcome.html#how-the-course-is-designed",
-    "href": "day01_welcome.html#how-the-course-is-designed",
-    "title": "Welcome to DS 460",
-    "section": "How the course is designed",
-    "text": "How the course is designed\nThe course follows five principles for teaching data science:\n\nOrganize around diverse case studies\nUse computing in every part of the course\nTeach abstraction, with little mathematical notation\nMake activities realistically mimic a data scientist’s work\nShow the value of critical thinking and skepticism through examples"
-  },
-  {
-    "objectID": "day01_welcome.html#the-class-runs-like-a-start-up",
-    "href": "day01_welcome.html#the-class-runs-like-a-start-up",
-    "title": "Welcome to DS 460",
-    "section": "The class runs like a start-up",
-    "text": "The class runs like a start-up\n\nWe’re a “company” with a mandate: learn big data programming and solve hard data problems.\nThe class decides how we get from week 1 to week 13.\nWe take turns teaching each other the tools.\nWe work in small teams, but make decisions as a class.\nClass meetings are working-group meetings, like in industry."
-  },
-  {
-    "objectID": "day01_welcome.html#section",
-    "href": "day01_welcome.html#section",
-    "title": "Welcome to DS 460",
-    "section": "",
-    "text": "You should not expect anything about this class to be “traditional” in the context of academia.\n\nIf you need someone to give you due dates and tell you exactly what to read each night, this class will push you into a new way of learning."
-  },
-  {
-    "objectID": "day01_welcome.html#what-we-do-in-class",
-    "href": "day01_welcome.html#what-we-do-in-class",
-    "title": "Welcome to DS 460",
-    "section": "What we do in class",
-    "text": "What we do in class\nNo traditional lectures. Class time goes to team work:\n\n\n\nPresentation development\nAlmost every project ends with a presentation.\n\n\n\nIndividual development\nYour own work on the current project.\n\n\n\n\n\nDecision-point presentations\nTeams pitch; the class agrees on one approach.\n\n\n\nProgramming training\nTeams build and lead hands-on activities for the class."
-  },
-  {
-    "objectID": "day01_welcome.html#what-youll-turn-in",
-    "href": "day01_welcome.html#what-youll-turn-in",
-    "title": "Welcome to DS 460",
-    "section": "What you’ll turn in",
-    "text": "What you’ll turn in\nThe work is open-ended, mostly in teams, with some individual submissions. Usually:\n\nA tools coding challenge (data munging and visualization)\nA Spark team feature build challenge\nSpark coding challenges (munging and feature creation)\nIn-class written code challenges (yes, paper and pencil)\nAn analytics app (Streamlit or Marimo, Docker, GCP)\nA team training on tools and code (15 to 120 minutes)\n\nCurrent projects: github.com/byuibigdata"
-  },
-  {
-    "objectID": "day01_welcome.html#design-thinking-guides-our-projects",
-    "href": "day01_welcome.html#design-thinking-guides-our-projects",
-    "title": "Welcome to DS 460",
-    "section": "Design thinking guides our projects",
-    "text": "Design thinking guides our projects\n\nSource: Illinois CITL\n\nYour earlier data science and design thinking courses are the foundation: empathy for the data and clients, ideating solutions, prototyping the end product."
-  },
-  {
-    "objectID": "day01_welcome.html#agile-rhythm",
-    "href": "day01_welcome.html#agile-rhythm",
-    "title": "Welcome to DS 460",
-    "section": "Agile rhythm",
-    "text": "Agile rhythm\n\n\nDaily stand-up (5–10 min)\n\nWhat did you work on?\nWhat will you work on next?\nWhat’s blocking you?\n\n\nEvery two weeks\n\nPlanning: pick tasks from the backlog\nReview: each team shows what it finished\nRetro: what worked, what didn’t, what changes\n\n\n\nAccountability and communication. Unfinished work carries over to the next sprint."
-  },
-  {
-    "objectID": "day01_welcome.html#agile-data-science",
-    "href": "day01_welcome.html#agile-data-science",
-    "title": "Welcome to DS 460",
-    "section": "Agile data science",
-    "text": "Agile data science\nRussell Jurney’s manifesto, in short:\n\nIterate, and ship intermediate output. Commit everything to source control.\nPerform experiments, not tasks.\nListen to the data. Ground discussions in exploratory visualization.\nRespect the data-value pyramid:\n\nplumbing → clean & question → explore & summarize → infer & predict → deliver value"
-  },
-  {
-    "objectID": "day01_welcome.html#presentations-live-jazz-not-a-symphony",
-    "href": "day01_welcome.html#presentations-live-jazz-not-a-symphony",
-    "title": "Welcome to DS 460",
-    "section": "Presentations: live jazz, not a symphony",
-    "text": "Presentations: live jazz, not a symphony\n\n\n\nInformal ≠ unprepared.\nMake your point early, then justify it.\nBe ready to go deep on data and methods.\nBad charts hurt your argument.\n\n\n Practice the “five whys” before you present."
-  },
-  {
-    "objectID": "day01_welcome.html#preparation",
-    "href": "day01_welcome.html#preparation",
-    "title": "Welcome to DS 460",
-    "section": "Preparation",
-    "text": "Preparation\n\nNo assigned weekly readings.\n6 hours a week outside class building your Spark skills.\nUse the curated resources or find your own.\nYou pace yourself with a learning plan:\n\n\n\n\nWeeks 1–3\nExplore resources. End of week 2: review the Spark materials you plan to use.\n\n\n\nWeeks 4–5\nPlan. Map concepts to resources. Propose a PySpark training with a partner.\n\n\n\nWeeks 6–13\nExecute a weekly plan with hours and topics."
-  },
-  {
-    "objectID": "day01_welcome.html#learning-should-burn-a-little",
-    "href": "day01_welcome.html#learning-should-burn-a-little",
-    "title": "Welcome to DS 460",
-    "section": "Learning should burn a little",
-    "text": "Learning should burn a little\n\nConfusion has the potential to motivate, lead to deep learning, and trigger problem solving.\n\n\n\n\nConfusion is part of learning, not a sign you’re failing.\nWhen the answer comes too soon, you skip the exploration that builds understanding.\nLearning how to learn is the key to career growth after graduation.\n\n\n\nThe earth doesn’t go around the sun in a day. It takes a year. Watch the video"
-  },
-  {
-    "objectID": "day01_welcome.html#your-instructor-is-a-mentor-and-a-manager",
-    "href": "day01_welcome.html#your-instructor-is-a-mentor-and-a-manager",
-    "title": "Welcome to DS 460",
-    "section": "Your instructor is a mentor and a manager",
-    "text": "Your instructor is a mentor and a manager\n\nA teacher instructs from set criteria. A mentor guides your growth.\nTreat me like an expensive consultant ($300 to $500 an hour): bring me the parts you can’t quite figure out on your own.\nThe class sets the project vision. I set the technical learning goals.\nI have high expectations, and I’ll tell you when you fall short."
-  },
-  {
-    "objectID": "day01_welcome.html#what-past-students-said",
-    "href": "day01_welcome.html#what-past-students-said",
-    "title": "Welcome to DS 460",
-    "section": "What past students said",
-    "text": "What past students said\n\nI personally feel much more prepared for a real work environment after this class than any other class.\n\n\nMy biggest takeaway is that to learn or be good at something, pain is inevitable but the result is satisfying after you put in the work.\n\n\nIf you don’t ask for help, you might fail this class! (Also from a past student.)"
-  },
-  {
-    "objectID": "day01_welcome.html#four-competencies",
-    "href": "day01_welcome.html#four-competencies",
-    "title": "Welcome to DS 460",
-    "section": "Four competencies",
-    "text": "Four competencies\n\n\n\nImpact\nYour team sees you as an equal or primary contributor.\n\n\n\nInvolvement\nCome prepared. Ask questions, give answers, help direct.\n\n\n\nHours\nThe best predictor of success.\n\n\n\nUnderstanding\nBe the go-to person on a few topics.\n\n\nThese map to how an employer will judge you. You don’t need to be exceptional in all four."
-  },
-  {
-    "objectID": "day01_welcome.html#hours",
-    "href": "day01_welcome.html#hours",
-    "title": "Welcome to DS 460",
-    "section": "Hours",
-    "text": "Hours\n\n\n9 hours per week: 6 outside class + 3 in class\n\n110 hours for an A\n\n\nA 3-credit class is a 9-hour-a-week job.\nTrack your hours from day one.\nHours are what let you produce, but you show hard work through your products, not your hours."
-  },
-  {
-    "objectID": "day01_welcome.html#competency-scale",
-    "href": "day01_welcome.html#competency-scale",
-    "title": "Welcome to DS 460",
-    "section": "Competency scale",
-    "text": "Competency scale\n\n\n\n\n\n\n\n\n\n\n\n\nGrade\nHours\nChallenges\nOral/written\nReplication\nInvolvement\nImpact\n\n\n\n\nA\n110\n4 on key* challenges & 3 or higher on the rest\nPass 3\nAll complete\n&lt; 3 warnings & &lt; 3.1 hours of class missed\nActive on all & primary on &gt; 2\n\n\nB\n90\n3 on key* challenges & 3’s on most\nPass 2\n&lt; 2 missing\n&lt; 9.1 hours of class missed, or a write-up\nActive on most & primary on &gt; 1\n\n\nC\n70\nA 3 on any challenge\nPass 1\n&lt; 3 missing\n&lt; 4 warnings\nActive often & primary on &gt; 0\n\n\nD\n50\n\n\n\n\n\n\n\n\n*Key challenges: any PySpark challenge and the end-of-semester app challenge."
-  },
-  {
-    "objectID": "day01_welcome.html#challenges-are-scored-1-to-4",
-    "href": "day01_welcome.html#challenges-are-scored-1-to-4",
-    "title": "Welcome to DS 460",
-    "section": "Challenges are scored 1 to 4",
-    "text": "Challenges are scored 1 to 4\n\n\n\n1 Submitted work\n\n\n\n2 Some code aligns with the challenge\n\n\n\n3 Strong performance, satisfactory code\n\n\n\n4 Near flawless, clean and concise code\n\n\nAll challenges are announced at least 24 hours ahead, with the programming topic."
-  },
-  {
-    "objectID": "day01_welcome.html#you-write-your-own-grade-request",
-    "href": "day01_welcome.html#you-write-your-own-grade-request",
-    "title": "Welcome to DS 460",
-    "section": "You write your own grade request",
-    "text": "You write your own grade request\nAt the end of the semester you submit a grade request letter, like an end-of-year review with an employer.\n\nBe clear about what you delivered.\nYou can negotiate: use strength in one area to argue for a shortfall in another.\n\n\nI achieved only a satisfactory score on my final coding challenge, but I completed 119 hours and was a key contributor to 5 projects. As such, I request an A.\n\nRead the example letter with discussion before you write yours."
-  },
-  {
-    "objectID": "day01_welcome.html#this-week",
-    "href": "day01_welcome.html#this-week",
-    "title": "Welcome to DS 460",
-    "section": "This week",
-    "text": "This week\n\nRead the syllabus and the course paradigm.\nStart tracking your hours.\nStart exploring the Spark learning resources. Your review is due at the end of week 2.\nNeed to talk? Schedule a visit."
-  },
-  {
-    "objectID": "day01_welcome.html#discuss",
-    "href": "day01_welcome.html#discuss",
-    "title": "Welcome to DS 460",
-    "section": "Discuss",
-    "text": "Discuss\nWhat do you want to be the go-to expert on by the end of the semester?\n\nPick one or two topics. That’s where your “understanding” competency comes from."
-  },
-  {
-    "objectID": "index.html#class-decks",
-    "href": "index.html#class-decks",
-    "title": "DS 460 Class Slides",
-    "section": "Class decks",
-    "text": "Class decks\n\n\n\n\n\n\nDeck\n\n\n\nTopics\n\n\n\n\n\n\n\n\nWelcome to DS 460\n\n\nDay 1: How this class works\n\n\n\n\n\n\nData Sizes, Formats, and Tools\n\n\nDay 2: Parquet, Arrow, Polars, PySpark, and your first two challenges\n\n\n\n\n\n\nDatabricks Setup and Team Time\n\n\nDay 3: Schedule, questions, Databricks Free Edition, and your proposal\n\n\n\n\n\n\nNo matching items\n\nPress s in a deck for speaker view, f for full screen, and Esc for a slide overview."
-  },
-  {
-    "objectID": "index.html#reference",
-    "href": "index.html#reference",
-    "title": "DS 460 Class Slides",
-    "section": "Reference",
-    "text": "Reference\n\nCourse book\nCourse guide and syllabus"
-  },
-  {
-    "objectID": "brand-guide.html#where-the-brand-lives",
-    "href": "brand-guide.html#where-the-brand-lives",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Where the brand lives",
-    "text": "Where the brand lives\nAll decks in slides/ pick this up automatically.\n\n\n\nFile\nWhat it controls\n\n\n\n\n_brand.yml\nColors, fonts, logos\n\n\nds460.scss\nHeading rule, title slide, code, helper classes\n\n\n_quarto.yml\nLogo, footer, slide numbers, transitions\n\n\n\nStart a new deck by copying example.qmd. There’s no theme to set per deck."
-  },
-  {
-    "objectID": "brand-guide.html#source-artwork",
-    "href": "brand-guide.html#source-artwork",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Source artwork",
-    "text": "Source artwork\n\nThe palette is sampled from the banner photo and the hex badge. Fonts match the banner’s monospaced title and the badge’s rounded sans."
-  },
-  {
-    "objectID": "brand-guide.html#color-palette",
-    "href": "brand-guide.html#color-palette",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Color palette",
-    "text": "Color palette\n\n\n  Summit Navy#022F4Aheadings, dark slides\n\n\n  Ridge Blue#426A8Alinks, h3, footer\n\n\n  Slate#263D46inline code\n\n\n  Teal#4D93ACcards, info\n\n\n  Sky Ice#BDD3E5hex fill, soft text\n\n\n  Mist#D2DADBdividers\n\n\n  Cloud#F4F7F9code, cards\n\n\n  Spark Orange#D5773Ccode rule, stats\n\n\n  Course Orange#F59625accents, subtitle\n\n\n  Ink#111111body text"
-  },
-  {
-    "objectID": "brand-guide.html#color-rules",
-    "href": "brand-guide.html#color-rules",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Color rules",
-    "text": "Color rules\n\nNavy carries the structure: headings, the title slide, table headers.\nOrange is the accent. Use it once or twice per slide, never for body text.\nTeal and ridge blue are for secondary information.\nLight slides use white. Save navy backgrounds for emphasis.\n\nText helpers: .navy · .orange · .spark · .teal · .muted\nSpark is [lazy]{.orange} until an action runs."
-  },
-  {
-    "objectID": "brand-guide.html#typography",
-    "href": "brand-guide.html#typography",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Typography",
-    "text": "Typography\n\n\nHeadings: Fira Code\nBig Data\nMonospaced, like the banner. Keep headings short so they fit on one line.\n\nBody: Open Sans\nReadable at the back of the room.\nSans serif for bullets and prose. Code also uses Fira Code, so headings and code look alike."
-  },
-  {
-    "objectID": "brand-guide.html#code",
-    "href": "brand-guide.html#code",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Code",
-    "text": "Code\nfrom pyspark.sql import functions as F\n\n(spark.table(\"games\")\n    .groupBy(\"team\")\n    .agg(F.avg(\"points\").alias(\"avg_points\"))\n    .orderBy(F.desc(\"avg_points\")))\nCode blocks use a light surface and a Spark Orange rule. Inline code uses slate on cloud."
-  },
-  {
-    "objectID": "brand-guide.html#cards-and-stats",
-    "href": "brand-guide.html#cards-and-stats",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Cards and stats",
-    "text": "Cards and stats\n\n\n\n2.5 PB Ingested per day\n\n\n\n200× Faster than pandas\n\n\n\n1 Line to scale out\n\n\n::: {.card}\n[Card title]{.card-title}\n\n[2.5 PB]{.stat}\n:::\nUse [Title]{.card-title}, not ###. A heading at the start of a div becomes its own slide."
-  },
-  {
-    "objectID": "brand-guide.html#takeaways",
-    "href": "brand-guide.html#takeaways",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Takeaways",
-    "text": "Takeaways\n\nKey idea: transformations build a plan; actions run it.\n\n\n::: {.takeaway}\n**Key idea:** transformations build a plan; actions run it.\n:::\nUse one takeaway per slide at most, usually at the end of a topic."
-  },
-  {
-    "objectID": "brand-guide.html#dark-slides",
-    "href": "brand-guide.html#dark-slides",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Dark slides",
-    "text": "Dark slides\nUse a dark slide for a question to the class, a pause, or a big idea.\n## Discuss {.dark background-color=\"#022F4A\"}\nUse no more than one or two per lecture."
-  },
-  {
-    "objectID": "brand-guide.html#tables",
-    "href": "brand-guide.html#tables",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Tables",
-    "text": "Tables\n\n\n\nTool\nScale\nLanguage\n\n\n\n\npandas\nOne machine\nPython\n\n\nPolars\nOne machine\nPython / Rust\n\n\nPySpark\nCluster\nPython / SQL\n\n\nDatabricks SQL\nCluster\nSQL\n\n\n\nTables get a navy header row and light striping."
-  },
-  {
-    "objectID": "brand-guide.html#logos",
-    "href": "brand-guide.html#logos",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Logos",
-    "text": "Logos\n\n\n\n\n\nHex badge (DS460_Hex.png) goes in the slide corner and on the title slide. That’s set up for every deck.\nBanner (DS460_Banner.png) is for the course site and syllabus headers. It’s too wide for a slide.\nDon’t recolor, stretch, or crop either logo."
+    "objectID": "example.html#speaker-notes",
+    "href": "example.html#speaker-notes",
+    "title": "Example Slides",
+    "section": "Speaker notes",
+    "text": "Speaker notes\nPress s in the browser to open the speaker view.\n\nThese notes only show in the speaker view."
   },
   {
     "objectID": "day02_data_tools.html#today",
@@ -518,24 +280,339 @@
     "text": "Discuss\nWho would pay for a prediction made from convenience-store data?\n\nName a client, a place, and a unit of analysis."
   },
   {
-    "objectID": "example.html#a-slide",
-    "href": "example.html#a-slide",
-    "title": "Example Slides",
-    "section": "A slide",
-    "text": "A slide\n\nBullet one\nBullet two"
+    "objectID": "brand-guide.html#where-the-brand-lives",
+    "href": "brand-guide.html#where-the-brand-lives",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Where the brand lives",
+    "text": "Where the brand lives\nAll decks in slides/ pick this up automatically.\n\n\n\nFile\nWhat it controls\n\n\n\n\n_brand.yml\nColors, fonts, logos\n\n\nds460.scss\nHeading rule, title slide, code, helper classes\n\n\n_quarto.yml\nLogo, footer, slide numbers, transitions\n\n\n\nStart a new deck by copying example.qmd. There’s no theme to set per deck."
   },
   {
-    "objectID": "example.html#some-code",
-    "href": "example.html#some-code",
-    "title": "Example Slides",
-    "section": "Some code",
-    "text": "Some code\ndf.groupBy(\"team\").agg(F.avg(\"points\"))"
+    "objectID": "brand-guide.html#source-artwork",
+    "href": "brand-guide.html#source-artwork",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Source artwork",
+    "text": "Source artwork\n\nThe palette is sampled from the banner photo and the hex badge. Fonts match the banner’s monospaced title and the badge’s rounded sans."
   },
   {
-    "objectID": "example.html#speaker-notes",
-    "href": "example.html#speaker-notes",
-    "title": "Example Slides",
-    "section": "Speaker notes",
-    "text": "Speaker notes\nPress s in the browser to open the speaker view.\n\nThese notes only show in the speaker view."
+    "objectID": "brand-guide.html#color-palette",
+    "href": "brand-guide.html#color-palette",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Color palette",
+    "text": "Color palette\n\n\n  Summit Navy#022F4Aheadings, dark slides\n\n\n  Ridge Blue#426A8Alinks, h3, footer\n\n\n  Slate#263D46inline code\n\n\n  Teal#4D93ACcards, info\n\n\n  Sky Ice#BDD3E5hex fill, soft text\n\n\n  Mist#D2DADBdividers\n\n\n  Cloud#F4F7F9code, cards\n\n\n  Spark Orange#D5773Ccode rule, stats\n\n\n  Course Orange#F59625accents, subtitle\n\n\n  Ink#111111body text"
+  },
+  {
+    "objectID": "brand-guide.html#color-rules",
+    "href": "brand-guide.html#color-rules",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Color rules",
+    "text": "Color rules\n\nNavy carries the structure: headings, the title slide, table headers.\nOrange is the accent. Use it once or twice per slide, never for body text.\nTeal and ridge blue are for secondary information.\nLight slides use white. Save navy backgrounds for emphasis.\n\nText helpers: .navy · .orange · .spark · .teal · .muted\nSpark is [lazy]{.orange} until an action runs."
+  },
+  {
+    "objectID": "brand-guide.html#typography",
+    "href": "brand-guide.html#typography",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Typography",
+    "text": "Typography\n\n\nHeadings: Fira Code\nBig Data\nMonospaced, like the banner. Keep headings short so they fit on one line.\n\nBody: Open Sans\nReadable at the back of the room.\nSans serif for bullets and prose. Code also uses Fira Code, so headings and code look alike."
+  },
+  {
+    "objectID": "brand-guide.html#code",
+    "href": "brand-guide.html#code",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Code",
+    "text": "Code\nfrom pyspark.sql import functions as F\n\n(spark.table(\"games\")\n    .groupBy(\"team\")\n    .agg(F.avg(\"points\").alias(\"avg_points\"))\n    .orderBy(F.desc(\"avg_points\")))\nCode blocks use a light surface and a Spark Orange rule. Inline code uses slate on cloud."
+  },
+  {
+    "objectID": "brand-guide.html#cards-and-stats",
+    "href": "brand-guide.html#cards-and-stats",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Cards and stats",
+    "text": "Cards and stats\n\n\n\n2.5 PB Ingested per day\n\n\n\n200× Faster than pandas\n\n\n\n1 Line to scale out\n\n\n::: {.card}\n[Card title]{.card-title}\n\n[2.5 PB]{.stat}\n:::\nUse [Title]{.card-title}, not ###. A heading at the start of a div becomes its own slide."
+  },
+  {
+    "objectID": "brand-guide.html#takeaways",
+    "href": "brand-guide.html#takeaways",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nKey idea: transformations build a plan; actions run it.\n\n\n::: {.takeaway}\n**Key idea:** transformations build a plan; actions run it.\n:::\nUse one takeaway per slide at most, usually at the end of a topic."
+  },
+  {
+    "objectID": "brand-guide.html#dark-slides",
+    "href": "brand-guide.html#dark-slides",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Dark slides",
+    "text": "Dark slides\nUse a dark slide for a question to the class, a pause, or a big idea.\n## Discuss {.dark background-color=\"#022F4A\"}\nUse no more than one or two per lecture."
+  },
+  {
+    "objectID": "brand-guide.html#tables",
+    "href": "brand-guide.html#tables",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Tables",
+    "text": "Tables\n\n\n\nTool\nScale\nLanguage\n\n\n\n\npandas\nOne machine\nPython\n\n\nPolars\nOne machine\nPython / Rust\n\n\nPySpark\nCluster\nPython / SQL\n\n\nDatabricks SQL\nCluster\nSQL\n\n\n\nTables get a navy header row and light striping."
+  },
+  {
+    "objectID": "brand-guide.html#logos",
+    "href": "brand-guide.html#logos",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Logos",
+    "text": "Logos\n\n\n\n\n\nHex badge (DS460_Hex.png) goes in the slide corner and on the title slide. That’s set up for every deck.\nBanner (DS460_Banner.png) is for the course site and syllabus headers. It’s too wide for a slide.\nDon’t recolor, stretch, or crop either logo."
+  },
+  {
+    "objectID": "index.html#class-decks",
+    "href": "index.html#class-decks",
+    "title": "DS 460 Class Slides",
+    "section": "Class decks",
+    "text": "Class decks\n\n\n\n\n\n\nDeck\n\n\n\nTopics\n\n\n\n\n\n\n\n\nWelcome to DS 460\n\n\nDay 1: How this class works\n\n\n\n\n\n\nData Sizes, Formats, and Tools\n\n\nDay 2: Parquet, Arrow, Polars, PySpark, and your first two challenges\n\n\n\n\n\n\nDatabricks Setup and Team Time\n\n\nDay 3: Schedule, questions, Databricks Free Edition, and your proposal\n\n\n\n\n\n\nData Summaries That Persuade\n\n\nDay 4: Charts, tables, due dates, and proposal time\n\n\n\n\n\n\nNo matching items\n\nPress s in a deck for speaker view, f for full screen, and Esc for a slide overview."
+  },
+  {
+    "objectID": "index.html#reference",
+    "href": "index.html#reference",
+    "title": "DS 460 Class Slides",
+    "section": "Reference",
+    "text": "Reference\n\nCourse book\nCourse guide and syllabus"
+  },
+  {
+    "objectID": "day01_welcome.html#today",
+    "href": "day01_welcome.html#today",
+    "title": "Welcome to DS 460",
+    "section": "Today",
+    "text": "Today\n\nWhat you’ll be able to do by the end of the semester\nHow the class runs: like a start-up, not a lecture\nHow you’ll learn: on purpose, with some confusion\nHow you’re graded: four competencies and a letter\nWhat to do this week\n\n\nEverything here comes from the course guide: github.com/byuibigdata/course_guide"
+  },
+  {
+    "objectID": "day01_welcome.html#by-the-end-of-the-semester-youll-be-able-to",
+    "href": "day01_welcome.html#by-the-end-of-the-semester-youll-be-able-to",
+    "title": "Welcome to DS 460",
+    "section": "By the end of the semester, you’ll be able to",
+    "text": "By the end of the semester, you’ll be able to\n\nExplore and interpret distributed data at scale in business contexts, using Databricks and PySpark.\nImplement the pipeline, from API ingestion through feature engineering to a containerized app.\nPresent data-informed arguments for technical team decisions.\nIdentify the differences and benefits of current industry tools for big data storage and analysis."
+  },
+  {
+    "objectID": "day01_welcome.html#the-tools",
+    "href": "day01_welcome.html#the-tools",
+    "title": "Welcome to DS 460",
+    "section": "The tools",
+    "text": "The tools\n\n\n\nData\nPolarsPySparkSpark SQL\n\n\n\nPlatforms\nDatabricksGoogle Cloud (GCP)Docker\n\n\n\nCollaboration\ngitGitHubStreamlit or Marimo apps\n\n\nWe’ll use git and GitHub in almost everything: team work, trainings, and submissions."
+  },
+  {
+    "objectID": "day01_welcome.html#is-this-a-data-engineering-course",
+    "href": "day01_welcome.html#is-this-a-data-engineering-course",
+    "title": "Welcome to DS 460",
+    "section": "Is this a data engineering course?",
+    "text": "Is this a data engineering course?\n\n\n\nData engineer\nBig client, small change.\nBuilds pipelines and tools used by thousands. Refines systems every day. Talks mostly with IT and CS.\n\n\n\nData scientist\nSmall client, big change.\nServes tens of people in management. Proposes new methods and data sources. Talks mostly with the business.\n\n\nWe use data engineering tools, but for data science: helping management make decisions."
+  },
+  {
+    "objectID": "day01_welcome.html#how-the-course-is-designed",
+    "href": "day01_welcome.html#how-the-course-is-designed",
+    "title": "Welcome to DS 460",
+    "section": "How the course is designed",
+    "text": "How the course is designed\nThe course follows five principles for teaching data science:\n\nOrganize around diverse case studies\nUse computing in every part of the course\nTeach abstraction, with little mathematical notation\nMake activities realistically mimic a data scientist’s work\nShow the value of critical thinking and skepticism through examples"
+  },
+  {
+    "objectID": "day01_welcome.html#the-class-runs-like-a-start-up",
+    "href": "day01_welcome.html#the-class-runs-like-a-start-up",
+    "title": "Welcome to DS 460",
+    "section": "The class runs like a start-up",
+    "text": "The class runs like a start-up\n\nWe’re a “company” with a mandate: learn big data programming and solve hard data problems.\nThe class decides how we get from week 1 to week 13.\nWe take turns teaching each other the tools.\nWe work in small teams, but make decisions as a class.\nClass meetings are working-group meetings, like in industry."
+  },
+  {
+    "objectID": "day01_welcome.html#section",
+    "href": "day01_welcome.html#section",
+    "title": "Welcome to DS 460",
+    "section": "",
+    "text": "You should not expect anything about this class to be “traditional” in the context of academia.\n\nIf you need someone to give you due dates and tell you exactly what to read each night, this class will push you into a new way of learning."
+  },
+  {
+    "objectID": "day01_welcome.html#what-we-do-in-class",
+    "href": "day01_welcome.html#what-we-do-in-class",
+    "title": "Welcome to DS 460",
+    "section": "What we do in class",
+    "text": "What we do in class\nNo traditional lectures. Class time goes to team work:\n\n\n\nPresentation development\nAlmost every project ends with a presentation.\n\n\n\nIndividual development\nYour own work on the current project.\n\n\n\n\n\nDecision-point presentations\nTeams pitch; the class agrees on one approach.\n\n\n\nProgramming training\nTeams build and lead hands-on activities for the class."
+  },
+  {
+    "objectID": "day01_welcome.html#what-youll-turn-in",
+    "href": "day01_welcome.html#what-youll-turn-in",
+    "title": "Welcome to DS 460",
+    "section": "What you’ll turn in",
+    "text": "What you’ll turn in\nThe work is open-ended, mostly in teams, with some individual submissions. Usually:\n\nA tools coding challenge (data munging and visualization)\nA Spark team feature build challenge\nSpark coding challenges (munging and feature creation)\nIn-class written code challenges (yes, paper and pencil)\nAn analytics app (Streamlit or Marimo, Docker, GCP)\nA team training on tools and code (15 to 120 minutes)\n\nCurrent projects: github.com/byuibigdata"
+  },
+  {
+    "objectID": "day01_welcome.html#design-thinking-guides-our-projects",
+    "href": "day01_welcome.html#design-thinking-guides-our-projects",
+    "title": "Welcome to DS 460",
+    "section": "Design thinking guides our projects",
+    "text": "Design thinking guides our projects\n\nSource: Illinois CITL\n\nYour earlier data science and design thinking courses are the foundation: empathy for the data and clients, ideating solutions, prototyping the end product."
+  },
+  {
+    "objectID": "day01_welcome.html#agile-rhythm",
+    "href": "day01_welcome.html#agile-rhythm",
+    "title": "Welcome to DS 460",
+    "section": "Agile rhythm",
+    "text": "Agile rhythm\n\n\nDaily stand-up (5–10 min)\n\nWhat did you work on?\nWhat will you work on next?\nWhat’s blocking you?\n\n\nEvery two weeks\n\nPlanning: pick tasks from the backlog\nReview: each team shows what it finished\nRetro: what worked, what didn’t, what changes\n\n\n\nAccountability and communication. Unfinished work carries over to the next sprint."
+  },
+  {
+    "objectID": "day01_welcome.html#agile-data-science",
+    "href": "day01_welcome.html#agile-data-science",
+    "title": "Welcome to DS 460",
+    "section": "Agile data science",
+    "text": "Agile data science\nRussell Jurney’s manifesto, in short:\n\nIterate, and ship intermediate output. Commit everything to source control.\nPerform experiments, not tasks.\nListen to the data. Ground discussions in exploratory visualization.\nRespect the data-value pyramid:\n\nplumbing → clean & question → explore & summarize → infer & predict → deliver value"
+  },
+  {
+    "objectID": "day01_welcome.html#presentations-live-jazz-not-a-symphony",
+    "href": "day01_welcome.html#presentations-live-jazz-not-a-symphony",
+    "title": "Welcome to DS 460",
+    "section": "Presentations: live jazz, not a symphony",
+    "text": "Presentations: live jazz, not a symphony\n\n\n\nInformal ≠ unprepared.\nMake your point early, then justify it.\nBe ready to go deep on data and methods.\nBad charts hurt your argument.\n\n\n Practice the “five whys” before you present."
+  },
+  {
+    "objectID": "day01_welcome.html#preparation",
+    "href": "day01_welcome.html#preparation",
+    "title": "Welcome to DS 460",
+    "section": "Preparation",
+    "text": "Preparation\n\nNo assigned weekly readings.\n6 hours a week outside class building your Spark skills.\nUse the curated resources or find your own.\nYou pace yourself with a learning plan:\n\n\n\n\nWeeks 1–3\nExplore resources. End of week 2: review the Spark materials you plan to use.\n\n\n\nWeeks 4–5\nPlan. Map concepts to resources. Propose a PySpark training with a partner.\n\n\n\nWeeks 6–13\nExecute a weekly plan with hours and topics."
+  },
+  {
+    "objectID": "day01_welcome.html#learning-should-burn-a-little",
+    "href": "day01_welcome.html#learning-should-burn-a-little",
+    "title": "Welcome to DS 460",
+    "section": "Learning should burn a little",
+    "text": "Learning should burn a little\n\nConfusion has the potential to motivate, lead to deep learning, and trigger problem solving.\n\n\n\n\nConfusion is part of learning, not a sign you’re failing.\nWhen the answer comes too soon, you skip the exploration that builds understanding.\nLearning how to learn is the key to career growth after graduation.\n\n\n\nThe earth doesn’t go around the sun in a day. It takes a year. Watch the video"
+  },
+  {
+    "objectID": "day01_welcome.html#your-instructor-is-a-mentor-and-a-manager",
+    "href": "day01_welcome.html#your-instructor-is-a-mentor-and-a-manager",
+    "title": "Welcome to DS 460",
+    "section": "Your instructor is a mentor and a manager",
+    "text": "Your instructor is a mentor and a manager\n\nA teacher instructs from set criteria. A mentor guides your growth.\nTreat me like an expensive consultant ($300 to $500 an hour): bring me the parts you can’t quite figure out on your own.\nThe class sets the project vision. I set the technical learning goals.\nI have high expectations, and I’ll tell you when you fall short."
+  },
+  {
+    "objectID": "day01_welcome.html#what-past-students-said",
+    "href": "day01_welcome.html#what-past-students-said",
+    "title": "Welcome to DS 460",
+    "section": "What past students said",
+    "text": "What past students said\n\nI personally feel much more prepared for a real work environment after this class than any other class.\n\n\nMy biggest takeaway is that to learn or be good at something, pain is inevitable but the result is satisfying after you put in the work.\n\n\nIf you don’t ask for help, you might fail this class! (Also from a past student.)"
+  },
+  {
+    "objectID": "day01_welcome.html#four-competencies",
+    "href": "day01_welcome.html#four-competencies",
+    "title": "Welcome to DS 460",
+    "section": "Four competencies",
+    "text": "Four competencies\n\n\n\nImpact\nYour team sees you as an equal or primary contributor.\n\n\n\nInvolvement\nCome prepared. Ask questions, give answers, help direct.\n\n\n\nHours\nThe best predictor of success.\n\n\n\nUnderstanding\nBe the go-to person on a few topics.\n\n\nThese map to how an employer will judge you. You don’t need to be exceptional in all four."
+  },
+  {
+    "objectID": "day01_welcome.html#hours",
+    "href": "day01_welcome.html#hours",
+    "title": "Welcome to DS 460",
+    "section": "Hours",
+    "text": "Hours\n\n\n9 hours per week: 6 outside class + 3 in class\n\n110 hours for an A\n\n\nA 3-credit class is a 9-hour-a-week job.\nTrack your hours from day one.\nHours are what let you produce, but you show hard work through your products, not your hours."
+  },
+  {
+    "objectID": "day01_welcome.html#competency-scale",
+    "href": "day01_welcome.html#competency-scale",
+    "title": "Welcome to DS 460",
+    "section": "Competency scale",
+    "text": "Competency scale\n\n\n\n\n\n\n\n\n\n\n\n\nGrade\nHours\nChallenges\nOral/written\nReplication\nInvolvement\nImpact\n\n\n\n\nA\n110\n4 on key* challenges & 3 or higher on the rest\nPass 3\nAll complete\n&lt; 3 warnings & &lt; 3.1 hours of class missed\nActive on all & primary on &gt; 2\n\n\nB\n90\n3 on key* challenges & 3’s on most\nPass 2\n&lt; 2 missing\n&lt; 9.1 hours of class missed, or a write-up\nActive on most & primary on &gt; 1\n\n\nC\n70\nA 3 on any challenge\nPass 1\n&lt; 3 missing\n&lt; 4 warnings\nActive often & primary on &gt; 0\n\n\nD\n50\n\n\n\n\n\n\n\n\n*Key challenges: any PySpark challenge and the end-of-semester app challenge."
+  },
+  {
+    "objectID": "day01_welcome.html#challenges-are-scored-1-to-4",
+    "href": "day01_welcome.html#challenges-are-scored-1-to-4",
+    "title": "Welcome to DS 460",
+    "section": "Challenges are scored 1 to 4",
+    "text": "Challenges are scored 1 to 4\n\n\n\n1 Submitted work\n\n\n\n2 Some code aligns with the challenge\n\n\n\n3 Strong performance, satisfactory code\n\n\n\n4 Near flawless, clean and concise code\n\n\nAll challenges are announced at least 24 hours ahead, with the programming topic."
+  },
+  {
+    "objectID": "day01_welcome.html#you-write-your-own-grade-request",
+    "href": "day01_welcome.html#you-write-your-own-grade-request",
+    "title": "Welcome to DS 460",
+    "section": "You write your own grade request",
+    "text": "You write your own grade request\nAt the end of the semester you submit a grade request letter, like an end-of-year review with an employer.\n\nBe clear about what you delivered.\nYou can negotiate: use strength in one area to argue for a shortfall in another.\n\n\nI achieved only a satisfactory score on my final coding challenge, but I completed 119 hours and was a key contributor to 5 projects. As such, I request an A.\n\nRead the example letter with discussion before you write yours."
+  },
+  {
+    "objectID": "day01_welcome.html#this-week",
+    "href": "day01_welcome.html#this-week",
+    "title": "Welcome to DS 460",
+    "section": "This week",
+    "text": "This week\n\nRead the syllabus and the course paradigm.\nStart tracking your hours.\nStart exploring the Spark learning resources. Your review is due at the end of week 2.\nNeed to talk? Schedule a visit."
+  },
+  {
+    "objectID": "day01_welcome.html#discuss",
+    "href": "day01_welcome.html#discuss",
+    "title": "Welcome to DS 460",
+    "section": "Discuss",
+    "text": "Discuss\nWhat do you want to be the go-to expert on by the end of the semester?\n\nPick one or two topics. That’s where your “understanding” competency comes from."
+  },
+  {
+    "objectID": "day04_data_summaries.html#today",
+    "href": "day04_data_summaries.html#today",
+    "title": "Data Summaries That Persuade",
+    "section": "Today",
+    "text": "Today\n\nWhat makes a chart worth showing\nOne of your charts, on the screen\nTables vs. charts\nCanvas: are the due dates right?\nThe project proposal challenge\nTeam time"
+  },
+  {
+    "objectID": "day04_data_summaries.html#what-makes-a-chart-worth-showing",
+    "href": "day04_data_summaries.html#what-makes-a-chart-worth-showing",
+    "title": "Data Summaries That Persuade",
+    "section": "What makes a chart worth showing",
+    "text": "What makes a chart worth showing\n\nOne point per chart. If you can’t say it in a sentence, it isn’t done.\nPut the point in the title. “Religious buildings fill up at different hours” beats “Visits by hour.”\nOrder on purpose. Sort by value, not alphabetically.\nLabel the axes in a client’s words, with units.\nCut what carries no meaning: heavy gridlines, needless legends, unread decimals.\n\n\nThe chart is the argument. A weak visual weakens it."
+  },
+  {
+    "objectID": "day04_data_summaries.html#the-challenge-questions",
+    "href": "day04_data_summaries.html#the-challenge-questions",
+    "title": "Data Summaries That Persuade",
+    "section": "The challenge questions",
+    "text": "The challenge questions\nCompare church buildings in Utah and Georgia. Answer at least three:\n\niPhone vs. Android visitors to Latter-day Saint buildings in each state\nHourly patterns, Latter-day Saint vs. other churches\nrelated_same_day_brand for each group\nA reach: related_same_day_brand for temples, seminaries, and meetinghouses\n\nEach answer: code, a visualization, the first five rows charted, and a few sentences of insight."
+  },
+  {
+    "objectID": "day04_data_summaries.html#lets-see-one-of-yours",
+    "href": "day04_data_summaries.html#lets-see-one-of-yours",
+    "title": "Data Summaries That Persuade",
+    "section": "Let’s see one of yours",
+    "text": "Let’s see one of yours\nWho will put a chart on the screen?\n\nTell us the question, then the point your chart makes. We’ll talk about what the chart does well and what would make the point land harder.\n\nAsk the room: what is the point? Can you see it in under five seconds? What would you cut?"
+  },
+  {
+    "objectID": "day04_data_summaries.html#when-a-table-wins",
+    "href": "day04_data_summaries.html#when-a-table-wins",
+    "title": "Data Summaries That Persuade",
+    "section": "When a table wins",
+    "text": "When a table wins\n\n\n\nUse a chart\n\nA shape, trend, or comparison\nMany values at once\n“Which is bigger” at a glance\n\n\n\n\nUse a table\n\nExact numbers matter\nA handful of rows\nSeveral different units side by side\nPeople will look up a specific row\n\n\n\nA table is a visual too. It deserves the same care: aligned numbers, real labels, a title that says the point."
+  },
+  {
+    "objectID": "day04_data_summaries.html#great-tables",
+    "href": "day04_data_summaries.html#great-tables",
+    "title": "Data Summaries That Persuade",
+    "section": "Great Tables",
+    "text": "Great Tables\n\nMade with Great Tables (pip install great-tables), which works directly with Polars."
+  },
+  {
+    "objectID": "day04_data_summaries.html#lets-plot",
+    "href": "day04_data_summaries.html#lets-plot",
+    "title": "Data Summaries That Persuade",
+    "section": "Lets-Plot",
+    "text": "Lets-Plot\n\nMade with Lets-Plot (pip install lets-plot), a grammar-of-graphics library like ggplot2."
+  },
+  {
+    "objectID": "day04_data_summaries.html#your-toolbox",
+    "href": "day04_data_summaries.html#your-toolbox",
+    "title": "Data Summaries That Persuade",
+    "section": "Your toolbox",
+    "text": "Your toolbox\n\n\n\nPackage\nGood for\n\n\n\n\nPlotly Express\nQuick interactive charts. Required for this challenge.\n\n\nLets-Plot\nGrammar of graphics, close to ggplot2\n\n\nGreat Tables\nPresentation-ready tables from Polars\n\n\n\nBoth example figures on the last two slides came from your challenge data. The script is in img/example_figures.py."
+  },
+  {
+    "objectID": "day04_data_summaries.html#canvas-check",
+    "href": "day04_data_summaries.html#canvas-check",
+    "title": "Data Summaries That Persuade",
+    "section": "Canvas check",
+    "text": "Canvas check\nLet’s open Canvas together and compare it to the class repository.\n\nIs the wrangling and visualization challenge date right?\nIs Learning Plan 1 there, and when?\nIs the project proposal date right?\nAnything listed that we haven’t talked about?\n\nTell me now if a date is wrong. Fixing it later costs you more than it costs me."
+  },
+  {
+    "objectID": "day04_data_summaries.html#the-proposal-again",
+    "href": "day04_data_summaries.html#the-proposal-again",
+    "title": "Data Summaries That Persuade",
+    "section": "The proposal, again",
+    "text": "The proposal, again\nDue 9/29. Challenge repository\n\nPDI C-Stores is the driving dataset; don’t target one brand.\nThe model outputs a probability or a count.\nName a client, place, time span, and unit of analysis.\nSay how you’ll use the Census API.\nTwo pages or 5 to 8 slides.\n\n\nThis is a decision-point presentation. Make your point early, then justify it."
+  },
+  {
+    "objectID": "day04_data_summaries.html#team-time",
+    "href": "day04_data_summaries.html#team-time",
+    "title": "Data Summaries That Persuade",
+    "section": "Team time",
+    "text": "Team time\nWork on the proposal. I’ll come around.\n\nCome find me with: your client, your unit of analysis, and the one chart you’d show them first."
   }
 ]

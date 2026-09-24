@@ -4,7 +4,8 @@
     "items": [
       "/day01_welcome.html",
       "/day02_data_tools.html",
-      "/day03_databricks.html"
+      "/day03_databricks.html",
+      "/day04_data_summaries.html"
     ]
   }
 ]

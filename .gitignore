@@ -4,3 +4,4 @@ features/data/csv/
 features/data/lets-plot-images/
 slides/.quarto/
 slides/_site/
+slides/_old_agendas/*
