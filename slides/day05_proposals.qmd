@@ -1,0 +1,112 @@
+---
+title: "Proposals and What's Next"
+subtitle: "Day 5: Show your work, team time, presentations, and three new challenges"
+author: "J. Hathaway"
+# Update these each semester.
+class-repo: "https://github.com/byuibigdata/FA26_hathaway"
+written-date: "10/1"
+---
+
+## Show us the church project
+
+**Who will put their work on the screen?**
+
+- Which question did you take, and why that one?
+- Show the chart. **Say the point in one sentence.**
+- What surprised you in the data?
+- What took the longest, and how did you get past it?
+
+[We learn more from the wrangling you struggled with than from the finished chart.]{.orange}
+
+::: {.notes}
+Aim for three or four students. Push on the insight sentence, not the code.
+:::
+
+## Questions {.dark background-color="#022F4A"}
+
+**What's still fuzzy?**
+
+::: {.columns}
+::: {.column width="33%"}
+**Polars**
+
+Nested columns, joins, group_by, lazy vs. eager
+:::
+::: {.column width="33%"}
+**Databricks**
+
+Workspaces, loading the data, the catalog, serverless
+:::
+::: {.column width="33%"}
+**PySpark**
+
+How it differs from Polars, when we start using it
+:::
+:::
+
+[Ask the question you think is too basic. Someone else has it too.]{.orange}
+
+## Team time
+
+**Build your proposal presentation. 5 to 8 slides.**
+
+::: {.columns}
+::: {.column width="50%"}
+1. Team members and majors
+2. The business need, and why it's worth money
+3. Your data, with descriptive visuals
+4. How ML/AI fits the application
+5. What a successful product looks like
+:::
+::: {.column width="50%"}
+::: {.card}
+[Before you present]{.card-title}
+
+- Can you say your **client**, **place**, **time span**, and **unit of analysis** in one breath?
+- Is your **point in the first minute**?
+- Who is saying which part?
+:::
+:::
+:::
+
+## Presentations
+
+**Each team presents, then takes questions.**
+
+- Make your point early, then justify it.
+- Be ready to go deep: where the data comes from, what a row means, why this client.
+- Everyone else: **take notes on the approach you'd back.**
+
+::: {.takeaway}
+**We're deciding as a class** which direction the project takes. Speak up now, not next week.
+:::
+
+## What's next
+
+::: {.columns}
+::: {.column width="33%"}
+::: {.card}
+[1. Written Polars challenge]{.card-title}
+
+**In class {{< meta written-date >}}**, first 15 to 20 minutes. On paper, no computer.
+
+Practice: `group_by`, `agg`, joins, and nested columns.
+:::
+:::
+::: {.column width="33%"}
+::: {.card}
+[2. Census API challenge]{.card-title}
+
+Pull block-group data from the **US Census API** and join it to our places.
+:::
+:::
+::: {.column width="33%"}
+::: {.card}
+[3. Simple feature challenge]{.card-title}
+
+Build your first features at the **unit of analysis** we choose today.
+:::
+:::
+:::
+
+Dates land in the [class repository]({{< meta class-repo >}}) and Canvas. **Challenges are announced at least 24 hours ahead.**

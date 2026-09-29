@@ -280,6 +280,41 @@
     "text": "Discuss\nWho would pay for a prediction made from convenience-store data?\n\nName a client, a place, and a unit of analysis."
   },
   {
+    "objectID": "day05_proposals.html#show-us-the-church-project",
+    "href": "day05_proposals.html#show-us-the-church-project",
+    "title": "Proposals and What’s Next",
+    "section": "Show us the church project",
+    "text": "Show us the church project\nWho will put their work on the screen?\n\nWhich question did you take, and why that one?\nShow the chart. Say the point in one sentence.\nWhat surprised you in the data?\nWhat took the longest, and how did you get past it?\n\nWe learn more from the wrangling you struggled with than from the finished chart.\n\nAim for three or four students. Push on the insight sentence, not the code."
+  },
+  {
+    "objectID": "day05_proposals.html#questions",
+    "href": "day05_proposals.html#questions",
+    "title": "Proposals and What’s Next",
+    "section": "Questions",
+    "text": "Questions\nWhat’s still fuzzy?\n\n\nPolars\nNested columns, joins, group_by, lazy vs. eager\n\nDatabricks\nWorkspaces, loading the data, the catalog, serverless\n\nPySpark\nHow it differs from Polars, when we start using it\n\nAsk the question you think is too basic. Someone else has it too."
+  },
+  {
+    "objectID": "day05_proposals.html#team-time",
+    "href": "day05_proposals.html#team-time",
+    "title": "Proposals and What’s Next",
+    "section": "Team time",
+    "text": "Team time\nBuild your proposal presentation. 5 to 8 slides.\n\n\n\nTeam members and majors\nThe business need, and why it’s worth money\nYour data, with descriptive visuals\nHow ML/AI fits the application\nWhat a successful product looks like\n\n\n\nBefore you present\n\nCan you say your client, place, time span, and unit of analysis in one breath?\nIs your point in the first minute?\nWho is saying which part?"
+  },
+  {
+    "objectID": "day05_proposals.html#presentations",
+    "href": "day05_proposals.html#presentations",
+    "title": "Proposals and What’s Next",
+    "section": "Presentations",
+    "text": "Presentations\nEach team presents, then takes questions.\n\nMake your point early, then justify it.\nBe ready to go deep: where the data comes from, what a row means, why this client.\nEveryone else: take notes on the approach you’d back.\n\n\nWe’re deciding as a class which direction the project takes. Speak up now, not next week."
+  },
+  {
+    "objectID": "day05_proposals.html#whats-next",
+    "href": "day05_proposals.html#whats-next",
+    "title": "Proposals and What’s Next",
+    "section": "What’s next",
+    "text": "What’s next\n\n\n\n1. Written Polars challenge\nIn class 10/1, first 15 to 20 minutes. On paper, no computer.\nPractice: group_by, agg, joins, and nested columns.\n\n\n\n2. Census API challenge\nPull block-group data from the US Census API and join it to our places.\n\n\n\n3. Simple feature challenge\nBuild your first features at the unit of analysis we choose today.\n\n\nDates land in the class repository and Canvas. Challenges are announced at least 24 hours ahead."
+  },
+  {
     "objectID": "brand-guide.html#where-the-brand-lives",
     "href": "brand-guide.html#where-the-brand-lives",
     "title": "DS 460 Slide Brand Guide",
@@ -361,7 +396,7 @@
     "href": "index.html#class-decks",
     "title": "DS 460 Class Slides",
     "section": "Class decks",
-    "text": "Class decks\n\n\n\n\n\n\nDeck\n\n\n\nTopics\n\n\n\n\n\n\n\n\nWelcome to DS 460\n\n\nDay 1: How this class works\n\n\n\n\n\n\nData Sizes, Formats, and Tools\n\n\nDay 2: Parquet, Arrow, Polars, PySpark, and your first two challenges\n\n\n\n\n\n\nDatabricks Setup and Team Time\n\n\nDay 3: Schedule, questions, Databricks Free Edition, and your proposal\n\n\n\n\n\n\nData Summaries That Persuade\n\n\nDay 4: Charts, tables, due dates, and proposal time\n\n\n\n\n\n\nNo matching items\n\nPress s in a deck for speaker view, f for full screen, and Esc for a slide overview."
+    "text": "Class decks\n\n\n\n\n\n\nDeck\n\n\n\nTopics\n\n\n\n\n\n\n\n\nWelcome to DS 460\n\n\nDay 1: How this class works\n\n\n\n\n\n\nData Sizes, Formats, and Tools\n\n\nDay 2: Parquet, Arrow, Polars, PySpark, and your first two challenges\n\n\n\n\n\n\nDatabricks Setup and Team Time\n\n\nDay 3: Schedule, questions, Databricks Free Edition, and your proposal\n\n\n\n\n\n\nData Summaries That Persuade\n\n\nDay 4: Charts, tables, due dates, and proposal time\n\n\n\n\n\n\nProposals and What’s Next\n\n\nDay 5: Show your work, team time, presentations, and three new challenges\n\n\n\n\n\n\nNo matching items\n\nPress s in a deck for speaker view, f for full screen, and Esc for a slide overview."
   },
   {
     "objectID": "index.html#reference",
