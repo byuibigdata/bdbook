@@ -105,6 +105,34 @@ ul.task-list li input[type="checkbox"] {
       window['quarto-listing-loaded']();
     }
   })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-topics .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-subtitle',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-topics'] = new List('listing-topics', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
   </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
@@ -171,8 +199,9 @@ window.Quarto = {
 
 
 <p><img src="DS460_Banner.png" class="img-fluid" alt="DS 460 Big Data Programming and Analytics banner"></p>
-<section id="class-decks" class="level2">
-<h2 class="anchored" data-anchor-id="class-decks">Class decks</h2>
+<section id="class-days" class="level2">
+<h2 class="anchored" data-anchor-id="class-days">Class days</h2>
+<p>One deck per class meeting, in order.</p>
 <div id="listing-decks" class="quarto-listing quarto-listing-container-table">
 <table class="quarto-listing-table table">
 <thead>
@@ -236,6 +265,41 @@ Topics
 </td>
 <td>
 <span class="listing-subtitle">Day 5: Show your work, team time, presentations, and three new challenges</span>
+</td>
+
+</tr>
+
+</tbody>
+</table>
+<div class="listing-no-matching d-none">No matching items</div>
+</div>
+</section>
+<section id="topics" class="level2">
+<h2 class="anchored" data-anchor-id="topics">Topics</h2>
+<p>Reusable decks on one tool or idea. Pull them into a class day when the class needs them.</p>
+<div id="listing-topics" class="quarto-listing quarto-listing-container-table">
+<table class="quarto-listing-table table">
+<thead>
+<tr>
+
+<th>
+Deck
+</th>
+
+<th>
+What it covers
+</th>
+
+</tr>
+</thead>
+<tbody class="list">
+
+<tr data-index="0" data-listing-file-modified-sort="1791322407097" data-listing-reading-time-sort="7" data-listing-word-count-sort="1221" data-listing-title-sort="Keep Your Secrets Out of Your Code" data-listing-filename-sort="topic_env_variables.qmd">
+<td>
+<a href="./topic_env_variables.html" class="title listing-title">Keep Your Secrets Out of Your Code</a>
+</td>
+<td>
+<span class="listing-subtitle">Environment variables in Python, Databricks, and R</span>
 </td>
 
 </tr>

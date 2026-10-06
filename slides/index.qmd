@@ -6,23 +6,42 @@ format:
     theme: [default, index.scss]
     toc: false
 listing:
-  id: decks
-  contents: "day*.qmd"
-  type: table
-  sort: "filename"
-  fields: [title, subtitle]
-  field-display-names:
-    title: "Deck"
-    subtitle: "Topics"
-  sort-ui: false
-  filter-ui: false
+  - id: decks
+    contents: "day*.qmd"
+    type: table
+    sort: "filename"
+    fields: [title, subtitle]
+    field-display-names:
+      title: "Deck"
+      subtitle: "Topics"
+    sort-ui: false
+    filter-ui: false
+  - id: topics
+    contents: "topic_*.qmd"
+    type: table
+    sort: "title"
+    fields: [title, subtitle]
+    field-display-names:
+      title: "Deck"
+      subtitle: "What it covers"
+    sort-ui: false
+    filter-ui: false
 ---
 
 ![](DS460_Banner.png){fig-alt="DS 460 Big Data Programming and Analytics banner"}
 
-## Class decks
+## Class days
+
+One deck per class meeting, in order.
 
 ::: {#decks}
+:::
+
+## Topics
+
+Reusable decks on one tool or idea. Pull them into a class day when the class needs them.
+
+::: {#topics}
 :::
 
 Press `s` in a deck for speaker view, `f` for full screen, and `Esc` for a slide overview.

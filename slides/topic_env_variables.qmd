@@ -1,0 +1,551 @@
+---
+title: "Keep Your Secrets Out of Your Code"
+subtitle: "Environment variables in Python, Databricks, and R"
+author: "J. Hathaway"
+execute:
+  eval: false
+  echo: true
+---
+
+## The problem {.dark background-color="#022F4A"}
+
+[Code gets **shared**. Secrets must **not**.]{.statement}
+
+<br>
+
+[An API key typed into a script travels with that script — everywhere.]{.orange}
+
+## Where a hardcoded key ends up
+
+```python
+API_KEY = "sk-abc123yourrealkeyhere"   # never
+```
+
+::: {.cards}
+::: {.card .bad}
+[Git history]{.card-title}
+
+Deleting the line later doesn't help. Old commits keep it.
+:::
+::: {.card .bad}
+[Shared files]{.card-title}
+
+Notebooks, exports, screenshots, screen shares.
+:::
+::: {.card .bad}
+[Everyone with access]{.card-title}
+
+Teammates, forks, and anyone who ever clones the repo.
+:::
+:::
+
+## The fix: separate config from code
+
+::: {.flow}
+::: {.box}
+Your code
+
+[no secret inside]{.muted}
+:::
+
+[←]{.arrow}
+
+::: {.box .hl}
+Environment
+
+[`API_KEY=…`]{.muted}
+:::
+
+[←]{.arrow}
+
+::: {.box}
+Where it's stored
+
+[`.env` file · secret store]{.muted}
+:::
+:::
+
+- The code is identical on every machine
+- Only the **environment** changes: laptop, server, Databricks
+- The secret is never committed
+
+## What is an environment variable?
+
+A named **string** the operating system hands to your program.
+
+```python
+import os
+
+os.getenv("API_KEY")                       # None if missing
+os.environ["API_KEY"]                      # KeyError if missing
+os.getenv("API_URL", "http://localhost")   # with a default
+```
+
+[Always strings. Convert numbers and booleans yourself.]{.muted}
+
+## Today
+
+::: {.cards}
+::: {.card}
+[1 · Python]{.card-title}
+
+Local development with `.env` files and the `python-dotenv` package.
+:::
+::: {.card}
+[2 · Databricks]{.card-title}
+
+Four ways to store an API key, ranked from safest to worst.
+:::
+::: {.card}
+[Appendix · R]{.card-title}
+
+The same idea with `.Renviron`, `askpass`, and `keyring`.
+:::
+:::
+
+# Python
+
+`.env` files and `python-dotenv`
+
+## Three steps
+
+::: {.flow}
+::: {.box .hl}
+[1]{.step} Write a `.env` file
+:::
+
+[→]{.arrow}
+
+::: {.box .hl}
+[2]{.step} Ignore it in Git
+:::
+
+[→]{.arrow}
+
+::: {.box .hl}
+[3]{.step} Load it in Python
+:::
+:::
+
+First, install the package:
+
+```bash
+pip install python-dotenv
+```
+
+## [1]{.step} Write a `.env` file
+
+One `NAME=value` per line, in your project folder.
+
+```{.bash filename=".env"}
+API_KEY=sk-abc123yourrealkeyhere
+API_URL=https://api.example.com
+DEBUG=true
+```
+
+- No spaces around `=`
+- Quotes only needed if the value has spaces
+- `#` starts a comment
+
+## [2]{.step} Keep it out of Git
+
+```{.bash filename=".gitignore"}
+.env
+```
+
+Then commit a **template** so teammates know what to set:
+
+```{.bash filename=".env.example"}
+API_KEY=your-key-here
+API_URL=https://api.example.com
+```
+
+::: {.takeaway}
+Add `.env` to `.gitignore` **before your first commit.**
+:::
+
+## [3]{.step} Load it in Python
+
+```python
+import os
+from dotenv import load_dotenv
+
+load_dotenv()                      # .env → os.environ
+
+api_key = os.getenv("API_KEY")
+api_url = os.getenv("API_URL")
+```
+
+[Call `load_dotenv()` once, at the top of your entry script.]{.muted}
+
+## Use it, never print it
+
+```python
+import requests
+
+resp = requests.get(
+    api_url,
+    headers={"Authorization": f"Bearer {api_key}"},
+)
+print(resp.status_code)
+```
+
+::: {.cards}
+::: {.card .good}
+[200]{.card-title}
+
+Key is valid
+:::
+::: {.card .bad}
+[401 / 403]{.card-title}
+
+Key is wrong or expired
+:::
+:::
+
+## Fail fast when a key is missing
+
+```python
+def require(name):
+    value = os.getenv(name)
+    if not value:
+        raise RuntimeError(f"Missing env var: {name}")
+    return value
+
+api_key = require("API_KEY")
+```
+
+A clear error at startup beats a confusing `401` ten minutes later.
+
+## Handy options
+
+```python
+load_dotenv(find_dotenv())      # search parent folders
+load_dotenv(".env.dev")         # a specific file
+load_dotenv(override=True)      # .env wins over real env
+
+config = dotenv_values(".env")  # a dict, os.environ untouched
+```
+
+[By default `load_dotenv()` does **not** overwrite variables already set. Servers and CI can override your local file.]{.muted}
+
+## Python recap
+
+::: {.cards}
+::: {.card}
+[Store]{.card-title}
+
+Secrets in `.env`
+:::
+::: {.card}
+[Protect]{.card-title}
+
+`.env` in `.gitignore`, `.env.example` committed
+:::
+::: {.card}
+[Load]{.card-title}
+
+`load_dotenv()` then `os.getenv()`
+:::
+::: {.card .bad}
+[Never]{.card-title}
+
+`print(api_key)`
+:::
+:::
+
+# Databricks
+
+Four options, safest to worst
+
+## Four ways to store a key
+
+::: {.rank}
+::: {.row .r1}
+[1]{.n} [Databricks Secrets]{.name} [Encrypted. Output shows `[REDACTED]`.]{.why} [Best]{.tag}
+:::
+::: {.row .r2}
+[2]{.n} [`%run` config notebook]{.name} [Only safe if it *reads* a secret.]{.why} [OK]{.tag}
+:::
+::: {.row .r3}
+[3]{.n} [Cluster env variable]{.name} [Visible in cluster config. Not redacted.]{.why} [Weak]{.tag}
+:::
+::: {.row .r4}
+[4]{.n} [Hardcoded]{.name} [In the file and its history, forever.]{.why} [Never]{.tag}
+:::
+:::
+
+## Option 1 — Databricks Secrets
+
+```python
+api_key = dbutils.secrets.get(
+    catalog="workspace", schema="alice", key="my-api-key"
+)
+```
+
+- Value is **never printed**: output shows `[REDACTED]`
+- **You** choose who can read it
+- The notebook is safe to share or commit
+
+[On Free Edition, use **Unity Catalog secrets**. No CLI needed.]{.muted}
+
+## Set it up: three steps
+
+::: {.flow}
+::: {.box .hl}
+[0]{.step} Admin grants `CREATE SCHEMA`
+
+[once]{.muted}
+:::
+
+[→]{.arrow}
+
+::: {.box .hl}
+[1]{.step} You create a private schema
+
+[once]{.muted}
+:::
+
+[→]{.arrow}
+
+::: {.box .hl}
+[2]{.step} You add the secret
+
+[per key]{.muted}
+:::
+:::
+
+[Everything happens in notebooks or the Catalog UI.]{.muted}
+
+## [0]{.step} Admin: allow schema creation
+
+Run once, as a workspace admin:
+
+```sql
+GRANT CREATE SCHEMA ON CATALOG workspace TO `users`;
+```
+
+[Or in the UI: **Catalog → workspace → Permissions → Grant**]{.muted}
+
+## [1]{.step} Create your own schema
+
+Use your own name in place of `alice`:
+
+```sql
+CREATE SCHEMA IF NOT EXISTS workspace.alice;
+```
+
+[This schema holds your private secrets. No one else can read them.]{.muted}
+
+## [2]{.step} Add the secret in the UI
+
+1. **Catalog** in the sidebar
+2. **workspace** → your schema
+3. **Create → Secret**
+4. Name: `my-api-key` · Value: paste your key
+5. **Create**
+
+[It is encrypted at rest and shows `[REDACTED]` from then on.]{.muted}
+
+## Read it at runtime
+
+```python
+api_key = dbutils.secrets.get(
+    catalog="workspace", schema="alice", key="my-api-key"
+)
+```
+
+Use it. Don't print it.
+
+```python
+requests.get(url, headers={"Authorization": f"Bearer {api_key}"})
+```
+
+## One key name, no collisions
+
+```text
+workspace
+├── alice    ← only Alice can read
+│   └── my-api-key
+├── bob      ← only Bob can read
+│   └── my-api-key
+└── charlie  ← only Charlie can read
+    └── my-api-key
+```
+
+To share on purpose:
+
+```sql
+GRANT READ SECRET ON SCHEMA workspace.alice TO `bob@byui.edu`;
+```
+
+## Rotate a key
+
+::: {.columns}
+::: {.column width="40%"}
+**In the UI**
+
+1. Catalog → your schema → **Secrets**
+2. Open the secret
+3. Menu (three dots) → **Edit** → new value
+:::
+::: {.column width="60%"}
+**In a notebook**
+
+```python
+from databricks.sdk import WorkspaceClient
+
+w = WorkspaceClient()
+w.secrets.update_secret(
+    name="workspace.alice.my-api-key",
+    value=new_key)
+```
+:::
+:::
+
+[Needs `WRITE SECRET`. The new value works immediately.]{.muted}
+
+## Check it loaded, without leaking it
+
+```python
+if not api_key:
+    print("not set")
+else:
+    print(f"loaded, {len(api_key)} characters")
+```
+
+[Databricks redacts secrets in output, but don't rely on that alone. Confirm with a real API call and its HTTP status.]{.muted}
+
+## Option 2 — Share one config notebook
+
+::: {.columns}
+::: {.column width="50%"}
+**`api_key_config` notebook**
+
+```python
+api_key = "sk-abc123yourrealkeyhere"
+api_url = "https://api.example.com"
+```
+:::
+::: {.column width="50%"}
+**Any other notebook**
+
+```python
+%run ./api_key_config
+```
+
+`api_key` is now defined.
+:::
+:::
+
+- One place to change or rotate
+- [Holding the key in the config notebook is a poor version of a `.env` file]{.spark}
+
+## Option 3 — Cluster environment variable
+
+```python
+import os
+api_key = os.environ.get("OPENAI_API_KEY")
+```
+
+::: {.takeaway}
+- Anyone with **Can manage** on the cluster can see it
+- **Not redacted**: printing it leaks it
+- Not supported on serverless (job-level variables are Beta)
+:::
+
+## Option 4 — Hardcoded
+
+```python
+API_KEY = "sk-abc123yourrealkeyhere"   # never
+```
+
+::: {.takeaway}
+If a key was ever hardcoded, **rotate it now.** Assume it is compromised.
+:::
+
+[It lives in the notebook, its revision history, Git, and exports.]{.muted}
+
+## Local Python vs. Databricks
+
+| | Local Python | Databricks |
+|---|---|---|
+| **Store** | `.env` file | Unity Catalog secret |
+| **Load** | `load_dotenv()` | `dbutils.secrets.get()` |
+| **Protect** | `.gitignore` | Access control + `[REDACTED]` |
+| **Rotate** | Edit `.env` | Catalog UI or SDK |
+
+## Takeaways
+
+1. **Never hardcode** a secret
+2. Locally: **`.env` + `python-dotenv` + `.gitignore`**
+3. On Databricks: **Unity Catalog secrets**
+4. Fail fast. **Never print** a value
+5. If it leaks: **rotate first**, clean up after
+
+# R
+
+Appendix · the same idea in R
+
+## `.Renviron`
+
+```r
+usethis::edit_r_environ(scope = "project")
+```
+
+```{.bash filename=".Renviron"}
+API_KEY=sk-abc123yourrealkeyhere
+API_URL=https://api.example.com
+```
+
+Restart R, then read it:
+
+```r
+api_key <- Sys.getenv("API_KEY")
+```
+
+[Add `.Renviron` to `.gitignore`.]{.muted}
+
+## `.env` files and safe use
+
+```r
+dotenv::load_dot_env(".env")      # like python-dotenv
+api_key <- Sys.getenv("API_KEY")
+```
+
+```r
+library(httr2)
+
+request(Sys.getenv("API_URL")) |>
+  req_auth_bearer_token(Sys.getenv("API_KEY")) |>
+  req_perform()
+```
+
+[Next: two ways to skip the file entirely.]{.muted}
+
+## `askpass`: type it when needed
+
+```r
+# install.packages("askpass")
+api_key <- askpass::askpass("Enter your API key")
+```
+
+- Pops up a password prompt, typed characters hidden
+- Returns the value as a string
+- Nothing is written to disk
+
+[Good for quick interactive work. You retype the key each session.]{.muted}
+
+## `keyring`: store it once
+
+```r
+# install.packages("keyring")
+keyring::key_set("my-api")          # prompts once, then stores it
+api_key <- keyring::key_get("my-api")
+```
+
+- Saved in your OS credential store (Keychain, Credential Manager)
+- Read it back in any script, no file in your project
+- Closest R equivalent to Databricks secrets
+
+[Never put the key itself in your code. Only the name `"my-api"`.]{.muted}

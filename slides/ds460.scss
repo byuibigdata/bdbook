@@ -11,6 +11,9 @@ $ds-cloud: #F4F7F9;
 $ds-spark-orange: #D5773C;
 $ds-course-orange: #F59625;
 $ds-ink: #111111;
+// Semantic only: a green and a red for "do this" / "never do this".
+$ds-good: #1F8A5B;
+$ds-bad: #C7352B;
 
 $presentation-font-size-root: 34px;
 $presentation-h1-font-size: 2.3em;
@@ -166,6 +169,126 @@ $code-color: $ds-slate;
   color: $ds-ridge-blue;
   font-size: 0.9em;
   margin-bottom: 0.3em;
+}
+
+// A row of cards without columns: ::: {.cards} of ::: {.card} blocks.
+.reveal .cards {
+  display: flex;
+  align-items: stretch;
+  gap: 0.6em;
+  margin: 0.5em 0 0.8em;
+  > .card {
+    flex: 1;
+    min-width: 0;
+  }
+  .card p { margin: 0 0 0.2em; }
+}
+
+// Judgement variants: ::: {.card .good} / ::: {.card .bad}
+.reveal .card.good { border-top-color: $ds-good; }
+.reveal .card.bad { border-top-color: $ds-bad; }
+.reveal .card.good .card-title { color: $ds-good; }
+.reveal .card.bad .card-title { color: $ds-bad; }
+
+// Left-to-right diagram: ::: {.flow} of ::: {.box} blocks, with [→]{.arrow}
+.reveal .flow {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0.8em 0;
+  .box {
+    flex: 1;
+    background: #fff;
+    border: 2px solid $ds-mist;
+    border-radius: 10px;
+    padding: 0.55em 0.5em;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.8em;
+    line-height: 1.25;
+    p { margin: 0; }
+    &.hl {
+      border-color: $ds-teal;
+      background: $ds-cloud;
+    }
+  }
+  .arrow {
+    flex: none;
+    font-size: 1.2em;
+    color: $ds-ridge-blue;
+  }
+}
+
+// A numbered badge: [1]{.step}
+.reveal .step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7em;
+  height: 1.7em;
+  border-radius: 50%;
+  background: $ds-course-orange;
+  color: #fff;
+  font-family: "Fira Code", monospace;
+  font-weight: 700;
+  font-size: 0.8em;
+  margin-right: 0.4em;
+  flex: none;
+}
+
+// Ranked options: ::: {.rank} of ::: {.row .r1} … {.r4}
+.reveal .rank {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  margin-top: 0.5em;
+  font-size: 0.8em;
+  .row {
+    background: $ds-cloud;
+    border-left: 10px solid var(--rank-color);
+    border-radius: 8px;
+    padding: 0.35em 0.8em;
+    > p {
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+      width: 100%;
+      margin: 0;
+    }
+  }
+  .n {
+    font-family: "Fira Code", monospace;
+    font-weight: 700;
+    font-size: 1.2em;
+    color: var(--rank-color);
+    flex: none;
+  }
+  .name { font-weight: 700; flex: 0 0 8.5em; }
+  .why { color: $ds-ridge-blue; font-size: 0.85em; flex: 1; }
+  .tag {
+    flex: none;
+    font-size: 0.7em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2em 0.7em;
+    border-radius: 99px;
+    background: var(--rank-color);
+    color: #fff;
+  }
+  .r1 { --rank-color: #{$ds-good}; }
+  .r2 { --rank-color: #{$ds-teal}; }
+  .r3 { --rank-color: #{$ds-course-orange}; }
+  .r4 { --rank-color: #{$ds-bad}; }
+}
+
+// One big line on a dark slide: [text]{.statement}
+.reveal .statement {
+  display: block;
+  font-family: "Fira Code", monospace;
+  font-weight: 600;
+  font-size: 1.5em;
+  line-height: 1.25;
 }
 
 // A key takeaway: ::: {.takeaway} ... :::
