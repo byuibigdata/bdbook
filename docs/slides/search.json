@@ -1,318 +1,311 @@
 [
   {
-    "objectID": "day03_databricks.html#today",
-    "href": "day03_databricks.html#today",
-    "title": "Databricks Setup and Team Time",
-    "section": "Today",
-    "text": "Today\n\nThe schedule\nQuestions on the church data\nDatabricks Free Edition: three workspaces\nLoad the semester data and find it in the catalog\nTeam time on your proposal"
+    "objectID": "topics/association_rules.html#the-question",
+    "href": "topics/association_rules.html#the-question",
+    "title": "Baskets of Goods",
+    "section": "The question",
+    "text": "The question\nWhat sells with what?\n\nEvery rule you find has to survive one question: what would the store do differently tomorrow?"
   },
   {
-    "objectID": "day03_databricks.html#whats-due",
-    "href": "day03_databricks.html#whats-due",
-    "title": "Databricks Setup and Team Time",
-    "section": "What’s due",
-    "text": "What’s due\n\n\n\n\n\n\n\n\nAssignment\nDue\nWhere\n\n\n\n\nData wrangling & visualization challenge\n9/24\nGitHub pull request + Canvas\n\n\nLearning Plan 1\n9/25\nCanvas\n\n\nProject proposal & unit of analysis\n9/29\nTeam folder on GitHub + Canvas\n\n\n\n\nThe full list of challenges and dates is in the class repository.\nKeep tracking your hours in Harvest."
+    "objectID": "topics/association_rules.html#a-basket-is-a-row-per-transaction",
+    "href": "topics/association_rules.html#a-basket-is-a-row-per-transaction",
+    "title": "Baskets of Goods",
+    "section": "A basket is a row per transaction",
+    "text": "A basket is a row per transaction\n\n\nLine items\none row per scan\n\n→\n\nBasket\none row per transaction\n\n→\n\nRules\none row per rule\n\n\nA basket is the set of categories in one transaction. Duplicates collapse: two energy drinks count as one Packaged Beverages."
   },
   {
-    "objectID": "day03_databricks.html#your-questions",
-    "href": "day03_databricks.html#your-questions",
-    "title": "Databricks Setup and Team Time",
-    "section": "Your questions",
-    "text": "Your questions\nWhat’s slowing you down on the wrangling and visualization challenge?\n\nReading the data · nested columns · picking a chart · the report format"
+    "objectID": "topics/association_rules.html#three-numbers-describe-a-rule",
+    "href": "topics/association_rules.html#three-numbers-describe-a-rule",
+    "title": "Baskets of Goods",
+    "section": "Three numbers describe a rule",
+    "text": "Three numbers describe a rule\nFor a rule A → B:\n\n\nSupport\nHow often A and B appear together, out of all baskets.\nIs it common enough to care?\n\n\nConfidence\nOf baskets with A, how many also have B.\nHow reliable is the rule?\n\n\nLift\nConfidence ÷ how often B shows up anyway.\nDoes A actually tell us anything?\n\n\nLift is the one that matters. High confidence on a very common item means nothing."
   },
   {
-    "objectID": "day03_databricks.html#nested-columns",
-    "href": "day03_databricks.html#nested-columns",
-    "title": "Databricks Setup and Team Time",
-    "section": "Nested columns",
-    "text": "Nested columns\nMany patterns columns are lists of key/value pairs. Explode the list into rows, then unnest the pairs into columns:\ndevices = (patterns\n    .select(\"placekey\", \"device_type\")\n    .explode(\"device_type\")\n    .unnest(\"device_type\"))\n\n\n\nplacekey\nkey\nvalue\n\n\n\n\n222-223@8g7-2n2-td9\nandroid\n4\n\n\n222-223@8g7-2n2-td9\nios\n5\n\n\n\nThe same pattern works for related_same_day_brand, popularity_by_day, and the other key/value columns."
+    "objectID": "topics/association_rules.html#the-arithmetic-on-our-data",
+    "href": "topics/association_rules.html#the-arithmetic-on-our-data",
+    "title": "Baskets of Goods",
+    "section": "The arithmetic, on our data",
+    "text": "The arithmetic, on our data\nBeer → Cigarettes, from the multi-item baskets:\n\n\n\n\nValue\nWhere it comes from\n\n\n\n\nSupport\n0.065\n6.5% of baskets have both\n\n\nConfidence\n0.318\n31.8% of beer baskets also have cigarettes\n\n\nCigarettes alone\n0.187\n18.7% of all baskets have cigarettes\n\n\nLift\n1.70\n0.318 ÷ 0.187\n\n\n\nBeer buyers are 1.7× more likely than average to also buy cigarettes.\nExample conclusions — one run on the Idaho sample, not a finished analysis."
   },
   {
-    "objectID": "day03_databricks.html#what-it-is",
-    "href": "day03_databricks.html#what-it-is",
-    "title": "Databricks Setup and Team Time",
-    "section": "What it is",
-    "text": "What it is\n\n\n\nA free, serverless Databricks workspace\nSpark notebooks with no clusters to manage\nThe same platform companies pay for\nSign up here\n\n\n\nLimits to know\n\nNotebooks time out after 2.5 hours\nGo over quota and compute shuts off for the day\nPython and SQL only (no R or Scala)\nNo commercial use"
+    "objectID": "topics/association_rules.html#reading-lift",
+    "href": "topics/association_rules.html#reading-lift",
+    "title": "Baskets of Goods",
+    "section": "Reading lift",
+    "text": "Reading lift\n\n\nLift &gt; 1\nThey go together more than chance. Worth acting on.\n\n\nLift ≈ 1\nIndependent. The rule tells you nothing.\n\n\nLift &lt; 1\nThey repel. Buying A makes B less likely.\n\n\n\nAssociation is not causation. A rule says the two co-occur, not that moving one moves the other. That’s what a test or a promotion proves."
   },
   {
-    "objectID": "day03_databricks.html#three-workspaces",
-    "href": "day03_databricks.html#three-workspaces",
-    "title": "Databricks Setup and Team Time",
-    "section": "Three workspaces",
-    "text": "Three workspaces\n\n\n\n1. Class\nOne workspace for all of us.\nOpen the class workspace\n\n\n\n2. Team\nYour whole team in one workspace, so you share notebooks and data.\nOne teammate creates it.\n\n\n\n3. Personal\nYour own space to experiment and practice.\nYou create it."
+    "objectID": "topics/association_rules.html#what-makes-c-store-baskets-different",
+    "href": "topics/association_rules.html#what-makes-c-store-baskets-different",
+    "title": "Baskets of Goods",
+    "section": "What makes C-Store baskets different",
+    "text": "What makes C-Store baskets different\n\n\nBaskets are tiny\nA drink. A pack of cigarettes. Fuel only. Support is low for everything.\n\n\nA few categories dominate\nFuel, tobacco, lottery, and services swamp the counts.\n\n\nSKUs are too fine\nHundreds of drink SKUs give sparse, unactionable rules. Roll up to category.\n\n\nTime and place matter\nMorning coffee baskets look nothing like Friday-evening beer baskets."
   },
   {
-    "objectID": "day03_databricks.html#set-up-your-personal-workspace",
-    "href": "day03_databricks.html#set-up-your-personal-workspace",
-    "title": "Databricks Setup and Team Time",
-    "section": "Set up your personal workspace",
-    "text": "Set up your personal workspace\n\nGo to Databricks Free Edition and sign up.\nUse your university email. BYU-I emails can sign in with Google or Microsoft.\nCreate a notebook to confirm it works."
+    "objectID": "topics/association_rules.html#profile-first",
+    "href": "topics/association_rules.html#profile-first",
+    "title": "Baskets of Goods",
+    "section": "Profile first",
+    "text": "Profile first\n\n\n2.7M line items in the Idaho sample\n\n\n1.5M baskets, averaging 1.8 items\n\n\n56% of baskets hold a single item\n\n\nMore than half the data carries no co-occurrence at all. Profile before you mine, or you’ll tune thresholds blind.\nExample conclusions — one run on the Idaho sample, not a finished analysis."
   },
   {
-    "objectID": "day03_databricks.html#set-up-your-team-workspace",
-    "href": "day03_databricks.html#set-up-your-team-workspace",
-    "title": "Databricks Setup and Team Time",
-    "section": "Set up your team workspace",
-    "text": "Set up your team workspace\n\nOne teammate creates a new Free Edition account for the team.\nThat teammate invites everyone else:\n\nUser icon (top right) → Settings → Workspace admin → Identity and access → Users → Manage → Add user → Invite user by email\n\nEveryone accepts the invite and opens the same workspace.\n\n\nDo this today, before you leave. You’ll need it for the proposal."
+    "objectID": "topics/association_rules.html#cleaning-what-counts-as-a-basket",
+    "href": "topics/association_rules.html#cleaning-what-counts-as-a-basket",
+    "title": "Baskets of Goods",
+    "section": "Cleaning: what counts as a basket",
+    "text": "Cleaning: what counts as a basket\n\nSingle-item baskets: keep them and support collapses; drop them and every number is conditional on “basket had 2+ items.”\nFuel, tobacco, lottery: so common they attach to everything. Tag them, then decide whether they’re items or context.\n\n\nEvery one of these changes your rules. Write the decision down, and report your numbers next to it."
   },
   {
-    "objectID": "day03_databricks.html#one-notebook-loads-everything",
-    "href": "day03_databricks.html#one-notebook-loads-everything",
-    "title": "Databricks Setup and Team Time",
-    "section": "One notebook loads everything",
-    "text": "One notebook loads everything\n\nDownload load_semester_data.html from Slack.\nIn Databricks, open Workspace → Import and choose the file.\nAttach the notebook to Serverless compute and click Run all.\nWait 8 to 12 minutes. The last cell shows a summary. Every row should say ok.\n\nSafe to re-run: anything already loaded is skipped. If a row says FAILED, run it once more, then post in Slack."
+    "objectID": "topics/association_rules.html#roll-up-to-category",
+    "href": "topics/association_rules.html#roll-up-to-category",
+    "title": "Baskets of Goods",
+    "section": "Roll up to category",
+    "text": "Roll up to category\n\n\n\nAt SKU level\n20OZ MTN DEW → 44OZ REIGN\nSupport near zero. Thousands of rules, none actionable.\n\n\n\nAt category level\nPackaged Beverages → Salty Snacks\nEnough support to act on. A planogram decision.\n\n\nThe GTIN table gives you CATEGORY, SUBCATEGORY, BRAND, and PRODUCT_TYPE. Start at category, go finer only where a rule earns it."
   },
   {
-    "objectID": "day03_databricks.html#what-gets-loaded",
-    "href": "day03_databricks.html#what-gets-loaded",
-    "title": "Databricks Setup and Team Time",
-    "section": "What gets loaded",
-    "text": "What gets loaded\n\n\n\n\n\n\n\nData\nWhere it lands\n\n\n\n\nChurch places and patterns (the challenge data)\nVolume: pattern_places/pattern_places_data/\n\n\nC-Store, Idaho, 167 stores (small)\nTables: cstore_snippet.*\n\n\nC-Store, five states, 240 stores (medium)\nTables: cstore_sample.*\n\n\nCensus block-group tables\nTables: census.*\n\n\nMaverik patterns\nVolume: default/data/other/\n\n\n\nStart on small while you build and test. Move to medium when it works."
+    "objectID": "topics/association_rules.html#bronze-silver-gold",
+    "href": "topics/association_rules.html#bronze-silver-gold",
+    "title": "Baskets of Goods",
+    "section": "Bronze, silver, gold",
+    "text": "Bronze, silver, gold\n\n\n\n\n\n\n\n\nLayer\nGrain\nWhat happens\n\n\n\n\nBronze\nRaw line item\nLoad PDI data as-is into Delta\n\n\nSilver\nClean line item\nDrop voids, tag fuel/tobacco/lottery, roll up to category\n\n\nGold: baskets\nOne row per basket\ncollect_set of items\n\n\nGold: rules\nOne row per rule\nFP-Growth output\n\n\nGold: modeling\nOne row per basket\nFeatures + Y\n\n\n\nEach layer is a table you can check. Don’t jump from raw to rules in one cell."
   },
   {
-    "objectID": "day03_databricks.html#finding-it-in-the-catalog",
-    "href": "day03_databricks.html#finding-it-in-the-catalog",
-    "title": "Databricks Setup and Team Time",
-    "section": "Finding it in the catalog",
-    "text": "Finding it in the catalog\n\n\nClick Catalog in the left sidebar. Data is organized in three levels:\nworkspace          ← catalog\n├── cstore_snippet ← schema\n│   ├── cstore_stores     ← table\n│   └── cstore_payments\n├── census\n└── pattern_places\n    └── pattern_places_data ← volume\n\n\nA table has a schema you can query by name.\nA volume holds files, like our Parquet files.\nClick a table to see its columns, sample data, and details.\nNames follow catalog.schema.table."
+    "objectID": "topics/association_rules.html#fp-growth-finds-the-rules",
+    "href": "topics/association_rules.html#fp-growth-finds-the-rules",
+    "title": "Baskets of Goods",
+    "section": "FP-Growth finds the rules",
+    "text": "FP-Growth finds the rules\nSpark’s FPGrowth does the counting. You give it baskets and two thresholds:\n\n\nMinimum support\nHow rare an itemset can be before it’s ignored.\nWe used 0.5%, not the textbook 1%, because baskets are tiny.\n\n\nMinimum confidence\nHow weak a rule can be before it’s dropped.\nWe used 5%, then sorted by lift.\n\n\nIt builds a tree of frequent items instead of rescanning for every combination, so it scales where the textbook Apriori algorithm stalls."
   },
   {
-    "objectID": "day03_databricks.html#reading-it-in-a-notebook",
-    "href": "day03_databricks.html#reading-it-in-a-notebook",
-    "title": "Databricks Setup and Team Time",
-    "section": "Reading it in a notebook",
-    "text": "Reading it in a notebook\n# A table, by its three-level name\nstores = spark.table(\"workspace.cstore_snippet.cstore_stores\")\n\n# A file in a volume, by its path\nplaces = spark.read.parquet(\n    \"/Volumes/workspace/pattern_places/pattern_places_data/places.parquet\")\n\ndisplay(stores)\nUse these exact names and paths. Don’t move or rename the data, so everyone’s code runs the same way."
+    "objectID": "topics/association_rules.html#one-more-decision-before-you-mine",
+    "href": "topics/association_rules.html#one-more-decision-before-you-mine",
+    "title": "Baskets of Goods",
+    "section": "One more decision before you mine",
+    "text": "One more decision before you mine\nWe ran it on multi-item baskets only: 211,282 of 886,936.\n\nKeep the single-item baskets and support collapses toward zero.\nDrop them and every number becomes “out of baskets that had 2 or more items.”\n\n\nNeither is wrong, but the denominator changes every result. Say which one you used, every time you report a lift.\n\nExample conclusions — one run on the Idaho sample, not a finished analysis."
   },
   {
-    "objectID": "day03_databricks.html#build-your-proposal",
-    "href": "day03_databricks.html#build-your-proposal",
-    "title": "Databricks Setup and Team Time",
-    "section": "Build your proposal",
-    "text": "Build your proposal\nDue 9/29. No more than two pages or 5 to 8 slides:\n\nTeam member names and majors\nThe business need and why it’s valuable\nThe data format, with some descriptive visuals\nHow you’ll use ML/AI in the application\nWhat counts as a successful product\n\nStart by exploring cstore_snippet in your team workspace."
+    "objectID": "topics/association_rules.html#what-we-actually-found",
+    "href": "topics/association_rules.html#what-we-actually-found",
+    "title": "Baskets of Goods",
+    "section": "What we actually found",
+    "text": "What we actually found\n\n\n\nAntecedent\nConsequent\nConfidence\nLift\n\n\n\n\nEdible Grocery\nSalty Snacks\n0.60\n2.89\n\n\nBeer\nCigarettes\n0.32\n1.70\n\n\nLiquor\nBeer\n0.31\n1.51\n\n\nBeer\nOther Tobacco\n0.15\n1.42\n\n\nPackaged Sweet Snacks + Candy\nSalty Snacks\n0.25\n1.18\n\n\nFUEL\nCigarettes\n0.20\n1.05\n\n\n\nExample conclusions — one run on the Idaho sample, not a finished analysis.\n\nAsk the class: which of these would you act on, and what would you do? Edible Grocery to Salty Snacks is a real adjacency decision. Fuel to Cigarettes at 1.05 is barely better than chance."
   },
   {
-    "objectID": "topic_env_variables.html#the-problem",
-    "href": "topic_env_variables.html#the-problem",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "The problem",
-    "text": "The problem\nCode gets shared. Secrets must not.\n\nAn API key typed into a script travels with that script — everywhere."
+    "objectID": "topics/association_rules.html#why-fuel-barely-shows-up",
+    "href": "topics/association_rules.html#why-fuel-barely-shows-up",
+    "title": "Baskets of Goods",
+    "section": "Why fuel barely shows up",
+    "text": "Why fuel barely shows up\n\n\n\nItem\nShare of multi-item baskets\n\n\n\n\nPackaged Beverages\n65%\n\n\nCandy\n29%\n\n\nSalty Snacks\n21%\n\n\nBeer\n20%\n\n\nCigarettes\n19%\n\n\nFUEL\n12%\n\n\n\nPackaged Beverages is in two of three baskets, so anything paired with it looks confident. Lift corrects for that. Fuel mostly sells alone, which is its own finding.\nExample conclusions — one run on the Idaho sample, not a finished analysis."
   },
   {
-    "objectID": "topic_env_variables.html#where-a-hardcoded-key-ends-up",
-    "href": "topic_env_variables.html#where-a-hardcoded-key-ends-up",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Where a hardcoded key ends up",
-    "text": "Where a hardcoded key ends up\nAPI_KEY = \"sk-abc123yourrealkeyhere\"   # never\n\n\nGit history\nDeleting the line later doesn’t help. Old commits keep it.\n\n\nShared files\nNotebooks, exports, screenshots, screen shares.\n\n\nEveryone with access\nTeammates, forks, and anyone who ever clones the repo."
+    "objectID": "topics/association_rules.html#segment-to-sharpen",
+    "href": "topics/association_rules.html#segment-to-sharpen",
+    "title": "Baskets of Goods",
+    "section": "Segment to sharpen",
+    "text": "Segment to sharpen\nsilver = silver.withColumn(\"daypart\",\n    F.when(F.hour(\"DATE_TIME\") &lt; 10, \"morning\")\n     .when(F.hour(\"DATE_TIME\") &lt; 15, \"midday\")\n     .when(F.hour(\"DATE_TIME\") &lt; 20, \"evening\")\n     .otherwise(\"late\"))\n\nmorning = baskets_for(silver.filter(F.col(\"daypart\") == \"morning\"))\nRun the same mining per daypart, store, or chain. A rule that only holds at 7am is still a rule — and a better one, because it tells you when to act."
   },
   {
-    "objectID": "topic_env_variables.html#the-fix-separate-config-from-code",
-    "href": "topic_env_variables.html#the-fix-separate-config-from-code",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "The fix: separate config from code",
-    "text": "The fix: separate config from code\n\n\nYour code\nno secret inside\n\n←\n\nEnvironment\nAPI_KEY=…\n\n←\n\nWhere it’s stored\n.env file · secret store\n\n\n\nThe code is identical on every machine\nOnly the environment changes: laptop, server, Databricks\nThe secret is never committed"
-  },
-  {
-    "objectID": "topic_env_variables.html#what-is-an-environment-variable",
-    "href": "topic_env_variables.html#what-is-an-environment-variable",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "What is an environment variable?",
-    "text": "What is an environment variable?\nA named string the operating system hands to your program.\nimport os\n\nos.getenv(\"API_KEY\")                       # None if missing\nos.environ[\"API_KEY\"]                      # KeyError if missing\nos.getenv(\"API_URL\", \"http://localhost\")   # with a default\nAlways strings. Convert numbers and booleans yourself."
-  },
-  {
-    "objectID": "topic_env_variables.html#today",
-    "href": "topic_env_variables.html#today",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Today",
-    "text": "Today\n\n\n1 · Python\nLocal development with .env files and the python-dotenv package.\n\n\n2 · Databricks\nFour ways to store an API key, ranked from safest to worst.\n\n\nAppendix · R\nThe same idea with .Renviron, askpass, and keyring."
-  },
-  {
-    "objectID": "topic_env_variables.html#three-steps",
-    "href": "topic_env_variables.html#three-steps",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Three steps",
-    "text": "Three steps\n\n\n1 Write a .env file\n\n→\n\n2 Ignore it in Git\n\n→\n\n3 Load it in Python\n\n\nFirst, install the package:\npip install python-dotenv"
-  },
-  {
-    "objectID": "topic_env_variables.html#write-a-.env-file",
-    "href": "topic_env_variables.html#write-a-.env-file",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "1 Write a .env file",
-    "text": "1 Write a .env file\nOne NAME=value per line, in your project folder.\n\n\n.env\n\nAPI_KEY=sk-abc123yourrealkeyhere\nAPI_URL=https://api.example.com\nDEBUG=true\n\n\nNo spaces around =\nQuotes only needed if the value has spaces\n# starts a comment"
-  },
-  {
-    "objectID": "topic_env_variables.html#keep-it-out-of-git",
-    "href": "topic_env_variables.html#keep-it-out-of-git",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "2 Keep it out of Git",
-    "text": "2 Keep it out of Git\n\n\n.gitignore\n\n.env\n\nThen commit a template so teammates know what to set:\n\n\n.env.example\n\nAPI_KEY=your-key-here\nAPI_URL=https://api.example.com\n\n\nAdd .env to .gitignore before your first commit."
-  },
-  {
-    "objectID": "topic_env_variables.html#load-it-in-python",
-    "href": "topic_env_variables.html#load-it-in-python",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "3 Load it in Python",
-    "text": "3 Load it in Python\nimport os\nfrom dotenv import load_dotenv\n\nload_dotenv()                      # .env → os.environ\n\napi_key = os.getenv(\"API_KEY\")\napi_url = os.getenv(\"API_URL\")\nCall load_dotenv() once, at the top of your entry script."
-  },
-  {
-    "objectID": "topic_env_variables.html#use-it-never-print-it",
-    "href": "topic_env_variables.html#use-it-never-print-it",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Use it, never print it",
-    "text": "Use it, never print it\nimport requests\n\nresp = requests.get(\n    api_url,\n    headers={\"Authorization\": f\"Bearer {api_key}\"},\n)\nprint(resp.status_code)\n\n\n200\nKey is valid\n\n\n401 / 403\nKey is wrong or expired"
-  },
-  {
-    "objectID": "topic_env_variables.html#fail-fast-when-a-key-is-missing",
-    "href": "topic_env_variables.html#fail-fast-when-a-key-is-missing",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Fail fast when a key is missing",
-    "text": "Fail fast when a key is missing\ndef require(name):\n    value = os.getenv(name)\n    if not value:\n        raise RuntimeError(f\"Missing env var: {name}\")\n    return value\n\napi_key = require(\"API_KEY\")\nA clear error at startup beats a confusing 401 ten minutes later."
-  },
-  {
-    "objectID": "topic_env_variables.html#handy-options",
-    "href": "topic_env_variables.html#handy-options",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Handy options",
-    "text": "Handy options\nload_dotenv(find_dotenv())      # search parent folders\nload_dotenv(\".env.dev\")         # a specific file\nload_dotenv(override=True)      # .env wins over real env\n\nconfig = dotenv_values(\".env\")  # a dict, os.environ untouched\nBy default load_dotenv() does not overwrite variables already set. Servers and CI can override your local file."
-  },
-  {
-    "objectID": "topic_env_variables.html#python-recap",
-    "href": "topic_env_variables.html#python-recap",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Python recap",
-    "text": "Python recap\n\n\nStore\nSecrets in .env\n\n\nProtect\n.env in .gitignore, .env.example committed\n\n\nLoad\nload_dotenv() then os.getenv()\n\n\nNever\nprint(api_key)"
-  },
-  {
-    "objectID": "topic_env_variables.html#four-ways-to-store-a-key",
-    "href": "topic_env_variables.html#four-ways-to-store-a-key",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Four ways to store a key",
-    "text": "Four ways to store a key\n\n\n1 Databricks Secrets Encrypted. Output shows [REDACTED]. Best\n\n\n2 %run config notebook Only safe if it reads a secret. OK\n\n\n3 Cluster env variable Visible in cluster config. Not redacted. Weak\n\n\n4 Hardcoded In the file and its history, forever. Never"
-  },
-  {
-    "objectID": "topic_env_variables.html#option-1-databricks-secrets",
-    "href": "topic_env_variables.html#option-1-databricks-secrets",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Option 1 — Databricks Secrets",
-    "text": "Option 1 — Databricks Secrets\napi_key = dbutils.secrets.get(\n    catalog=\"workspace\", schema=\"alice\", key=\"my-api-key\"\n)\n\nValue is never printed: output shows [REDACTED]\nYou choose who can read it\nThe notebook is safe to share or commit\n\nOn Free Edition, use Unity Catalog secrets. No CLI needed."
-  },
-  {
-    "objectID": "topic_env_variables.html#set-it-up-three-steps",
-    "href": "topic_env_variables.html#set-it-up-three-steps",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Set it up: three steps",
-    "text": "Set it up: three steps\n\n\n0 Admin grants CREATE SCHEMA\nonce\n\n→\n\n1 You create a private schema\nonce\n\n→\n\n2 You add the secret\nper key\n\n\nEverything happens in notebooks or the Catalog UI."
-  },
-  {
-    "objectID": "topic_env_variables.html#admin-allow-schema-creation",
-    "href": "topic_env_variables.html#admin-allow-schema-creation",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "0 Admin: allow schema creation",
-    "text": "0 Admin: allow schema creation\nRun once, as a workspace admin:\nGRANT CREATE SCHEMA ON CATALOG workspace TO `users`;\nOr in the UI: Catalog → workspace → Permissions → Grant"
-  },
-  {
-    "objectID": "topic_env_variables.html#create-your-own-schema",
-    "href": "topic_env_variables.html#create-your-own-schema",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "1 Create your own schema",
-    "text": "1 Create your own schema\nUse your own name in place of alice:\nCREATE SCHEMA IF NOT EXISTS workspace.alice;\nThis schema holds your private secrets. No one else can read them."
-  },
-  {
-    "objectID": "topic_env_variables.html#add-the-secret-in-the-ui",
-    "href": "topic_env_variables.html#add-the-secret-in-the-ui",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "2 Add the secret in the UI",
-    "text": "2 Add the secret in the UI\n\nCatalog in the sidebar\nworkspace → your schema\nCreate → Secret\nName: my-api-key · Value: paste your key\nCreate\n\nIt is encrypted at rest and shows [REDACTED] from then on."
-  },
-  {
-    "objectID": "topic_env_variables.html#read-it-at-runtime",
-    "href": "topic_env_variables.html#read-it-at-runtime",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Read it at runtime",
-    "text": "Read it at runtime\napi_key = dbutils.secrets.get(\n    catalog=\"workspace\", schema=\"alice\", key=\"my-api-key\"\n)\nUse it. Don’t print it.\nrequests.get(url, headers={\"Authorization\": f\"Bearer {api_key}\"})"
-  },
-  {
-    "objectID": "topic_env_variables.html#one-key-name-no-collisions",
-    "href": "topic_env_variables.html#one-key-name-no-collisions",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "One key name, no collisions",
-    "text": "One key name, no collisions\nworkspace\n├── alice    ← only Alice can read\n│   └── my-api-key\n├── bob      ← only Bob can read\n│   └── my-api-key\n└── charlie  ← only Charlie can read\n    └── my-api-key\nTo share on purpose:\nGRANT READ SECRET ON SCHEMA workspace.alice TO `bob@byui.edu`;"
-  },
-  {
-    "objectID": "topic_env_variables.html#rotate-a-key",
-    "href": "topic_env_variables.html#rotate-a-key",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Rotate a key",
-    "text": "Rotate a key\n\n\nIn the UI\n\nCatalog → your schema → Secrets\nOpen the secret\nMenu (three dots) → Edit → new value\n\n\nIn a notebook\nfrom databricks.sdk import WorkspaceClient\n\nw = WorkspaceClient()\nw.secrets.update_secret(\n    name=\"workspace.alice.my-api-key\",\n    value=new_key)\n\nNeeds WRITE SECRET. The new value works immediately."
-  },
-  {
-    "objectID": "topic_env_variables.html#check-it-loaded-without-leaking-it",
-    "href": "topic_env_variables.html#check-it-loaded-without-leaking-it",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Check it loaded, without leaking it",
-    "text": "Check it loaded, without leaking it\nif not api_key:\n    print(\"not set\")\nelse:\n    print(f\"loaded, {len(api_key)} characters\")\nDatabricks redacts secrets in output, but don’t rely on that alone. Confirm with a real API call and its HTTP status."
-  },
-  {
-    "objectID": "topic_env_variables.html#option-2-share-one-config-notebook",
-    "href": "topic_env_variables.html#option-2-share-one-config-notebook",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Option 2 — Share one config notebook",
-    "text": "Option 2 — Share one config notebook\n\n\napi_key_config notebook\napi_key = \"sk-abc123yourrealkeyhere\"\napi_url = \"https://api.example.com\"\n\nAny other notebook\n%run ./api_key_config\napi_key is now defined.\n\n\nOne place to change or rotate\nHolding the key in the config notebook is a poor version of a .env file"
-  },
-  {
-    "objectID": "topic_env_variables.html#option-3-cluster-environment-variable",
-    "href": "topic_env_variables.html#option-3-cluster-environment-variable",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Option 3 — Cluster environment variable",
-    "text": "Option 3 — Cluster environment variable\nimport os\napi_key = os.environ.get(\"OPENAI_API_KEY\")\n\n\nAnyone with Can manage on the cluster can see it\nNot redacted: printing it leaks it\nNot supported on serverless (job-level variables are Beta)"
-  },
-  {
-    "objectID": "topic_env_variables.html#option-4-hardcoded",
-    "href": "topic_env_variables.html#option-4-hardcoded",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Option 4 — Hardcoded",
-    "text": "Option 4 — Hardcoded\nAPI_KEY = \"sk-abc123yourrealkeyhere\"   # never\n\nIf a key was ever hardcoded, rotate it now. Assume it is compromised.\n\nIt lives in the notebook, its revision history, Git, and exports."
-  },
-  {
-    "objectID": "topic_env_variables.html#local-python-vs.-databricks",
-    "href": "topic_env_variables.html#local-python-vs.-databricks",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "Local Python vs. Databricks",
-    "text": "Local Python vs. Databricks\n\n\n\n\nLocal Python\nDatabricks\n\n\n\n\nStore\n.env file\nUnity Catalog secret\n\n\nLoad\nload_dotenv()\ndbutils.secrets.get()\n\n\nProtect\n.gitignore\nAccess control + [REDACTED]\n\n\nRotate\nEdit .env\nCatalog UI or SDK"
-  },
-  {
-    "objectID": "topic_env_variables.html#takeaways",
-    "href": "topic_env_variables.html#takeaways",
-    "title": "Keep Your Secrets Out of Your Code",
+    "objectID": "topics/association_rules.html#takeaways",
+    "href": "topics/association_rules.html#takeaways",
+    "title": "Baskets of Goods",
     "section": "Takeaways",
-    "text": "Takeaways\n\nNever hardcode a secret\nLocally: .env + python-dotenv + .gitignore\nOn Databricks: Unity Catalog secrets\nFail fast. Never print a value\nIf it leaks: rotate first, clean up after"
+    "text": "Takeaways\n\nProfile first. 56% single-item baskets changes everything downstream.\nRoll up to category. SKU-level rules don’t survive contact with a store manager.\nLift, not confidence. Common items fake high confidence.\nWrite down your cleaning decisions. They move the answer more than the algorithm does.\nRules describe, models predict. The labeled version is its own deck."
   },
   {
-    "objectID": "topic_env_variables.html#renviron",
-    "href": "topic_env_variables.html#renviron",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": ".Renviron",
-    "text": ".Renviron\nusethis::edit_r_environ(scope = \"project\")\n\n\n.Renviron\n\nAPI_KEY=sk-abc123yourrealkeyhere\nAPI_URL=https://api.example.com\n\nRestart R, then read it:\napi_key &lt;- Sys.getenv(\"API_KEY\")\nAdd .Renviron to .gitignore."
+    "objectID": "topics/association_rules.html#your-turn",
+    "href": "topics/association_rules.html#your-turn",
+    "title": "Baskets of Goods",
+    "section": "Your turn",
+    "text": "Your turn\nPick one rule and defend it.\n\nWhat would the store change? What would you measure to know it worked? What cleaning decision could have manufactured your rule?"
   },
   {
-    "objectID": "topic_env_variables.html#env-files-and-safe-use",
-    "href": "topic_env_variables.html#env-files-and-safe-use",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": ".env files and safe use",
-    "text": ".env files and safe use\ndotenv::load_dot_env(\".env\")      # like python-dotenv\napi_key &lt;- Sys.getenv(\"API_KEY\")\nlibrary(httr2)\n\nrequest(Sys.getenv(\"API_URL\")) |&gt;\n  req_auth_bearer_token(Sys.getenv(\"API_KEY\")) |&gt;\n  req_perform()\nNext: two ways to skip the file entirely."
+    "objectID": "topics/basket_models.html#from-rules-to-a-prediction",
+    "href": "topics/basket_models.html#from-rules-to-a-prediction",
+    "title": "Labeled Baskets",
+    "section": "From rules to a prediction",
+    "text": "From rules to a prediction\nAssociation rules describe what goes together. A model predicts something for one basket.\n\n\nRules\nUnsupervised. No Y column.\nOutput: beer and cigarettes co-occur at lift 1.7\n\n\nModel\nSupervised. You pick the Y.\nOutput: this visit has a 22% chance of an in-store purchase\n\n\nSame gold table, one row per basket or visit, plus a label."
   },
   {
-    "objectID": "topic_env_variables.html#askpass-type-it-when-needed",
-    "href": "topic_env_variables.html#askpass-type-it-when-needed",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "askpass: type it when needed",
-    "text": "askpass: type it when needed\n# install.packages(\"askpass\")\napi_key &lt;- askpass::askpass(\"Enter your API key\")\n\nPops up a password prompt, typed characters hidden\nReturns the value as a string\nNothing is written to disk\n\nGood for quick interactive work. You retype the key each session."
+    "objectID": "topics/basket_models.html#picking-a-label",
+    "href": "topics/basket_models.html#picking-a-label",
+    "title": "Labeled Baskets",
+    "section": "Picking a label",
+    "text": "Picking a label\nA good label is three things:\n\nActionable. Someone changes a decision because of the prediction.\nKnowable in time. You have the features before the outcome happens.\nNot rare to the point of uselessness. A 0.1% event needs a different approach than a 30% one.\n\n\nWrite the sentence first: “Given _____, predict _____, so that _____ can _____.” If you can’t finish it, you don’t have a label yet."
   },
   {
-    "objectID": "topic_env_variables.html#keyring-store-it-once",
-    "href": "topic_env_variables.html#keyring-store-it-once",
-    "title": "Keep Your Secrets Out of Your Code",
-    "section": "keyring: store it once",
-    "text": "keyring: store it once\n# install.packages(\"keyring\")\nkeyring::key_set(\"my-api\")          # prompts once, then stores it\napi_key &lt;- keyring::key_get(\"my-api\")\n\nSaved in your OS credential store (Keychain, Credential Manager)\nRead it back in any script, no file in your project\nClosest R equivalent to Databricks secrets\n\nNever put the key itself in your code. Only the name \"my-api\"."
+    "objectID": "topics/basket_models.html#the-setup",
+    "href": "topics/basket_models.html#the-setup",
+    "title": "Labeled Baskets",
+    "section": "The setup",
+    "text": "The setup\nGiven what we know at the pump, will this customer also buy inside?\n\n\n\nThe label\nin_store — did the visit include anything other than fuel?\n15.4% of fuel visits do.\n\n\n\nThe features\nGallons, dollars, fuel grade, payment type, pump, hour, day of week, store\n\n\nA visit stitches transactions from the same shopper and store within 30 minutes, so the pump and the counter land in one row.\nExample conclusions — one run on the Idaho sample, not a finished analysis."
+  },
+  {
+    "objectID": "topics/basket_models.html#fuel-grade-moves-the-number",
+    "href": "topics/basket_models.html#fuel-grade-moves-the-number",
+    "title": "Labeled Baskets",
+    "section": "Fuel grade moves the number",
+    "text": "Fuel grade moves the number\n\n\n\nGrade\nFuel visits\nIn-store attach\n\n\n\n\nDiesel\n6,536\n21.5%\n\n\nPremium\n12,388\n16.9%\n\n\nMid / Plus\n10,085\n15.3%\n\n\nRegular\n74,452\n14.7%\n\n\n\nDiesel buyers are half again as likely to come inside. Worth asking why — trucks, trip length, time of day?\nExample conclusions — one run on the Idaho sample, not a finished analysis."
+  },
+  {
+    "objectID": "topics/basket_models.html#so-does-the-size-of-the-fill",
+    "href": "topics/basket_models.html#so-does-the-size-of-the-fill",
+    "title": "Labeled Baskets",
+    "section": "So does the size of the fill",
+    "text": "So does the size of the fill\n\n\n\nGallons\nFuel visits\nIn-store attach\n\n\n\n\nUnder 5\n14,418\n18.4%\n\n\n5 to 10\n30,371\n17.7%\n\n\n10 to 15\n31,312\n13.8%\n\n\n15 to 25\n22,165\n13.2%\n\n\n25 and up\n5,195\n13.4%\n\n\n\nBackwards from the guess: small fills attach more. A quick top-up looks like a different trip than a full tank.\nExample conclusions — one run on the Idaho sample, not a finished analysis."
+  },
+  {
+    "objectID": "topics/basket_models.html#the-strongest-signal-is-a-trap",
+    "href": "topics/basket_models.html#the-strongest-signal-is-a-trap",
+    "title": "Labeled Baskets",
+    "section": "The strongest signal is a trap",
+    "text": "The strongest signal is a trap\n\n\n\nPayment\nFuel visits\nIn-store attach\n\n\n\n\nCash\n29,620\n21.6%\n\n\nCredit\n73,841\n13.0%\n\n\n\n\nCash customers walk inside to pay. The feature isn’t predicting behavior, it’s describing the mechanics of the sale.\n\nStill useful for counting who comes in. Useless for persuading anyone to come in.\nExample conclusions — one run on the Idaho sample, not a finished analysis."
+  },
+  {
+    "objectID": "topics/basket_models.html#leakage-is-the-trap-here",
+    "href": "topics/basket_models.html#leakage-is-the-trap-here",
+    "title": "Labeled Baskets",
+    "section": "Leakage is the trap here",
+    "text": "Leakage is the trap here\n\nIf the in-store items are in your features, your model will be perfect and useless. Filter them out of X before you aggregate.\n\nThe same goes for anything that only exists because of the outcome: the basket total, the payment amount, the receipt line count.\nAsk of every feature: would I know this before the customer walked in?"
+  },
+  {
+    "objectID": "topics/basket_models.html#same-table-different-question",
+    "href": "topics/basket_models.html#same-table-different-question",
+    "title": "Labeled Baskets",
+    "section": "Same table, different question",
+    "text": "Same table, different question\n\n\n\n\n\n\n\n\nLabel\nType\nWhy a business cares\n\n\n\n\nIn-store purchase with fuel\nClassification\nSizing the inside-sales opportunity\n\n\nIn-store spend, given a visit\nRegression\nWhat a converted fuel customer is worth\n\n\nBasket total\nRegression\nStaffing, promotion lift\n\n\nVisit includes foodservice\nClassification\nPrep volume, waste\n\n\nFuel grade chosen\nClassification\nPrice elasticity by segment\n\n\nReturns within 30 days\nClassification\nRetention, loyalty targeting\n\n\nVisits per shopper per month\nCount\nCustomer value, churn risk"
+  },
+  {
+    "objectID": "topics/basket_models.html#the-retention-label",
+    "href": "topics/basket_models.html#the-retention-label",
+    "title": "Labeled Baskets",
+    "section": "The retention label",
+    "text": "The retention label\n52% of shoppers appear more than once, across two years of data (Sept 2022 to Aug 2024).\n\n\nLabel\nDoes this shopper return within 30 days?\n\n\nFeatures\nLast visit’s basket, fuel grade, daypart, days since prior visit, visit count to date\n\n\nThe hard part\nPicking the cutoff date so features come only from before it\n\n\nThis one forces a time-based split, which is the most common thing teams get wrong.\nExample conclusions — one run on the Idaho sample, not a finished analysis."
+  },
+  {
+    "objectID": "topics/basket_models.html#rules-can-become-features",
+    "href": "topics/basket_models.html#rules-can-become-features",
+    "title": "Labeled Baskets",
+    "section": "Rules can become features",
+    "text": "Rules can become features\nThe itemsets from FP-Growth are features for a model:\n\nDid the basket contain a frequent itemset we found?\nHow many of the top 20 itemsets does it match?\nBasket size, category count, and the lift of the strongest rule it contains\n\n\nUnsupervised output makes good supervised input. That’s the honest reason to do both."
+  },
+  {
+    "objectID": "topics/basket_models.html#judge-the-model-against-the-base-rate",
+    "href": "topics/basket_models.html#judge-the-model-against-the-base-rate",
+    "title": "Labeled Baskets",
+    "section": "Judge the model against the base rate",
+    "text": "Judge the model against the base rate\nWith a 15.4% label, a model that always says “no” is 84.6% accurate and worth nothing.\n\nReport lift over the base rate, or precision and recall at the threshold you’d act on.\nDecide the threshold from the cost of acting: a coupon printed at the pump is cheap, a staffed offer is not.\nCheck calibration: if you say 30%, does it happen 30% of the time?\n\nExample conclusions — one run on the Idaho sample, not a finished analysis."
+  },
+  {
+    "objectID": "topics/basket_models.html#whats-under-the-data",
+    "href": "topics/basket_models.html#whats-under-the-data",
+    "title": "Labeled Baskets",
+    "section": "What’s under the data",
+    "text": "What’s under the data\n\nShopper IDs cover 29.6% of transactions, and look card-based. Cash-only customers are mostly invisible.\nOnly 5 stores have payment and shopper records, out of 167.\nVisit stitching uses a 30-minute window; almost all of the effect lands within 15.\n\n\nSay this out loud in your presentation. Knowing who is missing from your table is part of the result."
+  },
+  {
+    "objectID": "topics/basket_models.html#your-turn",
+    "href": "topics/basket_models.html#your-turn",
+    "title": "Labeled Baskets",
+    "section": "Your turn",
+    "text": "Your turn\nWrite the label sentence for your team’s project.\n\nGiven _____, predict _____, so that _____ can _____. Then say what would leak into your features, and how you’d keep it out."
+  },
+  {
+    "objectID": "day08_no_class.html#class-is-cancelled",
+    "href": "day08_no_class.html#class-is-cancelled",
+    "title": "No Class Today",
+    "section": "Class is cancelled",
+    "text": "Class is cancelled\nGo to the Adam Miller presentation instead.\n\nduring our class period · announced in Slack"
+  },
+  {
+    "objectID": "day08_no_class.html#keep-moving",
+    "href": "day08_no_class.html#keep-moving",
+    "title": "No Class Today",
+    "section": "Keep moving",
+    "text": "Keep moving\nThe challenges don’t pause.\n\n\nCensus API\nKey in hand, one table pulled, and the join to our stores worked out.\n\n\nUnit of analysis\nYour team’s one sentence: one row is one _____, and we predict _____ for it.\n\n\nHours\nLog them in Harvest. A cancelled class is still a week of work.\n\n\nDates live in the class repository. Bring questions to our next meeting."
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#today",
+    "href": "day09_project_and_analysis.html#today",
+    "title": "From Challenges to the Project",
+    "section": "Today",
+    "text": "Today\n\nYour questions\nThe Census API challenge\nWhat your team owes the larger project\nThe analysis decks: rules, labels, segments\nMurphy is in class the 14th — how we use that hour\nOpen work time"
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#questions",
+    "href": "day09_project_and_analysis.html#questions",
+    "title": "From Challenges to the Project",
+    "section": "Questions",
+    "text": "Questions\nWhat’s blocking you right now?\n\nCensus keys · the block-group join · Databricks · your unit of analysis · the proposal"
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#the-census-api-challenge",
+    "href": "day09_project_and_analysis.html#the-census-api-challenge",
+    "title": "From Challenges to the Project",
+    "section": "The Census API challenge",
+    "text": "The Census API challenge\n\n\nWhere people get stuck\n\nThe key: request it, then keep it out of your code\nGeography: state → county → tract → block group\nVariable names: B19013_001E means something, but you have to look it up\nLimits: pull once, cache it, don’t loop the API\n\n\n\nWhat makes it done\nA table you can join to our stores, with the variables you chose and a sentence on why those variables matter to your client.\n\n\nThe census.* tables are already in Databricks. The API work is about learning the pull, not about getting data we lack."
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#the-challenges-are-not-the-project",
+    "href": "day09_project_and_analysis.html#the-challenges-are-not-the-project",
+    "title": "From Challenges to the Project",
+    "section": "The challenges are not the project",
+    "text": "The challenges are not the project\nEach challenge builds one piece of what your team will deliver:\n\n\nWrangling\nPolars, charts\n\n→\n\nCensus\noutside data\n\n→\n\nUnit of analysis\none row = ?\n\n→\n\nFeatures\nthe model’s inputs\n\n→\n\nApp\nsomeone uses it\n\n\n\nThe project is the thread through all of them. Every challenge should move your team’s product forward, not sit in a folder by itself."
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#what-your-team-owes",
+    "href": "day09_project_and_analysis.html#what-your-team-owes",
+    "title": "From Challenges to the Project",
+    "section": "What your team owes",
+    "text": "What your team owes\n\nA unit of analysis everyone on the team can say out loud\nA target the data supports: a probability or a count\nFeatures built at that grain, documented so a teammate can rebuild them\nAn analysis that answers the business question, not just the model question\nAn app a non-technical person can use\n\nStart writing these down now. The grade request letter at the end is much easier when the work is on the record."
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#the-analysis-decks",
+    "href": "day09_project_and_analysis.html#the-analysis-decks",
+    "title": "From Challenges to the Project",
+    "section": "The analysis decks",
+    "text": "The analysis decks\nThree reference decks for the analysis half of the project. Read them when you need them.\n\n\nBaskets of Goods\nAssociation rules: what sells with what, support, confidence and lift.\nOpen →\n\n\nLabeled Baskets\nPicking a Y, building the modeling table, and avoiding leakage.\nOpen →\n\n\nCustomer Segmentation\nClustering, UMAP and HDBSCAN, and how to defend a segment.\nOpen →\n\n\nThey use our C-Store data for their examples, so the numbers should look familiar."
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#murphy-is-here-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206d6574612076697369742d64617465203e7d7d",
+    "href": "day09_project_and_analysis.html#murphy-is-here-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206d6574612076697369742d64617465203e7d7d",
+    "title": "From Challenges to the Project",
+    "section": "Murphy is here the 14th",
+    "text": "Murphy is here the 14th\nA fuel and convenience retailer, in our classroom, for an hour.\n\n\nHow we use it\n\nThey talk briefly, then we ask questions\nBring your team’s question written down\nTake notes: it becomes a slide in your pitch\n\nThis is your client in the room.\n\n\nQuestions worth asking\n\nWhat decisions do you make with store data today?\nWhat would you want to know and can’t?\nHow do you measure a promotion?\nWhat would make you distrust a model?"
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#thursday-your-first-take-home-challenge",
+    "href": "day09_project_and_analysis.html#thursday-your-first-take-home-challenge",
+    "title": "From Challenges to the Project",
+    "section": "Thursday: your first take-home challenge",
+    "text": "Thursday: your first take-home challenge\nA PySpark challenge, on your own, with a deadline.\n\n\n\nAnnounced at least 24 hours ahead, with the topic\nYou may talk with your group, but you don’t share code\nScored 1 to 4, and this one is a key challenge\n\n\n\nGet ready\nBe able to run a PySpark notebook on Databricks before Thursday. Don’t spend the challenge fighting your setup.\n\n\nIf your workspace isn’t working, tell me today, not Thursday."
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#work-time",
+    "href": "day09_project_and_analysis.html#work-time",
+    "title": "From Challenges to the Project",
+    "section": "Work time",
+    "text": "Work time\nTeams, the rest of the hour is yours.\n\nFinish the Census pull, settle the unit of analysis, and write the one question you’re asking Murphy."
+  },
+  {
+    "objectID": "example.html#a-slide",
+    "href": "example.html#a-slide",
+    "title": "Example Slides",
+    "section": "A slide",
+    "text": "A slide\n\nBullet one\nBullet two"
+  },
+  {
+    "objectID": "example.html#some-code",
+    "href": "example.html#some-code",
+    "title": "Example Slides",
+    "section": "Some code",
+    "text": "Some code\ndf.groupBy(\"team\").agg(F.avg(\"points\"))"
+  },
+  {
+    "objectID": "example.html#speaker-notes",
+    "href": "example.html#speaker-notes",
+    "title": "Example Slides",
+    "section": "Speaker notes",
+    "text": "Speaker notes\nPress s in the browser to open the speaker view.\n\nThese notes only show in the speaker view."
   },
   {
     "objectID": "day01_welcome.html#today",
@@ -487,14 +480,14 @@
     "href": "index.html#class-days",
     "title": "DS 460 Class Slides",
     "section": "Class days",
-    "text": "Class days\nOne deck per class meeting, in order.\n\n\n\n\n\n\nDeck\n\n\n\nTopics\n\n\n\n\n\n\n\n\nWelcome to DS 460\n\n\nDay 1: How this class works\n\n\n\n\n\n\nData Sizes, Formats, and Tools\n\n\nDay 2: Parquet, Arrow, Polars, PySpark, and your first two challenges\n\n\n\n\n\n\nDatabricks Setup and Team Time\n\n\nDay 3: Schedule, questions, Databricks Free Edition, and your proposal\n\n\n\n\n\n\nData Summaries That Persuade\n\n\nDay 4: Charts, tables, due dates, and proposal time\n\n\n\n\n\n\nProposals and What’s Next\n\n\nDay 5: Show your work, team time, presentations, and three new challenges\n\n\n\n\n\n\nNo matching items"
+    "text": "Class days\nOne deck per class meeting, in order.\n\n\n\n\n\n\nDeck\n\n\n\nTopics\n\n\n\n\n\n\n\n\nWelcome to DS 460\n\n\nDay 1: How this class works\n\n\n\n\n\n\nData Sizes, Formats, and Tools\n\n\nDay 2: Parquet, Arrow, Polars, PySpark, and your first two challenges\n\n\n\n\n\n\nDatabricks Setup and Team Time\n\n\nDay 3: Schedule, questions, Databricks Free Edition, and your proposal\n\n\n\n\n\n\nData Summaries That Persuade\n\n\nDay 4: Charts, tables, due dates, and proposal time\n\n\n\n\n\n\nProposals and What’s Next\n\n\nDay 5: Show your work, team time, presentations, and three new challenges\n\n\n\n\n\n\nWritten Challenge and Round Two\n\n\nDay 6: Polars on paper, second pitches, and two new challenges\n\n\n\n\n\n\nWork Time and Secrets\n\n\nDay 7: Open class time on the two challenges, plus environment variables\n\n\n\n\n\n\nNo Class Today\n\n\nDay 8: Adam Miller presentation\n\n\n\n\n\n\nFrom Challenges to the Project\n\n\nDay 9: Census API, the team project, analysis decks, and Murphy\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html#topics",
     "href": "index.html#topics",
     "title": "DS 460 Class Slides",
     "section": "Topics",
-    "text": "Topics\nReusable decks on one tool or idea. Pull them into a class day when the class needs them.\n\n\n\n\n\n\nDeck\n\n\n\nWhat it covers\n\n\n\n\n\n\n\n\nKeep Your Secrets Out of Your Code\n\n\nEnvironment variables in Python, Databricks, and R\n\n\n\n\n\n\nNo matching items\n\nPress s in a deck for speaker view, f for full screen, and Esc for a slide overview."
+    "text": "Topics\nReusable decks on one tool or idea. Pull them into a class day when the class needs them.\n\n\n\n\n\n\nDeck\n\n\n\nWhat it covers\n\n\n\n\n\n\n\n\nBaskets of Goods\n\n\nAssociation rule mining on C-Store transactions\n\n\n\n\n\n\nCustomer Segmentation\n\n\nClustering, dimension reduction, UMAP and HDBSCAN\n\n\n\n\n\n\nKeep Your Secrets Out of Your Code\n\n\nEnvironment variables in Python, Databricks, and R\n\n\n\n\n\n\nLabeled Baskets\n\n\nTurning C-Store transactions into a supervised model\n\n\n\n\n\n\nNo matching items\n\nPress s in a deck for speaker view, f for full screen, and Esc for a slide overview."
   },
   {
     "objectID": "index.html#reference",
@@ -579,6 +572,55 @@
     "title": "DS 460 Slide Brand Guide",
     "section": "Logos",
     "text": "Logos\n\n\n\n\n\nHex badge (DS460_Hex.png) goes in the slide corner and on the title slide. That’s set up for every deck.\nBanner (DS460_Banner.png) is for the course site and syllabus headers. It’s too wide for a slide.\nDon’t recolor, stretch, or crop either logo."
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#today",
+    "href": "day06_api_unit_of_analysis.html#today",
+    "title": "Written Challenge and Round Two",
+    "section": "Today",
+    "text": "Today\n\nWritten challenge — first 20 minutes\nSecond round of team pitches\nThe Census API challenge\nThe unit of analysis challenge"
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#written-challenge",
+    "href": "day06_api_unit_of_analysis.html#written-challenge",
+    "title": "Written Challenge and Round Two",
+    "section": "Written challenge",
+    "text": "Written challenge\nPaper and pencil. No computer.\n\nPolars: group_by and agg, joins, and the nested columns you wrangled in the church data.\n\nScored 1 to 4, like every challenge. I’m reading for whether you know what the code does, not whether the syntax is perfect."
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#second-pitches",
+    "href": "day06_api_unit_of_analysis.html#second-pitches",
+    "title": "Written Challenge and Round Two",
+    "section": "Second pitches",
+    "text": "Second pitches\nWhat’s different this round: you’ve seen the data now.\n\nHas your client survived contact with the C-Store tables?\nWhat did the data make easier than you pitched, and what turned out to be hard?\nShow one chart from the real data, not a mock-up.\nMake the point early, then justify it.\n\n\nWe’re converging, not just presenting. By the end we should agree on the direction the class takes."
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#the-census-api-challenge",
+    "href": "day06_api_unit_of_analysis.html#the-census-api-challenge",
+    "title": "Written Challenge and Round Two",
+    "section": "The Census API challenge",
+    "text": "The Census API challenge\nPull demographic data from the US Census API and join it to our stores.\n\n\nWhy\nPOS data says what sold. Census says who lives around the store.\n\n\nThe work\nRequest block-group tables, handle the key and the limits, cache what you pull.\n\n\nThe join\nStore → block group → demographics. Geography is the hard part.\n\n\nDetails and dates are in the class repository."
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#the-unit-of-analysis-challenge",
+    "href": "day06_api_unit_of_analysis.html#the-unit-of-analysis-challenge",
+    "title": "Written Challenge and Round Two",
+    "section": "The unit of analysis challenge",
+    "text": "The unit of analysis challenge\nOne row of your modeling table equals what?\n\nWho or what: a shopper, a store, a product, a store × week?\nWhere: county, city, or chain?\nWhen: daily, weekly, monthly?\nThe target: a probability or a count, measured on that unit.\n\nEverything downstream — features, the model, the app — is built on this one decision."
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#why-this-is-the-hard-one",
+    "href": "day06_api_unit_of_analysis.html#why-this-is-the-hard-one",
+    "title": "Written Challenge and Round Two",
+    "section": "Why this is the hard one",
+    "text": "Why this is the hard one\n\n\n\nToo fine\nProduct × store × day: mostly zeros, no signal to learn.\n\n\n\nJust right\nEnough rows to model, enough events per row to be stable, and a unit the client actually acts on.\n\n\n\nSay it in one sentence: “One row is one _____, and we predict _____ for it.”"
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#before-next-class",
+    "href": "day06_api_unit_of_analysis.html#before-next-class",
+    "title": "Written Challenge and Round Two",
+    "section": "Before next class",
+    "text": "Before next class\nBring your team’s one sentence.\n\nThen get a Census API key and pull one table — any table — so we can see the shape of what comes back."
   },
   {
     "objectID": "day05_proposals.html#show-us-the-church-project",
@@ -784,25 +826,39 @@
     "text": "Discuss\nWho would pay for a prediction made from convenience-store data?\n\nName a client, a place, and a unit of analysis."
   },
   {
-    "objectID": "example.html#a-slide",
-    "href": "example.html#a-slide",
-    "title": "Example Slides",
-    "section": "A slide",
-    "text": "A slide\n\nBullet one\nBullet two"
+    "objectID": "day07_work_time.html#today",
+    "href": "day07_work_time.html#today",
+    "title": "Work Time and Secrets",
+    "section": "Today",
+    "text": "Today\n\nA short word on environment variables — you’re about to need an API key\nOpen class time on the Census API and unit of analysis challenges"
   },
   {
-    "objectID": "example.html#some-code",
-    "href": "example.html#some-code",
-    "title": "Example Slides",
-    "section": "Some code",
-    "text": "Some code\ndf.groupBy(\"team\").agg(F.avg(\"points\"))"
+    "objectID": "day07_work_time.html#keys-dont-belong-in-code",
+    "href": "day07_work_time.html#keys-dont-belong-in-code",
+    "title": "Work Time and Secrets",
+    "section": "Keys don’t belong in code",
+    "text": "Keys don’t belong in code\nThe Census API hands you a key. Don’t paste it into a notebook.\n\nOnce a key is committed, it’s in the git history forever — and your repo is public."
   },
   {
-    "objectID": "example.html#speaker-notes",
-    "href": "example.html#speaker-notes",
-    "title": "Example Slides",
-    "section": "Speaker notes",
-    "text": "Speaker notes\nPress s in the browser to open the speaker view.\n\nThese notes only show in the speaker view."
+    "objectID": "day07_work_time.html#the-short-version",
+    "href": "day07_work_time.html#the-short-version",
+    "title": "Work Time and Secrets",
+    "section": "The short version",
+    "text": "The short version\n\n\nLocally\nPut it in a .env file, add .env to .gitignore, load it with python-dotenv.\n\n\nOn Databricks\nStore it as a Unity Catalog secret, read it with dbutils.secrets.get().\n\n\nAlways\nNever print() a key. If one leaks, rotate it first, clean up after.\n\n\nFull walkthrough: Keep Your Secrets Out of Your Code — setup for Python, Databricks and R."
+  },
+  {
+    "objectID": "day07_work_time.html#open-class-time",
+    "href": "day07_work_time.html#open-class-time",
+    "title": "Work Time and Secrets",
+    "section": "Open class time",
+    "text": "Open class time\nTwo challenges, your choice of order.\n\n\n\nCensus API\nGet a key, pull one table, work out the block-group join to our stores.\n\n\n\nUnit of analysis\nSettle your one sentence: one row is one _____, and we predict _____ for it.\n\n\nI’ll come around. Bring me the thing you’re stuck on, not the thing that’s finished."
+  },
+  {
+    "objectID": "day07_work_time.html#where-to-find-things",
+    "href": "day07_work_time.html#where-to-find-things",
+    "title": "Work Time and Secrets",
+    "section": "Where to find things",
+    "text": "Where to find things\n\nDates and links: the class repository\nSecrets and API keys: the environment variables deck\nDatabricks setup and the catalog: Day 3\nCharts and tables: Day 4"
   },
   {
     "objectID": "day04_data_summaries.html#today",
@@ -880,5 +936,460 @@
     "title": "Data Summaries That Persuade",
     "section": "Team time",
     "text": "Team time\nWork on the proposal. I’ll come around.\n\nCome find me with: your client, your unit of analysis, and the one chart you’d show them first."
+  },
+  {
+    "objectID": "day03_databricks.html#today",
+    "href": "day03_databricks.html#today",
+    "title": "Databricks Setup and Team Time",
+    "section": "Today",
+    "text": "Today\n\nThe schedule\nQuestions on the church data\nDatabricks Free Edition: three workspaces\nLoad the semester data and find it in the catalog\nTeam time on your proposal"
+  },
+  {
+    "objectID": "day03_databricks.html#whats-due",
+    "href": "day03_databricks.html#whats-due",
+    "title": "Databricks Setup and Team Time",
+    "section": "What’s due",
+    "text": "What’s due\n\n\n\n\n\n\n\n\nAssignment\nDue\nWhere\n\n\n\n\nData wrangling & visualization challenge\n9/24\nGitHub pull request + Canvas\n\n\nLearning Plan 1\n9/25\nCanvas\n\n\nProject proposal & unit of analysis\n9/29\nTeam folder on GitHub + Canvas\n\n\n\n\nThe full list of challenges and dates is in the class repository.\nKeep tracking your hours in Harvest."
+  },
+  {
+    "objectID": "day03_databricks.html#your-questions",
+    "href": "day03_databricks.html#your-questions",
+    "title": "Databricks Setup and Team Time",
+    "section": "Your questions",
+    "text": "Your questions\nWhat’s slowing you down on the wrangling and visualization challenge?\n\nReading the data · nested columns · picking a chart · the report format"
+  },
+  {
+    "objectID": "day03_databricks.html#nested-columns",
+    "href": "day03_databricks.html#nested-columns",
+    "title": "Databricks Setup and Team Time",
+    "section": "Nested columns",
+    "text": "Nested columns\nMany patterns columns are lists of key/value pairs. Explode the list into rows, then unnest the pairs into columns:\ndevices = (patterns\n    .select(\"placekey\", \"device_type\")\n    .explode(\"device_type\")\n    .unnest(\"device_type\"))\n\n\n\nplacekey\nkey\nvalue\n\n\n\n\n222-223@8g7-2n2-td9\nandroid\n4\n\n\n222-223@8g7-2n2-td9\nios\n5\n\n\n\nThe same pattern works for related_same_day_brand, popularity_by_day, and the other key/value columns."
+  },
+  {
+    "objectID": "day03_databricks.html#what-it-is",
+    "href": "day03_databricks.html#what-it-is",
+    "title": "Databricks Setup and Team Time",
+    "section": "What it is",
+    "text": "What it is\n\n\n\nA free, serverless Databricks workspace\nSpark notebooks with no clusters to manage\nThe same platform companies pay for\nSign up here\n\n\n\nLimits to know\n\nNotebooks time out after 2.5 hours\nGo over quota and compute shuts off for the day\nPython and SQL only (no R or Scala)\nNo commercial use"
+  },
+  {
+    "objectID": "day03_databricks.html#three-workspaces",
+    "href": "day03_databricks.html#three-workspaces",
+    "title": "Databricks Setup and Team Time",
+    "section": "Three workspaces",
+    "text": "Three workspaces\n\n\n\n1. Class\nOne workspace for all of us.\nOpen the class workspace\n\n\n\n2. Team\nYour whole team in one workspace, so you share notebooks and data.\nOne teammate creates it.\n\n\n\n3. Personal\nYour own space to experiment and practice.\nYou create it."
+  },
+  {
+    "objectID": "day03_databricks.html#set-up-your-personal-workspace",
+    "href": "day03_databricks.html#set-up-your-personal-workspace",
+    "title": "Databricks Setup and Team Time",
+    "section": "Set up your personal workspace",
+    "text": "Set up your personal workspace\n\nGo to Databricks Free Edition and sign up.\nUse your university email. BYU-I emails can sign in with Google or Microsoft.\nCreate a notebook to confirm it works."
+  },
+  {
+    "objectID": "day03_databricks.html#set-up-your-team-workspace",
+    "href": "day03_databricks.html#set-up-your-team-workspace",
+    "title": "Databricks Setup and Team Time",
+    "section": "Set up your team workspace",
+    "text": "Set up your team workspace\n\nOne teammate creates a new Free Edition account for the team.\nThat teammate invites everyone else:\n\nUser icon (top right) → Settings → Workspace admin → Identity and access → Users → Manage → Add user → Invite user by email\n\nEveryone accepts the invite and opens the same workspace.\n\n\nDo this today, before you leave. You’ll need it for the proposal."
+  },
+  {
+    "objectID": "day03_databricks.html#one-notebook-loads-everything",
+    "href": "day03_databricks.html#one-notebook-loads-everything",
+    "title": "Databricks Setup and Team Time",
+    "section": "One notebook loads everything",
+    "text": "One notebook loads everything\n\nDownload load_semester_data.html from Slack.\nIn Databricks, open Workspace → Import and choose the file.\nAttach the notebook to Serverless compute and click Run all.\nWait 8 to 12 minutes. The last cell shows a summary. Every row should say ok.\n\nSafe to re-run: anything already loaded is skipped. If a row says FAILED, run it once more, then post in Slack."
+  },
+  {
+    "objectID": "day03_databricks.html#what-gets-loaded",
+    "href": "day03_databricks.html#what-gets-loaded",
+    "title": "Databricks Setup and Team Time",
+    "section": "What gets loaded",
+    "text": "What gets loaded\n\n\n\n\n\n\n\nData\nWhere it lands\n\n\n\n\nChurch places and patterns (the challenge data)\nVolume: pattern_places/pattern_places_data/\n\n\nC-Store, Idaho, 167 stores (small)\nTables: cstore_snippet.*\n\n\nC-Store, five states, 240 stores (medium)\nTables: cstore_sample.*\n\n\nCensus block-group tables\nTables: census.*\n\n\nMaverik patterns\nVolume: default/data/other/\n\n\n\nStart on small while you build and test. Move to medium when it works."
+  },
+  {
+    "objectID": "day03_databricks.html#finding-it-in-the-catalog",
+    "href": "day03_databricks.html#finding-it-in-the-catalog",
+    "title": "Databricks Setup and Team Time",
+    "section": "Finding it in the catalog",
+    "text": "Finding it in the catalog\n\n\nClick Catalog in the left sidebar. Data is organized in three levels:\nworkspace          ← catalog\n├── cstore_snippet ← schema\n│   ├── cstore_stores     ← table\n│   └── cstore_payments\n├── census\n└── pattern_places\n    └── pattern_places_data ← volume\n\n\nA table has a schema you can query by name.\nA volume holds files, like our Parquet files.\nClick a table to see its columns, sample data, and details.\nNames follow catalog.schema.table."
+  },
+  {
+    "objectID": "day03_databricks.html#reading-it-in-a-notebook",
+    "href": "day03_databricks.html#reading-it-in-a-notebook",
+    "title": "Databricks Setup and Team Time",
+    "section": "Reading it in a notebook",
+    "text": "Reading it in a notebook\n# A table, by its three-level name\nstores = spark.table(\"workspace.cstore_snippet.cstore_stores\")\n\n# A file in a volume, by its path\nplaces = spark.read.parquet(\n    \"/Volumes/workspace/pattern_places/pattern_places_data/places.parquet\")\n\ndisplay(stores)\nUse these exact names and paths. Don’t move or rename the data, so everyone’s code runs the same way."
+  },
+  {
+    "objectID": "day03_databricks.html#build-your-proposal",
+    "href": "day03_databricks.html#build-your-proposal",
+    "title": "Databricks Setup and Team Time",
+    "section": "Build your proposal",
+    "text": "Build your proposal\nDue 9/29. No more than two pages or 5 to 8 slides:\n\nTeam member names and majors\nThe business need and why it’s valuable\nThe data format, with some descriptive visuals\nHow you’ll use ML/AI in the application\nWhat counts as a successful product\n\nStart by exploring cstore_snippet in your team workspace."
+  },
+  {
+    "objectID": "topics/env_variables.html#the-problem",
+    "href": "topics/env_variables.html#the-problem",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "The problem",
+    "text": "The problem\nCode gets shared. Secrets must not.\n\nAn API key typed into a script travels with that script — everywhere."
+  },
+  {
+    "objectID": "topics/env_variables.html#where-a-hardcoded-key-ends-up",
+    "href": "topics/env_variables.html#where-a-hardcoded-key-ends-up",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Where a hardcoded key ends up",
+    "text": "Where a hardcoded key ends up\nAPI_KEY = \"sk-abc123yourrealkeyhere\"   # never\n\n\nGit history\nDeleting the line later doesn’t help. Old commits keep it.\n\n\nShared files\nNotebooks, exports, screenshots, screen shares.\n\n\nEveryone with access\nTeammates, forks, and anyone who ever clones the repo."
+  },
+  {
+    "objectID": "topics/env_variables.html#the-fix-separate-config-from-code",
+    "href": "topics/env_variables.html#the-fix-separate-config-from-code",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "The fix: separate config from code",
+    "text": "The fix: separate config from code\n\n\nYour code\nno secret inside\n\n←\n\nEnvironment\nAPI_KEY=…\n\n←\n\nWhere it’s stored\n.env file · secret store\n\n\n\nThe code is identical on every machine\nOnly the environment changes: laptop, server, Databricks\nThe secret is never committed"
+  },
+  {
+    "objectID": "topics/env_variables.html#what-is-an-environment-variable",
+    "href": "topics/env_variables.html#what-is-an-environment-variable",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "What is an environment variable?",
+    "text": "What is an environment variable?\nA named string the operating system hands to your program.\nimport os\n\nos.getenv(\"API_KEY\")                       # None if missing\nos.environ[\"API_KEY\"]                      # KeyError if missing\nos.getenv(\"API_URL\", \"http://localhost\")   # with a default\nAlways strings. Convert numbers and booleans yourself."
+  },
+  {
+    "objectID": "topics/env_variables.html#today",
+    "href": "topics/env_variables.html#today",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Today",
+    "text": "Today\n\n\n1 · Python\nLocal development with .env files and the python-dotenv package.\n\n\n2 · Databricks\nFour ways to store an API key, ranked from safest to worst.\n\n\nAppendix · R\nThe same idea with .Renviron, askpass, and keyring."
+  },
+  {
+    "objectID": "topics/env_variables.html#three-steps",
+    "href": "topics/env_variables.html#three-steps",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Three steps",
+    "text": "Three steps\n\n\n1 Write a .env file\n\n→\n\n2 Ignore it in Git\n\n→\n\n3 Load it in Python\n\n\nFirst, install the package:\npip install python-dotenv"
+  },
+  {
+    "objectID": "topics/env_variables.html#write-a-.env-file",
+    "href": "topics/env_variables.html#write-a-.env-file",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "1 Write a .env file",
+    "text": "1 Write a .env file\nOne NAME=value per line, in your project folder.\n\n\n.env\n\nAPI_KEY=sk-abc123yourrealkeyhere\nAPI_URL=https://api.example.com\nDEBUG=true\n\n\nNo spaces around =\nQuotes only needed if the value has spaces\n# starts a comment"
+  },
+  {
+    "objectID": "topics/env_variables.html#keep-it-out-of-git",
+    "href": "topics/env_variables.html#keep-it-out-of-git",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "2 Keep it out of Git",
+    "text": "2 Keep it out of Git\n\n\n.gitignore\n\n.env\n\nThen commit a template so teammates know what to set:\n\n\n.env.example\n\nAPI_KEY=your-key-here\nAPI_URL=https://api.example.com\n\n\nAdd .env to .gitignore before your first commit."
+  },
+  {
+    "objectID": "topics/env_variables.html#load-it-in-python",
+    "href": "topics/env_variables.html#load-it-in-python",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "3 Load it in Python",
+    "text": "3 Load it in Python\nimport os\nfrom dotenv import load_dotenv\n\nload_dotenv()                      # .env → os.environ\n\napi_key = os.getenv(\"API_KEY\")\napi_url = os.getenv(\"API_URL\")\nCall load_dotenv() once, at the top of your entry script."
+  },
+  {
+    "objectID": "topics/env_variables.html#use-it-never-print-it",
+    "href": "topics/env_variables.html#use-it-never-print-it",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Use it, never print it",
+    "text": "Use it, never print it\nimport requests\n\nresp = requests.get(\n    api_url,\n    headers={\"Authorization\": f\"Bearer {api_key}\"},\n)\nprint(resp.status_code)\n\n\n200\nKey is valid\n\n\n401 / 403\nKey is wrong or expired"
+  },
+  {
+    "objectID": "topics/env_variables.html#fail-fast-when-a-key-is-missing",
+    "href": "topics/env_variables.html#fail-fast-when-a-key-is-missing",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Fail fast when a key is missing",
+    "text": "Fail fast when a key is missing\ndef require(name):\n    value = os.getenv(name)\n    if not value:\n        raise RuntimeError(f\"Missing env var: {name}\")\n    return value\n\napi_key = require(\"API_KEY\")\nA clear error at startup beats a confusing 401 ten minutes later."
+  },
+  {
+    "objectID": "topics/env_variables.html#handy-options",
+    "href": "topics/env_variables.html#handy-options",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Handy options",
+    "text": "Handy options\nload_dotenv(find_dotenv())      # search parent folders\nload_dotenv(\".env.dev\")         # a specific file\nload_dotenv(override=True)      # .env wins over real env\n\nconfig = dotenv_values(\".env\")  # a dict, os.environ untouched\nBy default load_dotenv() does not overwrite variables already set. Servers and CI can override your local file."
+  },
+  {
+    "objectID": "topics/env_variables.html#python-recap",
+    "href": "topics/env_variables.html#python-recap",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Python recap",
+    "text": "Python recap\n\n\nStore\nSecrets in .env\n\n\nProtect\n.env in .gitignore, .env.example committed\n\n\nLoad\nload_dotenv() then os.getenv()\n\n\nNever\nprint(api_key)"
+  },
+  {
+    "objectID": "topics/env_variables.html#four-ways-to-store-a-key",
+    "href": "topics/env_variables.html#four-ways-to-store-a-key",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Four ways to store a key",
+    "text": "Four ways to store a key\n\n\n1 Databricks Secrets Encrypted. Output shows [REDACTED]. Best\n\n\n2 %run config notebook Only safe if it reads a secret. OK\n\n\n3 Cluster env variable Visible in cluster config. Not redacted. Weak\n\n\n4 Hardcoded In the file and its history, forever. Never"
+  },
+  {
+    "objectID": "topics/env_variables.html#option-1-databricks-secrets",
+    "href": "topics/env_variables.html#option-1-databricks-secrets",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Option 1 — Databricks Secrets",
+    "text": "Option 1 — Databricks Secrets\napi_key = dbutils.secrets.get(\n    catalog=\"workspace\", schema=\"alice\", key=\"my-api-key\"\n)\n\nValue is never printed: output shows [REDACTED]\nYou choose who can read it\nThe notebook is safe to share or commit\n\nOn Free Edition, use Unity Catalog secrets. No CLI needed."
+  },
+  {
+    "objectID": "topics/env_variables.html#set-it-up-three-steps",
+    "href": "topics/env_variables.html#set-it-up-three-steps",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Set it up: three steps",
+    "text": "Set it up: three steps\n\n\n0 Admin grants CREATE SCHEMA\nonce\n\n→\n\n1 You create a private schema\nonce\n\n→\n\n2 You add the secret\nper key\n\n\nEverything happens in notebooks or the Catalog UI."
+  },
+  {
+    "objectID": "topics/env_variables.html#admin-allow-schema-creation",
+    "href": "topics/env_variables.html#admin-allow-schema-creation",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "0 Admin: allow schema creation",
+    "text": "0 Admin: allow schema creation\nRun once, as a workspace admin:\nGRANT CREATE SCHEMA ON CATALOG workspace TO `users`;\nOr in the UI: Catalog → workspace → Permissions → Grant"
+  },
+  {
+    "objectID": "topics/env_variables.html#create-your-own-schema",
+    "href": "topics/env_variables.html#create-your-own-schema",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "1 Create your own schema",
+    "text": "1 Create your own schema\nUse your own name in place of alice:\nCREATE SCHEMA IF NOT EXISTS workspace.alice;\nThis schema holds your private secrets. No one else can read them."
+  },
+  {
+    "objectID": "topics/env_variables.html#add-the-secret-in-the-ui",
+    "href": "topics/env_variables.html#add-the-secret-in-the-ui",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "2 Add the secret in the UI",
+    "text": "2 Add the secret in the UI\n\nCatalog in the sidebar\nworkspace → your schema\nCreate → Secret\nName: my-api-key · Value: paste your key\nCreate\n\nIt is encrypted at rest and shows [REDACTED] from then on."
+  },
+  {
+    "objectID": "topics/env_variables.html#read-it-at-runtime",
+    "href": "topics/env_variables.html#read-it-at-runtime",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Read it at runtime",
+    "text": "Read it at runtime\napi_key = dbutils.secrets.get(\n    catalog=\"workspace\", schema=\"alice\", key=\"my-api-key\"\n)\nUse it. Don’t print it.\nrequests.get(url, headers={\"Authorization\": f\"Bearer {api_key}\"})"
+  },
+  {
+    "objectID": "topics/env_variables.html#one-key-name-no-collisions",
+    "href": "topics/env_variables.html#one-key-name-no-collisions",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "One key name, no collisions",
+    "text": "One key name, no collisions\nworkspace\n├── alice    ← only Alice can read\n│   └── my-api-key\n├── bob      ← only Bob can read\n│   └── my-api-key\n└── charlie  ← only Charlie can read\n    └── my-api-key\nTo share on purpose:\nGRANT READ SECRET ON SCHEMA workspace.alice TO `bob@byui.edu`;"
+  },
+  {
+    "objectID": "topics/env_variables.html#rotate-a-key",
+    "href": "topics/env_variables.html#rotate-a-key",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Rotate a key",
+    "text": "Rotate a key\n\n\nIn the UI\n\nCatalog → your schema → Secrets\nOpen the secret\nMenu (three dots) → Edit → new value\n\n\nIn a notebook\nfrom databricks.sdk import WorkspaceClient\n\nw = WorkspaceClient()\nw.secrets.update_secret(\n    name=\"workspace.alice.my-api-key\",\n    value=new_key)\n\nNeeds WRITE SECRET. The new value works immediately."
+  },
+  {
+    "objectID": "topics/env_variables.html#check-it-loaded-without-leaking-it",
+    "href": "topics/env_variables.html#check-it-loaded-without-leaking-it",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Check it loaded, without leaking it",
+    "text": "Check it loaded, without leaking it\nif not api_key:\n    print(\"not set\")\nelse:\n    print(f\"loaded, {len(api_key)} characters\")\nDatabricks redacts secrets in output, but don’t rely on that alone. Confirm with a real API call and its HTTP status."
+  },
+  {
+    "objectID": "topics/env_variables.html#option-2-share-one-config-notebook",
+    "href": "topics/env_variables.html#option-2-share-one-config-notebook",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Option 2 — Share one config notebook",
+    "text": "Option 2 — Share one config notebook\n\n\napi_key_config notebook\napi_key = \"sk-abc123yourrealkeyhere\"\napi_url = \"https://api.example.com\"\n\nAny other notebook\n%run ./api_key_config\napi_key is now defined.\n\n\nOne place to change or rotate\nHolding the key in the config notebook is a poor version of a .env file"
+  },
+  {
+    "objectID": "topics/env_variables.html#option-3-cluster-environment-variable",
+    "href": "topics/env_variables.html#option-3-cluster-environment-variable",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Option 3 — Cluster environment variable",
+    "text": "Option 3 — Cluster environment variable\nimport os\napi_key = os.environ.get(\"OPENAI_API_KEY\")\n\n\nAnyone with Can manage on the cluster can see it\nNot redacted: printing it leaks it\nNot supported on serverless (job-level variables are Beta)"
+  },
+  {
+    "objectID": "topics/env_variables.html#option-4-hardcoded",
+    "href": "topics/env_variables.html#option-4-hardcoded",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Option 4 — Hardcoded",
+    "text": "Option 4 — Hardcoded\nAPI_KEY = \"sk-abc123yourrealkeyhere\"   # never\n\nIf a key was ever hardcoded, rotate it now. Assume it is compromised.\n\nIt lives in the notebook, its revision history, Git, and exports."
+  },
+  {
+    "objectID": "topics/env_variables.html#local-python-vs.-databricks",
+    "href": "topics/env_variables.html#local-python-vs.-databricks",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Local Python vs. Databricks",
+    "text": "Local Python vs. Databricks\n\n\n\n\nLocal Python\nDatabricks\n\n\n\n\nStore\n.env file\nUnity Catalog secret\n\n\nLoad\nload_dotenv()\ndbutils.secrets.get()\n\n\nProtect\n.gitignore\nAccess control + [REDACTED]\n\n\nRotate\nEdit .env\nCatalog UI or SDK"
+  },
+  {
+    "objectID": "topics/env_variables.html#takeaways",
+    "href": "topics/env_variables.html#takeaways",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nNever hardcode a secret\nLocally: .env + python-dotenv + .gitignore\nOn Databricks: Unity Catalog secrets\nFail fast. Never print a value\nIf it leaks: rotate first, clean up after"
+  },
+  {
+    "objectID": "topics/env_variables.html#renviron",
+    "href": "topics/env_variables.html#renviron",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": ".Renviron",
+    "text": ".Renviron\nusethis::edit_r_environ(scope = \"project\")\n\n\n.Renviron\n\nAPI_KEY=sk-abc123yourrealkeyhere\nAPI_URL=https://api.example.com\n\nRestart R, then read it:\napi_key &lt;- Sys.getenv(\"API_KEY\")\nAdd .Renviron to .gitignore."
+  },
+  {
+    "objectID": "topics/env_variables.html#env-files-and-safe-use",
+    "href": "topics/env_variables.html#env-files-and-safe-use",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": ".env files and safe use",
+    "text": ".env files and safe use\ndotenv::load_dot_env(\".env\")      # like python-dotenv\napi_key &lt;- Sys.getenv(\"API_KEY\")\nlibrary(httr2)\n\nrequest(Sys.getenv(\"API_URL\")) |&gt;\n  req_auth_bearer_token(Sys.getenv(\"API_KEY\")) |&gt;\n  req_perform()\nNext: two ways to skip the file entirely."
+  },
+  {
+    "objectID": "topics/env_variables.html#askpass-type-it-when-needed",
+    "href": "topics/env_variables.html#askpass-type-it-when-needed",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "askpass: type it when needed",
+    "text": "askpass: type it when needed\n# install.packages(\"askpass\")\napi_key &lt;- askpass::askpass(\"Enter your API key\")\n\nPops up a password prompt, typed characters hidden\nReturns the value as a string\nNothing is written to disk\n\nGood for quick interactive work. You retype the key each session."
+  },
+  {
+    "objectID": "topics/env_variables.html#keyring-store-it-once",
+    "href": "topics/env_variables.html#keyring-store-it-once",
+    "title": "Keep Your Secrets Out of Your Code",
+    "section": "keyring: store it once",
+    "text": "keyring: store it once\n# install.packages(\"keyring\")\nkeyring::key_set(\"my-api\")          # prompts once, then stores it\napi_key &lt;- keyring::key_get(\"my-api\")\n\nSaved in your OS credential store (Keychain, Credential Manager)\nRead it back in any script, no file in your project\nClosest R equivalent to Databricks secrets\n\nNever put the key itself in your code. Only the name \"my-api\"."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#where-we-are",
+    "href": "topics/customer_segmentation.html#where-we-are",
+    "title": "Customer Segmentation",
+    "section": "Where we are",
+    "text": "Where we are\nRules found what sells together. Labels predicted one outcome.\n\nSegmentation asks a different question: who are these customers, and how many kinds are there?"
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#unlabeled-learning",
+    "href": "topics/customer_segmentation.html#unlabeled-learning",
+    "title": "Customer Segmentation",
+    "section": "Unlabeled learning",
+    "text": "Unlabeled learning\nThere is no Y. No right answer to train against, so nothing to score yourself against at the end.\n\n\nSupervised\nYou know the answer for past rows. The model learns to reproduce it.\nDid this visit include fuel?\n\n\nUnsupervised\nYou have only the features. The model looks for structure.\nWhat kinds of shoppers are there?\n\n\nThat freedom is the danger: an algorithm will always return groups, whether or not they mean anything."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#clustering",
+    "href": "topics/customer_segmentation.html#clustering",
+    "title": "Customer Segmentation",
+    "section": "Clustering",
+    "text": "Clustering\n\nPartitioning a set of objects into groups so that objects in the same group are more similar to each other than to those in other groups.\n\nThe analyst defines “similar.” That choice — which features, on what scale — decides the answer more than the algorithm does.\n\nClusters are a hypothesis, not a finding. You still have to show they’re stable and that someone can act on them."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#k-means-vs.-hdbscan",
+    "href": "topics/customer_segmentation.html#k-means-vs.-hdbscan",
+    "title": "Customer Segmentation",
+    "section": "k-means vs. HDBSCAN",
+    "text": "k-means vs. HDBSCAN\n\nIllustrative: make_moons and make_blobs from scikit-learn, not customer data."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#what-the-picture-shows",
+    "href": "topics/customer_segmentation.html#what-the-picture-shows",
+    "title": "Customer Segmentation",
+    "section": "What the picture shows",
+    "text": "What the picture shows\n\n\n\nk-means\n\nYou must pick k in advance\nCuts by distance to a centre, so it only finds round blobs\nEvery point gets a cluster, outliers included\n\n\n\n\nHDBSCAN\n\nFinds the number of clusters itself\nFollows density, so shapes can be anything\nPoints in sparse regions are labeled noise, not forced\n\n\n\nFor customers, “I don’t know how many segments there are” and “some shoppers fit no segment” are both honest, so HDBSCAN fits the problem."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#the-two-knobs",
+    "href": "topics/customer_segmentation.html#the-two-knobs",
+    "title": "Customer Segmentation",
+    "section": "The two knobs",
+    "text": "The two knobs\n\nmin_cluster_size — the smallest group you’ll accept as a segment. Larger values are more robust on noisy data.\nmin_samples — how dense a neighborhood must be for a point to count as core. Higher means more points called noise. Defaults to min_cluster_size; tune it second.\n\nlabels = HDBSCAN(min_cluster_size=100, min_samples=20).fit_predict(X)\nFor a customer product, set min_cluster_size to your privacy floor: no segment smaller than the number of shoppers you’re willing to report on."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#the-curse-of-dimensionality",
+    "href": "topics/customer_segmentation.html#the-curse-of-dimensionality",
+    "title": "Customer Segmentation",
+    "section": "The curse of dimensionality",
+    "text": "The curse of dimensionality\nWith 20 behavioral features per shopper, distance stops meaning much: in high dimensions, everything is far from everything, and “nearest neighbor” loses its edge over the average point.\n\nDistances concentrate, so density looks flat\nSparse space, so clusters have no room to be dense\nCompute cost grows with every column\n\nDimension reduction maps the data to fewer dimensions while keeping what matters: which points are near which."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#umap",
+    "href": "topics/customer_segmentation.html#umap",
+    "title": "Customer Segmentation",
+    "section": "UMAP",
+    "text": "UMAP\nUniform Manifold Approximation and Projection.\n\nFind each point’s nearest neighbors in the original high-dimensional space.\nBuild a graph of those neighbor relationships.\nLay the graph out in 2 to 5 dimensions, nudging points until the layout preserves the neighborhoods.\n\n\n\nn_neighbors\nSmall keeps local detail. Large keeps the global shape.\n\n\nmin_dist\nHow tightly points may pack. Low for clustering, higher for a readable picture.\n\n\nn_components\nOutput dimensions. 5 to cluster, 2 to draw."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#umap-on-handwritten-digits",
+    "href": "topics/customer_segmentation.html#umap-on-handwritten-digits",
+    "title": "Customer Segmentation",
+    "section": "UMAP on handwritten digits",
+    "text": "UMAP on handwritten digits\n\n64 pixel columns, projected to 2. HDBSCAN found 12 clusters with 1.8% noise — close to the 10 true digits, splitting a couple of them.\nIllustrative: scikit-learn digits, not customer data."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#why-digits-are-the-honest-test",
+    "href": "topics/customer_segmentation.html#why-digits-are-the-honest-test",
+    "title": "Customer Segmentation",
+    "section": "Why digits are the honest test",
+    "text": "Why digits are the honest test\nWe know the answer here: 10 digits. So we can see the failure modes you won’t see on customers:\n\nSome digits split into two clusters (different handwriting styles)\nSome sit next to each other (4, 7 and 9 overlap)\nA few points land in no cluster\n\n\nOn customer data nobody hands you the digits. That’s why stability checks replace accuracy."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#the-pipeline",
+    "href": "topics/customer_segmentation.html#the-pipeline",
+    "title": "Customer Segmentation",
+    "section": "The pipeline",
+    "text": "The pipeline\n\n\n1 Features\n~20 per shopper\n\n→\n\n2 Scale\nlog, standardize\n\n→\n\n3 UMAP → 5-D\n\n→\n\n4 HDBSCAN\n\n→\n\n5 Name them\nprofile each group\n\n\nScaling matters more than it looks. Dollars run to the hundreds and trip counts to single digits, so without scaling, spend decides every cluster."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#features-for-a-c-store-shopper",
+    "href": "topics/customer_segmentation.html#features-for-a-c-store-shopper",
+    "title": "Customer Segmentation",
+    "section": "Features for a C-Store shopper",
+    "text": "Features for a C-Store shopper\n\n\n\nFrequency and value: trips, basket total, items per trip\nTiming: daypart shares, weekday vs. weekend\n\n\n\nMission: fuel, fountain and food, packaged drinks, snacks, tobacco\nPrice and payment: discount use, credit vs. debit\n\n\nLeave store brand out of the features. Otherwise you cluster by where people shop, then “discover” that each brand has its own shoppers."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#pick-the-unit-of-analysis-first",
+    "href": "topics/customer_segmentation.html#pick-the-unit-of-analysis-first",
+    "title": "Customer Segmentation",
+    "section": "Pick the unit of analysis first",
+    "text": "Pick the unit of analysis first\nOne row per what? For segments, it’s one row per shopper, not per basket — but over what span?\n\n\nOne week\nA trial run split the segments almost entirely by daypart, because most shoppers made a single trip.\n\n\nA quarter or more\nEnough trips per shopper that frequency, mission and timing can vary within a row.\n\n\nExample conclusions — from a one-store, one-week sample, not a finished analysis."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#naming-the-segments",
+    "href": "topics/customer_segmentation.html#naming-the-segments",
+    "title": "Customer Segmentation",
+    "section": "Naming the segments",
+    "text": "Naming the segments\nThe model returns 0, 1, 2, -1. You turn those into something a client can use:\n\nProfile each cluster against the features that built it.\nFind what makes it different from the average, not what’s biggest in it.\nName it for the behavior: Morning commuters, Fill-up only.\nCheck the name survives a new quarter of data.\n\n\n-1 is a real answer. “Unsegmented” shoppers are a group too, and often a big one."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#spark-builds-the-table-not-the-clusters",
+    "href": "topics/customer_segmentation.html#spark-builds-the-table-not-the-clusters",
+    "title": "Customer Segmentation",
+    "section": "Spark builds the table, not the clusters",
+    "text": "Spark builds the table, not the clusters\nUMAP and HDBSCAN are single-machine libraries. Spark ML has k-means, bisecting k-means and Gaussian mixtures — no HDBSCAN.\n\n\nPySpark\nmillions of lines → one row per shopper\n\n→\n\nOne machine\nUMAP + HDBSCAN on the shopper table\n\n→\n\nPySpark\njoin labels back, profile, write Delta\n\n\nThe heavy lifting is the feature build, and that’s the part Spark is for."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#why-the-handoff-is-fine",
+    "href": "topics/customer_segmentation.html#why-the-handoff-is-fine",
+    "title": "Customer Segmentation",
+    "section": "Why the handoff is fine",
+    "text": "Why the handoff is fine\nThe transaction data is big. The shopper table isn’t.\n\n\nMillions\nof transaction lines, across stores and quarters. Spark territory.\n\n\n~100k rows\none per shopper, with ~20 columns. A few MB in memory.\n\n\nA table that fits in a driver’s memory doesn’t need a cluster to cluster it. Use Spark to get there, then stop."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#in-a-databricks-notebook",
+    "href": "topics/customer_segmentation.html#in-a-databricks-notebook",
+    "title": "Customer Segmentation",
+    "section": "In a Databricks notebook",
+    "text": "In a Databricks notebook\n%pip install umap-learn hdbscan\n\nfeatures = spark.table(\"workspace.cstore.shopper_features\")   # built with Spark\npdf = features.toPandas()                                     # Arrow handles the move\n\nlabels = hdbscan.HDBSCAN(min_cluster_size=50).fit_predict(\n    umap.UMAP(n_components=5, min_dist=0.0).fit_transform(X))\n\n%pip install is notebook-scoped: it installs on the driver for this session.\ntoPandas() moves everything to the driver. Check the row count first.\nServerless compute gives you a modest driver. If it won’t fit, sample."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#how-you-know-it-worked",
+    "href": "topics/customer_segmentation.html#how-you-know-it-worked",
+    "title": "Customer Segmentation",
+    "section": "How you know it worked",
+    "text": "How you know it worked\nWithout a Y, you check stability and usefulness:\n\nNoise share. If 60% is noise, your features or knobs are wrong.\nAcross random seeds. Do the same shoppers land together each run?\nAcross time. Does last quarter’s segment still describe the same people?\nAgainst a simple baseline. Does it beat RFM (recency, frequency, monetary) buckets?\nThe client test. Can someone name an action per segment? If not, it’s decoration."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#what-segmentation-cant-do",
+    "href": "topics/customer_segmentation.html#what-segmentation-cant-do",
+    "title": "Customer Segmentation",
+    "section": "What segmentation can’t do",
+    "text": "What segmentation can’t do\n\nIt won’t tell you why anyone belongs to a group.\nIt won’t predict what a shopper does next. That’s a labeled model.\nIt will give you groups even from noise, so a result alone proves nothing.\nSegments drift: refit on a schedule and expect the boundaries to move."
+  },
+  {
+    "objectID": "topics/customer_segmentation.html#your-turn",
+    "href": "topics/customer_segmentation.html#your-turn",
+    "title": "Customer Segmentation",
+    "section": "Your turn",
+    "text": "Your turn\nName three segments you expect in your C-Store data.\n\nWhat features would separate them? What would a store do differently for each? If the model can’t find them, what does that tell you?"
   }
 ]

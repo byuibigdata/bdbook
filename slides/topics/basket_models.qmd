@@ -1,0 +1,204 @@
+---
+title: "Labeled Baskets"
+subtitle: "Turning C-Store transactions into a supervised model"
+author: "J. Hathaway"
+execute:
+  eval: false
+  echo: true
+---
+
+## From rules to a prediction
+
+Association rules **describe** what goes together. A model **predicts** something for one basket.
+
+::: {.cards}
+::: {.card}
+[Rules]{.card-title}
+
+Unsupervised. No Y column.
+
+Output: *beer and cigarettes co-occur at lift 1.7*
+:::
+::: {.card}
+[Model]{.card-title}
+
+Supervised. You pick the Y.
+
+Output: *this visit has a 22% chance of an in-store purchase*
+:::
+:::
+
+Same gold table, **one row per basket or visit**, plus a label.
+
+## Picking a label
+
+A good label is three things:
+
+- **Actionable.** Someone changes a decision because of the prediction.
+- **Knowable in time.** You have the features *before* the outcome happens.
+- **Not rare to the point of uselessness.** A 0.1% event needs a different approach than a 30% one.
+
+::: {.takeaway}
+**Write the sentence first:** "Given _____, predict _____, so that _____ can _____." If you can't finish it, you don't have a label yet.
+:::
+
+# Example: does fuel predict an in-store purchase?
+
+## The setup
+
+**Given what we know at the pump, will this customer also buy inside?**
+
+::: {.columns}
+::: {.column width="50%"}
+::: {.card}
+[The label]{.card-title}
+
+`in_store` — did the visit include anything other than fuel?
+
+**15.4%** of fuel visits do.
+:::
+:::
+::: {.column width="50%"}
+::: {.card}
+[The features]{.card-title}
+
+Gallons, dollars, fuel grade, payment type, pump, hour, day of week, store
+:::
+:::
+:::
+
+A visit stitches transactions from the same shopper and store within 30 minutes, so the pump and the counter land in one row.
+
+[**Example conclusions** — one run on the Idaho sample, not a finished analysis.]{.muted style="font-size:0.65em"}
+
+## Fuel grade moves the number
+
+| Grade | Fuel visits | In-store attach |
+|---|---|---|
+| Diesel | 6,536 | **21.5%** |
+| Premium | 12,388 | 16.9% |
+| Mid / Plus | 10,085 | 15.3% |
+| Regular | 74,452 | 14.7% |
+
+Diesel buyers are **half again as likely** to come inside. Worth asking why — trucks, trip length, time of day?
+
+[**Example conclusions** — one run on the Idaho sample, not a finished analysis.]{.muted style="font-size:0.65em"}
+
+## So does the size of the fill
+
+| Gallons | Fuel visits | In-store attach |
+|---|---|---|
+| Under 5 | 14,418 | **18.4%** |
+| 5 to 10 | 30,371 | 17.7% |
+| 10 to 15 | 31,312 | 13.8% |
+| 15 to 25 | 22,165 | 13.2% |
+| 25 and up | 5,195 | 13.4% |
+
+**Backwards from the guess:** small fills attach *more*. A quick top-up looks like a different trip than a full tank.
+
+[**Example conclusions** — one run on the Idaho sample, not a finished analysis.]{.muted style="font-size:0.65em"}
+
+## The strongest signal is a trap
+
+| Payment | Fuel visits | In-store attach |
+|---|---|---|
+| Cash | 29,620 | **21.6%** |
+| Credit | 73,841 | 13.0% |
+
+::: {.takeaway}
+**Cash customers walk inside to pay.** The feature isn't predicting behavior, it's describing the mechanics of the sale.
+:::
+
+Still useful for *counting* who comes in. Useless for *persuading* anyone to come in.
+
+[**Example conclusions** — one run on the Idaho sample, not a finished analysis.]{.muted style="font-size:0.65em"}
+
+## Leakage is the trap here
+
+::: {.takeaway}
+**If the in-store items are in your features, your model will be perfect and useless.** Filter them out of X before you aggregate.
+:::
+
+The same goes for anything that only exists *because* of the outcome: the basket total, the payment amount, the receipt line count.
+
+[Ask of every feature: **would I know this before the customer walked in?**]{.orange}
+
+# Other labels worth building
+
+## Same table, different question
+
+| Label | Type | Why a business cares |
+|---|---|---|
+| In-store purchase with fuel | Classification | Sizing the inside-sales opportunity |
+| In-store spend, given a visit | Regression | What a converted fuel customer is worth |
+| Basket total | Regression | Staffing, promotion lift |
+| Visit includes foodservice | Classification | Prep volume, waste |
+| Fuel grade chosen | Classification | Price elasticity by segment |
+| Returns within 30 days | Classification | Retention, loyalty targeting |
+| Visits per shopper per month | Count | Customer value, churn risk |
+
+## The retention label
+
+**52% of shoppers appear more than once**, across two years of data (Sept 2022 to Aug 2024).
+
+::: {.cards}
+::: {.card}
+[Label]{.card-title}
+
+Does this shopper return within 30 days?
+:::
+::: {.card}
+[Features]{.card-title}
+
+Last visit's basket, fuel grade, daypart, days since prior visit, visit count to date
+:::
+::: {.card}
+[The hard part]{.card-title}
+
+Picking the cutoff date so features come only from **before** it
+:::
+:::
+
+This one forces a time-based split, which is the most common thing teams get wrong.
+
+[**Example conclusions** — one run on the Idaho sample, not a finished analysis.]{.muted style="font-size:0.65em"}
+
+## Rules can become features
+
+The itemsets from FP-Growth are features for a model:
+
+- Did the basket contain a **frequent itemset** we found?
+- How many of the top 20 itemsets does it match?
+- Basket size, category count, and the lift of the strongest rule it contains
+
+::: {.takeaway}
+**Unsupervised output makes good supervised input.** That's the honest reason to do both.
+:::
+
+## Judge the model against the base rate
+
+With a **15.4%** label, a model that always says "no" is **84.6% accurate** and worth nothing.
+
+- Report **lift over the base rate**, or precision and recall at the threshold you'd act on.
+- Decide the threshold from the **cost of acting**: a coupon printed at the pump is cheap, a staffed offer is not.
+- Check calibration: if you say 30%, does it happen 30% of the time?
+
+[**Example conclusions** — one run on the Idaho sample, not a finished analysis.]{.muted style="font-size:0.65em"}
+
+## What's under the data
+
+- **Shopper IDs cover 29.6% of transactions**, and look card-based. Cash-only customers are mostly invisible.
+- Only **5 stores** have payment and shopper records, out of 167.
+- Visit stitching uses a 30-minute window; almost all of the effect lands within 15.
+
+::: {.takeaway}
+**Say this out loud in your presentation.** Knowing who is missing from your table is part of the result.
+:::
+
+## Your turn {.dark background-color="#022F4A"}
+
+**Write the label sentence for your team's project.**
+
+<br>
+
+[Given _____, predict _____, so that _____ can _____. Then say what would leak into your features, and how you'd keep it out.]{.orange}

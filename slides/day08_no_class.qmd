@@ -1,0 +1,41 @@
+---
+title: "No Class Today"
+subtitle: "Day 8: Adam Miller presentation"
+author: "J. Hathaway"
+# Update these each semester.
+class-repo: "https://github.com/byuibigdata/FA26_hathaway"
+event-when: "during our class period"
+event-where: "announced in Slack"
+---
+
+## Class is cancelled {.dark background-color="#022F4A"}
+
+[Go to the **Adam Miller presentation** instead.]{.statement}
+
+<br>
+
+[{{< meta event-when >}} · {{< meta event-where >}}]{.orange}
+
+## Keep moving
+
+**The challenges don't pause.**
+
+::: {.cards}
+::: {.card}
+[Census API]{.card-title}
+
+Key in hand, one table pulled, and the join to our stores worked out.
+:::
+::: {.card}
+[Unit of analysis]{.card-title}
+
+Your team's one sentence: one row is one _____, and we predict _____ for it.
+:::
+::: {.card}
+[Hours]{.card-title}
+
+Log them in Harvest. A cancelled class is still a week of work.
+:::
+:::
+
+Dates live in the [class repository]({{< meta class-repo >}}). **Bring questions to our next meeting.**

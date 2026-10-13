@@ -1,0 +1,72 @@
+---
+title: "Work Time and Secrets"
+subtitle: "Day 7: Open class time on the two challenges, plus environment variables"
+author: "J. Hathaway"
+# Update these each semester.
+class-repo: "https://github.com/byuibigdata/FA26_hathaway"
+---
+
+## Today
+
+1. A short word on **environment variables** — you're about to need an API key
+2. **Open class time** on the Census API and unit of analysis challenges
+
+## Keys don't belong in code {.dark background-color="#022F4A"}
+
+[The Census API hands you a key. **Don't paste it into a notebook.**]{.statement}
+
+<br>
+
+[Once a key is committed, it's in the git history forever — and your repo is public.]{.orange}
+
+## The short version
+
+::: {.cards}
+::: {.card}
+[Locally]{.card-title}
+
+Put it in a `.env` file, add `.env` to `.gitignore`, load it with `python-dotenv`.
+:::
+::: {.card}
+[On Databricks]{.card-title}
+
+Store it as a **Unity Catalog secret**, read it with `dbutils.secrets.get()`.
+:::
+::: {.card}
+[Always]{.card-title}
+
+Never `print()` a key. If one leaks, **rotate it first**, clean up after.
+:::
+:::
+
+**Full walkthrough:** [Keep Your Secrets Out of Your Code](topics/env_variables.html) — setup for Python, Databricks and R.
+
+## Open class time
+
+**Two challenges, your choice of order.**
+
+::: {.columns}
+::: {.column width="50%"}
+::: {.card}
+[Census API]{.card-title}
+
+Get a key, pull one table, work out the block-group join to our stores.
+:::
+:::
+::: {.column width="50%"}
+::: {.card}
+[Unit of analysis]{.card-title}
+
+Settle your one sentence: one row is one _____, and we predict _____ for it.
+:::
+:::
+:::
+
+I'll come around. **Bring me the thing you're stuck on**, not the thing that's finished.
+
+## Where to find things
+
+- Dates and links: the [class repository]({{< meta class-repo >}})
+- Secrets and API keys: [the environment variables deck](topics/env_variables.html)
+- Databricks setup and the catalog: [Day 3](day03_databricks.html)
+- Charts and tables: [Day 4](day04_data_summaries.html)

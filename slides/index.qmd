@@ -17,7 +17,7 @@ listing:
     sort-ui: false
     filter-ui: false
   - id: topics
-    contents: "topic_*.qmd"
+    contents: "topics/*.qmd"
     type: table
     sort: "title"
     fields: [title, subtitle]

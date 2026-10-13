@@ -1,0 +1,190 @@
+---
+title: "From Challenges to the Project"
+subtitle: "Day 9: Census API, the team project, analysis decks, and Murphy"
+author: "J. Hathaway"
+# Update these each semester.
+class-repo: "https://github.com/byuibigdata/FA26_hathaway"
+visit-date: "the 14th"
+---
+
+## Today
+
+1. Your questions
+2. The Census API challenge
+3. What your team owes the larger project
+4. The analysis decks: rules, labels, segments
+5. **Murphy is in class {{< meta visit-date >}}** — how we use that hour
+6. Open work time
+
+## Questions {.dark background-color="#022F4A"}
+
+**What's blocking you right now?**
+
+<br>
+
+[Census keys · the block-group join · Databricks · your unit of analysis · the proposal]{.orange}
+
+## The Census API challenge
+
+::: {.columns}
+::: {.column width="50%"}
+**Where people get stuck**
+
+- The **key**: request it, then keep it out of your code
+- **Geography**: state → county → tract → block group
+- **Variable names**: `B19013_001E` means something, but you have to look it up
+- **Limits**: pull once, cache it, don't loop the API
+:::
+::: {.column width="50%"}
+::: {.card}
+[What makes it done]{.card-title}
+
+A table you can **join to our stores**, with the variables you chose and a sentence on **why those** variables matter to your client.
+:::
+:::
+:::
+
+The `census.*` tables are already in Databricks. **The API work is about learning the pull**, not about getting data we lack.
+
+## The challenges are not the project
+
+Each challenge builds **one piece** of what your team will deliver:
+
+::: {.flow}
+::: {.box}
+Wrangling
+
+[Polars, charts]{.muted}
+:::
+
+[→]{.arrow}
+
+::: {.box}
+Census
+
+[outside data]{.muted}
+:::
+
+[→]{.arrow}
+
+::: {.box .hl}
+Unit of analysis
+
+[one row = ?]{.muted}
+:::
+
+[→]{.arrow}
+
+::: {.box}
+Features
+
+[the model's inputs]{.muted}
+:::
+
+[→]{.arrow}
+
+::: {.box}
+App
+
+[someone uses it]{.muted}
+:::
+:::
+
+::: {.takeaway}
+**The project is the thread through all of them.** Every challenge should move your team's product forward, not sit in a folder by itself.
+:::
+
+## What your team owes
+
+- A **unit of analysis** everyone on the team can say out loud
+- A **target** the data supports: a probability or a count
+- **Features** built at that grain, documented so a teammate can rebuild them
+- An **analysis** that answers the business question, not just the model question
+- An **app** a non-technical person can use
+
+[Start writing these down now. The grade request letter at the end is much easier when the work is on the record.]{.orange}
+
+## The analysis decks
+
+Three reference decks for the analysis half of the project. **Read them when you need them.**
+
+::: {.cards}
+::: {.card}
+[Baskets of Goods]{.card-title}
+
+Association rules: what sells with what, support, confidence and lift.
+
+[Open →](topics/association_rules.html)
+:::
+::: {.card}
+[Labeled Baskets]{.card-title}
+
+Picking a Y, building the modeling table, and avoiding leakage.
+
+[Open →](topics/basket_models.html)
+:::
+::: {.card}
+[Customer Segmentation]{.card-title}
+
+Clustering, UMAP and HDBSCAN, and how to defend a segment.
+
+[Open →](topics/customer_segmentation.html)
+:::
+:::
+
+They use **our C-Store data** for their examples, so the numbers should look familiar.
+
+## Murphy is here {{< meta visit-date >}}
+
+**A fuel and convenience retailer, in our classroom, for an hour.**
+
+::: {.columns}
+::: {.column width="50%"}
+**How we use it**
+
+- They talk briefly, then **we ask questions**
+- Bring your team's question written down
+- Take notes: it becomes a slide in your pitch
+
+[This is your client in the room.]{.orange}
+:::
+::: {.column width="50%"}
+::: {.card}
+[Questions worth asking]{.card-title}
+
+- What decisions do you make with store data today?
+- What would you want to know and can't?
+- How do you measure a promotion?
+- What would make you distrust a model?
+:::
+:::
+:::
+
+## Thursday: your first take-home challenge
+
+**A PySpark challenge, on your own, with a deadline.**
+
+::: {.columns}
+::: {.column width="50%"}
+- Announced **at least 24 hours** ahead, with the topic
+- You may talk with your group, but **you don't share code**
+- Scored 1 to 4, and this one is a **key challenge**
+:::
+::: {.column width="50%"}
+::: {.card}
+[Get ready]{.card-title}
+
+Be able to run a PySpark notebook on Databricks **before Thursday**. Don't spend the challenge fighting your setup.
+:::
+:::
+:::
+
+[If your workspace isn't working, tell me today, not Thursday.]{.orange}
+
+## Work time {.dark background-color="#022F4A"}
+
+**Teams, the rest of the hour is yours.**
+
+<br>
+
+[Finish the Census pull, settle the unit of analysis, and write the one question you're asking Murphy.]{.orange}

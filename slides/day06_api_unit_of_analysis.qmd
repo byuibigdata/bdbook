@@ -1,0 +1,105 @@
+---
+title: "Written Challenge and Round Two"
+subtitle: "Day 6: Polars on paper, second pitches, and two new challenges"
+author: "J. Hathaway"
+# Update these each semester.
+class-repo: "https://github.com/byuibigdata/FA26_hathaway"
+---
+
+## Today
+
+1. Written challenge — **first 20 minutes**
+2. Second round of team pitches
+3. The Census API challenge
+4. The unit of analysis challenge
+
+## Written challenge {.dark background-color="#022F4A"}
+
+**Paper and pencil. No computer.**
+
+<br>
+
+[Polars: `group_by` and `agg`, joins, and the nested columns you wrangled in the church data.]{.orange}
+
+<br>
+
+[Scored 1 to 4, like every challenge. I'm reading for whether you know what the code *does*, not whether the syntax is perfect.]{.muted}
+
+## Second pitches
+
+**What's different this round:** you've seen the data now.
+
+- Has your **client** survived contact with the C-Store tables?
+- What did the data make **easier** than you pitched, and what turned out to be **hard**?
+- Show one chart from the real data, not a mock-up.
+- **Make the point early**, then justify it.
+
+::: {.takeaway}
+**We're converging, not just presenting.** By the end we should agree on the direction the class takes.
+:::
+
+## The Census API challenge
+
+Pull demographic data from the **US Census API** and join it to our stores.
+
+::: {.cards}
+::: {.card}
+[Why]{.card-title}
+
+POS data says *what* sold. Census says *who lives around the store*.
+:::
+::: {.card}
+[The work]{.card-title}
+
+Request block-group tables, handle the key and the limits, cache what you pull.
+:::
+::: {.card}
+[The join]{.card-title}
+
+Store → block group → demographics. Geography is the hard part.
+:::
+:::
+
+Details and dates are in the [class repository]({{< meta class-repo >}}).
+
+## The unit of analysis challenge
+
+**One row of your modeling table equals what?**
+
+- **Who or what:** a shopper, a store, a product, a store × week?
+- **Where:** county, city, or chain?
+- **When:** daily, weekly, monthly?
+- **The target:** a probability or a count, measured on that unit.
+
+[Everything downstream — features, the model, the app — is built on this one decision.]{.orange}
+
+## Why this is the hard one
+
+::: {.columns}
+::: {.column width="50%"}
+::: {.card .bad}
+[Too fine]{.card-title}
+
+Product × store × day: mostly zeros, no signal to learn.
+:::
+:::
+::: {.column width="50%"}
+::: {.card .good}
+[Just right]{.card-title}
+
+Enough rows to model, enough events per row to be stable, and a unit the client actually acts on.
+:::
+:::
+:::
+
+::: {.takeaway}
+**Say it in one sentence:** "One row is one _____, and we predict _____ for it."
+:::
+
+## Before next class {.dark background-color="#022F4A"}
+
+**Bring your team's one sentence.**
+
+<br>
+
+[Then get a Census API key and pull one table — any table — so we can see the shape of what comes back.]{.orange}

@@ -97,6 +97,7 @@ $code-color: $ds-slate;
 .reveal .slides section.dark {
   color: #fff;
   h1, h2, h3, strong { color: #fff; }
+  .muted { color: $ds-sky-ice; }
   h1 { border-left-color: $ds-course-orange; }
   a { color: $ds-course-orange; }
   code:not(pre code) { background: rgba(255, 255, 255, 0.12); color: #fff; }

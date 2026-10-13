@@ -1,0 +1,14 @@
+# Applies to every deck in slides/topics/.
+# These paths are relative to the deck, so the ones set in ../_quarto.yml
+# (theme, logo, footer link) need a ../ prefix down here.
+format:
+  revealjs:
+    theme: [default, ../ds460.scss]
+    logo: DS460_Hex.png
+    footer: "[DS 460 · Big Data Programming & Analytics](../index.html)"
+
+title-slide-attributes:
+  data-background-color: "#022F4A"
+  data-background-image: ../DS460_Hex.png
+  data-background-size: "20%"
+  data-background-position: "90% 50%"

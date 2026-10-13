@@ -1,0 +1,308 @@
+---
+title: "Baskets of Goods"
+subtitle: "Association rule mining on C-Store transactions"
+author: "J. Hathaway"
+execute:
+  eval: false
+  echo: true
+---
+
+## The question {.dark background-color="#022F4A"}
+
+[What sells **with** what?]{.statement}
+
+<br>
+
+[Every rule you find has to survive one question: **what would the store do differently tomorrow?**]{.orange}
+
+## A basket is a row per transaction
+
+::: {.flow}
+::: {.box}
+Line items
+
+[one row per scan]{.muted}
+:::
+
+[→]{.arrow}
+
+::: {.box .hl}
+Basket
+
+[one row per transaction]{.muted}
+:::
+
+[→]{.arrow}
+
+::: {.box}
+Rules
+
+[one row per rule]{.muted}
+:::
+:::
+
+A basket is the **set** of categories in one transaction. Duplicates collapse: two energy drinks count as one *Packaged Beverages*.
+
+## Three numbers describe a rule
+
+For a rule **A → B**:
+
+::: {.cards}
+::: {.card}
+[Support]{.card-title}
+
+How often A and B appear **together**, out of all baskets.
+
+*Is it common enough to care?*
+:::
+::: {.card}
+[Confidence]{.card-title}
+
+Of baskets with A, how many also have B.
+
+*How reliable is the rule?*
+:::
+::: {.card}
+[Lift]{.card-title}
+
+Confidence ÷ how often B shows up anyway.
+
+*Does A actually tell us anything?*
+:::
+:::
+
+[Lift is the one that matters. High confidence on a very common item means nothing.]{.orange}
+
+## The arithmetic, on our data
+
+**Beer → Cigarettes**, from the multi-item baskets:
+
+| | Value | Where it comes from |
+|---|---|---|
+| Support | 0.065 | 6.5% of baskets have both |
+| Confidence | 0.318 | 31.8% of beer baskets also have cigarettes |
+| Cigarettes alone | 0.187 | 18.7% of all baskets have cigarettes |
+| **Lift** | **1.70** | 0.318 ÷ 0.187 |
+
+Beer buyers are **1.7× more likely** than average to also buy cigarettes.
+
+[**Example conclusions** — one run on the Idaho sample, not a finished analysis.]{.muted style="font-size:0.65em"}
+
+## Reading lift
+
+::: {.cards}
+::: {.card .good}
+[Lift > 1]{.card-title}
+
+They go together more than chance. Worth acting on.
+:::
+::: {.card}
+[Lift ≈ 1]{.card-title}
+
+Independent. The rule tells you nothing.
+:::
+::: {.card .bad}
+[Lift < 1]{.card-title}
+
+They repel. Buying A makes B **less** likely.
+:::
+:::
+
+::: {.takeaway}
+**Association is not causation.** A rule says the two co-occur, not that moving one moves the other. That's what a test or a promotion proves.
+:::
+
+# Our data
+
+## What makes C-Store baskets different
+
+::: {.cards}
+::: {.card}
+[Baskets are tiny]{.card-title}
+
+A drink. A pack of cigarettes. Fuel only. Support is low for *everything*.
+:::
+::: {.card}
+[A few categories dominate]{.card-title}
+
+Fuel, tobacco, lottery, and services swamp the counts.
+:::
+::: {.card}
+[SKUs are too fine]{.card-title}
+
+Hundreds of drink SKUs give sparse, unactionable rules. Roll up to category.
+:::
+::: {.card}
+[Time and place matter]{.card-title}
+
+Morning coffee baskets look nothing like Friday-evening beer baskets.
+:::
+:::
+
+## Profile first
+
+::: {.cards}
+::: {.card}
+[2.7M]{.stat}
+line items in the Idaho sample
+:::
+::: {.card}
+[1.5M]{.stat}
+baskets, averaging **1.8 items**
+:::
+::: {.card}
+[56%]{.stat}
+of baskets hold a **single item**
+:::
+:::
+
+More than half the data carries no co-occurrence at all. **Profile before you mine**, or you'll tune thresholds blind.
+
+[**Example conclusions** — one run on the Idaho sample, not a finished analysis.]{.muted style="font-size:0.65em"}
+
+## Cleaning: what counts as a basket
+
+- **Single-item baskets:** keep them and support collapses; drop them and every number is conditional on "basket had 2+ items."
+- **Fuel, tobacco, lottery:** so common they attach to everything. Tag them, then decide whether they're items or context.
+
+::: {.takeaway}
+**Every one of these changes your rules.** Write the decision down, and report your numbers next to it.
+:::
+
+## Roll up to category
+
+::: {.columns}
+::: {.column width="50%"}
+::: {.card .bad}
+[At SKU level]{.card-title}
+
+`20OZ MTN DEW` → `44OZ REIGN`
+
+Support near zero. Thousands of rules, none actionable.
+:::
+:::
+::: {.column width="50%"}
+::: {.card .good}
+[At category level]{.card-title}
+
+`Packaged Beverages` → `Salty Snacks`
+
+Enough support to act on. A planogram decision.
+:::
+:::
+:::
+
+The GTIN table gives you `CATEGORY`, `SUBCATEGORY`, `BRAND`, and `PRODUCT_TYPE`. **Start at category**, go finer only where a rule earns it.
+
+# The pipeline
+
+## Bronze, silver, gold
+
+| Layer | Grain | What happens |
+|---|---|---|
+| **Bronze** | Raw line item | Load PDI data as-is into Delta |
+| **Silver** | Clean line item | Drop voids, tag fuel/tobacco/lottery, roll up to category |
+| **Gold: baskets** | One row per basket | `collect_set` of items |
+| **Gold: rules** | One row per rule | FP-Growth output |
+| **Gold: modeling** | One row per basket | Features + Y |
+
+Each layer is a table you can check. **Don't jump from raw to rules in one cell.**
+
+## FP-Growth finds the rules
+
+**Spark's `FPGrowth` does the counting.** You give it baskets and two thresholds:
+
+::: {.cards}
+::: {.card}
+[Minimum support]{.card-title}
+
+How rare an itemset can be before it's ignored.
+
+We used **0.5%**, not the textbook 1%, because baskets are tiny.
+:::
+::: {.card}
+[Minimum confidence]{.card-title}
+
+How weak a rule can be before it's dropped.
+
+We used **5%**, then sorted by lift.
+:::
+:::
+
+It builds a tree of frequent items instead of rescanning for every combination, so it scales where the textbook **Apriori** algorithm stalls.
+
+## One more decision before you mine
+
+We ran it on **multi-item baskets only**: 211,282 of 886,936.
+
+- Keep the single-item baskets and support collapses toward zero.
+- Drop them and every number becomes **"out of baskets that had 2 or more items."**
+
+::: {.takeaway}
+**Neither is wrong, but the denominator changes every result.** Say which one you used, every time you report a lift.
+:::
+
+[**Example conclusions** — one run on the Idaho sample, not a finished analysis.]{.muted style="font-size:0.65em"}
+
+
+## What we actually found
+
+| Antecedent | Consequent | Confidence | Lift |
+|---|---|---|---|
+| Edible Grocery | Salty Snacks | 0.60 | **2.89** |
+| Beer | Cigarettes | 0.32 | 1.70 |
+| Liquor | Beer | 0.31 | 1.51 |
+| Beer | Other Tobacco | 0.15 | 1.42 |
+| Packaged Sweet Snacks + Candy | Salty Snacks | 0.25 | 1.18 |
+| FUEL | Cigarettes | 0.20 | 1.05 |
+
+[**Example conclusions** — one run on the Idaho sample, not a finished analysis.]{.muted style="font-size:0.65em"}
+
+::: {.notes}
+Ask the class: which of these would you act on, and what would you do? Edible Grocery to Salty Snacks is a real adjacency decision. Fuel to Cigarettes at 1.05 is barely better than chance.
+:::
+
+## Why fuel barely shows up
+
+| Item | Share of multi-item baskets |
+|---|---|
+| Packaged Beverages | 65% |
+| Candy | 29% |
+| Salty Snacks | 21% |
+| Beer | 20% |
+| Cigarettes | 19% |
+| FUEL | 12% |
+
+Packaged Beverages is in two of three baskets, so **anything** paired with it looks confident. Lift corrects for that. Fuel mostly sells **alone**, which is its own finding.
+
+[**Example conclusions** — one run on the Idaho sample, not a finished analysis.]{.muted style="font-size:0.65em"}
+
+## Segment to sharpen
+
+```python
+silver = silver.withColumn("daypart",
+    F.when(F.hour("DATE_TIME") < 10, "morning")
+     .when(F.hour("DATE_TIME") < 15, "midday")
+     .when(F.hour("DATE_TIME") < 20, "evening")
+     .otherwise("late"))
+
+morning = baskets_for(silver.filter(F.col("daypart") == "morning"))
+```
+
+Run the same mining per daypart, store, or chain. **A rule that only holds at 7am is still a rule** — and a better one, because it tells you when to act.
+
+## Takeaways
+
+1. **Profile first.** 56% single-item baskets changes everything downstream.
+2. **Roll up to category.** SKU-level rules don't survive contact with a store manager.
+3. **Lift, not confidence.** Common items fake high confidence.
+4. **Write down your cleaning decisions.** They move the answer more than the algorithm does.
+5. **Rules describe, models predict.** The labeled version is its own deck.
+
+## Your turn {.dark background-color="#022F4A"}
+
+**Pick one rule and defend it.**
+
+<br>
+
+[What would the store change? What would you measure to know it worked? What cleaning decision could have manufactured your rule?]{.orange}
