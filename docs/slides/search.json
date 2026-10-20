@@ -228,7 +228,7 @@
     "href": "day09_project_and_analysis.html#today",
     "title": "From Challenges to the Project",
     "section": "Today",
-    "text": "Today\n\nYour questions\nThe Census API challenge\nWhat your team owes the larger project\nThe analysis decks: rules, labels, segments\nMurphy is in class the 14th — how we use that hour\nOpen work time"
+    "text": "Today\n\nYour questions\nThe Census API challenge\nWhat your team owes the larger project\nThe analysis decks: rules, labels, segments\nMurphy is in class the 15th — how we use that hour\nOpen work time"
   },
   {
     "objectID": "day09_project_and_analysis.html#questions",
@@ -269,8 +269,8 @@
     "objectID": "day09_project_and_analysis.html#murphy-is-here-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206d6574612076697369742d64617465203e7d7d",
     "href": "day09_project_and_analysis.html#murphy-is-here-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206d6574612076697369742d64617465203e7d7d",
     "title": "From Challenges to the Project",
-    "section": "Murphy is here the 14th",
-    "text": "Murphy is here the 14th\nA fuel and convenience retailer, in our classroom, for an hour.\n\n\nHow we use it\n\nThey talk briefly, then we ask questions\nBring your team’s question written down\nTake notes: it becomes a slide in your pitch\n\nThis is your client in the room.\n\n\nQuestions worth asking\n\nWhat decisions do you make with store data today?\nWhat would you want to know and can’t?\nHow do you measure a promotion?\nWhat would make you distrust a model?"
+    "section": "Murphy is here the 15th",
+    "text": "Murphy is here the 15th\nA fuel and convenience retailer, in our classroom, for an hour.\n\n\nHow we use it\n\nThey talk briefly, then we ask questions\nBring your team’s question written down\nTake notes: it becomes a slide in your pitch\n\nThis is your client in the room.\n\n\nQuestions worth asking\n\nWhat decisions do you make with store data today?\nWhat would you want to know and can’t?\nHow do you measure a promotion?\nWhat would make you distrust a model?"
   },
   {
     "objectID": "day09_project_and_analysis.html#thursday-your-first-take-home-challenge",
@@ -306,6 +306,27 @@
     "title": "Example Slides",
     "section": "Speaker notes",
     "text": "Speaker notes\nPress s in the browser to open the speaker view.\n\nThese notes only show in the speaker view."
+  },
+  {
+    "objectID": "day10_work_time.html#today",
+    "href": "day10_work_time.html#today",
+    "title": "Project Work Time",
+    "section": "Today",
+    "text": "Today\nThe hour is yours.\n\nI’ll come around to each team. Bring me what you’re stuck on, not what’s finished."
+  },
+  {
+    "objectID": "day10_work_time.html#where-you-should-be",
+    "href": "day10_work_time.html#where-you-should-be",
+    "title": "Project Work Time",
+    "section": "Where you should be",
+    "text": "Where you should be\n\n\nCensus API\nDue 10/8. Key working, table pulled, joined to our stores.\n\n\nUnit of analysis\nDue 10/12. One row is one _____, and we predict _____ for it.\n\n\nNext\nFeatures at that grain, and the analysis that answers your client’s question.\n\n\nDates and links live in the class repository."
+  },
+  {
+    "objectID": "day10_work_time.html#good-uses-of-this-hour",
+    "href": "day10_work_time.html#good-uses-of-this-hour",
+    "title": "Project Work Time",
+    "section": "Good uses of this hour",
+    "text": "Good uses of this hour\n\nGet your whole team saying the same unit of analysis out loud.\nBuild one feature end to end, and write down how you built it.\nMake one chart from the real C-Store data that you’d show a client.\nFix the Databricks problem you’ve been working around.\n\nIf your team is blocked on a decision, that’s what I’m here for. Don’t spend the hour politely stuck."
   },
   {
     "objectID": "day01_welcome.html#today",
@@ -480,7 +501,7 @@
     "href": "index.html#class-days",
     "title": "DS 460 Class Slides",
     "section": "Class days",
-    "text": "Class days\nOne deck per class meeting, in order.\n\n\n\n\n\n\nDeck\n\n\n\nTopics\n\n\n\n\n\n\n\n\nWelcome to DS 460\n\n\nDay 1: How this class works\n\n\n\n\n\n\nData Sizes, Formats, and Tools\n\n\nDay 2: Parquet, Arrow, Polars, PySpark, and your first two challenges\n\n\n\n\n\n\nDatabricks Setup and Team Time\n\n\nDay 3: Schedule, questions, Databricks Free Edition, and your proposal\n\n\n\n\n\n\nData Summaries That Persuade\n\n\nDay 4: Charts, tables, due dates, and proposal time\n\n\n\n\n\n\nProposals and What’s Next\n\n\nDay 5: Show your work, team time, presentations, and three new challenges\n\n\n\n\n\n\nWritten Challenge and Round Two\n\n\nDay 6: Polars on paper, second pitches, and two new challenges\n\n\n\n\n\n\nWork Time and Secrets\n\n\nDay 7: Open class time on the two challenges, plus environment variables\n\n\n\n\n\n\nNo Class Today\n\n\nDay 8: Adam Miller presentation\n\n\n\n\n\n\nFrom Challenges to the Project\n\n\nDay 9: Census API, the team project, analysis decks, and Murphy\n\n\n\n\n\n\nNo matching items"
+    "text": "Class days\nOne deck per class meeting, in order.\n\n\n\n\n\n\nDeck\n\n\n\nTopics\n\n\n\n\n\n\n\n\nWelcome to DS 460\n\n\nDay 1: How this class works\n\n\n\n\n\n\nData Sizes, Formats, and Tools\n\n\nDay 2: Parquet, Arrow, Polars, PySpark, and your first two challenges\n\n\n\n\n\n\nDatabricks Setup and Team Time\n\n\nDay 3: Schedule, questions, Databricks Free Edition, and your proposal\n\n\n\n\n\n\nData Summaries That Persuade\n\n\nDay 4: Charts, tables, due dates, and proposal time\n\n\n\n\n\n\nProposals and What’s Next\n\n\nDay 5: Show your work, team time, presentations, and three new challenges\n\n\n\n\n\n\nWritten Challenge and Round Two\n\n\nDay 6: Polars on paper, second pitches, and two new challenges\n\n\n\n\n\n\nWork Time and Secrets\n\n\nDay 7: Open class time on the two challenges, plus environment variables\n\n\n\n\n\n\nNo Class Today\n\n\nDay 8: Adam Miller presentation\n\n\n\n\n\n\nFrom Challenges to the Project\n\n\nDay 9: Census API, the team project, analysis decks, and Murphy\n\n\n\n\n\n\nProject Work Time\n\n\nDay 10: Teams build, I come to you\n\n\n\n\n\n\nMurphy in Class\n\n\nDay 11: Our client in the room\n\n\n\n\n\n\nUnit of Analysis Presentations\n\n\nDay 12: Present, then two new challenges\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html#topics",
@@ -495,6 +516,90 @@
     "title": "DS 460 Class Slides",
     "section": "Reference",
     "text": "Reference\n\nCourse book\nCourse guide and syllabus"
+  },
+  {
+    "objectID": "day12_unit_presentations.html#today",
+    "href": "day12_unit_presentations.html#today",
+    "title": "Unit of Analysis Presentations",
+    "section": "Today",
+    "text": "Today\n\nUnit of analysis presentations — every team\nThe easy feature challenge\nYour first take-home PySpark challenge"
+  },
+  {
+    "objectID": "day12_unit_presentations.html#presenting-your-unit-of-analysis",
+    "href": "day12_unit_presentations.html#presenting-your-unit-of-analysis",
+    "title": "Unit of Analysis Presentations",
+    "section": "Presenting your unit of analysis",
+    "text": "Presenting your unit of analysis\nShort, specific, and defensible.\n\nOne row is one _____, and we predict _____ for it.\nWhy that grain? What breaks if you go finer or coarser?\nHow many rows does it give you, and how many events per row?\nWhat does your client do with a prediction at that grain?\n\n\nWe’re deciding as a class. Listen for the grain you’d be willing to build features on, because that’s the one we’ll use."
+  },
+  {
+    "objectID": "day12_unit_presentations.html#the-easy-feature-challenge",
+    "href": "day12_unit_presentations.html#the-easy-feature-challenge",
+    "title": "Unit of Analysis Presentations",
+    "section": "The easy feature challenge",
+    "text": "The easy feature challenge\nBuild your first features at the unit of analysis we settle today.\n\n\n\nStart with simple aggregates: counts, sums, rates, shares\nDocument each one so a teammate can rebuild it\nWatch for leakage: nothing that only exists after the outcome\n\n\n\nDue\n10/26\nChallenge repo →"
+  },
+  {
+    "objectID": "day12_unit_presentations.html#take-home-pyspark-challenge-1",
+    "href": "day12_unit_presentations.html#take-home-pyspark-challenge-1",
+    "title": "Unit of Analysis Presentations",
+    "section": "Take-home PySpark challenge 1",
+    "text": "Take-home PySpark challenge 1\nDue 10/21. Find it in Databricks.\n\n\nA key challenge — it carries extra weight in your grade\nTalk with your group, but don’t share code\nScored 1 to 4\n\nStart tonight. If Databricks fights you, tell me before the deadline, not after."
+  },
+  {
+    "objectID": "day12_unit_presentations.html#whats-due",
+    "href": "day12_unit_presentations.html#whats-due",
+    "title": "Unit of Analysis Presentations",
+    "section": "What’s due",
+    "text": "What’s due\n\n\n\n\n\n\n\nWork\nDue\n\n\n\n\nTake-home PySpark challenge 1\n10/21\n\n\nEasy feature challenge\n10/26\n\n\n\nEverything is listed in the class repository."
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#today",
+    "href": "day06_api_unit_of_analysis.html#today",
+    "title": "Written Challenge and Round Two",
+    "section": "Today",
+    "text": "Today\n\nWritten challenge — first 20 minutes\nSecond round of team pitches\nThe Census API challenge\nThe unit of analysis challenge"
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#written-challenge",
+    "href": "day06_api_unit_of_analysis.html#written-challenge",
+    "title": "Written Challenge and Round Two",
+    "section": "Written challenge",
+    "text": "Written challenge\nPaper and pencil. No computer.\n\nPolars: group_by and agg, joins, and the nested columns you wrangled in the church data.\n\nScored 1 to 4, like every challenge. I’m reading for whether you know what the code does, not whether the syntax is perfect."
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#second-pitches",
+    "href": "day06_api_unit_of_analysis.html#second-pitches",
+    "title": "Written Challenge and Round Two",
+    "section": "Second pitches",
+    "text": "Second pitches\nWhat’s different this round: you’ve seen the data now.\n\nHas your client survived contact with the C-Store tables?\nWhat did the data make easier than you pitched, and what turned out to be hard?\nShow one chart from the real data, not a mock-up.\nMake the point early, then justify it.\n\n\nWe’re converging, not just presenting. By the end we should agree on the direction the class takes."
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#the-census-api-challenge",
+    "href": "day06_api_unit_of_analysis.html#the-census-api-challenge",
+    "title": "Written Challenge and Round Two",
+    "section": "The Census API challenge",
+    "text": "The Census API challenge\nPull demographic data from the US Census API and join it to our stores.\n\n\nWhy\nPOS data says what sold. Census says who lives around the store.\n\n\nThe work\nRequest block-group tables, handle the key and the limits, cache what you pull.\n\n\nThe join\nStore → block group → demographics. Geography is the hard part.\n\n\nDetails and dates are in the class repository."
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#the-unit-of-analysis-challenge",
+    "href": "day06_api_unit_of_analysis.html#the-unit-of-analysis-challenge",
+    "title": "Written Challenge and Round Two",
+    "section": "The unit of analysis challenge",
+    "text": "The unit of analysis challenge\nOne row of your modeling table equals what?\n\nWho or what: a shopper, a store, a product, a store × week?\nWhere: county, city, or chain?\nWhen: daily, weekly, monthly?\nThe target: a probability or a count, measured on that unit.\n\nEverything downstream — features, the model, the app — is built on this one decision."
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#why-this-is-the-hard-one",
+    "href": "day06_api_unit_of_analysis.html#why-this-is-the-hard-one",
+    "title": "Written Challenge and Round Two",
+    "section": "Why this is the hard one",
+    "text": "Why this is the hard one\n\n\n\nToo fine\nProduct × store × day: mostly zeros, no signal to learn.\n\n\n\nJust right\nEnough rows to model, enough events per row to be stable, and a unit the client actually acts on.\n\n\n\nSay it in one sentence: “One row is one _____, and we predict _____ for it.”"
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#before-next-class",
+    "href": "day06_api_unit_of_analysis.html#before-next-class",
+    "title": "Written Challenge and Round Two",
+    "section": "Before next class",
+    "text": "Before next class\nBring your team’s one sentence.\n\nThen get a Census API key and pull one table — any table — so we can see the shape of what comes back."
   },
   {
     "objectID": "brand-guide.html#where-the-brand-lives",
@@ -572,55 +677,6 @@
     "title": "DS 460 Slide Brand Guide",
     "section": "Logos",
     "text": "Logos\n\n\n\n\n\nHex badge (DS460_Hex.png) goes in the slide corner and on the title slide. That’s set up for every deck.\nBanner (DS460_Banner.png) is for the course site and syllabus headers. It’s too wide for a slide.\nDon’t recolor, stretch, or crop either logo."
-  },
-  {
-    "objectID": "day06_api_unit_of_analysis.html#today",
-    "href": "day06_api_unit_of_analysis.html#today",
-    "title": "Written Challenge and Round Two",
-    "section": "Today",
-    "text": "Today\n\nWritten challenge — first 20 minutes\nSecond round of team pitches\nThe Census API challenge\nThe unit of analysis challenge"
-  },
-  {
-    "objectID": "day06_api_unit_of_analysis.html#written-challenge",
-    "href": "day06_api_unit_of_analysis.html#written-challenge",
-    "title": "Written Challenge and Round Two",
-    "section": "Written challenge",
-    "text": "Written challenge\nPaper and pencil. No computer.\n\nPolars: group_by and agg, joins, and the nested columns you wrangled in the church data.\n\nScored 1 to 4, like every challenge. I’m reading for whether you know what the code does, not whether the syntax is perfect."
-  },
-  {
-    "objectID": "day06_api_unit_of_analysis.html#second-pitches",
-    "href": "day06_api_unit_of_analysis.html#second-pitches",
-    "title": "Written Challenge and Round Two",
-    "section": "Second pitches",
-    "text": "Second pitches\nWhat’s different this round: you’ve seen the data now.\n\nHas your client survived contact with the C-Store tables?\nWhat did the data make easier than you pitched, and what turned out to be hard?\nShow one chart from the real data, not a mock-up.\nMake the point early, then justify it.\n\n\nWe’re converging, not just presenting. By the end we should agree on the direction the class takes."
-  },
-  {
-    "objectID": "day06_api_unit_of_analysis.html#the-census-api-challenge",
-    "href": "day06_api_unit_of_analysis.html#the-census-api-challenge",
-    "title": "Written Challenge and Round Two",
-    "section": "The Census API challenge",
-    "text": "The Census API challenge\nPull demographic data from the US Census API and join it to our stores.\n\n\nWhy\nPOS data says what sold. Census says who lives around the store.\n\n\nThe work\nRequest block-group tables, handle the key and the limits, cache what you pull.\n\n\nThe join\nStore → block group → demographics. Geography is the hard part.\n\n\nDetails and dates are in the class repository."
-  },
-  {
-    "objectID": "day06_api_unit_of_analysis.html#the-unit-of-analysis-challenge",
-    "href": "day06_api_unit_of_analysis.html#the-unit-of-analysis-challenge",
-    "title": "Written Challenge and Round Two",
-    "section": "The unit of analysis challenge",
-    "text": "The unit of analysis challenge\nOne row of your modeling table equals what?\n\nWho or what: a shopper, a store, a product, a store × week?\nWhere: county, city, or chain?\nWhen: daily, weekly, monthly?\nThe target: a probability or a count, measured on that unit.\n\nEverything downstream — features, the model, the app — is built on this one decision."
-  },
-  {
-    "objectID": "day06_api_unit_of_analysis.html#why-this-is-the-hard-one",
-    "href": "day06_api_unit_of_analysis.html#why-this-is-the-hard-one",
-    "title": "Written Challenge and Round Two",
-    "section": "Why this is the hard one",
-    "text": "Why this is the hard one\n\n\n\nToo fine\nProduct × store × day: mostly zeros, no signal to learn.\n\n\n\nJust right\nEnough rows to model, enough events per row to be stable, and a unit the client actually acts on.\n\n\n\nSay it in one sentence: “One row is one _____, and we predict _____ for it.”"
-  },
-  {
-    "objectID": "day06_api_unit_of_analysis.html#before-next-class",
-    "href": "day06_api_unit_of_analysis.html#before-next-class",
-    "title": "Written Challenge and Round Two",
-    "section": "Before next class",
-    "text": "Before next class\nBring your team’s one sentence.\n\nThen get a Census API key and pull one table — any table — so we can see the shape of what comes back."
   },
   {
     "objectID": "day05_proposals.html#show-us-the-church-project",
@@ -824,6 +880,27 @@
     "title": "Data Sizes, Formats, and Tools",
     "section": "Discuss",
     "text": "Discuss\nWho would pay for a prediction made from convenience-store data?\n\nName a client, a place, and a unit of analysis."
+  },
+  {
+    "objectID": "day11_murphy.html#murphy-is-here",
+    "href": "day11_murphy.html#murphy-is-here",
+    "title": "Murphy in Class",
+    "section": "Murphy is here",
+    "text": "Murphy is here\nThey talk. Then we ask questions.\n\nThis is the closest thing to a real client you’ll get this semester. Use it."
+  },
+  {
+    "objectID": "day11_murphy.html#questions-worth-asking",
+    "href": "day11_murphy.html#questions-worth-asking",
+    "title": "Murphy in Class",
+    "section": "Questions worth asking",
+    "text": "Questions worth asking\n\n\nAbout the business\n\nWhat decisions do you make with store data today?\nWhat would you want to know and can’t?\nHow do you measure whether a promotion worked?\n\n\nAbout our project\n\nWould this prediction change anything you do?\nWhat would make you distrust a model?\nWho inside the company would actually use it?"
+  },
+  {
+    "objectID": "day11_murphy.html#after-they-leave",
+    "href": "day11_murphy.html#after-they-leave",
+    "title": "Murphy in Class",
+    "section": "After they leave",
+    "text": "After they leave\nWrite it down while it’s fresh.\n\nWhat did they say your project is missing?\nWhat did they care about that you hadn’t considered?\nWhat assumption of yours did they contradict?\n\n\nTheir words belong in your pitch. “We asked a fuel retailer, and they said ___” beats anything you can assert on your own."
   },
   {
     "objectID": "day07_work_time.html#today",

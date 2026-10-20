@@ -1,0 +1,44 @@
+---
+title: "Murphy in Class"
+subtitle: "Day 11: Our client in the room"
+author: "J. Hathaway"
+---
+
+## Murphy is here {.dark background-color="#022F4A"}
+
+[They talk. Then **we ask questions**.]{.statement}
+
+<br>
+
+[This is the closest thing to a real client you'll get this semester. Use it.]{.orange}
+
+## Questions worth asking
+
+::: {.columns}
+::: {.column width="50%"}
+**About the business**
+
+- What decisions do you make with store data today?
+- What would you want to know and can't?
+- How do you measure whether a promotion worked?
+:::
+::: {.column width="50%"}
+**About our project**
+
+- Would this prediction change anything you do?
+- What would make you distrust a model?
+- Who inside the company would actually use it?
+:::
+:::
+
+## After they leave
+
+**Write it down while it's fresh.**
+
+- What did they say your project is **missing**?
+- What did they **care about** that you hadn't considered?
+- What assumption of yours did they **contradict**?
+
+::: {.takeaway}
+**Their words belong in your pitch.** "We asked a fuel retailer, and they said ___" beats anything you can assert on your own.
+:::

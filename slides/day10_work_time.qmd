@@ -1,0 +1,46 @@
+---
+title: "Project Work Time"
+subtitle: "Day 10: Teams build, I come to you"
+author: "J. Hathaway"
+# Update these each semester.
+class-repo: "https://github.com/byuibigdata/FA26_hathaway"
+---
+
+## Today {.dark background-color="#022F4A"}
+
+[The hour is **yours**.]{.statement}
+
+<br>
+
+[I'll come around to each team. Bring me what you're stuck on, not what's finished.]{.orange}
+
+## Where you should be
+
+::: {.cards}
+::: {.card}
+[Census API]{.card-title}
+
+Due **10/8**. Key working, table pulled, joined to our stores.
+:::
+::: {.card}
+[Unit of analysis]{.card-title}
+
+Due **10/12**. One row is one _____, and we predict _____ for it.
+:::
+::: {.card}
+[Next]{.card-title}
+
+Features at that grain, and the analysis that answers your client's question.
+:::
+:::
+
+Dates and links live in the [class repository]({{< meta class-repo >}}).
+
+## Good uses of this hour
+
+- Get your **whole team** saying the same unit of analysis out loud.
+- Build **one feature** end to end, and write down how you built it.
+- Make **one chart** from the real C-Store data that you'd show a client.
+- Fix the Databricks problem you've been working around.
+
+[If your team is blocked on a decision, that's what I'm here for. **Don't spend the hour politely stuck.**]{.orange}

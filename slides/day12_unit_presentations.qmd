@@ -1,0 +1,71 @@
+---
+title: "Unit of Analysis Presentations"
+subtitle: "Day 12: Present, then two new challenges"
+author: "J. Hathaway"
+# Update these each semester.
+class-repo: "https://github.com/byuibigdata/FA26_hathaway"
+challenge-feature: "https://github.com/byuibigdata/easy_feature_challenge_fa26_hathaway"
+feature-due: "10/26"
+takehome-due: "10/21"
+---
+
+## Today
+
+1. **Unit of analysis presentations** — every team
+2. The easy feature challenge
+3. Your first **take-home PySpark challenge**
+
+## Presenting your unit of analysis
+
+**Short, specific, and defensible.**
+
+- One row is one _____, and we predict _____ for it.
+- **Why that grain?** What breaks if you go finer or coarser?
+- How many rows does it give you, and how many events per row?
+- What does your **client do** with a prediction at that grain?
+
+::: {.takeaway}
+**We're deciding as a class.** Listen for the grain you'd be willing to build features on, because that's the one we'll use.
+:::
+
+## The easy feature challenge
+
+Build your first features **at the unit of analysis we settle today**.
+
+::: {.columns}
+::: {.column width="55%"}
+- Start with simple aggregates: counts, sums, rates, shares
+- Document each one so a teammate can rebuild it
+- Watch for **leakage**: nothing that only exists after the outcome
+:::
+::: {.column width="45%"}
+::: {.card}
+[Due]{.card-title}
+
+**{{< meta feature-due >}}**
+
+[Challenge repo →]({{< meta challenge-feature >}})
+:::
+:::
+:::
+
+## Take-home PySpark challenge 1 {.dark background-color="#022F4A"}
+
+**Due {{< meta takehome-due >}}. Find it in Databricks.**
+
+<br>
+
+- A **key challenge** — it carries extra weight in your grade
+- Talk with your group, but **don't share code**
+- Scored 1 to 4
+
+[Start tonight. If Databricks fights you, tell me before the deadline, not after.]{.orange}
+
+## What's due
+
+| Work | Due |
+|---|---|
+| Take-home PySpark challenge 1 | **{{< meta takehome-due >}}** |
+| Easy feature challenge | **{{< meta feature-due >}}** |
+
+Everything is listed in the [class repository]({{< meta class-repo >}}).

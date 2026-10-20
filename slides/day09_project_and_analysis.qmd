@@ -4,7 +4,7 @@ subtitle: "Day 9: Census API, the team project, analysis decks, and Murphy"
 author: "J. Hathaway"
 # Update these each semester.
 class-repo: "https://github.com/byuibigdata/FA26_hathaway"
-visit-date: "the 14th"
+visit-date: "the 15th"
 ---
 
 ## Today
