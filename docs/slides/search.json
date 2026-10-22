@@ -210,508 +210,291 @@
     "text": "Your turn\nWrite the label sentence for your team’s project.\n\nGiven _____, predict _____, so that _____ can _____. Then say what would leak into your features, and how you’d keep it out."
   },
   {
-    "objectID": "day08_no_class.html#class-is-cancelled",
-    "href": "day08_no_class.html#class-is-cancelled",
-    "title": "No Class Today",
-    "section": "Class is cancelled",
-    "text": "Class is cancelled\nGo to the Adam Miller presentation instead.\n\nduring our class period · announced in Slack"
-  },
-  {
-    "objectID": "day08_no_class.html#keep-moving",
-    "href": "day08_no_class.html#keep-moving",
-    "title": "No Class Today",
-    "section": "Keep moving",
-    "text": "Keep moving\nThe challenges don’t pause.\n\n\nCensus API\nKey in hand, one table pulled, and the join to our stores worked out.\n\n\nUnit of analysis\nYour team’s one sentence: one row is one _____, and we predict _____ for it.\n\n\nHours\nLog them in Harvest. A cancelled class is still a week of work.\n\n\nDates live in the class repository. Bring questions to our next meeting."
-  },
-  {
-    "objectID": "day09_project_and_analysis.html#today",
-    "href": "day09_project_and_analysis.html#today",
-    "title": "From Challenges to the Project",
+    "objectID": "day13_teaching_and_aggregations.html#today",
+    "href": "day13_teaching_and_aggregations.html#today",
+    "title": "Plan the Semester, Then Aggregate",
     "section": "Today",
-    "text": "Today\n\nYour questions\nThe Census API challenge\nWhat your team owes the larger project\nThe analysis decks: rules, labels, segments\nMurphy is in class the 15th — how we use that hour\nOpen work time"
+    "text": "Today\n\nYour questions\nTeams pick what they want to teach\nPlan the rest of the semester\nAggregated calculations: GROUP BY vs. windows"
   },
   {
-    "objectID": "day09_project_and_analysis.html#questions",
-    "href": "day09_project_and_analysis.html#questions",
-    "title": "From Challenges to the Project",
+    "objectID": "day13_teaching_and_aggregations.html#questions",
+    "href": "day13_teaching_and_aggregations.html#questions",
+    "title": "Plan the Semester, Then Aggregate",
     "section": "Questions",
-    "text": "Questions\nWhat’s blocking you right now?\n\nCensus keys · the block-group join · Databricks · your unit of analysis · the proposal"
+    "text": "Questions\nWhat’s unresolved?\n\nThe take-home challenge · the easy feature challenge · your unit of analysis · Databricks"
   },
   {
-    "objectID": "day09_project_and_analysis.html#the-census-api-challenge",
-    "href": "day09_project_and_analysis.html#the-census-api-challenge",
-    "title": "From Challenges to the Project",
-    "section": "The Census API challenge",
-    "text": "The Census API challenge\n\n\nWhere people get stuck\n\nThe key: request it, then keep it out of your code\nGeography: state → county → tract → block group\nVariable names: B19013_001E means something, but you have to look it up\nLimits: pull once, cache it, don’t loop the API\n\n\n\nWhat makes it done\nA table you can join to our stores, with the variables you chose and a sentence on why those variables matter to your client.\n\n\nThe census.* tables are already in Databricks. The API work is about learning the pull, not about getting data we lack."
+    "objectID": "day13_teaching_and_aggregations.html#pick-your-teaching-topic",
+    "href": "day13_teaching_and_aggregations.html#pick-your-teaching-topic",
+    "title": "Plan the Semester, Then Aggregate",
+    "section": "Pick your teaching topic",
+    "text": "Pick your teaching topic\nEvery team teaches the class once. 15 to 120 minutes, with a hands-on coding activity, self-contained in our GitHub organization.\n\n\nPick today: a topic and a date.\nChoose something your project needs. You’ll learn it properly by teaching it, and the class gets it when it’s useful.\n\n\nTopics past teams took\nUDFs and pandas UDFs · regex · Streamlit in Docker · jobs and pipelines · GraphQL APIs · complex schemas · NLP in Spark · Spark ML"
   },
   {
-    "objectID": "day09_project_and_analysis.html#the-challenges-are-not-the-project",
-    "href": "day09_project_and_analysis.html#the-challenges-are-not-the-project",
-    "title": "From Challenges to the Project",
-    "section": "The challenges are not the project",
-    "text": "The challenges are not the project\nEach challenge builds one piece of what your team will deliver:\n\n\nWrangling\nPolars, charts\n\n→\n\nCensus\noutside data\n\n→\n\nUnit of analysis\none row = ?\n\n→\n\nFeatures\nthe model’s inputs\n\n→\n\nApp\nsomeone uses it\n\n\n\nThe project is the thread through all of them. Every challenge should move your team’s product forward, not sit in a folder by itself."
+    "objectID": "day13_teaching_and_aggregations.html#whats-left-this-semester",
+    "href": "day13_teaching_and_aggregations.html#whats-left-this-semester",
+    "title": "Plan the Semester, Then Aggregate",
+    "section": "What’s left this semester",
+    "text": "What’s left this semester\n\n\n\n\n\n\n\nStill ahead\nWhat it is\n\n\n\n\nPySpark verbal 1, 2, 3\nOne-on-one, out loud, about code you wrote\n\n\nDocker and Google Cloud\nContainerize and publish\n\n\nFeature challenge 2\nComplex features at our unit of analysis\n\n\nTake-home 2\nSecond key PySpark challenge\n\n\nML challenge\nA model on our features\n\n\nCoding devotionals\nYou teach\n\n\nApp challenge\nThe final product\n\n\n\nLet’s put dates on these together. Class repository"
   },
   {
-    "objectID": "day09_project_and_analysis.html#what-your-team-owes",
-    "href": "day09_project_and_analysis.html#what-your-team-owes",
-    "title": "From Challenges to the Project",
-    "section": "What your team owes",
-    "text": "What your team owes\n\nA unit of analysis everyone on the team can say out loud\nA target the data supports: a probability or a count\nFeatures built at that grain, documented so a teammate can rebuild them\nAn analysis that answers the business question, not just the model question\nAn app a non-technical person can use\n\nStart writing these down now. The grade request letter at the end is much easier when the work is on the record."
+    "objectID": "day13_teaching_and_aggregations.html#two-ways-to-summarize",
+    "href": "day13_teaching_and_aggregations.html#two-ways-to-summarize",
+    "title": "Plan the Semester, Then Aggregate",
+    "section": "Two ways to summarize",
+    "text": "Two ways to summarize\n\nGROUP BY gives you fewer rows. Windows keep every row and add a column.\nFrom the book: Aggregated calculations"
   },
   {
-    "objectID": "day09_project_and_analysis.html#the-analysis-decks",
-    "href": "day09_project_and_analysis.html#the-analysis-decks",
-    "title": "From Challenges to the Project",
-    "section": "The analysis decks",
-    "text": "The analysis decks\nThree reference decks for the analysis half of the project. Read them when you need them.\n\n\nBaskets of Goods\nAssociation rules: what sells with what, support, confidence and lift.\nOpen →\n\n\nLabeled Baskets\nPicking a Y, building the modeling table, and avoiding leakage.\nOpen →\n\n\nCustomer Segmentation\nClustering, UMAP and HDBSCAN, and how to defend a segment.\nOpen →\n\n\nThey use our C-Store data for their examples, so the numbers should look familiar."
+    "objectID": "day13_teaching_and_aggregations.html#group-by-changes-the-grain",
+    "href": "day13_teaching_and_aggregations.html#group-by-changes-the-grain",
+    "title": "Plan the Semester, Then Aggregate",
+    "section": "GROUP BY changes the grain",
+    "text": "GROUP BY changes the grain\ndf.groupBy(\"Section\").agg(\n    F.mean(\"Score\").alias(\"average\"),\n    F.stddev_samp(\"Score\").alias(\"sd\"))\n\n\n\nSection\naverage\nsd\n\n\n\n\n1\n90\n—\n\n\n2\n80\n7.07\n\n\n3\n86\n18.25\n\n\n\nSix rows became three. The new observational unit is the section."
   },
   {
-    "objectID": "day09_project_and_analysis.html#murphy-is-here-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206d6574612076697369742d64617465203e7d7d",
-    "href": "day09_project_and_analysis.html#murphy-is-here-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206d6574612076697369742d64617465203e7d7d",
-    "title": "From Challenges to the Project",
-    "section": "Murphy is here the 15th",
-    "text": "Murphy is here the 15th\nA fuel and convenience retailer, in our classroom, for an hour.\n\n\nHow we use it\n\nThey talk briefly, then we ask questions\nBring your team’s question written down\nTake notes: it becomes a slide in your pitch\n\nThis is your client in the room.\n\n\nQuestions worth asking\n\nWhat decisions do you make with store data today?\nWhat would you want to know and can’t?\nHow do you measure a promotion?\nWhat would make you distrust a model?"
+    "objectID": "day13_teaching_and_aggregations.html#windows-keep-the-grain",
+    "href": "day13_teaching_and_aggregations.html#windows-keep-the-grain",
+    "title": "Plan the Semester, Then Aggregate",
+    "section": "Windows keep the grain",
+    "text": "Windows keep the grain\nwindow = Window.partitionBy(\"Section\")\nwindow_order = Window.partitionBy(\"Section\").orderBy(F.col(\"Score\").desc())\n\ndf.withColumn(\"rank\", F.rank().over(window_order)) \\\n  .withColumn(\"min\", F.min(\"Score\").over(window))\n\n\n\nSection\nStudent\nScore\nrank\nmin\n\n\n\n\n2\nb\n85\n1\n75\n\n\n2\nc\n75\n2\n75\n\n\n3\nd\n95\n2\n65\n\n\n\nStill six rows, with the group’s summary attached to each one."
   },
   {
-    "objectID": "day09_project_and_analysis.html#thursday-your-first-take-home-challenge",
-    "href": "day09_project_and_analysis.html#thursday-your-first-take-home-challenge",
-    "title": "From Challenges to the Project",
-    "section": "Thursday: your first take-home challenge",
-    "text": "Thursday: your first take-home challenge\nA PySpark challenge, on your own, with a deadline.\n\n\n\nAnnounced at least 24 hours ahead, with the topic\nYou may talk with your group, but you don’t share code\nScored 1 to 4, and this one is a key challenge\n\n\n\nGet ready\nBe able to run a PySpark notebook on Databricks before Thursday. Don’t spend the challenge fighting your setup.\n\n\nIf your workspace isn’t working, tell me today, not Thursday."
+    "objectID": "day13_teaching_and_aggregations.html#why-this-is-the-feature-engineering-skill",
+    "href": "day13_teaching_and_aggregations.html#why-this-is-the-feature-engineering-skill",
+    "title": "Plan the Semester, Then Aggregate",
+    "section": "Why this is the feature-engineering skill",
+    "text": "Why this is the feature-engineering skill\n\nYour unit of analysis decides which one you need.\ngroupBy builds the table: one row per shopper, store, or week.\nover(Window) adds context without collapsing: this basket vs. that shopper’s average.\npartitionBy + orderBy gives you lags, ranks and running totals — the temporal features.\n\n\nIf you can’t say whether a calculation changes the row count, you don’t know what you’re building yet."
   },
   {
-    "objectID": "day09_project_and_analysis.html#work-time",
-    "href": "day09_project_and_analysis.html#work-time",
-    "title": "From Challenges to the Project",
+    "objectID": "day13_teaching_and_aggregations.html#work-time",
+    "href": "day13_teaching_and_aggregations.html#work-time",
+    "title": "Plan the Semester, Then Aggregate",
     "section": "Work time",
-    "text": "Work time\nTeams, the rest of the hour is yours.\n\nFinish the Census pull, settle the unit of analysis, and write the one question you’re asking Murphy."
+    "text": "Work time\nPick your teaching topic. Then back to the feature challenge.\n\nTell me your topic and date before you leave."
   },
   {
-    "objectID": "example.html#a-slide",
-    "href": "example.html#a-slide",
-    "title": "Example Slides",
-    "section": "A slide",
-    "text": "A slide\n\nBullet one\nBullet two"
-  },
-  {
-    "objectID": "example.html#some-code",
-    "href": "example.html#some-code",
-    "title": "Example Slides",
-    "section": "Some code",
-    "text": "Some code\ndf.groupBy(\"team\").agg(F.avg(\"points\"))"
-  },
-  {
-    "objectID": "example.html#speaker-notes",
-    "href": "example.html#speaker-notes",
-    "title": "Example Slides",
-    "section": "Speaker notes",
-    "text": "Speaker notes\nPress s in the browser to open the speaker view.\n\nThese notes only show in the speaker view."
-  },
-  {
-    "objectID": "day10_work_time.html#today",
-    "href": "day10_work_time.html#today",
-    "title": "Project Work Time",
+    "objectID": "day03_databricks.html#today",
+    "href": "day03_databricks.html#today",
+    "title": "Databricks Setup and Team Time",
     "section": "Today",
-    "text": "Today\nThe hour is yours.\n\nI’ll come around to each team. Bring me what you’re stuck on, not what’s finished."
+    "text": "Today\n\nThe schedule\nQuestions on the church data\nDatabricks Free Edition: three workspaces\nLoad the semester data and find it in the catalog\nTeam time on your proposal"
   },
   {
-    "objectID": "day10_work_time.html#where-you-should-be",
-    "href": "day10_work_time.html#where-you-should-be",
-    "title": "Project Work Time",
-    "section": "Where you should be",
-    "text": "Where you should be\n\n\nCensus API\nDue 10/8. Key working, table pulled, joined to our stores.\n\n\nUnit of analysis\nDue 10/12. One row is one _____, and we predict _____ for it.\n\n\nNext\nFeatures at that grain, and the analysis that answers your client’s question.\n\n\nDates and links live in the class repository."
-  },
-  {
-    "objectID": "day10_work_time.html#good-uses-of-this-hour",
-    "href": "day10_work_time.html#good-uses-of-this-hour",
-    "title": "Project Work Time",
-    "section": "Good uses of this hour",
-    "text": "Good uses of this hour\n\nGet your whole team saying the same unit of analysis out loud.\nBuild one feature end to end, and write down how you built it.\nMake one chart from the real C-Store data that you’d show a client.\nFix the Databricks problem you’ve been working around.\n\nIf your team is blocked on a decision, that’s what I’m here for. Don’t spend the hour politely stuck."
-  },
-  {
-    "objectID": "day01_welcome.html#today",
-    "href": "day01_welcome.html#today",
-    "title": "Welcome to DS 460",
-    "section": "Today",
-    "text": "Today\n\nWhat you’ll be able to do by the end of the semester\nHow the class runs: like a start-up, not a lecture\nHow you’ll learn: on purpose, with some confusion\nHow you’re graded: four competencies and a letter\nWhat to do this week\n\n\nEverything here comes from the course guide: github.com/byuibigdata/course_guide"
-  },
-  {
-    "objectID": "day01_welcome.html#by-the-end-of-the-semester-youll-be-able-to",
-    "href": "day01_welcome.html#by-the-end-of-the-semester-youll-be-able-to",
-    "title": "Welcome to DS 460",
-    "section": "By the end of the semester, you’ll be able to",
-    "text": "By the end of the semester, you’ll be able to\n\nExplore and interpret distributed data at scale in business contexts, using Databricks and PySpark.\nImplement the pipeline, from API ingestion through feature engineering to a containerized app.\nPresent data-informed arguments for technical team decisions.\nIdentify the differences and benefits of current industry tools for big data storage and analysis."
-  },
-  {
-    "objectID": "day01_welcome.html#the-tools",
-    "href": "day01_welcome.html#the-tools",
-    "title": "Welcome to DS 460",
-    "section": "The tools",
-    "text": "The tools\n\n\n\nData\nPolarsPySparkSpark SQL\n\n\n\nPlatforms\nDatabricksGoogle Cloud (GCP)Docker\n\n\n\nCollaboration\ngitGitHubStreamlit or Marimo apps\n\n\nWe’ll use git and GitHub in almost everything: team work, trainings, and submissions."
-  },
-  {
-    "objectID": "day01_welcome.html#is-this-a-data-engineering-course",
-    "href": "day01_welcome.html#is-this-a-data-engineering-course",
-    "title": "Welcome to DS 460",
-    "section": "Is this a data engineering course?",
-    "text": "Is this a data engineering course?\n\n\n\nData engineer\nBig client, small change.\nBuilds pipelines and tools used by thousands. Refines systems every day. Talks mostly with IT and CS.\n\n\n\nData scientist\nSmall client, big change.\nServes tens of people in management. Proposes new methods and data sources. Talks mostly with the business.\n\n\nWe use data engineering tools, but for data science: helping management make decisions."
-  },
-  {
-    "objectID": "day01_welcome.html#how-the-course-is-designed",
-    "href": "day01_welcome.html#how-the-course-is-designed",
-    "title": "Welcome to DS 460",
-    "section": "How the course is designed",
-    "text": "How the course is designed\nThe course follows five principles for teaching data science:\n\nOrganize around diverse case studies\nUse computing in every part of the course\nTeach abstraction, with little mathematical notation\nMake activities realistically mimic a data scientist’s work\nShow the value of critical thinking and skepticism through examples"
-  },
-  {
-    "objectID": "day01_welcome.html#the-class-runs-like-a-start-up",
-    "href": "day01_welcome.html#the-class-runs-like-a-start-up",
-    "title": "Welcome to DS 460",
-    "section": "The class runs like a start-up",
-    "text": "The class runs like a start-up\n\nWe’re a “company” with a mandate: learn big data programming and solve hard data problems.\nThe class decides how we get from week 1 to week 13.\nWe take turns teaching each other the tools.\nWe work in small teams, but make decisions as a class.\nClass meetings are working-group meetings, like in industry."
-  },
-  {
-    "objectID": "day01_welcome.html#section",
-    "href": "day01_welcome.html#section",
-    "title": "Welcome to DS 460",
-    "section": "",
-    "text": "You should not expect anything about this class to be “traditional” in the context of academia.\n\nIf you need someone to give you due dates and tell you exactly what to read each night, this class will push you into a new way of learning."
-  },
-  {
-    "objectID": "day01_welcome.html#what-we-do-in-class",
-    "href": "day01_welcome.html#what-we-do-in-class",
-    "title": "Welcome to DS 460",
-    "section": "What we do in class",
-    "text": "What we do in class\nNo traditional lectures. Class time goes to team work:\n\n\n\nPresentation development\nAlmost every project ends with a presentation.\n\n\n\nIndividual development\nYour own work on the current project.\n\n\n\n\n\nDecision-point presentations\nTeams pitch; the class agrees on one approach.\n\n\n\nProgramming training\nTeams build and lead hands-on activities for the class."
-  },
-  {
-    "objectID": "day01_welcome.html#what-youll-turn-in",
-    "href": "day01_welcome.html#what-youll-turn-in",
-    "title": "Welcome to DS 460",
-    "section": "What you’ll turn in",
-    "text": "What you’ll turn in\nThe work is open-ended, mostly in teams, with some individual submissions. Usually:\n\nA tools coding challenge (data munging and visualization)\nA Spark team feature build challenge\nSpark coding challenges (munging and feature creation)\nIn-class written code challenges (yes, paper and pencil)\nAn analytics app (Streamlit or Marimo, Docker, GCP)\nA team training on tools and code (15 to 120 minutes)\n\nCurrent projects: github.com/byuibigdata"
-  },
-  {
-    "objectID": "day01_welcome.html#design-thinking-guides-our-projects",
-    "href": "day01_welcome.html#design-thinking-guides-our-projects",
-    "title": "Welcome to DS 460",
-    "section": "Design thinking guides our projects",
-    "text": "Design thinking guides our projects\n\nSource: Illinois CITL\n\nYour earlier data science and design thinking courses are the foundation: empathy for the data and clients, ideating solutions, prototyping the end product."
-  },
-  {
-    "objectID": "day01_welcome.html#agile-rhythm",
-    "href": "day01_welcome.html#agile-rhythm",
-    "title": "Welcome to DS 460",
-    "section": "Agile rhythm",
-    "text": "Agile rhythm\n\n\nDaily stand-up (5–10 min)\n\nWhat did you work on?\nWhat will you work on next?\nWhat’s blocking you?\n\n\nEvery two weeks\n\nPlanning: pick tasks from the backlog\nReview: each team shows what it finished\nRetro: what worked, what didn’t, what changes\n\n\n\nAccountability and communication. Unfinished work carries over to the next sprint."
-  },
-  {
-    "objectID": "day01_welcome.html#agile-data-science",
-    "href": "day01_welcome.html#agile-data-science",
-    "title": "Welcome to DS 460",
-    "section": "Agile data science",
-    "text": "Agile data science\nRussell Jurney’s manifesto, in short:\n\nIterate, and ship intermediate output. Commit everything to source control.\nPerform experiments, not tasks.\nListen to the data. Ground discussions in exploratory visualization.\nRespect the data-value pyramid:\n\nplumbing → clean & question → explore & summarize → infer & predict → deliver value"
-  },
-  {
-    "objectID": "day01_welcome.html#presentations-live-jazz-not-a-symphony",
-    "href": "day01_welcome.html#presentations-live-jazz-not-a-symphony",
-    "title": "Welcome to DS 460",
-    "section": "Presentations: live jazz, not a symphony",
-    "text": "Presentations: live jazz, not a symphony\n\n\n\nInformal ≠ unprepared.\nMake your point early, then justify it.\nBe ready to go deep on data and methods.\nBad charts hurt your argument.\n\n\n Practice the “five whys” before you present."
-  },
-  {
-    "objectID": "day01_welcome.html#preparation",
-    "href": "day01_welcome.html#preparation",
-    "title": "Welcome to DS 460",
-    "section": "Preparation",
-    "text": "Preparation\n\nNo assigned weekly readings.\n6 hours a week outside class building your Spark skills.\nUse the curated resources or find your own.\nYou pace yourself with a learning plan:\n\n\n\n\nWeeks 1–3\nExplore resources. End of week 2: review the Spark materials you plan to use.\n\n\n\nWeeks 4–5\nPlan. Map concepts to resources. Propose a PySpark training with a partner.\n\n\n\nWeeks 6–13\nExecute a weekly plan with hours and topics."
-  },
-  {
-    "objectID": "day01_welcome.html#learning-should-burn-a-little",
-    "href": "day01_welcome.html#learning-should-burn-a-little",
-    "title": "Welcome to DS 460",
-    "section": "Learning should burn a little",
-    "text": "Learning should burn a little\n\nConfusion has the potential to motivate, lead to deep learning, and trigger problem solving.\n\n\n\n\nConfusion is part of learning, not a sign you’re failing.\nWhen the answer comes too soon, you skip the exploration that builds understanding.\nLearning how to learn is the key to career growth after graduation.\n\n\n\nThe earth doesn’t go around the sun in a day. It takes a year. Watch the video"
-  },
-  {
-    "objectID": "day01_welcome.html#your-instructor-is-a-mentor-and-a-manager",
-    "href": "day01_welcome.html#your-instructor-is-a-mentor-and-a-manager",
-    "title": "Welcome to DS 460",
-    "section": "Your instructor is a mentor and a manager",
-    "text": "Your instructor is a mentor and a manager\n\nA teacher instructs from set criteria. A mentor guides your growth.\nTreat me like an expensive consultant ($300 to $500 an hour): bring me the parts you can’t quite figure out on your own.\nThe class sets the project vision. I set the technical learning goals.\nI have high expectations, and I’ll tell you when you fall short."
-  },
-  {
-    "objectID": "day01_welcome.html#what-past-students-said",
-    "href": "day01_welcome.html#what-past-students-said",
-    "title": "Welcome to DS 460",
-    "section": "What past students said",
-    "text": "What past students said\n\nI personally feel much more prepared for a real work environment after this class than any other class.\n\n\nMy biggest takeaway is that to learn or be good at something, pain is inevitable but the result is satisfying after you put in the work.\n\n\nIf you don’t ask for help, you might fail this class! (Also from a past student.)"
-  },
-  {
-    "objectID": "day01_welcome.html#four-competencies",
-    "href": "day01_welcome.html#four-competencies",
-    "title": "Welcome to DS 460",
-    "section": "Four competencies",
-    "text": "Four competencies\n\n\n\nImpact\nYour team sees you as an equal or primary contributor.\n\n\n\nInvolvement\nCome prepared. Ask questions, give answers, help direct.\n\n\n\nHours\nThe best predictor of success.\n\n\n\nUnderstanding\nBe the go-to person on a few topics.\n\n\nThese map to how an employer will judge you. You don’t need to be exceptional in all four."
-  },
-  {
-    "objectID": "day01_welcome.html#hours",
-    "href": "day01_welcome.html#hours",
-    "title": "Welcome to DS 460",
-    "section": "Hours",
-    "text": "Hours\n\n\n9 hours per week: 6 outside class + 3 in class\n\n110 hours for an A\n\n\nA 3-credit class is a 9-hour-a-week job.\nTrack your hours from day one.\nHours are what let you produce, but you show hard work through your products, not your hours."
-  },
-  {
-    "objectID": "day01_welcome.html#competency-scale",
-    "href": "day01_welcome.html#competency-scale",
-    "title": "Welcome to DS 460",
-    "section": "Competency scale",
-    "text": "Competency scale\n\n\n\n\n\n\n\n\n\n\n\n\nGrade\nHours\nChallenges\nOral/written\nReplication\nInvolvement\nImpact\n\n\n\n\nA\n110\n4 on key* challenges & 3 or higher on the rest\nPass 3\nAll complete\n&lt; 3 warnings & &lt; 3.1 hours of class missed\nActive on all & primary on &gt; 2\n\n\nB\n90\n3 on key* challenges & 3’s on most\nPass 2\n&lt; 2 missing\n&lt; 9.1 hours of class missed, or a write-up\nActive on most & primary on &gt; 1\n\n\nC\n70\nA 3 on any challenge\nPass 1\n&lt; 3 missing\n&lt; 4 warnings\nActive often & primary on &gt; 0\n\n\nD\n50\n\n\n\n\n\n\n\n\n*Key challenges: any PySpark challenge and the end-of-semester app challenge."
-  },
-  {
-    "objectID": "day01_welcome.html#challenges-are-scored-1-to-4",
-    "href": "day01_welcome.html#challenges-are-scored-1-to-4",
-    "title": "Welcome to DS 460",
-    "section": "Challenges are scored 1 to 4",
-    "text": "Challenges are scored 1 to 4\n\n\n\n1 Submitted work\n\n\n\n2 Some code aligns with the challenge\n\n\n\n3 Strong performance, satisfactory code\n\n\n\n4 Near flawless, clean and concise code\n\n\nAll challenges are announced at least 24 hours ahead, with the programming topic."
-  },
-  {
-    "objectID": "day01_welcome.html#you-write-your-own-grade-request",
-    "href": "day01_welcome.html#you-write-your-own-grade-request",
-    "title": "Welcome to DS 460",
-    "section": "You write your own grade request",
-    "text": "You write your own grade request\nAt the end of the semester you submit a grade request letter, like an end-of-year review with an employer.\n\nBe clear about what you delivered.\nYou can negotiate: use strength in one area to argue for a shortfall in another.\n\n\nI achieved only a satisfactory score on my final coding challenge, but I completed 119 hours and was a key contributor to 5 projects. As such, I request an A.\n\nRead the example letter with discussion before you write yours."
-  },
-  {
-    "objectID": "day01_welcome.html#this-week",
-    "href": "day01_welcome.html#this-week",
-    "title": "Welcome to DS 460",
-    "section": "This week",
-    "text": "This week\n\nRead the syllabus and the course paradigm.\nStart tracking your hours.\nStart exploring the Spark learning resources. Your review is due at the end of week 2.\nNeed to talk? Schedule a visit."
-  },
-  {
-    "objectID": "day01_welcome.html#discuss",
-    "href": "day01_welcome.html#discuss",
-    "title": "Welcome to DS 460",
-    "section": "Discuss",
-    "text": "Discuss\nWhat do you want to be the go-to expert on by the end of the semester?\n\nPick one or two topics. That’s where your “understanding” competency comes from."
-  },
-  {
-    "objectID": "index.html#class-days",
-    "href": "index.html#class-days",
-    "title": "DS 460 Class Slides",
-    "section": "Class days",
-    "text": "Class days\nOne deck per class meeting, in order.\n\n\n\n\n\n\nDeck\n\n\n\nTopics\n\n\n\n\n\n\n\n\nWelcome to DS 460\n\n\nDay 1: How this class works\n\n\n\n\n\n\nData Sizes, Formats, and Tools\n\n\nDay 2: Parquet, Arrow, Polars, PySpark, and your first two challenges\n\n\n\n\n\n\nDatabricks Setup and Team Time\n\n\nDay 3: Schedule, questions, Databricks Free Edition, and your proposal\n\n\n\n\n\n\nData Summaries That Persuade\n\n\nDay 4: Charts, tables, due dates, and proposal time\n\n\n\n\n\n\nProposals and What’s Next\n\n\nDay 5: Show your work, team time, presentations, and three new challenges\n\n\n\n\n\n\nWritten Challenge and Round Two\n\n\nDay 6: Polars on paper, second pitches, and two new challenges\n\n\n\n\n\n\nWork Time and Secrets\n\n\nDay 7: Open class time on the two challenges, plus environment variables\n\n\n\n\n\n\nNo Class Today\n\n\nDay 8: Adam Miller presentation\n\n\n\n\n\n\nFrom Challenges to the Project\n\n\nDay 9: Census API, the team project, analysis decks, and Murphy\n\n\n\n\n\n\nProject Work Time\n\n\nDay 10: Teams build, I come to you\n\n\n\n\n\n\nMurphy in Class\n\n\nDay 11: Our client in the room\n\n\n\n\n\n\nUnit of Analysis Presentations\n\n\nDay 12: Present, then two new challenges\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "index.html#topics",
-    "href": "index.html#topics",
-    "title": "DS 460 Class Slides",
-    "section": "Topics",
-    "text": "Topics\nReusable decks on one tool or idea. Pull them into a class day when the class needs them.\n\n\n\n\n\n\nDeck\n\n\n\nWhat it covers\n\n\n\n\n\n\n\n\nBaskets of Goods\n\n\nAssociation rule mining on C-Store transactions\n\n\n\n\n\n\nCustomer Segmentation\n\n\nClustering, dimension reduction, UMAP and HDBSCAN\n\n\n\n\n\n\nKeep Your Secrets Out of Your Code\n\n\nEnvironment variables in Python, Databricks, and R\n\n\n\n\n\n\nLabeled Baskets\n\n\nTurning C-Store transactions into a supervised model\n\n\n\n\n\n\nNo matching items\n\nPress s in a deck for speaker view, f for full screen, and Esc for a slide overview."
-  },
-  {
-    "objectID": "index.html#reference",
-    "href": "index.html#reference",
-    "title": "DS 460 Class Slides",
-    "section": "Reference",
-    "text": "Reference\n\nCourse book\nCourse guide and syllabus"
-  },
-  {
-    "objectID": "day12_unit_presentations.html#today",
-    "href": "day12_unit_presentations.html#today",
-    "title": "Unit of Analysis Presentations",
-    "section": "Today",
-    "text": "Today\n\nUnit of analysis presentations — every team\nThe easy feature challenge\nYour first take-home PySpark challenge"
-  },
-  {
-    "objectID": "day12_unit_presentations.html#presenting-your-unit-of-analysis",
-    "href": "day12_unit_presentations.html#presenting-your-unit-of-analysis",
-    "title": "Unit of Analysis Presentations",
-    "section": "Presenting your unit of analysis",
-    "text": "Presenting your unit of analysis\nShort, specific, and defensible.\n\nOne row is one _____, and we predict _____ for it.\nWhy that grain? What breaks if you go finer or coarser?\nHow many rows does it give you, and how many events per row?\nWhat does your client do with a prediction at that grain?\n\n\nWe’re deciding as a class. Listen for the grain you’d be willing to build features on, because that’s the one we’ll use."
-  },
-  {
-    "objectID": "day12_unit_presentations.html#the-easy-feature-challenge",
-    "href": "day12_unit_presentations.html#the-easy-feature-challenge",
-    "title": "Unit of Analysis Presentations",
-    "section": "The easy feature challenge",
-    "text": "The easy feature challenge\nBuild your first features at the unit of analysis we settle today.\n\n\n\nStart with simple aggregates: counts, sums, rates, shares\nDocument each one so a teammate can rebuild it\nWatch for leakage: nothing that only exists after the outcome\n\n\n\nDue\n10/26\nChallenge repo →"
-  },
-  {
-    "objectID": "day12_unit_presentations.html#take-home-pyspark-challenge-1",
-    "href": "day12_unit_presentations.html#take-home-pyspark-challenge-1",
-    "title": "Unit of Analysis Presentations",
-    "section": "Take-home PySpark challenge 1",
-    "text": "Take-home PySpark challenge 1\nDue 10/21. Find it in Databricks.\n\n\nA key challenge — it carries extra weight in your grade\nTalk with your group, but don’t share code\nScored 1 to 4\n\nStart tonight. If Databricks fights you, tell me before the deadline, not after."
-  },
-  {
-    "objectID": "day12_unit_presentations.html#whats-due",
-    "href": "day12_unit_presentations.html#whats-due",
-    "title": "Unit of Analysis Presentations",
+    "objectID": "day03_databricks.html#whats-due",
+    "href": "day03_databricks.html#whats-due",
+    "title": "Databricks Setup and Team Time",
     "section": "What’s due",
-    "text": "What’s due\n\n\n\n\n\n\n\nWork\nDue\n\n\n\n\nTake-home PySpark challenge 1\n10/21\n\n\nEasy feature challenge\n10/26\n\n\n\nEverything is listed in the class repository."
+    "text": "What’s due\n\n\n\n\n\n\n\n\nAssignment\nDue\nWhere\n\n\n\n\nData wrangling & visualization challenge\n9/24\nGitHub pull request + Canvas\n\n\nLearning Plan 1\n9/25\nCanvas\n\n\nProject proposal & unit of analysis\n9/29\nTeam folder on GitHub + Canvas\n\n\n\n\nThe full list of challenges and dates is in the class repository.\nKeep tracking your hours in Harvest."
   },
   {
-    "objectID": "day06_api_unit_of_analysis.html#today",
-    "href": "day06_api_unit_of_analysis.html#today",
-    "title": "Written Challenge and Round Two",
+    "objectID": "day03_databricks.html#your-questions",
+    "href": "day03_databricks.html#your-questions",
+    "title": "Databricks Setup and Team Time",
+    "section": "Your questions",
+    "text": "Your questions\nWhat’s slowing you down on the wrangling and visualization challenge?\n\nReading the data · nested columns · picking a chart · the report format"
+  },
+  {
+    "objectID": "day03_databricks.html#nested-columns",
+    "href": "day03_databricks.html#nested-columns",
+    "title": "Databricks Setup and Team Time",
+    "section": "Nested columns",
+    "text": "Nested columns\nMany patterns columns are lists of key/value pairs. Explode the list into rows, then unnest the pairs into columns:\ndevices = (patterns\n    .select(\"placekey\", \"device_type\")\n    .explode(\"device_type\")\n    .unnest(\"device_type\"))\n\n\n\nplacekey\nkey\nvalue\n\n\n\n\n222-223@8g7-2n2-td9\nandroid\n4\n\n\n222-223@8g7-2n2-td9\nios\n5\n\n\n\nThe same pattern works for related_same_day_brand, popularity_by_day, and the other key/value columns."
+  },
+  {
+    "objectID": "day03_databricks.html#what-it-is",
+    "href": "day03_databricks.html#what-it-is",
+    "title": "Databricks Setup and Team Time",
+    "section": "What it is",
+    "text": "What it is\n\n\n\nA free, serverless Databricks workspace\nSpark notebooks with no clusters to manage\nThe same platform companies pay for\nSign up here\n\n\n\nLimits to know\n\nNotebooks time out after 2.5 hours\nGo over quota and compute shuts off for the day\nPython and SQL only (no R or Scala)\nNo commercial use"
+  },
+  {
+    "objectID": "day03_databricks.html#three-workspaces",
+    "href": "day03_databricks.html#three-workspaces",
+    "title": "Databricks Setup and Team Time",
+    "section": "Three workspaces",
+    "text": "Three workspaces\n\n\n\n1. Class\nOne workspace for all of us.\nOpen the class workspace\n\n\n\n2. Team\nYour whole team in one workspace, so you share notebooks and data.\nOne teammate creates it.\n\n\n\n3. Personal\nYour own space to experiment and practice.\nYou create it."
+  },
+  {
+    "objectID": "day03_databricks.html#set-up-your-personal-workspace",
+    "href": "day03_databricks.html#set-up-your-personal-workspace",
+    "title": "Databricks Setup and Team Time",
+    "section": "Set up your personal workspace",
+    "text": "Set up your personal workspace\n\nGo to Databricks Free Edition and sign up.\nUse your university email. BYU-I emails can sign in with Google or Microsoft.\nCreate a notebook to confirm it works."
+  },
+  {
+    "objectID": "day03_databricks.html#set-up-your-team-workspace",
+    "href": "day03_databricks.html#set-up-your-team-workspace",
+    "title": "Databricks Setup and Team Time",
+    "section": "Set up your team workspace",
+    "text": "Set up your team workspace\n\nOne teammate creates a new Free Edition account for the team.\nThat teammate invites everyone else:\n\nUser icon (top right) → Settings → Workspace admin → Identity and access → Users → Manage → Add user → Invite user by email\n\nEveryone accepts the invite and opens the same workspace.\n\n\nDo this today, before you leave. You’ll need it for the proposal."
+  },
+  {
+    "objectID": "day03_databricks.html#one-notebook-loads-everything",
+    "href": "day03_databricks.html#one-notebook-loads-everything",
+    "title": "Databricks Setup and Team Time",
+    "section": "One notebook loads everything",
+    "text": "One notebook loads everything\n\nDownload load_semester_data.html from Slack.\nIn Databricks, open Workspace → Import and choose the file.\nAttach the notebook to Serverless compute and click Run all.\nWait 8 to 12 minutes. The last cell shows a summary. Every row should say ok.\n\nSafe to re-run: anything already loaded is skipped. If a row says FAILED, run it once more, then post in Slack."
+  },
+  {
+    "objectID": "day03_databricks.html#what-gets-loaded",
+    "href": "day03_databricks.html#what-gets-loaded",
+    "title": "Databricks Setup and Team Time",
+    "section": "What gets loaded",
+    "text": "What gets loaded\n\n\n\n\n\n\n\nData\nWhere it lands\n\n\n\n\nChurch places and patterns (the challenge data)\nVolume: pattern_places/pattern_places_data/\n\n\nC-Store, Idaho, 167 stores (small)\nTables: cstore_snippet.*\n\n\nC-Store, five states, 240 stores (medium)\nTables: cstore_sample.*\n\n\nCensus block-group tables\nTables: census.*\n\n\nMaverik patterns\nVolume: default/data/other/\n\n\n\nStart on small while you build and test. Move to medium when it works."
+  },
+  {
+    "objectID": "day03_databricks.html#finding-it-in-the-catalog",
+    "href": "day03_databricks.html#finding-it-in-the-catalog",
+    "title": "Databricks Setup and Team Time",
+    "section": "Finding it in the catalog",
+    "text": "Finding it in the catalog\n\n\nClick Catalog in the left sidebar. Data is organized in three levels:\nworkspace          ← catalog\n├── cstore_snippet ← schema\n│   ├── cstore_stores     ← table\n│   └── cstore_payments\n├── census\n└── pattern_places\n    └── pattern_places_data ← volume\n\n\nA table has a schema you can query by name.\nA volume holds files, like our Parquet files.\nClick a table to see its columns, sample data, and details.\nNames follow catalog.schema.table."
+  },
+  {
+    "objectID": "day03_databricks.html#reading-it-in-a-notebook",
+    "href": "day03_databricks.html#reading-it-in-a-notebook",
+    "title": "Databricks Setup and Team Time",
+    "section": "Reading it in a notebook",
+    "text": "Reading it in a notebook\n# A table, by its three-level name\nstores = spark.table(\"workspace.cstore_snippet.cstore_stores\")\n\n# A file in a volume, by its path\nplaces = spark.read.parquet(\n    \"/Volumes/workspace/pattern_places/pattern_places_data/places.parquet\")\n\ndisplay(stores)\nUse these exact names and paths. Don’t move or rename the data, so everyone’s code runs the same way."
+  },
+  {
+    "objectID": "day03_databricks.html#build-your-proposal",
+    "href": "day03_databricks.html#build-your-proposal",
+    "title": "Databricks Setup and Team Time",
+    "section": "Build your proposal",
+    "text": "Build your proposal\nDue 9/29. No more than two pages or 5 to 8 slides:\n\nTeam member names and majors\nThe business need and why it’s valuable\nThe data format, with some descriptive visuals\nHow you’ll use ML/AI in the application\nWhat counts as a successful product\n\nStart by exploring cstore_snippet in your team workspace."
+  },
+  {
+    "objectID": "day04_data_summaries.html#today",
+    "href": "day04_data_summaries.html#today",
+    "title": "Data Summaries That Persuade",
     "section": "Today",
-    "text": "Today\n\nWritten challenge — first 20 minutes\nSecond round of team pitches\nThe Census API challenge\nThe unit of analysis challenge"
+    "text": "Today\n\nWhat makes a chart worth showing\nOne of your charts, on the screen\nTables vs. charts\nCanvas: are the due dates right?\nThe project proposal challenge\nTeam time"
   },
   {
-    "objectID": "day06_api_unit_of_analysis.html#written-challenge",
-    "href": "day06_api_unit_of_analysis.html#written-challenge",
-    "title": "Written Challenge and Round Two",
-    "section": "Written challenge",
-    "text": "Written challenge\nPaper and pencil. No computer.\n\nPolars: group_by and agg, joins, and the nested columns you wrangled in the church data.\n\nScored 1 to 4, like every challenge. I’m reading for whether you know what the code does, not whether the syntax is perfect."
+    "objectID": "day04_data_summaries.html#what-makes-a-chart-worth-showing",
+    "href": "day04_data_summaries.html#what-makes-a-chart-worth-showing",
+    "title": "Data Summaries That Persuade",
+    "section": "What makes a chart worth showing",
+    "text": "What makes a chart worth showing\n\nOne point per chart. If you can’t say it in a sentence, it isn’t done.\nPut the point in the title. “Religious buildings fill up at different hours” beats “Visits by hour.”\nOrder on purpose. Sort by value, not alphabetically.\nLabel the axes in a client’s words, with units.\nCut what carries no meaning: heavy gridlines, needless legends, unread decimals.\n\n\nThe chart is the argument. A weak visual weakens it."
   },
   {
-    "objectID": "day06_api_unit_of_analysis.html#second-pitches",
-    "href": "day06_api_unit_of_analysis.html#second-pitches",
-    "title": "Written Challenge and Round Two",
-    "section": "Second pitches",
-    "text": "Second pitches\nWhat’s different this round: you’ve seen the data now.\n\nHas your client survived contact with the C-Store tables?\nWhat did the data make easier than you pitched, and what turned out to be hard?\nShow one chart from the real data, not a mock-up.\nMake the point early, then justify it.\n\n\nWe’re converging, not just presenting. By the end we should agree on the direction the class takes."
+    "objectID": "day04_data_summaries.html#the-challenge-questions",
+    "href": "day04_data_summaries.html#the-challenge-questions",
+    "title": "Data Summaries That Persuade",
+    "section": "The challenge questions",
+    "text": "The challenge questions\nCompare church buildings in Utah and Georgia. Answer at least three:\n\niPhone vs. Android visitors to Latter-day Saint buildings in each state\nHourly patterns, Latter-day Saint vs. other churches\nrelated_same_day_brand for each group\nA reach: related_same_day_brand for temples, seminaries, and meetinghouses\n\nEach answer: code, a visualization, the first five rows charted, and a few sentences of insight."
   },
   {
-    "objectID": "day06_api_unit_of_analysis.html#the-census-api-challenge",
-    "href": "day06_api_unit_of_analysis.html#the-census-api-challenge",
-    "title": "Written Challenge and Round Two",
-    "section": "The Census API challenge",
-    "text": "The Census API challenge\nPull demographic data from the US Census API and join it to our stores.\n\n\nWhy\nPOS data says what sold. Census says who lives around the store.\n\n\nThe work\nRequest block-group tables, handle the key and the limits, cache what you pull.\n\n\nThe join\nStore → block group → demographics. Geography is the hard part.\n\n\nDetails and dates are in the class repository."
+    "objectID": "day04_data_summaries.html#lets-see-one-of-yours",
+    "href": "day04_data_summaries.html#lets-see-one-of-yours",
+    "title": "Data Summaries That Persuade",
+    "section": "Let’s see one of yours",
+    "text": "Let’s see one of yours\nWho will put a chart on the screen?\n\nTell us the question, then the point your chart makes. We’ll talk about what the chart does well and what would make the point land harder.\n\nAsk the room: what is the point? Can you see it in under five seconds? What would you cut?"
   },
   {
-    "objectID": "day06_api_unit_of_analysis.html#the-unit-of-analysis-challenge",
-    "href": "day06_api_unit_of_analysis.html#the-unit-of-analysis-challenge",
-    "title": "Written Challenge and Round Two",
-    "section": "The unit of analysis challenge",
-    "text": "The unit of analysis challenge\nOne row of your modeling table equals what?\n\nWho or what: a shopper, a store, a product, a store × week?\nWhere: county, city, or chain?\nWhen: daily, weekly, monthly?\nThe target: a probability or a count, measured on that unit.\n\nEverything downstream — features, the model, the app — is built on this one decision."
+    "objectID": "day04_data_summaries.html#when-a-table-wins",
+    "href": "day04_data_summaries.html#when-a-table-wins",
+    "title": "Data Summaries That Persuade",
+    "section": "When a table wins",
+    "text": "When a table wins\n\n\n\nUse a chart\n\nA shape, trend, or comparison\nMany values at once\n“Which is bigger” at a glance\n\n\n\n\nUse a table\n\nExact numbers matter\nA handful of rows\nSeveral different units side by side\nPeople will look up a specific row\n\n\n\nA table is a visual too. It deserves the same care: aligned numbers, real labels, a title that says the point."
   },
   {
-    "objectID": "day06_api_unit_of_analysis.html#why-this-is-the-hard-one",
-    "href": "day06_api_unit_of_analysis.html#why-this-is-the-hard-one",
-    "title": "Written Challenge and Round Two",
-    "section": "Why this is the hard one",
-    "text": "Why this is the hard one\n\n\n\nToo fine\nProduct × store × day: mostly zeros, no signal to learn.\n\n\n\nJust right\nEnough rows to model, enough events per row to be stable, and a unit the client actually acts on.\n\n\n\nSay it in one sentence: “One row is one _____, and we predict _____ for it.”"
+    "objectID": "day04_data_summaries.html#great-tables",
+    "href": "day04_data_summaries.html#great-tables",
+    "title": "Data Summaries That Persuade",
+    "section": "Great Tables",
+    "text": "Great Tables\n\nMade with Great Tables (pip install great-tables), which works directly with Polars."
   },
   {
-    "objectID": "day06_api_unit_of_analysis.html#before-next-class",
-    "href": "day06_api_unit_of_analysis.html#before-next-class",
-    "title": "Written Challenge and Round Two",
-    "section": "Before next class",
-    "text": "Before next class\nBring your team’s one sentence.\n\nThen get a Census API key and pull one table — any table — so we can see the shape of what comes back."
+    "objectID": "day04_data_summaries.html#lets-plot",
+    "href": "day04_data_summaries.html#lets-plot",
+    "title": "Data Summaries That Persuade",
+    "section": "Lets-Plot",
+    "text": "Lets-Plot\n\nMade with Lets-Plot (pip install lets-plot), a grammar-of-graphics library like ggplot2."
   },
   {
-    "objectID": "brand-guide.html#where-the-brand-lives",
-    "href": "brand-guide.html#where-the-brand-lives",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Where the brand lives",
-    "text": "Where the brand lives\nAll decks in slides/ pick this up automatically.\n\n\n\nFile\nWhat it controls\n\n\n\n\n_brand.yml\nColors, fonts, logos\n\n\nds460.scss\nHeading rule, title slide, code, helper classes\n\n\n_quarto.yml\nLogo, footer, slide numbers, transitions\n\n\n\nStart a new deck by copying example.qmd. There’s no theme to set per deck."
+    "objectID": "day04_data_summaries.html#your-toolbox",
+    "href": "day04_data_summaries.html#your-toolbox",
+    "title": "Data Summaries That Persuade",
+    "section": "Your toolbox",
+    "text": "Your toolbox\n\n\n\nPackage\nGood for\n\n\n\n\nPlotly Express\nQuick interactive charts. Required for this challenge.\n\n\nLets-Plot\nGrammar of graphics, close to ggplot2\n\n\nGreat Tables\nPresentation-ready tables from Polars\n\n\n\nBoth example figures on the last two slides came from your challenge data. The script is in img/example_figures.py."
   },
   {
-    "objectID": "brand-guide.html#source-artwork",
-    "href": "brand-guide.html#source-artwork",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Source artwork",
-    "text": "Source artwork\n\nThe palette is sampled from the banner photo and the hex badge. Fonts match the banner’s monospaced title and the badge’s rounded sans."
+    "objectID": "day04_data_summaries.html#canvas-check",
+    "href": "day04_data_summaries.html#canvas-check",
+    "title": "Data Summaries That Persuade",
+    "section": "Canvas check",
+    "text": "Canvas check\nLet’s open Canvas together and compare it to the class repository.\n\nIs the wrangling and visualization challenge date right?\nIs Learning Plan 1 there, and when?\nIs the project proposal date right?\nAnything listed that we haven’t talked about?\n\nTell me now if a date is wrong. Fixing it later costs you more than it costs me."
   },
   {
-    "objectID": "brand-guide.html#color-palette",
-    "href": "brand-guide.html#color-palette",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Color palette",
-    "text": "Color palette\n\n\n  Summit Navy#022F4Aheadings, dark slides\n\n\n  Ridge Blue#426A8Alinks, h3, footer\n\n\n  Slate#263D46inline code\n\n\n  Teal#4D93ACcards, info\n\n\n  Sky Ice#BDD3E5hex fill, soft text\n\n\n  Mist#D2DADBdividers\n\n\n  Cloud#F4F7F9code, cards\n\n\n  Spark Orange#D5773Ccode rule, stats\n\n\n  Course Orange#F59625accents, subtitle\n\n\n  Ink#111111body text"
+    "objectID": "day04_data_summaries.html#the-proposal-again",
+    "href": "day04_data_summaries.html#the-proposal-again",
+    "title": "Data Summaries That Persuade",
+    "section": "The proposal, again",
+    "text": "The proposal, again\nDue 9/29. Challenge repository\n\nPDI C-Stores is the driving dataset; don’t target one brand.\nThe model outputs a probability or a count.\nName a client, place, time span, and unit of analysis.\nSay how you’ll use the Census API.\nTwo pages or 5 to 8 slides.\n\n\nThis is a decision-point presentation. Make your point early, then justify it."
   },
   {
-    "objectID": "brand-guide.html#color-rules",
-    "href": "brand-guide.html#color-rules",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Color rules",
-    "text": "Color rules\n\nNavy carries the structure: headings, the title slide, table headers.\nOrange is the accent. Use it once or twice per slide, never for body text.\nTeal and ridge blue are for secondary information.\nLight slides use white. Save navy backgrounds for emphasis.\n\nText helpers: .navy · .orange · .spark · .teal · .muted\nSpark is [lazy]{.orange} until an action runs."
-  },
-  {
-    "objectID": "brand-guide.html#typography",
-    "href": "brand-guide.html#typography",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Typography",
-    "text": "Typography\n\n\nHeadings: Fira Code\nBig Data\nMonospaced, like the banner. Keep headings short so they fit on one line.\n\nBody: Open Sans\nReadable at the back of the room.\nSans serif for bullets and prose. Code also uses Fira Code, so headings and code look alike."
-  },
-  {
-    "objectID": "brand-guide.html#code",
-    "href": "brand-guide.html#code",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Code",
-    "text": "Code\nfrom pyspark.sql import functions as F\n\n(spark.table(\"games\")\n    .groupBy(\"team\")\n    .agg(F.avg(\"points\").alias(\"avg_points\"))\n    .orderBy(F.desc(\"avg_points\")))\nCode blocks use a light surface and a Spark Orange rule. Inline code uses slate on cloud."
-  },
-  {
-    "objectID": "brand-guide.html#cards-and-stats",
-    "href": "brand-guide.html#cards-and-stats",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Cards and stats",
-    "text": "Cards and stats\n\n\n\n2.5 PB Ingested per day\n\n\n\n200× Faster than pandas\n\n\n\n1 Line to scale out\n\n\n::: {.card}\n[Card title]{.card-title}\n\n[2.5 PB]{.stat}\n:::\nUse [Title]{.card-title}, not ###. A heading at the start of a div becomes its own slide."
-  },
-  {
-    "objectID": "brand-guide.html#takeaways",
-    "href": "brand-guide.html#takeaways",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Takeaways",
-    "text": "Takeaways\n\nKey idea: transformations build a plan; actions run it.\n\n\n::: {.takeaway}\n**Key idea:** transformations build a plan; actions run it.\n:::\nUse one takeaway per slide at most, usually at the end of a topic."
-  },
-  {
-    "objectID": "brand-guide.html#dark-slides",
-    "href": "brand-guide.html#dark-slides",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Dark slides",
-    "text": "Dark slides\nUse a dark slide for a question to the class, a pause, or a big idea.\n## Discuss {.dark background-color=\"#022F4A\"}\nUse no more than one or two per lecture."
-  },
-  {
-    "objectID": "brand-guide.html#tables",
-    "href": "brand-guide.html#tables",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Tables",
-    "text": "Tables\n\n\n\nTool\nScale\nLanguage\n\n\n\n\npandas\nOne machine\nPython\n\n\nPolars\nOne machine\nPython / Rust\n\n\nPySpark\nCluster\nPython / SQL\n\n\nDatabricks SQL\nCluster\nSQL\n\n\n\nTables get a navy header row and light striping."
-  },
-  {
-    "objectID": "brand-guide.html#logos",
-    "href": "brand-guide.html#logos",
-    "title": "DS 460 Slide Brand Guide",
-    "section": "Logos",
-    "text": "Logos\n\n\n\n\n\nHex badge (DS460_Hex.png) goes in the slide corner and on the title slide. That’s set up for every deck.\nBanner (DS460_Banner.png) is for the course site and syllabus headers. It’s too wide for a slide.\nDon’t recolor, stretch, or crop either logo."
-  },
-  {
-    "objectID": "day05_proposals.html#show-us-the-church-project",
-    "href": "day05_proposals.html#show-us-the-church-project",
-    "title": "Proposals and What’s Next",
-    "section": "Show us the church project",
-    "text": "Show us the church project\nWho will put their work on the screen?\n\nWhich question did you take, and why that one?\nShow the chart. Say the point in one sentence.\nWhat surprised you in the data?\nWhat took the longest, and how did you get past it?\n\nWe learn more from the wrangling you struggled with than from the finished chart.\n\nAim for three or four students. Push on the insight sentence, not the code."
-  },
-  {
-    "objectID": "day05_proposals.html#questions",
-    "href": "day05_proposals.html#questions",
-    "title": "Proposals and What’s Next",
-    "section": "Questions",
-    "text": "Questions\nWhat’s still fuzzy?\n\n\nPolars\nNested columns, joins, group_by, lazy vs. eager\n\nDatabricks\nWorkspaces, loading the data, the catalog, serverless\n\nPySpark\nHow it differs from Polars, when we start using it\n\nAsk the question you think is too basic. Someone else has it too."
-  },
-  {
-    "objectID": "day05_proposals.html#team-time",
-    "href": "day05_proposals.html#team-time",
-    "title": "Proposals and What’s Next",
+    "objectID": "day04_data_summaries.html#team-time",
+    "href": "day04_data_summaries.html#team-time",
+    "title": "Data Summaries That Persuade",
     "section": "Team time",
-    "text": "Team time\nBuild your proposal presentation. 5 to 8 slides.\n\n\n\nTeam members and majors\nThe business need, and why it’s worth money\nYour data, with descriptive visuals\nHow ML/AI fits the application\nWhat a successful product looks like\n\n\n\nBefore you present\n\nCan you say your client, place, time span, and unit of analysis in one breath?\nIs your point in the first minute?\nWho is saying which part?"
+    "text": "Team time\nWork on the proposal. I’ll come around.\n\nCome find me with: your client, your unit of analysis, and the one chart you’d show them first."
   },
   {
-    "objectID": "day05_proposals.html#presentations",
-    "href": "day05_proposals.html#presentations",
-    "title": "Proposals and What’s Next",
-    "section": "Presentations",
-    "text": "Presentations\nEach team presents, then takes questions.\n\nMake your point early, then justify it.\nBe ready to go deep: where the data comes from, what a row means, why this client.\nEveryone else: take notes on the approach you’d back.\n\n\nWe’re deciding as a class which direction the project takes. Speak up now, not next week."
+    "objectID": "day07_work_time.html#today",
+    "href": "day07_work_time.html#today",
+    "title": "Work Time and Secrets",
+    "section": "Today",
+    "text": "Today\n\nA short word on environment variables — you’re about to need an API key\nOpen class time on the Census API and unit of analysis challenges"
   },
   {
-    "objectID": "day05_proposals.html#whats-next",
-    "href": "day05_proposals.html#whats-next",
-    "title": "Proposals and What’s Next",
-    "section": "What’s next",
-    "text": "What’s next\n\n\n\n1. Written Polars challenge\nIn class 10/1, first 15 to 20 minutes. On paper, no computer.\nPractice: group_by, agg, joins, and nested columns.\n\n\n\n2. Census API challenge\nPull block-group data from the US Census API and join it to our places.\n\n\n\n3. Simple feature challenge\nBuild your first features at the unit of analysis we choose today.\n\n\nDates land in the class repository and Canvas. Challenges are announced at least 24 hours ahead."
+    "objectID": "day07_work_time.html#keys-dont-belong-in-code",
+    "href": "day07_work_time.html#keys-dont-belong-in-code",
+    "title": "Work Time and Secrets",
+    "section": "Keys don’t belong in code",
+    "text": "Keys don’t belong in code\nThe Census API hands you a key. Don’t paste it into a notebook.\n\nOnce a key is committed, it’s in the git history forever — and your repo is public."
+  },
+  {
+    "objectID": "day07_work_time.html#the-short-version",
+    "href": "day07_work_time.html#the-short-version",
+    "title": "Work Time and Secrets",
+    "section": "The short version",
+    "text": "The short version\n\n\nLocally\nPut it in a .env file, add .env to .gitignore, load it with python-dotenv.\n\n\nOn Databricks\nStore it as a Unity Catalog secret, read it with dbutils.secrets.get().\n\n\nAlways\nNever print() a key. If one leaks, rotate it first, clean up after.\n\n\nFull walkthrough: Keep Your Secrets Out of Your Code — setup for Python, Databricks and R."
+  },
+  {
+    "objectID": "day07_work_time.html#open-class-time",
+    "href": "day07_work_time.html#open-class-time",
+    "title": "Work Time and Secrets",
+    "section": "Open class time",
+    "text": "Open class time\nTwo challenges, your choice of order.\n\n\n\nCensus API\nGet a key, pull one table, work out the block-group join to our stores.\n\n\n\nUnit of analysis\nSettle your one sentence: one row is one _____, and we predict _____ for it.\n\n\nI’ll come around. Bring me the thing you’re stuck on, not the thing that’s finished."
+  },
+  {
+    "objectID": "day07_work_time.html#where-to-find-things",
+    "href": "day07_work_time.html#where-to-find-things",
+    "title": "Work Time and Secrets",
+    "section": "Where to find things",
+    "text": "Where to find things\n\nDates and links: the class repository\nSecrets and API keys: the environment variables deck\nDatabricks setup and the catalog: Day 3\nCharts and tables: Day 4"
+  },
+  {
+    "objectID": "day11_murphy.html#murphy-is-here",
+    "href": "day11_murphy.html#murphy-is-here",
+    "title": "Murphy in Class",
+    "section": "Murphy is here",
+    "text": "Murphy is here\nThey talk. Then we ask questions.\n\nThis is the closest thing to a real client you’ll get this semester. Use it."
+  },
+  {
+    "objectID": "day11_murphy.html#questions-worth-asking",
+    "href": "day11_murphy.html#questions-worth-asking",
+    "title": "Murphy in Class",
+    "section": "Questions worth asking",
+    "text": "Questions worth asking\n\n\nAbout the business\n\nWhat decisions do you make with store data today?\nWhat would you want to know and can’t?\nHow do you measure whether a promotion worked?\n\n\nAbout our project\n\nWould this prediction change anything you do?\nWhat would make you distrust a model?\nWho inside the company would actually use it?"
+  },
+  {
+    "objectID": "day11_murphy.html#after-they-leave",
+    "href": "day11_murphy.html#after-they-leave",
+    "title": "Murphy in Class",
+    "section": "After they leave",
+    "text": "After they leave\nWrite it down while it’s fresh.\n\nWhat did they say your project is missing?\nWhat did they care about that you hadn’t considered?\nWhat assumption of yours did they contradict?\n\n\nTheir words belong in your pitch. “We asked a fuel retailer, and they said ___” beats anything you can assert on your own."
   },
   {
     "objectID": "day02_data_tools.html#today",
@@ -882,228 +665,508 @@
     "text": "Discuss\nWho would pay for a prediction made from convenience-store data?\n\nName a client, a place, and a unit of analysis."
   },
   {
-    "objectID": "day11_murphy.html#murphy-is-here",
-    "href": "day11_murphy.html#murphy-is-here",
-    "title": "Murphy in Class",
-    "section": "Murphy is here",
-    "text": "Murphy is here\nThey talk. Then we ask questions.\n\nThis is the closest thing to a real client you’ll get this semester. Use it."
+    "objectID": "day05_proposals.html#show-us-the-church-project",
+    "href": "day05_proposals.html#show-us-the-church-project",
+    "title": "Proposals and What’s Next",
+    "section": "Show us the church project",
+    "text": "Show us the church project\nWho will put their work on the screen?\n\nWhich question did you take, and why that one?\nShow the chart. Say the point in one sentence.\nWhat surprised you in the data?\nWhat took the longest, and how did you get past it?\n\nWe learn more from the wrangling you struggled with than from the finished chart.\n\nAim for three or four students. Push on the insight sentence, not the code."
   },
   {
-    "objectID": "day11_murphy.html#questions-worth-asking",
-    "href": "day11_murphy.html#questions-worth-asking",
-    "title": "Murphy in Class",
-    "section": "Questions worth asking",
-    "text": "Questions worth asking\n\n\nAbout the business\n\nWhat decisions do you make with store data today?\nWhat would you want to know and can’t?\nHow do you measure whether a promotion worked?\n\n\nAbout our project\n\nWould this prediction change anything you do?\nWhat would make you distrust a model?\nWho inside the company would actually use it?"
+    "objectID": "day05_proposals.html#questions",
+    "href": "day05_proposals.html#questions",
+    "title": "Proposals and What’s Next",
+    "section": "Questions",
+    "text": "Questions\nWhat’s still fuzzy?\n\n\nPolars\nNested columns, joins, group_by, lazy vs. eager\n\nDatabricks\nWorkspaces, loading the data, the catalog, serverless\n\nPySpark\nHow it differs from Polars, when we start using it\n\nAsk the question you think is too basic. Someone else has it too."
   },
   {
-    "objectID": "day11_murphy.html#after-they-leave",
-    "href": "day11_murphy.html#after-they-leave",
-    "title": "Murphy in Class",
-    "section": "After they leave",
-    "text": "After they leave\nWrite it down while it’s fresh.\n\nWhat did they say your project is missing?\nWhat did they care about that you hadn’t considered?\nWhat assumption of yours did they contradict?\n\n\nTheir words belong in your pitch. “We asked a fuel retailer, and they said ___” beats anything you can assert on your own."
-  },
-  {
-    "objectID": "day07_work_time.html#today",
-    "href": "day07_work_time.html#today",
-    "title": "Work Time and Secrets",
-    "section": "Today",
-    "text": "Today\n\nA short word on environment variables — you’re about to need an API key\nOpen class time on the Census API and unit of analysis challenges"
-  },
-  {
-    "objectID": "day07_work_time.html#keys-dont-belong-in-code",
-    "href": "day07_work_time.html#keys-dont-belong-in-code",
-    "title": "Work Time and Secrets",
-    "section": "Keys don’t belong in code",
-    "text": "Keys don’t belong in code\nThe Census API hands you a key. Don’t paste it into a notebook.\n\nOnce a key is committed, it’s in the git history forever — and your repo is public."
-  },
-  {
-    "objectID": "day07_work_time.html#the-short-version",
-    "href": "day07_work_time.html#the-short-version",
-    "title": "Work Time and Secrets",
-    "section": "The short version",
-    "text": "The short version\n\n\nLocally\nPut it in a .env file, add .env to .gitignore, load it with python-dotenv.\n\n\nOn Databricks\nStore it as a Unity Catalog secret, read it with dbutils.secrets.get().\n\n\nAlways\nNever print() a key. If one leaks, rotate it first, clean up after.\n\n\nFull walkthrough: Keep Your Secrets Out of Your Code — setup for Python, Databricks and R."
-  },
-  {
-    "objectID": "day07_work_time.html#open-class-time",
-    "href": "day07_work_time.html#open-class-time",
-    "title": "Work Time and Secrets",
-    "section": "Open class time",
-    "text": "Open class time\nTwo challenges, your choice of order.\n\n\n\nCensus API\nGet a key, pull one table, work out the block-group join to our stores.\n\n\n\nUnit of analysis\nSettle your one sentence: one row is one _____, and we predict _____ for it.\n\n\nI’ll come around. Bring me the thing you’re stuck on, not the thing that’s finished."
-  },
-  {
-    "objectID": "day07_work_time.html#where-to-find-things",
-    "href": "day07_work_time.html#where-to-find-things",
-    "title": "Work Time and Secrets",
-    "section": "Where to find things",
-    "text": "Where to find things\n\nDates and links: the class repository\nSecrets and API keys: the environment variables deck\nDatabricks setup and the catalog: Day 3\nCharts and tables: Day 4"
-  },
-  {
-    "objectID": "day04_data_summaries.html#today",
-    "href": "day04_data_summaries.html#today",
-    "title": "Data Summaries That Persuade",
-    "section": "Today",
-    "text": "Today\n\nWhat makes a chart worth showing\nOne of your charts, on the screen\nTables vs. charts\nCanvas: are the due dates right?\nThe project proposal challenge\nTeam time"
-  },
-  {
-    "objectID": "day04_data_summaries.html#what-makes-a-chart-worth-showing",
-    "href": "day04_data_summaries.html#what-makes-a-chart-worth-showing",
-    "title": "Data Summaries That Persuade",
-    "section": "What makes a chart worth showing",
-    "text": "What makes a chart worth showing\n\nOne point per chart. If you can’t say it in a sentence, it isn’t done.\nPut the point in the title. “Religious buildings fill up at different hours” beats “Visits by hour.”\nOrder on purpose. Sort by value, not alphabetically.\nLabel the axes in a client’s words, with units.\nCut what carries no meaning: heavy gridlines, needless legends, unread decimals.\n\n\nThe chart is the argument. A weak visual weakens it."
-  },
-  {
-    "objectID": "day04_data_summaries.html#the-challenge-questions",
-    "href": "day04_data_summaries.html#the-challenge-questions",
-    "title": "Data Summaries That Persuade",
-    "section": "The challenge questions",
-    "text": "The challenge questions\nCompare church buildings in Utah and Georgia. Answer at least three:\n\niPhone vs. Android visitors to Latter-day Saint buildings in each state\nHourly patterns, Latter-day Saint vs. other churches\nrelated_same_day_brand for each group\nA reach: related_same_day_brand for temples, seminaries, and meetinghouses\n\nEach answer: code, a visualization, the first five rows charted, and a few sentences of insight."
-  },
-  {
-    "objectID": "day04_data_summaries.html#lets-see-one-of-yours",
-    "href": "day04_data_summaries.html#lets-see-one-of-yours",
-    "title": "Data Summaries That Persuade",
-    "section": "Let’s see one of yours",
-    "text": "Let’s see one of yours\nWho will put a chart on the screen?\n\nTell us the question, then the point your chart makes. We’ll talk about what the chart does well and what would make the point land harder.\n\nAsk the room: what is the point? Can you see it in under five seconds? What would you cut?"
-  },
-  {
-    "objectID": "day04_data_summaries.html#when-a-table-wins",
-    "href": "day04_data_summaries.html#when-a-table-wins",
-    "title": "Data Summaries That Persuade",
-    "section": "When a table wins",
-    "text": "When a table wins\n\n\n\nUse a chart\n\nA shape, trend, or comparison\nMany values at once\n“Which is bigger” at a glance\n\n\n\n\nUse a table\n\nExact numbers matter\nA handful of rows\nSeveral different units side by side\nPeople will look up a specific row\n\n\n\nA table is a visual too. It deserves the same care: aligned numbers, real labels, a title that says the point."
-  },
-  {
-    "objectID": "day04_data_summaries.html#great-tables",
-    "href": "day04_data_summaries.html#great-tables",
-    "title": "Data Summaries That Persuade",
-    "section": "Great Tables",
-    "text": "Great Tables\n\nMade with Great Tables (pip install great-tables), which works directly with Polars."
-  },
-  {
-    "objectID": "day04_data_summaries.html#lets-plot",
-    "href": "day04_data_summaries.html#lets-plot",
-    "title": "Data Summaries That Persuade",
-    "section": "Lets-Plot",
-    "text": "Lets-Plot\n\nMade with Lets-Plot (pip install lets-plot), a grammar-of-graphics library like ggplot2."
-  },
-  {
-    "objectID": "day04_data_summaries.html#your-toolbox",
-    "href": "day04_data_summaries.html#your-toolbox",
-    "title": "Data Summaries That Persuade",
-    "section": "Your toolbox",
-    "text": "Your toolbox\n\n\n\nPackage\nGood for\n\n\n\n\nPlotly Express\nQuick interactive charts. Required for this challenge.\n\n\nLets-Plot\nGrammar of graphics, close to ggplot2\n\n\nGreat Tables\nPresentation-ready tables from Polars\n\n\n\nBoth example figures on the last two slides came from your challenge data. The script is in img/example_figures.py."
-  },
-  {
-    "objectID": "day04_data_summaries.html#canvas-check",
-    "href": "day04_data_summaries.html#canvas-check",
-    "title": "Data Summaries That Persuade",
-    "section": "Canvas check",
-    "text": "Canvas check\nLet’s open Canvas together and compare it to the class repository.\n\nIs the wrangling and visualization challenge date right?\nIs Learning Plan 1 there, and when?\nIs the project proposal date right?\nAnything listed that we haven’t talked about?\n\nTell me now if a date is wrong. Fixing it later costs you more than it costs me."
-  },
-  {
-    "objectID": "day04_data_summaries.html#the-proposal-again",
-    "href": "day04_data_summaries.html#the-proposal-again",
-    "title": "Data Summaries That Persuade",
-    "section": "The proposal, again",
-    "text": "The proposal, again\nDue 9/29. Challenge repository\n\nPDI C-Stores is the driving dataset; don’t target one brand.\nThe model outputs a probability or a count.\nName a client, place, time span, and unit of analysis.\nSay how you’ll use the Census API.\nTwo pages or 5 to 8 slides.\n\n\nThis is a decision-point presentation. Make your point early, then justify it."
-  },
-  {
-    "objectID": "day04_data_summaries.html#team-time",
-    "href": "day04_data_summaries.html#team-time",
-    "title": "Data Summaries That Persuade",
+    "objectID": "day05_proposals.html#team-time",
+    "href": "day05_proposals.html#team-time",
+    "title": "Proposals and What’s Next",
     "section": "Team time",
-    "text": "Team time\nWork on the proposal. I’ll come around.\n\nCome find me with: your client, your unit of analysis, and the one chart you’d show them first."
+    "text": "Team time\nBuild your proposal presentation. 5 to 8 slides.\n\n\n\nTeam members and majors\nThe business need, and why it’s worth money\nYour data, with descriptive visuals\nHow ML/AI fits the application\nWhat a successful product looks like\n\n\n\nBefore you present\n\nCan you say your client, place, time span, and unit of analysis in one breath?\nIs your point in the first minute?\nWho is saying which part?"
   },
   {
-    "objectID": "day03_databricks.html#today",
-    "href": "day03_databricks.html#today",
-    "title": "Databricks Setup and Team Time",
+    "objectID": "day05_proposals.html#presentations",
+    "href": "day05_proposals.html#presentations",
+    "title": "Proposals and What’s Next",
+    "section": "Presentations",
+    "text": "Presentations\nEach team presents, then takes questions.\n\nMake your point early, then justify it.\nBe ready to go deep: where the data comes from, what a row means, why this client.\nEveryone else: take notes on the approach you’d back.\n\n\nWe’re deciding as a class which direction the project takes. Speak up now, not next week."
+  },
+  {
+    "objectID": "day05_proposals.html#whats-next",
+    "href": "day05_proposals.html#whats-next",
+    "title": "Proposals and What’s Next",
+    "section": "What’s next",
+    "text": "What’s next\n\n\n\n1. Written Polars challenge\nIn class 10/1, first 15 to 20 minutes. On paper, no computer.\nPractice: group_by, agg, joins, and nested columns.\n\n\n\n2. Census API challenge\nPull block-group data from the US Census API and join it to our places.\n\n\n\n3. Simple feature challenge\nBuild your first features at the unit of analysis we choose today.\n\n\nDates land in the class repository and Canvas. Challenges are announced at least 24 hours ahead."
+  },
+  {
+    "objectID": "brand-guide.html#where-the-brand-lives",
+    "href": "brand-guide.html#where-the-brand-lives",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Where the brand lives",
+    "text": "Where the brand lives\nAll decks in slides/ pick this up automatically.\n\n\n\nFile\nWhat it controls\n\n\n\n\n_brand.yml\nColors, fonts, logos\n\n\nds460.scss\nHeading rule, title slide, code, helper classes\n\n\n_quarto.yml\nLogo, footer, slide numbers, transitions\n\n\n\nStart a new deck by copying example.qmd. There’s no theme to set per deck."
+  },
+  {
+    "objectID": "brand-guide.html#source-artwork",
+    "href": "brand-guide.html#source-artwork",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Source artwork",
+    "text": "Source artwork\n\nThe palette is sampled from the banner photo and the hex badge. Fonts match the banner’s monospaced title and the badge’s rounded sans."
+  },
+  {
+    "objectID": "brand-guide.html#color-palette",
+    "href": "brand-guide.html#color-palette",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Color palette",
+    "text": "Color palette\n\n\n  Summit Navy#022F4Aheadings, dark slides\n\n\n  Ridge Blue#426A8Alinks, h3, footer\n\n\n  Slate#263D46inline code\n\n\n  Teal#4D93ACcards, info\n\n\n  Sky Ice#BDD3E5hex fill, soft text\n\n\n  Mist#D2DADBdividers\n\n\n  Cloud#F4F7F9code, cards\n\n\n  Spark Orange#D5773Ccode rule, stats\n\n\n  Course Orange#F59625accents, subtitle\n\n\n  Ink#111111body text"
+  },
+  {
+    "objectID": "brand-guide.html#color-rules",
+    "href": "brand-guide.html#color-rules",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Color rules",
+    "text": "Color rules\n\nNavy carries the structure: headings, the title slide, table headers.\nOrange is the accent. Use it once or twice per slide, never for body text.\nTeal and ridge blue are for secondary information.\nLight slides use white. Save navy backgrounds for emphasis.\n\nText helpers: .navy · .orange · .spark · .teal · .muted\nSpark is [lazy]{.orange} until an action runs."
+  },
+  {
+    "objectID": "brand-guide.html#typography",
+    "href": "brand-guide.html#typography",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Typography",
+    "text": "Typography\n\n\nHeadings: Fira Code\nBig Data\nMonospaced, like the banner. Keep headings short so they fit on one line.\n\nBody: Open Sans\nReadable at the back of the room.\nSans serif for bullets and prose. Code also uses Fira Code, so headings and code look alike."
+  },
+  {
+    "objectID": "brand-guide.html#code",
+    "href": "brand-guide.html#code",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Code",
+    "text": "Code\nfrom pyspark.sql import functions as F\n\n(spark.table(\"games\")\n    .groupBy(\"team\")\n    .agg(F.avg(\"points\").alias(\"avg_points\"))\n    .orderBy(F.desc(\"avg_points\")))\nCode blocks use a light surface and a Spark Orange rule. Inline code uses slate on cloud."
+  },
+  {
+    "objectID": "brand-guide.html#cards-and-stats",
+    "href": "brand-guide.html#cards-and-stats",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Cards and stats",
+    "text": "Cards and stats\n\n\n\n2.5 PB Ingested per day\n\n\n\n200× Faster than pandas\n\n\n\n1 Line to scale out\n\n\n::: {.card}\n[Card title]{.card-title}\n\n[2.5 PB]{.stat}\n:::\nUse [Title]{.card-title}, not ###. A heading at the start of a div becomes its own slide."
+  },
+  {
+    "objectID": "brand-guide.html#takeaways",
+    "href": "brand-guide.html#takeaways",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nKey idea: transformations build a plan; actions run it.\n\n\n::: {.takeaway}\n**Key idea:** transformations build a plan; actions run it.\n:::\nUse one takeaway per slide at most, usually at the end of a topic."
+  },
+  {
+    "objectID": "brand-guide.html#dark-slides",
+    "href": "brand-guide.html#dark-slides",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Dark slides",
+    "text": "Dark slides\nUse a dark slide for a question to the class, a pause, or a big idea.\n## Discuss {.dark background-color=\"#022F4A\"}\nUse no more than one or two per lecture."
+  },
+  {
+    "objectID": "brand-guide.html#tables",
+    "href": "brand-guide.html#tables",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Tables",
+    "text": "Tables\n\n\n\nTool\nScale\nLanguage\n\n\n\n\npandas\nOne machine\nPython\n\n\nPolars\nOne machine\nPython / Rust\n\n\nPySpark\nCluster\nPython / SQL\n\n\nDatabricks SQL\nCluster\nSQL\n\n\n\nTables get a navy header row and light striping."
+  },
+  {
+    "objectID": "brand-guide.html#logos",
+    "href": "brand-guide.html#logos",
+    "title": "DS 460 Slide Brand Guide",
+    "section": "Logos",
+    "text": "Logos\n\n\n\n\n\nHex badge (DS460_Hex.png) goes in the slide corner and on the title slide. That’s set up for every deck.\nBanner (DS460_Banner.png) is for the course site and syllabus headers. It’s too wide for a slide.\nDon’t recolor, stretch, or crop either logo."
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#today",
+    "href": "day06_api_unit_of_analysis.html#today",
+    "title": "Written Challenge and Round Two",
     "section": "Today",
-    "text": "Today\n\nThe schedule\nQuestions on the church data\nDatabricks Free Edition: three workspaces\nLoad the semester data and find it in the catalog\nTeam time on your proposal"
+    "text": "Today\n\nWritten challenge — first 20 minutes\nSecond round of team pitches\nThe Census API challenge\nThe unit of analysis challenge"
   },
   {
-    "objectID": "day03_databricks.html#whats-due",
-    "href": "day03_databricks.html#whats-due",
-    "title": "Databricks Setup and Team Time",
+    "objectID": "day06_api_unit_of_analysis.html#written-challenge",
+    "href": "day06_api_unit_of_analysis.html#written-challenge",
+    "title": "Written Challenge and Round Two",
+    "section": "Written challenge",
+    "text": "Written challenge\nPaper and pencil. No computer.\n\nPolars: group_by and agg, joins, and the nested columns you wrangled in the church data.\n\nScored 1 to 4, like every challenge. I’m reading for whether you know what the code does, not whether the syntax is perfect."
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#second-pitches",
+    "href": "day06_api_unit_of_analysis.html#second-pitches",
+    "title": "Written Challenge and Round Two",
+    "section": "Second pitches",
+    "text": "Second pitches\nWhat’s different this round: you’ve seen the data now.\n\nHas your client survived contact with the C-Store tables?\nWhat did the data make easier than you pitched, and what turned out to be hard?\nShow one chart from the real data, not a mock-up.\nMake the point early, then justify it.\n\n\nWe’re converging, not just presenting. By the end we should agree on the direction the class takes."
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#the-census-api-challenge",
+    "href": "day06_api_unit_of_analysis.html#the-census-api-challenge",
+    "title": "Written Challenge and Round Two",
+    "section": "The Census API challenge",
+    "text": "The Census API challenge\nPull demographic data from the US Census API and join it to our stores.\n\n\nWhy\nPOS data says what sold. Census says who lives around the store.\n\n\nThe work\nRequest block-group tables, handle the key and the limits, cache what you pull.\n\n\nThe join\nStore → block group → demographics. Geography is the hard part.\n\n\nDetails and dates are in the class repository."
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#the-unit-of-analysis-challenge",
+    "href": "day06_api_unit_of_analysis.html#the-unit-of-analysis-challenge",
+    "title": "Written Challenge and Round Two",
+    "section": "The unit of analysis challenge",
+    "text": "The unit of analysis challenge\nOne row of your modeling table equals what?\n\nWho or what: a shopper, a store, a product, a store × week?\nWhere: county, city, or chain?\nWhen: daily, weekly, monthly?\nThe target: a probability or a count, measured on that unit.\n\nEverything downstream — features, the model, the app — is built on this one decision."
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#why-this-is-the-hard-one",
+    "href": "day06_api_unit_of_analysis.html#why-this-is-the-hard-one",
+    "title": "Written Challenge and Round Two",
+    "section": "Why this is the hard one",
+    "text": "Why this is the hard one\n\n\n\nToo fine\nProduct × store × day: mostly zeros, no signal to learn.\n\n\n\nJust right\nEnough rows to model, enough events per row to be stable, and a unit the client actually acts on.\n\n\n\nSay it in one sentence: “One row is one _____, and we predict _____ for it.”"
+  },
+  {
+    "objectID": "day06_api_unit_of_analysis.html#before-next-class",
+    "href": "day06_api_unit_of_analysis.html#before-next-class",
+    "title": "Written Challenge and Round Two",
+    "section": "Before next class",
+    "text": "Before next class\nBring your team’s one sentence.\n\nThen get a Census API key and pull one table — any table — so we can see the shape of what comes back."
+  },
+  {
+    "objectID": "day12_unit_presentations.html#today",
+    "href": "day12_unit_presentations.html#today",
+    "title": "Unit of Analysis Presentations",
+    "section": "Today",
+    "text": "Today\n\nUnit of analysis presentations — every team\nThe easy feature challenge\nYour first take-home PySpark challenge"
+  },
+  {
+    "objectID": "day12_unit_presentations.html#presenting-your-unit-of-analysis",
+    "href": "day12_unit_presentations.html#presenting-your-unit-of-analysis",
+    "title": "Unit of Analysis Presentations",
+    "section": "Presenting your unit of analysis",
+    "text": "Presenting your unit of analysis\nShort, specific, and defensible.\n\nOne row is one _____, and we predict _____ for it.\nWhy that grain? What breaks if you go finer or coarser?\nHow many rows does it give you, and how many events per row?\nWhat does your client do with a prediction at that grain?\n\n\nWe’re deciding as a class. Listen for the grain you’d be willing to build features on, because that’s the one we’ll use."
+  },
+  {
+    "objectID": "day12_unit_presentations.html#the-easy-feature-challenge",
+    "href": "day12_unit_presentations.html#the-easy-feature-challenge",
+    "title": "Unit of Analysis Presentations",
+    "section": "The easy feature challenge",
+    "text": "The easy feature challenge\nBuild your first features at the unit of analysis we settle today.\n\n\n\nStart with simple aggregates: counts, sums, rates, shares\nDocument each one so a teammate can rebuild it\nWatch for leakage: nothing that only exists after the outcome\n\n\n\nDue\n10/26\nChallenge repo →"
+  },
+  {
+    "objectID": "day12_unit_presentations.html#take-home-pyspark-challenge-1",
+    "href": "day12_unit_presentations.html#take-home-pyspark-challenge-1",
+    "title": "Unit of Analysis Presentations",
+    "section": "Take-home PySpark challenge 1",
+    "text": "Take-home PySpark challenge 1\nDue 10/21. Find it in Databricks.\n\n\nA key challenge — it carries extra weight in your grade\nTalk with your group, but don’t share code\nScored 1 to 4\n\nStart tonight. If Databricks fights you, tell me before the deadline, not after."
+  },
+  {
+    "objectID": "day12_unit_presentations.html#whats-due",
+    "href": "day12_unit_presentations.html#whats-due",
+    "title": "Unit of Analysis Presentations",
     "section": "What’s due",
-    "text": "What’s due\n\n\n\n\n\n\n\n\nAssignment\nDue\nWhere\n\n\n\n\nData wrangling & visualization challenge\n9/24\nGitHub pull request + Canvas\n\n\nLearning Plan 1\n9/25\nCanvas\n\n\nProject proposal & unit of analysis\n9/29\nTeam folder on GitHub + Canvas\n\n\n\n\nThe full list of challenges and dates is in the class repository.\nKeep tracking your hours in Harvest."
+    "text": "What’s due\n\n\n\n\n\n\n\nWork\nDue\n\n\n\n\nTake-home PySpark challenge 1\n10/21\n\n\nEasy feature challenge\n10/26\n\n\n\nEverything is listed in the class repository."
   },
   {
-    "objectID": "day03_databricks.html#your-questions",
-    "href": "day03_databricks.html#your-questions",
-    "title": "Databricks Setup and Team Time",
-    "section": "Your questions",
-    "text": "Your questions\nWhat’s slowing you down on the wrangling and visualization challenge?\n\nReading the data · nested columns · picking a chart · the report format"
+    "objectID": "index.html#class-days",
+    "href": "index.html#class-days",
+    "title": "DS 460 Class Slides",
+    "section": "Class days",
+    "text": "Class days\nOne deck per class meeting, in order.\n\n\n\n\n\n\nDeck\n\n\n\nTopics\n\n\n\n\n\n\n\n\nWelcome to DS 460\n\n\nDay 1: How this class works\n\n\n\n\n\n\nData Sizes, Formats, and Tools\n\n\nDay 2: Parquet, Arrow, Polars, PySpark, and your first two challenges\n\n\n\n\n\n\nDatabricks Setup and Team Time\n\n\nDay 3: Schedule, questions, Databricks Free Edition, and your proposal\n\n\n\n\n\n\nData Summaries That Persuade\n\n\nDay 4: Charts, tables, due dates, and proposal time\n\n\n\n\n\n\nProposals and What’s Next\n\n\nDay 5: Show your work, team time, presentations, and three new challenges\n\n\n\n\n\n\nWritten Challenge and Round Two\n\n\nDay 6: Polars on paper, second pitches, and two new challenges\n\n\n\n\n\n\nWork Time and Secrets\n\n\nDay 7: Open class time on the two challenges, plus environment variables\n\n\n\n\n\n\nNo Class Today\n\n\nDay 8: Adam Miller presentation\n\n\n\n\n\n\nFrom Challenges to the Project\n\n\nDay 9: Census API, the team project, analysis decks, and Murphy\n\n\n\n\n\n\nProject Work Time\n\n\nDay 10: Teams build, I come to you\n\n\n\n\n\n\nMurphy in Class\n\n\nDay 11: Our client in the room\n\n\n\n\n\n\nUnit of Analysis Presentations\n\n\nDay 12: Present, then two new challenges\n\n\n\n\n\n\nPlan the Semester, Then Aggregate\n\n\nDay 13: Questions, teaching topics, the schedule, and GROUP BY vs. windows\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "day03_databricks.html#nested-columns",
-    "href": "day03_databricks.html#nested-columns",
-    "title": "Databricks Setup and Team Time",
-    "section": "Nested columns",
-    "text": "Nested columns\nMany patterns columns are lists of key/value pairs. Explode the list into rows, then unnest the pairs into columns:\ndevices = (patterns\n    .select(\"placekey\", \"device_type\")\n    .explode(\"device_type\")\n    .unnest(\"device_type\"))\n\n\n\nplacekey\nkey\nvalue\n\n\n\n\n222-223@8g7-2n2-td9\nandroid\n4\n\n\n222-223@8g7-2n2-td9\nios\n5\n\n\n\nThe same pattern works for related_same_day_brand, popularity_by_day, and the other key/value columns."
+    "objectID": "index.html#topics",
+    "href": "index.html#topics",
+    "title": "DS 460 Class Slides",
+    "section": "Topics",
+    "text": "Topics\nReusable decks on one tool or idea. Pull them into a class day when the class needs them.\n\n\n\n\n\n\nDeck\n\n\n\nWhat it covers\n\n\n\n\n\n\n\n\nBaskets of Goods\n\n\nAssociation rule mining on C-Store transactions\n\n\n\n\n\n\nCustomer Segmentation\n\n\nClustering, dimension reduction, UMAP and HDBSCAN\n\n\n\n\n\n\nKeep Your Secrets Out of Your Code\n\n\nEnvironment variables in Python, Databricks, and R\n\n\n\n\n\n\nLabeled Baskets\n\n\nTurning C-Store transactions into a supervised model\n\n\n\n\n\n\nNo matching items\n\nPress s in a deck for speaker view, f for full screen, and Esc for a slide overview."
   },
   {
-    "objectID": "day03_databricks.html#what-it-is",
-    "href": "day03_databricks.html#what-it-is",
-    "title": "Databricks Setup and Team Time",
-    "section": "What it is",
-    "text": "What it is\n\n\n\nA free, serverless Databricks workspace\nSpark notebooks with no clusters to manage\nThe same platform companies pay for\nSign up here\n\n\n\nLimits to know\n\nNotebooks time out after 2.5 hours\nGo over quota and compute shuts off for the day\nPython and SQL only (no R or Scala)\nNo commercial use"
+    "objectID": "index.html#reference",
+    "href": "index.html#reference",
+    "title": "DS 460 Class Slides",
+    "section": "Reference",
+    "text": "Reference\n\nCourse book\nCourse guide and syllabus"
   },
   {
-    "objectID": "day03_databricks.html#three-workspaces",
-    "href": "day03_databricks.html#three-workspaces",
-    "title": "Databricks Setup and Team Time",
-    "section": "Three workspaces",
-    "text": "Three workspaces\n\n\n\n1. Class\nOne workspace for all of us.\nOpen the class workspace\n\n\n\n2. Team\nYour whole team in one workspace, so you share notebooks and data.\nOne teammate creates it.\n\n\n\n3. Personal\nYour own space to experiment and practice.\nYou create it."
+    "objectID": "day01_welcome.html#today",
+    "href": "day01_welcome.html#today",
+    "title": "Welcome to DS 460",
+    "section": "Today",
+    "text": "Today\n\nWhat you’ll be able to do by the end of the semester\nHow the class runs: like a start-up, not a lecture\nHow you’ll learn: on purpose, with some confusion\nHow you’re graded: four competencies and a letter\nWhat to do this week\n\n\nEverything here comes from the course guide: github.com/byuibigdata/course_guide"
   },
   {
-    "objectID": "day03_databricks.html#set-up-your-personal-workspace",
-    "href": "day03_databricks.html#set-up-your-personal-workspace",
-    "title": "Databricks Setup and Team Time",
-    "section": "Set up your personal workspace",
-    "text": "Set up your personal workspace\n\nGo to Databricks Free Edition and sign up.\nUse your university email. BYU-I emails can sign in with Google or Microsoft.\nCreate a notebook to confirm it works."
+    "objectID": "day01_welcome.html#by-the-end-of-the-semester-youll-be-able-to",
+    "href": "day01_welcome.html#by-the-end-of-the-semester-youll-be-able-to",
+    "title": "Welcome to DS 460",
+    "section": "By the end of the semester, you’ll be able to",
+    "text": "By the end of the semester, you’ll be able to\n\nExplore and interpret distributed data at scale in business contexts, using Databricks and PySpark.\nImplement the pipeline, from API ingestion through feature engineering to a containerized app.\nPresent data-informed arguments for technical team decisions.\nIdentify the differences and benefits of current industry tools for big data storage and analysis."
   },
   {
-    "objectID": "day03_databricks.html#set-up-your-team-workspace",
-    "href": "day03_databricks.html#set-up-your-team-workspace",
-    "title": "Databricks Setup and Team Time",
-    "section": "Set up your team workspace",
-    "text": "Set up your team workspace\n\nOne teammate creates a new Free Edition account for the team.\nThat teammate invites everyone else:\n\nUser icon (top right) → Settings → Workspace admin → Identity and access → Users → Manage → Add user → Invite user by email\n\nEveryone accepts the invite and opens the same workspace.\n\n\nDo this today, before you leave. You’ll need it for the proposal."
+    "objectID": "day01_welcome.html#the-tools",
+    "href": "day01_welcome.html#the-tools",
+    "title": "Welcome to DS 460",
+    "section": "The tools",
+    "text": "The tools\n\n\n\nData\nPolarsPySparkSpark SQL\n\n\n\nPlatforms\nDatabricksGoogle Cloud (GCP)Docker\n\n\n\nCollaboration\ngitGitHubStreamlit or Marimo apps\n\n\nWe’ll use git and GitHub in almost everything: team work, trainings, and submissions."
   },
   {
-    "objectID": "day03_databricks.html#one-notebook-loads-everything",
-    "href": "day03_databricks.html#one-notebook-loads-everything",
-    "title": "Databricks Setup and Team Time",
-    "section": "One notebook loads everything",
-    "text": "One notebook loads everything\n\nDownload load_semester_data.html from Slack.\nIn Databricks, open Workspace → Import and choose the file.\nAttach the notebook to Serverless compute and click Run all.\nWait 8 to 12 minutes. The last cell shows a summary. Every row should say ok.\n\nSafe to re-run: anything already loaded is skipped. If a row says FAILED, run it once more, then post in Slack."
+    "objectID": "day01_welcome.html#is-this-a-data-engineering-course",
+    "href": "day01_welcome.html#is-this-a-data-engineering-course",
+    "title": "Welcome to DS 460",
+    "section": "Is this a data engineering course?",
+    "text": "Is this a data engineering course?\n\n\n\nData engineer\nBig client, small change.\nBuilds pipelines and tools used by thousands. Refines systems every day. Talks mostly with IT and CS.\n\n\n\nData scientist\nSmall client, big change.\nServes tens of people in management. Proposes new methods and data sources. Talks mostly with the business.\n\n\nWe use data engineering tools, but for data science: helping management make decisions."
   },
   {
-    "objectID": "day03_databricks.html#what-gets-loaded",
-    "href": "day03_databricks.html#what-gets-loaded",
-    "title": "Databricks Setup and Team Time",
-    "section": "What gets loaded",
-    "text": "What gets loaded\n\n\n\n\n\n\n\nData\nWhere it lands\n\n\n\n\nChurch places and patterns (the challenge data)\nVolume: pattern_places/pattern_places_data/\n\n\nC-Store, Idaho, 167 stores (small)\nTables: cstore_snippet.*\n\n\nC-Store, five states, 240 stores (medium)\nTables: cstore_sample.*\n\n\nCensus block-group tables\nTables: census.*\n\n\nMaverik patterns\nVolume: default/data/other/\n\n\n\nStart on small while you build and test. Move to medium when it works."
+    "objectID": "day01_welcome.html#how-the-course-is-designed",
+    "href": "day01_welcome.html#how-the-course-is-designed",
+    "title": "Welcome to DS 460",
+    "section": "How the course is designed",
+    "text": "How the course is designed\nThe course follows five principles for teaching data science:\n\nOrganize around diverse case studies\nUse computing in every part of the course\nTeach abstraction, with little mathematical notation\nMake activities realistically mimic a data scientist’s work\nShow the value of critical thinking and skepticism through examples"
   },
   {
-    "objectID": "day03_databricks.html#finding-it-in-the-catalog",
-    "href": "day03_databricks.html#finding-it-in-the-catalog",
-    "title": "Databricks Setup and Team Time",
-    "section": "Finding it in the catalog",
-    "text": "Finding it in the catalog\n\n\nClick Catalog in the left sidebar. Data is organized in three levels:\nworkspace          ← catalog\n├── cstore_snippet ← schema\n│   ├── cstore_stores     ← table\n│   └── cstore_payments\n├── census\n└── pattern_places\n    └── pattern_places_data ← volume\n\n\nA table has a schema you can query by name.\nA volume holds files, like our Parquet files.\nClick a table to see its columns, sample data, and details.\nNames follow catalog.schema.table."
+    "objectID": "day01_welcome.html#the-class-runs-like-a-start-up",
+    "href": "day01_welcome.html#the-class-runs-like-a-start-up",
+    "title": "Welcome to DS 460",
+    "section": "The class runs like a start-up",
+    "text": "The class runs like a start-up\n\nWe’re a “company” with a mandate: learn big data programming and solve hard data problems.\nThe class decides how we get from week 1 to week 13.\nWe take turns teaching each other the tools.\nWe work in small teams, but make decisions as a class.\nClass meetings are working-group meetings, like in industry."
   },
   {
-    "objectID": "day03_databricks.html#reading-it-in-a-notebook",
-    "href": "day03_databricks.html#reading-it-in-a-notebook",
-    "title": "Databricks Setup and Team Time",
-    "section": "Reading it in a notebook",
-    "text": "Reading it in a notebook\n# A table, by its three-level name\nstores = spark.table(\"workspace.cstore_snippet.cstore_stores\")\n\n# A file in a volume, by its path\nplaces = spark.read.parquet(\n    \"/Volumes/workspace/pattern_places/pattern_places_data/places.parquet\")\n\ndisplay(stores)\nUse these exact names and paths. Don’t move or rename the data, so everyone’s code runs the same way."
+    "objectID": "day01_welcome.html#section",
+    "href": "day01_welcome.html#section",
+    "title": "Welcome to DS 460",
+    "section": "",
+    "text": "You should not expect anything about this class to be “traditional” in the context of academia.\n\nIf you need someone to give you due dates and tell you exactly what to read each night, this class will push you into a new way of learning."
   },
   {
-    "objectID": "day03_databricks.html#build-your-proposal",
-    "href": "day03_databricks.html#build-your-proposal",
-    "title": "Databricks Setup and Team Time",
-    "section": "Build your proposal",
-    "text": "Build your proposal\nDue 9/29. No more than two pages or 5 to 8 slides:\n\nTeam member names and majors\nThe business need and why it’s valuable\nThe data format, with some descriptive visuals\nHow you’ll use ML/AI in the application\nWhat counts as a successful product\n\nStart by exploring cstore_snippet in your team workspace."
+    "objectID": "day01_welcome.html#what-we-do-in-class",
+    "href": "day01_welcome.html#what-we-do-in-class",
+    "title": "Welcome to DS 460",
+    "section": "What we do in class",
+    "text": "What we do in class\nNo traditional lectures. Class time goes to team work:\n\n\n\nPresentation development\nAlmost every project ends with a presentation.\n\n\n\nIndividual development\nYour own work on the current project.\n\n\n\n\n\nDecision-point presentations\nTeams pitch; the class agrees on one approach.\n\n\n\nProgramming training\nTeams build and lead hands-on activities for the class."
+  },
+  {
+    "objectID": "day01_welcome.html#what-youll-turn-in",
+    "href": "day01_welcome.html#what-youll-turn-in",
+    "title": "Welcome to DS 460",
+    "section": "What you’ll turn in",
+    "text": "What you’ll turn in\nThe work is open-ended, mostly in teams, with some individual submissions. Usually:\n\nA tools coding challenge (data munging and visualization)\nA Spark team feature build challenge\nSpark coding challenges (munging and feature creation)\nIn-class written code challenges (yes, paper and pencil)\nAn analytics app (Streamlit or Marimo, Docker, GCP)\nA team training on tools and code (15 to 120 minutes)\n\nCurrent projects: github.com/byuibigdata"
+  },
+  {
+    "objectID": "day01_welcome.html#design-thinking-guides-our-projects",
+    "href": "day01_welcome.html#design-thinking-guides-our-projects",
+    "title": "Welcome to DS 460",
+    "section": "Design thinking guides our projects",
+    "text": "Design thinking guides our projects\n\nSource: Illinois CITL\n\nYour earlier data science and design thinking courses are the foundation: empathy for the data and clients, ideating solutions, prototyping the end product."
+  },
+  {
+    "objectID": "day01_welcome.html#agile-rhythm",
+    "href": "day01_welcome.html#agile-rhythm",
+    "title": "Welcome to DS 460",
+    "section": "Agile rhythm",
+    "text": "Agile rhythm\n\n\nDaily stand-up (5–10 min)\n\nWhat did you work on?\nWhat will you work on next?\nWhat’s blocking you?\n\n\nEvery two weeks\n\nPlanning: pick tasks from the backlog\nReview: each team shows what it finished\nRetro: what worked, what didn’t, what changes\n\n\n\nAccountability and communication. Unfinished work carries over to the next sprint."
+  },
+  {
+    "objectID": "day01_welcome.html#agile-data-science",
+    "href": "day01_welcome.html#agile-data-science",
+    "title": "Welcome to DS 460",
+    "section": "Agile data science",
+    "text": "Agile data science\nRussell Jurney’s manifesto, in short:\n\nIterate, and ship intermediate output. Commit everything to source control.\nPerform experiments, not tasks.\nListen to the data. Ground discussions in exploratory visualization.\nRespect the data-value pyramid:\n\nplumbing → clean & question → explore & summarize → infer & predict → deliver value"
+  },
+  {
+    "objectID": "day01_welcome.html#presentations-live-jazz-not-a-symphony",
+    "href": "day01_welcome.html#presentations-live-jazz-not-a-symphony",
+    "title": "Welcome to DS 460",
+    "section": "Presentations: live jazz, not a symphony",
+    "text": "Presentations: live jazz, not a symphony\n\n\n\nInformal ≠ unprepared.\nMake your point early, then justify it.\nBe ready to go deep on data and methods.\nBad charts hurt your argument.\n\n\n Practice the “five whys” before you present."
+  },
+  {
+    "objectID": "day01_welcome.html#preparation",
+    "href": "day01_welcome.html#preparation",
+    "title": "Welcome to DS 460",
+    "section": "Preparation",
+    "text": "Preparation\n\nNo assigned weekly readings.\n6 hours a week outside class building your Spark skills.\nUse the curated resources or find your own.\nYou pace yourself with a learning plan:\n\n\n\n\nWeeks 1–3\nExplore resources. End of week 2: review the Spark materials you plan to use.\n\n\n\nWeeks 4–5\nPlan. Map concepts to resources. Propose a PySpark training with a partner.\n\n\n\nWeeks 6–13\nExecute a weekly plan with hours and topics."
+  },
+  {
+    "objectID": "day01_welcome.html#learning-should-burn-a-little",
+    "href": "day01_welcome.html#learning-should-burn-a-little",
+    "title": "Welcome to DS 460",
+    "section": "Learning should burn a little",
+    "text": "Learning should burn a little\n\nConfusion has the potential to motivate, lead to deep learning, and trigger problem solving.\n\n\n\n\nConfusion is part of learning, not a sign you’re failing.\nWhen the answer comes too soon, you skip the exploration that builds understanding.\nLearning how to learn is the key to career growth after graduation.\n\n\n\nThe earth doesn’t go around the sun in a day. It takes a year. Watch the video"
+  },
+  {
+    "objectID": "day01_welcome.html#your-instructor-is-a-mentor-and-a-manager",
+    "href": "day01_welcome.html#your-instructor-is-a-mentor-and-a-manager",
+    "title": "Welcome to DS 460",
+    "section": "Your instructor is a mentor and a manager",
+    "text": "Your instructor is a mentor and a manager\n\nA teacher instructs from set criteria. A mentor guides your growth.\nTreat me like an expensive consultant ($300 to $500 an hour): bring me the parts you can’t quite figure out on your own.\nThe class sets the project vision. I set the technical learning goals.\nI have high expectations, and I’ll tell you when you fall short."
+  },
+  {
+    "objectID": "day01_welcome.html#what-past-students-said",
+    "href": "day01_welcome.html#what-past-students-said",
+    "title": "Welcome to DS 460",
+    "section": "What past students said",
+    "text": "What past students said\n\nI personally feel much more prepared for a real work environment after this class than any other class.\n\n\nMy biggest takeaway is that to learn or be good at something, pain is inevitable but the result is satisfying after you put in the work.\n\n\nIf you don’t ask for help, you might fail this class! (Also from a past student.)"
+  },
+  {
+    "objectID": "day01_welcome.html#four-competencies",
+    "href": "day01_welcome.html#four-competencies",
+    "title": "Welcome to DS 460",
+    "section": "Four competencies",
+    "text": "Four competencies\n\n\n\nImpact\nYour team sees you as an equal or primary contributor.\n\n\n\nInvolvement\nCome prepared. Ask questions, give answers, help direct.\n\n\n\nHours\nThe best predictor of success.\n\n\n\nUnderstanding\nBe the go-to person on a few topics.\n\n\nThese map to how an employer will judge you. You don’t need to be exceptional in all four."
+  },
+  {
+    "objectID": "day01_welcome.html#hours",
+    "href": "day01_welcome.html#hours",
+    "title": "Welcome to DS 460",
+    "section": "Hours",
+    "text": "Hours\n\n\n9 hours per week: 6 outside class + 3 in class\n\n110 hours for an A\n\n\nA 3-credit class is a 9-hour-a-week job.\nTrack your hours from day one.\nHours are what let you produce, but you show hard work through your products, not your hours."
+  },
+  {
+    "objectID": "day01_welcome.html#competency-scale",
+    "href": "day01_welcome.html#competency-scale",
+    "title": "Welcome to DS 460",
+    "section": "Competency scale",
+    "text": "Competency scale\n\n\n\n\n\n\n\n\n\n\n\n\nGrade\nHours\nChallenges\nOral/written\nReplication\nInvolvement\nImpact\n\n\n\n\nA\n110\n4 on key* challenges & 3 or higher on the rest\nPass 3\nAll complete\n&lt; 3 warnings & &lt; 3.1 hours of class missed\nActive on all & primary on &gt; 2\n\n\nB\n90\n3 on key* challenges & 3’s on most\nPass 2\n&lt; 2 missing\n&lt; 9.1 hours of class missed, or a write-up\nActive on most & primary on &gt; 1\n\n\nC\n70\nA 3 on any challenge\nPass 1\n&lt; 3 missing\n&lt; 4 warnings\nActive often & primary on &gt; 0\n\n\nD\n50\n\n\n\n\n\n\n\n\n*Key challenges: any PySpark challenge and the end-of-semester app challenge."
+  },
+  {
+    "objectID": "day01_welcome.html#challenges-are-scored-1-to-4",
+    "href": "day01_welcome.html#challenges-are-scored-1-to-4",
+    "title": "Welcome to DS 460",
+    "section": "Challenges are scored 1 to 4",
+    "text": "Challenges are scored 1 to 4\n\n\n\n1 Submitted work\n\n\n\n2 Some code aligns with the challenge\n\n\n\n3 Strong performance, satisfactory code\n\n\n\n4 Near flawless, clean and concise code\n\n\nAll challenges are announced at least 24 hours ahead, with the programming topic."
+  },
+  {
+    "objectID": "day01_welcome.html#you-write-your-own-grade-request",
+    "href": "day01_welcome.html#you-write-your-own-grade-request",
+    "title": "Welcome to DS 460",
+    "section": "You write your own grade request",
+    "text": "You write your own grade request\nAt the end of the semester you submit a grade request letter, like an end-of-year review with an employer.\n\nBe clear about what you delivered.\nYou can negotiate: use strength in one area to argue for a shortfall in another.\n\n\nI achieved only a satisfactory score on my final coding challenge, but I completed 119 hours and was a key contributor to 5 projects. As such, I request an A.\n\nRead the example letter with discussion before you write yours."
+  },
+  {
+    "objectID": "day01_welcome.html#this-week",
+    "href": "day01_welcome.html#this-week",
+    "title": "Welcome to DS 460",
+    "section": "This week",
+    "text": "This week\n\nRead the syllabus and the course paradigm.\nStart tracking your hours.\nStart exploring the Spark learning resources. Your review is due at the end of week 2.\nNeed to talk? Schedule a visit."
+  },
+  {
+    "objectID": "day01_welcome.html#discuss",
+    "href": "day01_welcome.html#discuss",
+    "title": "Welcome to DS 460",
+    "section": "Discuss",
+    "text": "Discuss\nWhat do you want to be the go-to expert on by the end of the semester?\n\nPick one or two topics. That’s where your “understanding” competency comes from."
+  },
+  {
+    "objectID": "day10_work_time.html#today",
+    "href": "day10_work_time.html#today",
+    "title": "Project Work Time",
+    "section": "Today",
+    "text": "Today\nThe hour is yours.\n\nI’ll come around to each team. Bring me what you’re stuck on, not what’s finished."
+  },
+  {
+    "objectID": "day10_work_time.html#where-you-should-be",
+    "href": "day10_work_time.html#where-you-should-be",
+    "title": "Project Work Time",
+    "section": "Where you should be",
+    "text": "Where you should be\n\n\nCensus API\nDue 10/8. Key working, table pulled, joined to our stores.\n\n\nUnit of analysis\nDue 10/12. One row is one _____, and we predict _____ for it.\n\n\nNext\nFeatures at that grain, and the analysis that answers your client’s question.\n\n\nDates and links live in the class repository."
+  },
+  {
+    "objectID": "day10_work_time.html#good-uses-of-this-hour",
+    "href": "day10_work_time.html#good-uses-of-this-hour",
+    "title": "Project Work Time",
+    "section": "Good uses of this hour",
+    "text": "Good uses of this hour\n\nGet your whole team saying the same unit of analysis out loud.\nBuild one feature end to end, and write down how you built it.\nMake one chart from the real C-Store data that you’d show a client.\nFix the Databricks problem you’ve been working around.\n\nIf your team is blocked on a decision, that’s what I’m here for. Don’t spend the hour politely stuck."
+  },
+  {
+    "objectID": "example.html#a-slide",
+    "href": "example.html#a-slide",
+    "title": "Example Slides",
+    "section": "A slide",
+    "text": "A slide\n\nBullet one\nBullet two"
+  },
+  {
+    "objectID": "example.html#some-code",
+    "href": "example.html#some-code",
+    "title": "Example Slides",
+    "section": "Some code",
+    "text": "Some code\ndf.groupBy(\"team\").agg(F.avg(\"points\"))"
+  },
+  {
+    "objectID": "example.html#speaker-notes",
+    "href": "example.html#speaker-notes",
+    "title": "Example Slides",
+    "section": "Speaker notes",
+    "text": "Speaker notes\nPress s in the browser to open the speaker view.\n\nThese notes only show in the speaker view."
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#today",
+    "href": "day09_project_and_analysis.html#today",
+    "title": "From Challenges to the Project",
+    "section": "Today",
+    "text": "Today\n\nYour questions\nThe Census API challenge\nWhat your team owes the larger project\nThe analysis decks: rules, labels, segments\nMurphy is in class the 15th — how we use that hour\nOpen work time"
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#questions",
+    "href": "day09_project_and_analysis.html#questions",
+    "title": "From Challenges to the Project",
+    "section": "Questions",
+    "text": "Questions\nWhat’s blocking you right now?\n\nCensus keys · the block-group join · Databricks · your unit of analysis · the proposal"
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#the-census-api-challenge",
+    "href": "day09_project_and_analysis.html#the-census-api-challenge",
+    "title": "From Challenges to the Project",
+    "section": "The Census API challenge",
+    "text": "The Census API challenge\n\n\nWhere people get stuck\n\nThe key: request it, then keep it out of your code\nGeography: state → county → tract → block group\nVariable names: B19013_001E means something, but you have to look it up\nLimits: pull once, cache it, don’t loop the API\n\n\n\nWhat makes it done\nA table you can join to our stores, with the variables you chose and a sentence on why those variables matter to your client.\n\n\nThe census.* tables are already in Databricks. The API work is about learning the pull, not about getting data we lack."
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#the-challenges-are-not-the-project",
+    "href": "day09_project_and_analysis.html#the-challenges-are-not-the-project",
+    "title": "From Challenges to the Project",
+    "section": "The challenges are not the project",
+    "text": "The challenges are not the project\nEach challenge builds one piece of what your team will deliver:\n\n\nWrangling\nPolars, charts\n\n→\n\nCensus\noutside data\n\n→\n\nUnit of analysis\none row = ?\n\n→\n\nFeatures\nthe model’s inputs\n\n→\n\nApp\nsomeone uses it\n\n\n\nThe project is the thread through all of them. Every challenge should move your team’s product forward, not sit in a folder by itself."
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#what-your-team-owes",
+    "href": "day09_project_and_analysis.html#what-your-team-owes",
+    "title": "From Challenges to the Project",
+    "section": "What your team owes",
+    "text": "What your team owes\n\nA unit of analysis everyone on the team can say out loud\nA target the data supports: a probability or a count\nFeatures built at that grain, documented so a teammate can rebuild them\nAn analysis that answers the business question, not just the model question\nAn app a non-technical person can use\n\nStart writing these down now. The grade request letter at the end is much easier when the work is on the record."
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#the-analysis-decks",
+    "href": "day09_project_and_analysis.html#the-analysis-decks",
+    "title": "From Challenges to the Project",
+    "section": "The analysis decks",
+    "text": "The analysis decks\nThree reference decks for the analysis half of the project. Read them when you need them.\n\n\nBaskets of Goods\nAssociation rules: what sells with what, support, confidence and lift.\nOpen →\n\n\nLabeled Baskets\nPicking a Y, building the modeling table, and avoiding leakage.\nOpen →\n\n\nCustomer Segmentation\nClustering, UMAP and HDBSCAN, and how to defend a segment.\nOpen →\n\n\nThey use our C-Store data for their examples, so the numbers should look familiar."
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#murphy-is-here-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206d6574612076697369742d64617465203e7d7d",
+    "href": "day09_project_and_analysis.html#murphy-is-here-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206d6574612076697369742d64617465203e7d7d",
+    "title": "From Challenges to the Project",
+    "section": "Murphy is here the 15th",
+    "text": "Murphy is here the 15th\nA fuel and convenience retailer, in our classroom, for an hour.\n\n\nHow we use it\n\nThey talk briefly, then we ask questions\nBring your team’s question written down\nTake notes: it becomes a slide in your pitch\n\nThis is your client in the room.\n\n\nQuestions worth asking\n\nWhat decisions do you make with store data today?\nWhat would you want to know and can’t?\nHow do you measure a promotion?\nWhat would make you distrust a model?"
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#thursday-your-first-take-home-challenge",
+    "href": "day09_project_and_analysis.html#thursday-your-first-take-home-challenge",
+    "title": "From Challenges to the Project",
+    "section": "Thursday: your first take-home challenge",
+    "text": "Thursday: your first take-home challenge\nA PySpark challenge, on your own, with a deadline.\n\n\n\nAnnounced at least 24 hours ahead, with the topic\nYou may talk with your group, but you don’t share code\nScored 1 to 4, and this one is a key challenge\n\n\n\nGet ready\nBe able to run a PySpark notebook on Databricks before Thursday. Don’t spend the challenge fighting your setup.\n\n\nIf your workspace isn’t working, tell me today, not Thursday."
+  },
+  {
+    "objectID": "day09_project_and_analysis.html#work-time",
+    "href": "day09_project_and_analysis.html#work-time",
+    "title": "From Challenges to the Project",
+    "section": "Work time",
+    "text": "Work time\nTeams, the rest of the hour is yours.\n\nFinish the Census pull, settle the unit of analysis, and write the one question you’re asking Murphy."
+  },
+  {
+    "objectID": "day08_no_class.html#class-is-cancelled",
+    "href": "day08_no_class.html#class-is-cancelled",
+    "title": "No Class Today",
+    "section": "Class is cancelled",
+    "text": "Class is cancelled\nGo to the Adam Miller presentation instead.\n\nduring our class period · announced in Slack"
+  },
+  {
+    "objectID": "day08_no_class.html#keep-moving",
+    "href": "day08_no_class.html#keep-moving",
+    "title": "No Class Today",
+    "section": "Keep moving",
+    "text": "Keep moving\nThe challenges don’t pause.\n\n\nCensus API\nKey in hand, one table pulled, and the join to our stores worked out.\n\n\nUnit of analysis\nYour team’s one sentence: one row is one _____, and we predict _____ for it.\n\n\nHours\nLog them in Harvest. A cancelled class is still a week of work.\n\n\nDates live in the class repository. Bring questions to our next meeting."
   },
   {
     "objectID": "topics/env_variables.html#the-problem",
