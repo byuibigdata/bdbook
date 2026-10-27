@@ -1,0 +1,84 @@
+---
+title: "Written Challenge and Review"
+subtitle: "Day 14: On paper, then what the take-home taught us"
+author: "J. Hathaway"
+# Update these each semester.
+class-repo: "https://github.com/byuibigdata/FA26_hathaway"
+feature-due: "10/26"
+---
+
+## Today
+
+1. **Written challenge** — first 20 minutes
+2. Review the coding challenge
+3. Group time
+
+## Written challenge {.dark background-color="#022F4A"}
+
+**Paper and pencil. No computer.**
+
+<br>
+
+[PySpark this time: `groupBy` and `agg`, joins, and `Window` with `partitionBy`.]{.orange}
+
+<br>
+
+[Scored 1 to 4. I'm reading for whether you know what the code *does*.]{.muted}
+
+## Reviewing the take-home
+
+**We go through it together, so the second one goes better.**
+
+- Where the **grain** went wrong: a join that multiplied rows, a `groupBy` that collapsed them
+- `groupBy` vs. `over(Window)` — which one the question actually needed
+- Nulls and types that quietly changed an answer
+- Reading the error message instead of guessing
+
+[Bring up your own wrong answer. **That's the most useful thing in the room.**]{.orange}
+
+## Where the work stands
+
+::: {.cards}
+::: {.card}
+[Done]{.card-title}
+
+Take-home 1 and the easy feature challenge (**{{< meta feature-due >}}**).
+:::
+::: {.card}
+[Thursday]{.card-title}
+
+**Present your simple features**, then we start baskets of goods.
+:::
+::: {.card}
+[Teaching]{.card-title}
+
+Every team owes a training. Topics and dates are being set now.
+:::
+:::
+
+## The rest of the semester {.smaller}
+
+| Date | What happens |
+|---|---|
+| **10/29** | Present simple features · baskets of goods |
+| **11/3** | Finish baskets of goods · complex features |
+| **11/5** | Data types written challenge |
+| **11/10** | Present complex features |
+| **11/12** | Second take-home |
+| **11/17** | Streamlit and apps — *Mighty Oaks* · written challenge PySpark 2 |
+| **11/19** | Docker — *Fabrice and Friends* · ML take-home |
+| **11/24** | Team day |
+| **11/26** | Thanksgiving — no class |
+| **12/1** | ML challenge · PySpark verbal 3 |
+| **12/3** | Google Cloud |
+| **12/8** | Present model results |
+| **12/10** | Open |
+| **12/15** | Docker · Google Cloud · app challenge |
+
+## Group time {.dark background-color="#022F4A"}
+
+**The rest of the hour is yours.**
+
+<br>
+
+[Get Thursday's presentation ready: the features you built, how you built them, and what they tell your client.]{.orange}

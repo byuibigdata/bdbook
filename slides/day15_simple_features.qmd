@@ -1,0 +1,67 @@
+---
+title: "Simple Features, Then Baskets"
+subtitle: "Day 15: Team presentations and association rule mining"
+author: "J. Hathaway"
+# Update these each semester.
+class-repo: "https://github.com/byuibigdata/FA26_hathaway"
+---
+
+## Today
+
+1. **Teams present their simple features**
+2. Baskets of goods: association rule mining
+3. What it takes to practice it on our data
+
+## Presenting your features
+
+**Five minutes each. Show the work, not the slides.**
+
+- What **grain** did you build at, and does it match the class unit of analysis?
+- Walk one feature from raw table to column.
+- What did you expect, and what did the numbers actually say?
+- Which feature would you **throw away**, and why?
+
+::: {.takeaway}
+**Documented beats clever.** A feature a teammate can rebuild is worth more than one only you understand.
+:::
+
+## Baskets of goods
+
+Now the analysis side: **what sells with what**, and what a store would do about it.
+
+::: {.columns}
+::: {.column width="55%"}
+- A basket is one row per transaction, or per **visit**
+- Support, confidence and **lift** — lift is the one that matters
+- FP-Growth finds the rules; your cleaning decisions shape them
+- Category rollup, single-item baskets, and the fuel question
+:::
+::: {.column width="45%"}
+::: {.card}
+[The deck]{.card-title}
+
+**[Baskets of Goods →](topics/association_rules.html)**
+
+Worked on our C-Store data, with the numbers from a real run.
+:::
+:::
+:::
+
+## Practicing it on our data
+
+**Try it this week, at whatever grain your team settled on.**
+
+- Build the basket table with `collect_set`, then look at it before you mine it
+- **Profile first:** how many baskets have only one item?
+- Lower the thresholds — C-Store baskets are tiny
+- Bring a rule you can defend, and one you can't
+
+[We'll finish baskets of goods on **11/3**, then move to complex features.]{.orange}
+
+## Work time {.dark background-color="#022F4A"}
+
+**Teams, keep going.**
+
+<br>
+
+[Next up: complex features on 11/3, and a data types written challenge on 11/5.]{.orange}

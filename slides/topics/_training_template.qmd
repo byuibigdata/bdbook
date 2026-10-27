@@ -1,0 +1,63 @@
+---
+# Starter file for a team training. Copy it, rename it (drop the underscore so
+# Quarto renders it), and fill in the five sections.
+#   cp topics/_training_template.qmd topics/your_topic.qmd
+#   quarto preview slides/topics/your_topic.qmd
+# Theme, logo and footer come from topics/_metadata.yml. Don't set them here.
+title: "Your Topic"
+subtitle: "A short training by Team Name"
+author: "Team member · Team member"
+execute:
+  eval: false
+  echo: true
+---
+
+## Why this matters {.dark background-color="#022F4A"}
+
+[State the need in one sentence.]{.statement}
+
+<br>
+
+[Where it shows up in our project, and what breaks without it.]{.orange}
+
+## What you need to know
+
+The two or three ideas they must hold to read your code.
+
+- Idea one
+- Idea two
+- The vocabulary, defined once
+
+[Keep this short. You are not the documentation.]{.muted}
+
+## The smallest working example
+
+```python
+# Start with the smallest version that does something real.
+```
+
+Show the output too, not just the code.
+
+## Building it up
+
+```python
+# One idea per cell. Add the next piece.
+```
+
+::: {.takeaway}
+**The point of this step:** what the class should notice in the output above.
+:::
+
+## Your turn {.dark background-color="#022F4A"}
+
+**Ten minutes. Here's the notebook.**
+
+<br>
+
+[Link to the notebook in our GitHub org, and the expected output so they know when they're done.]{.orange}
+
+## What you should be able to do now
+
+- The thing they couldn't do before
+- The mistake most people make
+- Where to look next: docs, guide, or the course book

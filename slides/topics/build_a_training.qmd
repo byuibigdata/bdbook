@@ -1,0 +1,156 @@
+---
+title: "Build a Short Training"
+subtitle: "How to teach the class something in 15 to 120 minutes"
+author: "J. Hathaway"
+execute:
+  eval: false
+  echo: true
+---
+
+## You're teaching, not presenting {.dark background-color="#022F4A"}
+
+[A presentation ends when you stop talking. **A training ends when they can do it.**]{.statement}
+
+<br>
+
+[Every team owes one. Pick something your project needs, and you'll learn it properly by teaching it.]{.orange}
+
+## The shape of a training
+
+::: {.flow}
+::: {.box .hl}
+Frame the need
+:::
+
+[→]{.arrow}
+
+::: {.box .hl}
+Navigate to details
+:::
+
+[→]{.arrow}
+
+::: {.box}
+Give examples
+:::
+
+[→]{.arrow}
+
+::: {.box}
+Let them practice
+:::
+
+[→]{.arrow}
+
+::: {.box}
+Review / reflect
+:::
+:::
+
+::: {.columns}
+::: {.column width="50%"}
+**Slides** carry the first two steps.
+:::
+::: {.column width="50%"}
+**Code** carries the next two.
+:::
+:::
+
+[Frame all of it the way **industry** would: why a team would pay for this skill.]{.orange}
+
+## 1 · Frame the need
+
+**One slide. Why should anyone in this room care?**
+
+- What problem does this solve that we currently solve badly, or not at all?
+- Where does it show up in **our project**?
+- What breaks without it?
+
+::: {.takeaway}
+**If you can't name the need, don't teach the tool.** Nobody remembers a solution to a problem they never felt.
+:::
+
+## 2 · Navigate to details
+
+**Enough background to follow along, and no more.**
+
+- The two or three ideas they must hold to read your code
+- The vocabulary, defined once
+- Where it sits next to what we already know
+
+[Resist teaching the whole API. **You are not the documentation.**]{.orange}
+
+## 3 · Give examples
+
+**Working code they can read, on data they recognize.**
+
+- Start with the smallest version that does something real
+- Show the output, not just the code
+- Use **our C-Store data** where you can, so nobody is learning a new dataset at the same time
+- Build up in steps: one idea per cell
+
+## 4 · Let them practice
+
+**This is the part teams skip. It's the part that works.**
+
+::: {.cards}
+::: {.card}
+[Make it runnable]{.card-title}
+
+A notebook in our GitHub org, or a Databricks notebook they can clone.
+:::
+::: {.card}
+[Make it small]{.card-title}
+
+Ten minutes, with a clear finish line. Not a project.
+:::
+::: {.card}
+[Make it graded by them]{.card-title}
+
+Give the expected output, so they know whether they got it.
+:::
+:::
+
+**Walk the room while they work.** Where they get stuck is your real feedback.
+
+## 5 · Review and reflect
+
+**Close the loop.**
+
+- What should they be able to do now that they couldn't before?
+- The one mistake you'd bet most of them made
+- Where to look next: docs, a guide, the book chapter
+
+## What good looks like
+
+::: {.columns}
+::: {.column width="50%"}
+::: {.card}
+[DataCamp is the model]{.card-title}
+
+Short video, immediate coding, repeat. Never more than a few minutes of talking before you do something.
+:::
+:::
+::: {.column width="50%"}
+::: {.card}
+[AI study guides]{.card-title}
+
+Fine for building your material and checking your explanation.
+
+**Not** a substitute for writing the practice activity yourself.
+:::
+:::
+:::
+
+## Your checklist
+
+- A **need** stated in one sentence
+- **Slides** for the first two steps, short
+- **Runnable code** in our GitHub org, self-contained
+- A **practice activity** with an expected output
+- A **takeaway** slide and somewhere to go next
+- A dry run — **time it**
+
+::: {.takeaway}
+**Copy `topics/_training_template.qmd`** to start. It has these five sections and the course theme already set up.
+:::

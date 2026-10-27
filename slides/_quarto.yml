@@ -9,6 +9,13 @@ project:
   type: website
   output-dir: _site
   post-render: sync_output.py
+  # Planning notes stay out of the published site. Folders starting with "_"
+  # are skipped automatically; this one is named without the underscore.
+  render:
+    - "*.qmd"
+    - "topics/*.qmd"
+    - "!mid_semester_planning/"
+
 
 format:
   revealjs:
