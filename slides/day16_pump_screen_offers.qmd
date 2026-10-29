@@ -1,0 +1,229 @@
+---
+title: "What to Show on the Pump Screen"
+subtitle: "Day 16: Picking a modeling method for customer-specific offers"
+author: "J. Hathaway"
+# Update these each semester.
+class-repo: "https://github.com/byuibigdata/FA26_hathaway"
+---
+
+## Today
+
+1. The pump screen as a **decision**, not a display
+2. Five modeling methods, and when each one fits
+3. What our data can actually support
+4. How to **present** a method to a client
+
+## The setting {.dark background-color="#022F4A"}
+
+[Ninety seconds. One screen. **One offer.**]{.statement}
+
+<br>
+
+[The customer is standing at the pump watching the gallons tick. What do you put in front of them, and how did you decide?]{.orange}
+
+## It's a decision, not a prediction
+
+A model that says *this shopper has a 23% chance of buying a drink* hasn't decided anything yet.
+
+::: {.cards}
+::: {.card}
+[Predict]{.card-title}
+
+How likely is each outcome?
+:::
+::: {.card}
+[Value it]{.card-title}
+
+What is each outcome worth, minus what the offer costs?
+:::
+::: {.card}
+[Choose]{.card-title}
+
+Show the one offer with the highest expected value.
+:::
+:::
+
+**Expected value = P(accepts) × margin − cost of the discount.** Every method below is a way to get that first number.
+
+# Five methods
+
+## 1 · Association rules
+
+**"People who buy this also buy that."**
+
+::: {.columns}
+::: {.column width="50%"}
+- No model to train, no cold start
+- Works on the **first visit**, with no shopper ID
+- Explainable to a store manager in one sentence
+:::
+::: {.column width="50%"}
+::: {.card .bad}
+[The limit]{.card-title}
+
+It describes the **basket**, not the person. Everyone buying fuel sees the same offer.
+:::
+:::
+:::
+
+[Reference: [Baskets of Goods →](topics/association_rules.html)]{.muted style="font-size:0.6em"}
+
+## 2 · Segment-based offers
+
+**Cluster the shoppers, then write one offer per segment.**
+
+- Stable: segments don't move week to week
+- Explainable: *morning commuters get coffee, fill-up-only gets a car wash*
+- A human can **sanity-check every offer** before it ships
+
+::: {.card .bad}
+[The limit]{.card-title}
+
+Everyone in a segment gets the same thing, and your segments were built to describe shoppers, not to predict what they'd accept.
+:::
+
+[Reference: [Customer Segmentation →](topics/customer_segmentation.html)]{.muted style="font-size:0.6em"}
+
+## 3 · Propensity models
+
+**One model per offer: P(buys this category | what we know at the pump).**
+
+- Ranks offers by probability for **this** visit
+- Uses the features you've been building: fuel grade, gallons, daypart, history
+- Scales to as many candidate offers as you have models
+
+::: {.card .bad}
+[The limit]{.card-title}
+
+It predicts what they'd do **anyway**. Your best-scoring offer is often the thing they were already going to buy.
+:::
+
+[Reference: [Labeled Baskets →](topics/basket_models.html)]{.muted style="font-size:0.6em"}
+
+## 4 · Uplift models
+
+**Don't predict the purchase. Predict the *change* in purchase.**
+
+::: {.columns}
+::: {.column width="50%"}
+::: {.card .good}
+[Persuadable]{.card-title}
+
+Buys **only if** shown the offer. The only group worth paying for.
+:::
+::: {.card}
+[Sure thing]{.card-title}
+
+Buys either way. The discount is pure margin loss.
+:::
+:::
+::: {.column width="50%"}
+::: {.card}
+[Lost cause]{.card-title}
+
+Never buys. Wasted screen.
+:::
+::: {.card .bad}
+[Sleeping dog]{.card-title}
+
+Buys **unless** you bother them. Rare, but real.
+:::
+:::
+:::
+
+**You need a holdout** — some customers get no offer — or you can never measure uplift.
+
+## 5 · Contextual bandits
+
+**Learn while serving.** Mostly show the offer you believe is best, and sometimes try another to keep learning.
+
+- Handles a changing offer lineup without retraining from scratch
+- Solves the cold-start problem by exploring
+- Measures itself as it runs
+
+::: {.card .bad}
+[The limit]{.card-title}
+
+Hardest to build, hardest to explain to a client, and it needs real-time serving at the pump.
+:::
+
+# What our data supports
+
+## The honest constraints
+
+::: {.cards}
+::: {.card}
+[29.6%]{.stat}
+of transactions carry a shopper ID — and it's card-based
+:::
+::: {.card}
+[52%]{.stat}
+of shoppers appear more than once in two years
+:::
+::: {.card}
+[12.2%]{.stat}
+of fuel visits include an in-store purchase
+:::
+:::
+
+**Roughly seven in ten visits are anonymous to us.** A personalization plan that assumes a known shopper fails most of the time.
+
+[**Example conclusions** — from one run on the Idaho sample, not a finished analysis.]{.muted style="font-size:0.65em"}
+
+## A fallback ladder
+
+::: {.flow}
+::: {.box}
+**Anonymous**
+
+[pump, hour, day, weather, fuel grade]{.muted}
+:::
+
+[→]{.arrow}
+
+::: {.box .hl}
+**Recognized card**
+
+[segment assignment]{.muted}
+:::
+
+[→]{.arrow}
+
+::: {.box .hl}
+**Known history**
+
+[propensity, then uplift]{.muted}
+:::
+:::
+
+Build the **anonymous tier first**. It covers most visits, needs no identity, and gives you the baseline that everything else has to beat.
+
+## Where this meets your features
+
+The pump screen only knows what you can compute **before the customer walks in**:
+
+- Fuel grade, gallons so far, payment type, pump number
+- Hour, weekday, store
+- For recognized shoppers: visit count, days since last visit, past mission mix
+
+::: {.takeaway}
+**Anything you can't know at the moment of the offer is not a feature.** That's the same leakage rule, with a clock on it.
+:::
+
+## Presenting a method to a client
+
+**They don't want the algorithm. They want the decision and the risk.**
+
+1. **The decision** you're automating, in one sentence
+2. **Why this method** fits the data you actually have
+3. **What it costs to be wrong** — a bad offer, a wasted discount, an annoyed customer
+4. **How you'd know it worked**: holdout, lift over no-offer, measured in dollars
+5. **What you'd build first** — the simplest version that beats the baseline
+
+## Discuss {.dark background-color="#022F4A"}
+
+**Which method would you pitch, and what's your first build?**
+
+<br>
+
+[Name the method, the tier of the ladder you'd start on, and the one number you'd report back to Murphy.]{.orange}
