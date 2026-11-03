@@ -1,0 +1,159 @@
+/* Layout and interaction for the clickable pipeline diagram.
+   Single column: a large diagram you scroll top to bottom, detail beneath. */
+
+:root {
+  --ds-navy: #022f4a;
+  --ds-ridge: #426a8a;
+  --ds-sky: #bdd3e5;
+  --ds-teal: #4d93ac;
+  --ds-cloud: #f4f7f9;
+  --ds-orange: #f59625;
+  --ds-good: #1f8a5b;
+  --ds-bad: #c7352b;
+}
+
+.pipeline-layout {
+  display: block;
+  margin: 1.5rem 0 2rem;
+}
+
+/* The diagram gets its own viewport: a fixed-height window you scroll
+   inside. Deliberately NOT sticky -- pinning it means the detail text
+   slides underneath, and the text has to stay readable. */
+.pipeline-diagram {
+  height: 62vh;
+  min-height: 380px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--ds-sky);
+  border-radius: 10px;
+  padding: 1rem;
+  background: #fff;
+  margin: 0 auto 1.25rem;
+  max-width: 1400px;
+  box-shadow: 0 6px 14px -10px rgba(2, 47, 74, 0.5);
+}
+
+/* macOS hides overlay scrollbars until you scroll, which makes the inner
+   pane look like a cropped image. Keep one visible. */
+.pipeline-diagram {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ds-sky) transparent;
+}
+
+.pipeline-diagram::-webkit-scrollbar {
+  width: 11px;
+}
+
+.pipeline-diagram::-webkit-scrollbar-thumb {
+  background: var(--ds-sky);
+  border-radius: 6px;
+  border: 3px solid #fff;
+}
+
+.pipeline-diagram::-webkit-scrollbar-thumb:hover {
+  background: var(--ds-ridge);
+}
+
+/* Width 100% against the viewBox makes the drawing far taller than its
+   window, which is what gives it something to scroll. */
+.pipeline-diagram svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.pipeline-diagram g.node.is-clickable {
+  cursor: pointer;
+}
+
+.pipeline-diagram g.node.is-clickable:hover > :is(polygon, path, ellipse) {
+  filter: brightness(0.94);
+}
+
+.pipeline-diagram g.node.is-clickable:focus-visible {
+  outline: 2px solid var(--ds-orange);
+  outline-offset: 2px;
+}
+
+.pipeline-diagram g.node.is-selected > :is(polygon, path, ellipse) {
+  stroke-width: 4px;
+  filter: drop-shadow(0 0 6px rgba(245, 150, 37, 0.7));
+}
+
+/* ---- the detail section, below the diagram ---- */
+
+.pipeline-detail {
+  max-width: 1000px;
+  margin: 0 auto;
+  scroll-margin-top: 1rem;
+  border-top: 3px solid var(--ds-navy);
+  padding-top: 1.25rem;
+}
+
+.detail-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: var(--ds-ridge);
+  margin-bottom: 0.5rem;
+}
+
+.detail-nav a {
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+}
+
+/* Panes are stacked in the markup; JS reveals one at a time. */
+.node-detail {
+  display: none;
+}
+
+.node-detail.is-active {
+  display: block;
+  animation: fade 0.18s ease-in;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.node-detail h3 {
+  margin-top: 0;
+  color: var(--ds-navy);
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+
+.node-detail h3.bronze-head { color: var(--ds-ridge); }
+.node-detail h3.silver-head { color: var(--ds-teal, #4d93ac); }
+.node-detail h3.teal-head   { color: #2f7f99; }
+.node-detail h3.orange-head { color: #c9761c; }
+.node-detail h3.green-head  { color: var(--ds-good); }
+.node-detail h3.red-head    { color: var(--ds-bad); }
+
+.node-detail table {
+  font-size: 0.95rem;
+  margin: 0.9rem 0;
+}
+
+.node-detail pre {
+  font-size: 0.88rem;
+  border-left: 3px solid var(--ds-orange);
+}
+
+/* A 62vh pane leaves too little room on a short screen. */
+@media (max-height: 700px) {
+  .pipeline-diagram { height: 55vh; }
+}
+
+@media (max-width: 900px) {
+  .pipeline-diagram {
+    height: 60vh;
+    padding: 0.4rem;
+  }
+  .node-detail h3 { font-size: 1.35rem; }
+}

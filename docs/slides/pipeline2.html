@@ -1,0 +1,2166 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.20">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Pump Screen Pipeline · v2</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./DS460_Hex.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-c71942d98dfb179c90dde172f45c29e1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-05b73876ec8e91609299e25bc831f6fc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-c71942d98dfb179c90dde172f45c29e1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-42cc18e8bcad72787945a0a75b489242.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-42cc18e8bcad72787945a0a75b489242.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-42cc18e8bcad72787945a0a75b489242.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="pipeline.css">
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Pump Screen Pipeline · v2</h1>
+<p class="subtitle lead">The tables to build, and how each one feeds the model</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>This page answers <em>what to build</em></strong> — every box is a table a team has to materialise, with a grain, a schema and a job that writes it. For <strong><em>why</em></strong> each one looks the way it does — why the window is −15/+45, why three models, why the decision is priced against a no-offer world — read <a href="pipeline.html"><strong>pipeline v1 →</strong></a> first.</p>
+<p>The five Bronze tables are documented column by column in the <a href="data-dict.html"><strong>data dictionary →</strong></a> — types, null rates, join keys and the traps.</p>
+<p><strong>Scroll inside the diagram</strong> to move through the lineage, and <strong>click any table</strong> for its columns and the PySpark that builds it and feeds it to the model. The drawing is generated by <a href="img/pump_tables.py"><code>img/pump_tables.py</code></a>; there is also a <a href="img/pump_tables.png">flat PNG</a>.</p>
+<div class="pipeline-layout">
+<div id="pipeline-top" class="pipeline-diagram">
+<svg id="pipeline-svg" viewbox="0.00 0.00 1150.00 858.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 853.73)">
+<title>pump_tables</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-853.73 1146.15,-853.73 1146.15,4 -4,4"></polygon>
+<g id="clust1" class="cluster">
+<title>cluster_src</title>
+<path fill="white" stroke="#bdd3e5" d="M20,-762.51C20,-762.51 786,-762.51 786,-762.51 792,-762.51 798,-768.51 798,-774.51 798,-774.51 798,-829.73 798,-829.73 798,-835.73 792,-841.73 786,-841.73 786,-841.73 20,-841.73 20,-841.73 14,-841.73 8,-835.73 8,-829.73 8,-829.73 8,-774.51 8,-774.51 8,-768.51 14,-762.51 20,-762.51"></path>
+<text space="preserve" text-anchor="middle" x="100.38" y="-827.28" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#426a8a"> &nbsp;Bronze · as delivered &nbsp;</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_silver</title>
+<path fill="white" stroke="#4d93ac" d="M132,-559.07C132,-559.07 472,-559.07 472,-559.07 478,-559.07 484,-565.07 484,-571.07 484,-571.07 484,-719.26 484,-719.26 484,-725.26 478,-731.26 472,-731.26 472,-731.26 132,-731.26 132,-731.26 126,-731.26 120,-725.26 120,-719.26 120,-719.26 120,-571.07 120,-571.07 120,-565.07 126,-559.07 132,-559.07"></path>
+<text space="preserve" text-anchor="middle" x="195.5" y="-716.81" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#4d93ac"> &nbsp;Silver · cleaned &nbsp;</text>
+</g>
+<g id="clust5" class="cluster">
+<title>cluster_feat</title>
+<path fill="white" stroke="#bdd3e5" d="M292,-365.88C292,-365.88 794,-365.88 794,-365.88 800,-365.88 806,-371.88 806,-377.88 806,-377.88 806,-433.1 806,-433.1 806,-439.1 800,-445.1 794,-445.1 794,-445.1 292,-445.1 292,-445.1 286,-445.1 280,-439.1 280,-433.1 280,-433.1 280,-377.88 280,-377.88 280,-371.88 286,-365.88 292,-365.88"></path>
+<text space="preserve" text-anchor="middle" x="328.5" y="-430.65" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#426a8a"> &nbsp;Features &nbsp;</text>
+</g>
+<g id="clust8" class="cluster">
+<title>cluster_models</title>
+<path fill="white" stroke="#4d93ac" d="M368,-172.69C368,-172.69 756,-172.69 756,-172.69 762,-172.69 768,-178.69 768,-184.69 768,-184.69 768,-239.91 768,-239.91 768,-245.91 762,-251.91 756,-251.91 756,-251.91 368,-251.91 368,-251.91 362,-251.91 356,-245.91 356,-239.91 356,-239.91 356,-184.69 356,-184.69 356,-178.69 362,-172.69 368,-172.69"></path>
+<text space="preserve" text-anchor="middle" x="421.38" y="-237.46" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#4d93ac"> &nbsp;Fitted models &nbsp;</text>
+</g>
+<!-- src_items -->
+<g id="n-src_items" class="node">
+<title>src_items</title>
+<g id="a_n-src_items"><a title="Click for the schema and the code">
+<path fill="white" stroke="#bdd3e5" stroke-width="1.2" d="M160.15,-812.23C160.15,-812.23 27.85,-812.23 27.85,-812.23 21.85,-812.23 15.85,-806.23 15.85,-800.23 15.85,-800.23 15.85,-782.51 15.85,-782.51 15.85,-776.51 21.85,-770.51 27.85,-770.51 27.85,-770.51 160.15,-770.51 160.15,-770.51 166.15,-770.51 172.15,-776.51 172.15,-782.51 172.15,-782.51 172.15,-800.23 172.15,-800.23 172.15,-806.23 166.15,-812.23 160.15,-812.23"></path>
+<text space="preserve" text-anchor="start" x="30.25" y="-791.52" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">transaction_items</text>
+<text space="preserve" text-anchor="start" x="66.25" y="-781.37" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">128.6M lines</text>
+</a>
+</g>
+</g>
+<!-- line_clean -->
+<g id="n-line_clean" class="node">
+<title>line_clean</title>
+<g id="a_n-line_clean"><a title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M272.9,-701.76C272.9,-701.76 163.1,-701.76 163.1,-701.76 157.1,-701.76 151.1,-695.76 151.1,-689.76 151.1,-689.76 151.1,-672.04 151.1,-672.04 151.1,-666.04 157.1,-660.04 163.1,-660.04 163.1,-660.04 272.9,-660.04 272.9,-660.04 278.9,-660.04 284.9,-666.04 284.9,-672.04 284.9,-672.04 284.9,-689.76 284.9,-689.76 284.9,-695.76 278.9,-701.76 272.9,-701.76"></path>
+<text space="preserve" text-anchor="start" x="180.5" y="-681.05" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">line_clean</text>
+<text space="preserve" text-anchor="start" x="165.5" y="-670.9" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">one row per sellable line</text>
+</a>
+</g>
+</g>
+<!-- src_items&#45;&gt;line_clean -->
+<g id="edge1" class="edge">
+<title>src_items-&gt;line_clean</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M117.32,-769.97C137.15,-752.62 165.78,-727.58 187.44,-708.64"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="189.01,-710.98 193.19,-703.61 185.32,-706.77 189.01,-710.98"></polygon>
+</g>
+<!-- src_gtin -->
+<g id="n-src_gtin" class="node">
+<title>src_gtin</title>
+<g id="a_n-src_gtin"><a title="Click for the schema and the code">
+<path fill="white" stroke="#bdd3e5" stroke-width="1.2" d="M303.65,-812.23C303.65,-812.23 216.35,-812.23 216.35,-812.23 210.35,-812.23 204.35,-806.23 204.35,-800.23 204.35,-800.23 204.35,-782.51 204.35,-782.51 204.35,-776.51 210.35,-770.51 216.35,-770.51 216.35,-770.51 303.65,-770.51 303.65,-770.51 309.65,-770.51 315.65,-776.51 315.65,-782.51 315.65,-782.51 315.65,-800.23 315.65,-800.23 315.65,-806.23 309.65,-812.23 303.65,-812.23"></path>
+<text space="preserve" text-anchor="start" x="218.75" y="-791.52" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">master_gtin</text>
+<text space="preserve" text-anchor="start" x="231.88" y="-781.37" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">99k products</text>
+</a>
+</g>
+</g>
+<!-- src_gtin&#45;&gt;line_clean -->
+<g id="edge2" class="edge">
+<title>src_gtin-&gt;line_clean</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M252.1,-769.97C245.71,-753.45 236.61,-729.97 229.43,-711.41"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="232.13,-710.64 226.63,-704.19 226.91,-712.66 232.13,-710.64"></polygon>
+<text space="preserve" text-anchor="middle" x="256" y="-741.01" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">GTIN</text>
+</g>
+<!-- src_shopper -->
+<g id="n-src_shopper" class="node">
+<title>src_shopper</title>
+<g id="a_n-src_shopper"><a title="Click for the schema and the code">
+<path fill="white" stroke="#bdd3e5" stroke-width="1.2" d="M439.9,-812.23C439.9,-812.23 360.1,-812.23 360.1,-812.23 354.1,-812.23 348.1,-806.23 348.1,-800.23 348.1,-800.23 348.1,-782.51 348.1,-782.51 348.1,-776.51 354.1,-770.51 360.1,-770.51 360.1,-770.51 439.9,-770.51 439.9,-770.51 445.9,-770.51 451.9,-776.51 451.9,-782.51 451.9,-782.51 451.9,-800.23 451.9,-800.23 451.9,-806.23 445.9,-812.23 439.9,-812.23"></path>
+<text space="preserve" text-anchor="start" x="362.5" y="-791.52" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">shopper_id</text>
+<text space="preserve" text-anchor="start" x="363.62" y="-781.37" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">71.8M payments</text>
+</a>
+</g>
+</g>
+<!-- fuel_anchor -->
+<g id="n-fuel_anchor" class="node">
+<title>fuel_anchor</title>
+<g id="a_n-fuel_anchor"><a title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M463.77,-608.79C463.77,-608.79 338.23,-608.79 338.23,-608.79 332.23,-608.79 326.23,-602.79 326.23,-596.79 326.23,-596.79 326.23,-579.07 326.23,-579.07 326.23,-573.07 332.23,-567.07 338.23,-567.07 338.23,-567.07 463.77,-567.07 463.77,-567.07 469.77,-567.07 475.77,-573.07 475.77,-579.07 475.77,-579.07 475.77,-596.79 475.77,-596.79 475.77,-602.79 469.77,-608.79 463.77,-608.79"></path>
+<text space="preserve" text-anchor="start" x="359.75" y="-588.08" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">fuel_anchor</text>
+<text space="preserve" text-anchor="start" x="340.62" y="-577.93" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">one row per fuel transaction</text>
+</a>
+</g>
+</g>
+<!-- src_shopper&#45;&gt;fuel_anchor -->
+<g id="edge5" class="edge">
+<title>src_shopper-&gt;fuel_anchor</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M400.1,-769.95C400.28,-734.43 400.64,-661.11 400.85,-619.51"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="403.65,-619.54 400.89,-611.53 398.05,-619.51 403.65,-619.54"></polygon>
+<text space="preserve" text-anchor="middle" x="433.26" y="-677.03" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">SHOPPER_ID</text>
+</g>
+<!-- store_tx -->
+<g id="n-store_tx" class="node">
+<title>store_tx</title>
+<g id="a_n-store_tx"><a title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M282.02,-608.79C282.02,-608.79 139.97,-608.79 139.97,-608.79 133.97,-608.79 127.97,-602.79 127.97,-596.79 127.97,-596.79 127.97,-579.07 127.97,-579.07 127.97,-573.07 133.97,-567.07 139.97,-567.07 139.97,-567.07 282.02,-567.07 282.02,-567.07 288.02,-567.07 294.02,-573.07 294.02,-579.07 294.02,-579.07 294.02,-596.79 294.02,-596.79 294.02,-602.79 288.02,-608.79 282.02,-608.79"></path>
+<text space="preserve" text-anchor="start" x="181" y="-588.08" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">store_tx</text>
+<text space="preserve" text-anchor="start" x="142.38" y="-577.93" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">one row per in-store transaction</text>
+</a>
+</g>
+</g>
+<!-- src_shopper&#45;&gt;store_tx -->
+<g id="edge6" class="edge">
+<title>src_shopper-&gt;store_tx</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M394.76,-770.03C385.02,-736.16 361.03,-668.03 317,-628.79 310.53,-623.03 303.15,-618.07 295.36,-613.8"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="297.07,-611.53 288.66,-610.4 294.53,-616.52 297.07,-611.53"></polygon>
+</g>
+<!-- src_stores -->
+<g id="n-src_stores" class="node">
+<title>src_stores</title>
+<g id="a_n-src_stores"><a title="Click for the schema and the code">
+<path fill="white" stroke="#bdd3e5" stroke-width="1.2" d="M635.9,-812.23C635.9,-812.23 496.1,-812.23 496.1,-812.23 490.1,-812.23 484.1,-806.23 484.1,-800.23 484.1,-800.23 484.1,-782.51 484.1,-782.51 484.1,-776.51 490.1,-770.51 496.1,-770.51 496.1,-770.51 635.9,-770.51 635.9,-770.51 641.9,-770.51 647.9,-776.51 647.9,-782.51 647.9,-782.51 647.9,-800.23 647.9,-800.23 647.9,-806.23 641.9,-812.23 635.9,-812.23"></path>
+<text space="preserve" text-anchor="start" x="498.5" y="-791.52" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">stores_information</text>
+<text space="preserve" text-anchor="start" x="539" y="-781.37" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">36.9k stores</text>
+</a>
+</g>
+</g>
+<!-- feat_ctx -->
+<g id="n-feat_ctx" class="node">
+<title>feat_ctx</title>
+<g id="a_n-feat_ctx"><a title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M605.52,-415.6C605.52,-415.6 490.48,-415.6 490.48,-415.6 484.48,-415.6 478.48,-409.6 478.48,-403.6 478.48,-403.6 478.48,-385.88 478.48,-385.88 478.48,-379.88 484.48,-373.88 490.48,-373.88 490.48,-373.88 605.52,-373.88 605.52,-373.88 611.52,-373.88 617.52,-379.88 617.52,-385.88 617.52,-385.88 617.52,-403.6 617.52,-403.6 617.52,-409.6 611.52,-415.6 605.52,-415.6"></path>
+<text space="preserve" text-anchor="start" x="503" y="-394.89" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">feat_context</text>
+<text space="preserve" text-anchor="start" x="492.88" y="-384.74" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">visit · known at the pump</text>
+</a>
+</g>
+</g>
+<!-- src_stores&#45;&gt;feat_ctx -->
+<g id="edge11" class="edge">
+<title>src_stores-&gt;feat_ctx</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M566,-769.98C566,-748.18 566,-712.6 566,-681.9 566,-681.9 566,-681.9 566,-493.96 566,-470.89 561.14,-445.26 556.46,-425.97"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="559.2,-425.35 554.51,-418.29 553.77,-426.73 559.2,-425.35"></polygon>
+</g>
+<!-- src_disc -->
+<g id="n-src_disc" class="node">
+<title>src_disc</title>
+<g id="a_n-src_disc"><a title="Click for the schema and the code">
+<path fill="white" stroke="#bdd3e5" stroke-width="1.2" d="M778.27,-812.23C778.27,-812.23 691.73,-812.23 691.73,-812.23 685.73,-812.23 679.73,-806.23 679.73,-800.23 679.73,-800.23 679.73,-782.51 679.73,-782.51 679.73,-776.51 685.73,-770.51 691.73,-770.51 691.73,-770.51 778.27,-770.51 778.27,-770.51 784.27,-770.51 790.27,-776.51 790.27,-782.51 790.27,-782.51 790.27,-800.23 790.27,-800.23 790.27,-806.23 784.27,-812.23 778.27,-812.23"></path>
+<text space="preserve" text-anchor="start" x="701.25" y="-791.52" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">discounts</text>
+<text space="preserve" text-anchor="start" x="694.12" y="-781.37" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">17.4M applications</text>
+</a>
+</g>
+</g>
+<!-- line_clean&#45;&gt;fuel_anchor -->
+<g id="edge3" class="edge">
+<title>line_clean-&gt;fuel_anchor</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M258.23,-659.36C276.71,-649.97 298.93,-638.75 319,-628.79 328.77,-623.94 339.22,-618.82 349.28,-613.91"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="350.5,-616.43 356.47,-610.42 348.05,-611.4 350.5,-616.43"></polygon>
+<text space="preserve" text-anchor="middle" x="356.5" y="-630.54" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">category = FUEL</text>
+</g>
+<!-- line_clean&#45;&gt;store_tx -->
+<g id="edge4" class="edge">
+<title>line_clean-&gt;store_tx</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M195.16,-659.48C190.21,-653.74 185.66,-647.11 183,-640.04 180.19,-632.58 181.76,-624.88 185.28,-617.78"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="187.65,-619.26 189.48,-610.99 182.89,-616.32 187.65,-619.26"></polygon>
+<text space="preserve" text-anchor="middle" x="192" y="-630.54" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">else</text>
+</g>
+<!-- visit -->
+<g id="n-visit" class="node">
+<title>visit</title>
+<g id="a_n-visit"><a title="Click for the schema and the code">
+<path fill="#fef5e9" stroke="#f59625" stroke-width="2.2" d="M439.15,-515.82C439.15,-515.82 294.85,-515.82 294.85,-515.82 288.85,-515.82 282.85,-509.82 282.85,-503.82 282.85,-503.82 282.85,-486.1 282.85,-486.1 282.85,-480.1 288.85,-474.1 294.85,-474.1 294.85,-474.1 439.15,-474.1 439.15,-474.1 445.15,-474.1 451.15,-480.1 451.15,-486.1 451.15,-486.1 451.15,-503.82 451.15,-503.82 451.15,-509.82 445.15,-515.82 439.15,-515.82"></path>
+<text space="preserve" text-anchor="start" x="348.25" y="-495.11" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">visit</text>
+<text space="preserve" text-anchor="start" x="297.25" y="-484.96" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">one row per fuel visit · </text>
+<text space="preserve" text-anchor="start" x="397" y="-484.96" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">the label</text>
+</a>
+</g>
+</g>
+<!-- fuel_anchor&#45;&gt;visit -->
+<g id="edge7" class="edge">
+<title>fuel_anchor-&gt;visit</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M393.45,-566.74C388.98,-554.78 383.23,-539.39 378.24,-526.02"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="380.93,-525.22 375.5,-518.71 375.68,-527.18 380.93,-525.22"></polygon>
+</g>
+<!-- store_tx&#45;&gt;visit -->
+<g id="edge8" class="edge">
+<title>store_tx-&gt;visit</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M246.01,-566.51C268.65,-553.31 298.32,-536.01 322.61,-521.84"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="323.97,-524.3 329.47,-517.85 321.15,-519.46 323.97,-524.3"></polygon>
+<text space="preserve" text-anchor="middle" x="328.72" y="-537.57" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">−15 / +45 min</text>
+</g>
+<!-- als_int -->
+<g id="n-als_int" class="node">
+<title>als_int</title>
+<g id="a_n-als_int"><a title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M786.4,-415.6C786.4,-415.6 661.6,-415.6 661.6,-415.6 655.6,-415.6 649.6,-409.6 649.6,-403.6 649.6,-403.6 649.6,-385.88 649.6,-385.88 649.6,-379.88 655.6,-373.88 661.6,-373.88 661.6,-373.88 786.4,-373.88 786.4,-373.88 792.4,-373.88 798.4,-379.88 798.4,-385.88 798.4,-385.88 798.4,-403.6 798.4,-403.6 798.4,-409.6 792.4,-415.6 786.4,-415.6"></path>
+<text space="preserve" text-anchor="start" x="664" y="-394.89" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">als_interactions</text>
+<text space="preserve" text-anchor="start" x="671.5" y="-384.74" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">shopper × sku@daypart</text>
+</a>
+</g>
+</g>
+<!-- store_tx&#45;&gt;als_int -->
+<g id="edge12" class="edge">
+<title>store_tx-&gt;als_int</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M281.69,-566.42C291.18,-563.84 300.81,-561.33 310,-559.07 335.14,-552.89 341.95,-553.61 367,-547.07 489.91,-515 519.68,-500.48 634,-445.1 649.14,-437.77 665.35,-429.13 679.79,-421.15"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="681.05,-423.65 686.67,-417.31 678.32,-418.76 681.05,-423.65"></polygon>
+</g>
+<!-- visit&#45;&gt;feat_ctx -->
+<g id="edge9" class="edge">
+<title>visit-&gt;feat_ctx</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M407.13,-473.07C419.57,-466.63 433.34,-459.54 446,-453.1 453.09,-449.5 454.99,-448.86 462,-445.1 476.06,-437.56 491.22,-429 504.83,-421.16"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="506.17,-423.62 511.69,-417.19 503.36,-418.78 506.17,-423.62"></polygon>
+</g>
+<!-- feat_hist -->
+<g id="n-feat_hist" class="node">
+<title>feat_hist</title>
+<g id="a_n-feat_hist"><a title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M434.27,-415.6C434.27,-415.6 299.73,-415.6 299.73,-415.6 293.73,-415.6 287.73,-409.6 287.73,-403.6 287.73,-403.6 287.73,-385.88 287.73,-385.88 287.73,-379.88 293.73,-373.88 299.73,-373.88 299.73,-373.88 434.27,-373.88 434.27,-373.88 440.27,-373.88 446.27,-379.88 446.27,-385.88 446.27,-385.88 446.27,-403.6 446.27,-403.6 446.27,-409.6 440.27,-415.6 434.27,-415.6"></path>
+<text space="preserve" text-anchor="start" x="322" y="-394.89" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">feat_history</text>
+<text space="preserve" text-anchor="start" x="302.12" y="-384.74" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">visit × category · point-in-time</text>
+</a>
+</g>
+</g>
+<!-- visit&#45;&gt;feat_hist -->
+<g id="edge10" class="edge">
+<title>visit-&gt;feat_hist</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M367,-473.13C367,-459.5 367,-441.45 367,-426.21"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="369.8,-426.32 367,-418.32 364.2,-426.32 369.8,-426.32"></polygon>
+</g>
+<!-- train_a -->
+<g id="n-train_a" class="node">
+<title>train_a</title>
+<g id="a_n-train_a"><a title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M616.65,-332.88C616.65,-332.88 523.35,-332.88 523.35,-332.88 517.35,-332.88 511.35,-326.88 511.35,-320.88 511.35,-320.88 511.35,-303.16 511.35,-303.16 511.35,-297.16 517.35,-291.16 523.35,-291.16 523.35,-291.16 616.65,-291.16 616.65,-291.16 622.65,-291.16 628.65,-297.16 628.65,-303.16 628.65,-303.16 628.65,-320.88 628.65,-320.88 628.65,-326.88 622.65,-332.88 616.65,-332.88"></path>
+<text space="preserve" text-anchor="start" x="543.75" y="-312.17" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">train_a</text>
+<text space="preserve" text-anchor="start" x="525.75" y="-302.02" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">36.1M rows · 1 label</text>
+</a>
+</g>
+</g>
+<!-- feat_ctx&#45;&gt;train_a -->
+<g id="edge13" class="edge">
+<title>feat_ctx-&gt;train_a</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M553.55,-373.37C556.05,-364.19 559.06,-353.17 561.81,-343.07"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="564.49,-343.88 563.89,-335.43 559.09,-342.41 564.49,-343.88"></polygon>
+</g>
+<!-- train_b -->
+<g id="n-train_b" class="node">
+<title>train_b</title>
+<g id="a_n-train_b"><a title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M464.65,-332.88C464.65,-332.88 371.35,-332.88 371.35,-332.88 365.35,-332.88 359.35,-326.88 359.35,-320.88 359.35,-320.88 359.35,-303.16 359.35,-303.16 359.35,-297.16 365.35,-291.16 371.35,-291.16 371.35,-291.16 464.65,-291.16 464.65,-291.16 470.65,-291.16 476.65,-297.16 476.65,-303.16 476.65,-303.16 476.65,-320.88 476.65,-320.88 476.65,-326.88 470.65,-332.88 464.65,-332.88"></path>
+<text space="preserve" text-anchor="start" x="391.75" y="-312.17" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">train_b</text>
+<text space="preserve" text-anchor="start" x="373.75" y="-302.02" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">4.6M rows · 6 labels</text>
+</a>
+</g>
+</g>
+<!-- feat_ctx&#45;&gt;train_b -->
+<g id="edge14" class="edge">
+<title>feat_ctx-&gt;train_b</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M515.2,-373.37C498.11,-362.76 477.04,-349.68 458.9,-338.42"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="460.87,-336.34 452.59,-334.5 457.91,-341.1 460.87,-336.34"></polygon>
+</g>
+<!-- feat_hist&#45;&gt;train_b -->
+<g id="edge15" class="edge">
+<title>feat_hist-&gt;train_b</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M379.87,-373.37C385.91,-363.81 393.21,-352.25 399.81,-341.81"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="402.1,-343.43 404,-335.17 397.36,-340.44 402.1,-343.43"></polygon>
+</g>
+<!-- m_c -->
+<g id="n-m_c" class="node">
+<title>m_c</title>
+<g id="a_n-m_c"><a title="Click for the schema and the code">
+<path fill="#eef5f8" stroke="#4d93ac" stroke-width="1.8" d="M747.65,-222.41C747.65,-222.41 690.35,-222.41 690.35,-222.41 684.35,-222.41 678.35,-216.41 678.35,-210.41 678.35,-210.41 678.35,-192.69 678.35,-192.69 678.35,-186.69 684.35,-180.69 690.35,-180.69 690.35,-180.69 747.65,-180.69 747.65,-180.69 753.65,-180.69 759.65,-186.69 759.65,-192.69 759.65,-192.69 759.65,-210.41 759.65,-210.41 759.65,-216.41 753.65,-222.41 747.65,-222.41"></path>
+<text space="preserve" text-anchor="start" x="692.75" y="-201.7" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">model_c</text>
+<text space="preserve" text-anchor="start" x="696.5" y="-191.55" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">ALSModel</text>
+</a>
+</g>
+</g>
+<!-- als_int&#45;&gt;m_c -->
+<g id="edge18" class="edge">
+<title>als_int-&gt;m_c</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M723.46,-373.28C722.59,-339.66 720.83,-272.55 719.8,-233.22"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="722.6,-233.19 719.59,-225.27 717,-233.34 722.6,-233.19"></polygon>
+</g>
+<!-- m_a -->
+<g id="n-m_a" class="node">
+<title>m_a</title>
+<g id="a_n-m_a"><a title="Click for the schema and the code">
+<path fill="#eef5f8" stroke="#4d93ac" stroke-width="1.8" d="M634.02,-222.41C634.02,-222.41 515.98,-222.41 515.98,-222.41 509.98,-222.41 503.98,-216.41 503.98,-210.41 503.98,-210.41 503.98,-192.69 503.98,-192.69 503.98,-186.69 509.98,-180.69 515.98,-180.69 515.98,-180.69 634.02,-180.69 634.02,-180.69 640.02,-180.69 646.02,-186.69 646.02,-192.69 646.02,-192.69 646.02,-210.41 646.02,-210.41 646.02,-216.41 640.02,-222.41 634.02,-222.41"></path>
+<text space="preserve" text-anchor="start" x="548.75" y="-201.7" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">model_a</text>
+<text space="preserve" text-anchor="start" x="518.38" y="-191.55" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">GBTClassifier + calibrator</text>
+</a>
+</g>
+</g>
+<!-- train_a&#45;&gt;m_a -->
+<g id="edge16" class="edge">
+<title>train_a-&gt;m_a</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M570.94,-290.62C571.69,-274.43 572.74,-251.56 573.59,-233.18"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="576.38,-233.47 573.95,-225.35 570.78,-233.21 576.38,-233.47"></polygon>
+</g>
+<!-- m_b -->
+<g id="n-m_b" class="node">
+<title>m_b</title>
+<g id="a_n-m_b"><a title="Click for the schema and the code">
+<path fill="#eef5f8" stroke="#4d93ac" stroke-width="1.8" d="M459.77,-222.41C459.77,-222.41 376.23,-222.41 376.23,-222.41 370.23,-222.41 364.23,-216.41 364.23,-210.41 364.23,-210.41 364.23,-192.69 364.23,-192.69 364.23,-186.69 370.23,-180.69 376.23,-180.69 376.23,-180.69 459.77,-180.69 459.77,-180.69 465.77,-180.69 471.77,-186.69 471.77,-192.69 471.77,-192.69 471.77,-210.41 471.77,-210.41 471.77,-216.41 465.77,-222.41 459.77,-222.41"></path>
+<text space="preserve" text-anchor="start" x="391.75" y="-201.7" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">model_b</text>
+<text space="preserve" text-anchor="start" x="378.62" y="-191.55" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">6 × GBTClassifier</text>
+</a>
+</g>
+</g>
+<!-- train_b&#45;&gt;m_b -->
+<g id="edge17" class="edge">
+<title>train_b-&gt;m_b</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M418,-290.62C418,-274.43 418,-251.56 418,-233.18"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="420.8,-233.35 418,-225.35 415.2,-233.35 420.8,-233.35"></polygon>
+</g>
+<!-- decision -->
+<g id="n-decision" class="node">
+<title>decision</title>
+<g id="a_n-decision"><a title="Click for the schema and the code">
+<path fill="#edf7f2" stroke="#1f8a5b" stroke-width="2.2" d="M785.15,-124.44C785.15,-124.44 652.85,-124.44 652.85,-124.44 646.85,-124.44 640.85,-118.44 640.85,-112.44 640.85,-112.44 640.85,-94.72 640.85,-94.72 640.85,-88.72 646.85,-82.72 652.85,-82.72 652.85,-82.72 785.15,-82.72 785.15,-82.72 791.15,-82.72 797.15,-88.72 797.15,-94.72 797.15,-94.72 797.15,-112.44 797.15,-112.44 797.15,-118.44 791.15,-124.44 785.15,-124.44"></path>
+<text space="preserve" text-anchor="start" x="689" y="-103.73" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">decision</text>
+<text space="preserve" text-anchor="start" x="655.25" y="-93.58" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">expected value per candidate</text>
+</a>
+</g>
+</g>
+<!-- m_a&#45;&gt;decision -->
+<g id="edge19" class="edge">
+<title>m_a-&gt;decision</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M605.89,-179.96C627.38,-165.64 656.22,-146.42 679.4,-130.97"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="680.8,-133.41 685.9,-126.64 677.69,-128.75 680.8,-133.41"></polygon>
+<text space="preserve" text-anchor="middle" x="674.75" y="-146.19" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">P(inside)</text>
+</g>
+<!-- m_b&#45;&gt;decision -->
+<g id="edge20" class="edge">
+<title>m_b-&gt;decision</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M468.26,-179.9C474.87,-177.38 481.57,-174.91 488,-172.69 535.03,-156.44 588.25,-140.58 631.74,-128.26"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="632.46,-130.96 639.4,-126.1 630.94,-125.57 632.46,-130.96"></polygon>
+<text space="preserve" text-anchor="middle" x="595.06" y="-146.19" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">P(category)</text>
+</g>
+<!-- m_c&#45;&gt;decision -->
+<g id="edge21" class="edge">
+<title>m_c-&gt;decision</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M719,-180.2C719,-167.05 719,-149.71 719,-134.96"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="721.8,-135.35 719,-127.35 716.2,-135.35 721.8,-135.35"></polygon>
+<text space="preserve" text-anchor="middle" x="740.38" y="-146.19" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">top SKUs</text>
+</g>
+<!-- offer_cat -->
+<g id="n-offer_cat" class="node">
+<title>offer_cat</title>
+<g id="a_n-offer_cat"><a title="Click for the schema and the code">
+<path fill="white" stroke="#c7352b" stroke-width="1.4" stroke-dasharray="5,2" d="M972.15,-227.41C972.15,-227.41 869.85,-227.41 869.85,-227.41 863.85,-227.41 857.85,-221.41 857.85,-215.41 857.85,-215.41 857.85,-187.69 857.85,-187.69 857.85,-181.69 863.85,-175.69 869.85,-175.69 869.85,-175.69 972.15,-175.69 972.15,-175.69 978.15,-175.69 984.15,-181.69 984.15,-187.69 984.15,-187.69 984.15,-215.41 984.15,-215.41 984.15,-221.41 978.15,-227.41 972.15,-227.41"></path>
+<text space="preserve" text-anchor="start" x="872.25" y="-206.7" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">offer_catalog</text>
+<text space="preserve" text-anchor="start" x="873.75" y="-196.55" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">sku · margin · funding</text>
+<text space="preserve" text-anchor="start" x="888.38" y="-186.55" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">does not exist</text>
+</a>
+</g>
+</g>
+<!-- offer_cat&#45;&gt;decision -->
+<g id="edge22" class="edge">
+<title>offer_cat-&gt;decision</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M867.4,-175.08C837.85,-161.04 801.29,-143.68 771.86,-129.69"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="773.31,-127.28 764.88,-126.38 770.9,-132.34 773.31,-127.28"></polygon>
+<text space="preserve" text-anchor="middle" x="860.93" y="-146.19" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">margin · funding</text>
+</g>
+<!-- score_req -->
+<g id="n-score_req" class="node">
+<title>score_req</title>
+<g id="a_n-score_req"><a title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M1130.15,-222.41C1130.15,-222.41 1027.85,-222.41 1027.85,-222.41 1021.85,-222.41 1015.85,-216.41 1015.85,-210.41 1015.85,-210.41 1015.85,-192.69 1015.85,-192.69 1015.85,-186.69 1021.85,-180.69 1027.85,-180.69 1027.85,-180.69 1130.15,-180.69 1130.15,-180.69 1136.15,-180.69 1142.15,-186.69 1142.15,-192.69 1142.15,-192.69 1142.15,-210.41 1142.15,-210.41 1142.15,-216.41 1136.15,-222.41 1130.15,-222.41"></path>
+<text space="preserve" text-anchor="start" x="1030.25" y="-201.7" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">score_request</text>
+<text space="preserve" text-anchor="start" x="1038.12" y="-191.55" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">one row per live fill</text>
+</a>
+</g>
+</g>
+<!-- score_req&#45;&gt;decision -->
+<g id="edge23" class="edge">
+<title>score_req-&gt;decision</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M1022.16,-180.1C1014.73,-177.55 1007.2,-175.02 1000,-172.69 957.68,-159.01 947.1,-155.41 904,-144.44 872.83,-136.51 838.44,-128.81 807.86,-122.33"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="808.55,-119.62 800.14,-120.71 807.39,-125.1 808.55,-119.62"></polygon>
+</g>
+<!-- dec_log -->
+<g id="n-dec_log" class="node">
+<title>dec_log</title>
+<g id="a_n-dec_log"><a title="Click for the schema and the code">
+<path fill="#fef5e9" stroke="#f59625" stroke-width="2" d="M821.52,-41.72C821.52,-41.72 616.48,-41.72 616.48,-41.72 610.48,-41.72 604.48,-35.72 604.48,-29.72 604.48,-29.72 604.48,-12 604.48,-12 604.48,-6 610.48,0 616.48,0 616.48,0 821.52,0 821.52,0 827.52,0 833.52,-6 833.52,-12 833.52,-12 833.52,-29.72 833.52,-29.72 833.52,-35.72 827.52,-41.72 821.52,-41.72"></path>
+<text space="preserve" text-anchor="start" x="674" y="-21.01" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">decision_log</text>
+<text space="preserve" text-anchor="start" x="618.88" y="-10.86" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">what we showed · </text>
+<text space="preserve" text-anchor="start" x="701.38" y="-10.86" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">and with what probability</text>
+</a>
+</g>
+</g>
+<!-- decision&#45;&gt;dec_log -->
+<g id="edge24" class="edge">
+<title>decision-&gt;dec_log</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M719,-81.79C719,-72.85 719,-62.21 719,-52.4"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="721.8,-52.7 719,-44.7 716.2,-52.7 721.8,-52.7"></polygon>
+</g>
+<!-- dec_log&#45;&gt;visit -->
+<g id="edge25" class="edge">
+<title>dec_log-&gt;visit</title>
+<path fill="none" stroke="#f59625" stroke-width="1.4" stroke-dasharray="5,2" d="M769.8,-42.54C786.64,-52.12 803.5,-65.32 813,-82.72 848.04,-146.89 823.91,-434.05 814,-445.1 790.94,-470.81 586.18,-484.32 461.93,-490.22"></path>
+<polygon fill="#f59625" stroke="#f59625" stroke-width="1.4" points="462,-487.41 454.14,-490.58 462.26,-493 462,-487.41"></polygon>
+<text space="preserve" text-anchor="middle" x="883.15" y="-261.66" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#b5721f">tomorrow's training data</text>
+</g>
+</g>
+</svg>
+
+</div>
+<div class="pipeline-detail">
+<div class="detail-nav">
+<p><span>Detail</span> <a href="#pipeline-top">↑ back to the diagram</a></p>
+</div>
+<div id="d-start" class="node-detail">
+<section id="pick-a-table" class="level3">
+<h3 class="anchored" data-anchor-id="pick-a-table">Pick a table</h3>
+<p>Three layers, then serving:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Layer</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Bronze</strong></td>
+<td>Exactly as PDI delivered it. Never edited</td>
+</tr>
+<tr class="even">
+<td><strong>Silver</strong></td>
+<td>Cleaned, typed, conformed. One row per real thing</td>
+</tr>
+<tr class="odd">
+<td><strong>Gold</strong></td>
+<td><code>visit</code> — the unit of analysis, and the label we built</td>
+</tr>
+<tr class="even">
+<td><strong>Features</strong></td>
+<td>Point-in-time, nothing knowable only after the pump</td>
+</tr>
+<tr class="odd">
+<td><strong>Serving</strong></td>
+<td>What the pump sends, and what we must log back</td>
+</tr>
+</tbody>
+</table>
+<p>The orange boxes are ours. <strong><code>visit</code></strong> is the one that matters: no column in the source data says <em>“did they come inside?”</em>, so we construct it, and every number downstream inherits whatever we got wrong.</p>
+</section>
+<section id="what-it-costs-to-run" class="level3">
+<h3 class="anchored" data-anchor-id="what-it-costs-to-run">What it costs to run</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Table</th>
+<th>Rows</th>
+<th>Shape</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>line_clean</code></td>
+<td>~110M</td>
+<td>wide → narrow</td>
+<td>The expensive join. Broadcast <code>master_gtin</code>, it is only 99k rows</td>
+</tr>
+<tr class="even">
+<td><code>fuel_anchor</code></td>
+<td>36.1M</td>
+<td>shuffle</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>store_tx</code></td>
+<td>32.7M</td>
+<td>shuffle</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>visit</code></td>
+<td>36.1M</td>
+<td><strong>range join</strong></td>
+<td>The one to watch — see below</td>
+</tr>
+<tr class="odd">
+<td><code>feat_history</code></td>
+<td>~216M</td>
+<td>window</td>
+<td>visit × 6 categories</td>
+</tr>
+<tr class="even">
+<td><code>als_interactions</code></td>
+<td>~26M</td>
+<td>—</td>
+<td>Beverages only</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Partition everything on date.</strong> <code>transaction_items</code> arrives as 19 undated files; rewrite it once as <code>parquet partitioned by (dt)</code> and every job below reads a slice instead of 3.8 GB.</p>
+<p><strong>The <code>visit</code> range join is the one that will hurt.</strong> A naive <code>BETWEEN</code> join has no equality key, so Spark falls back to a nested loop over 36.1M × 32.7M rows. Give it an hour-bucket equality key first — the window spans at most three buckets — then filter the exact minutes. That is the difference between minutes and never finishing.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Example conclusions.</strong> Row counts come from one run over the PDI extract — 940 stores in eight Intermountain West states, October 2024 to September 2026.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div id="d-src_items" class="node-detail">
+<section id="transaction_items" class="level3 bronze-head">
+<h3 class="bronze-head anchored" data-anchor-id="transaction_items">transaction_items</h3>
+<p><strong>Grain:</strong> one row per item rung up. <strong>128,599,042 rows.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>TRANSACTION_ITEM_ID</code></td>
+<td>decimal(38,0)</td>
+<td>Primary key. 22 digits — <strong>keep as string or decimal</strong>, Int64 overflows</td>
+</tr>
+<tr class="even">
+<td><code>TRANSACTION_SET_ID</code></td>
+<td>decimal(38,0)</td>
+<td>The basket key</td>
+</tr>
+<tr class="odd">
+<td><code>STORE_ID</code></td>
+<td>decimal(38,0)</td>
+<td>Joins the store master</td>
+</tr>
+<tr class="even">
+<td><code>DATE_TIME</code></td>
+<td>timestamp</td>
+<td><strong>Store wall-clock time</strong>, per PDI. No zone conversion needed</td>
+</tr>
+<tr class="odd">
+<td><code>GTIN</code></td>
+<td>string</td>
+<td>14-digit barcode; placeholder on keyed lines</td>
+</tr>
+<tr class="even">
+<td><code>UNIT_QUANTITY</code></td>
+<td>decimal(38,4)</td>
+<td>Gallons for fuel, count otherwise</td>
+</tr>
+<tr class="odd">
+<td><code>GRAND_TOTAL_AMOUNT</code></td>
+<td>decimal(38,4)</td>
+<td>Tax-inclusive line total</td>
+</tr>
+<tr class="even">
+<td><code>SCAN_TYPE</code></td>
+<td>string</td>
+<td><code>GTIN</code> | <code>NONSCAN</code> | <code>PLU</code> | <code>FMT_ERR</code></td>
+</tr>
+<tr class="odd">
+<td><code>NONSCAN_CATEGORY</code></td>
+<td>string</td>
+<td>NACS dept for keyed lines. <strong><code>FUEL</code> lives here</strong></td>
+</tr>
+<tr class="even">
+<td><code>NONSCAN_SUBCATEGORY</code></td>
+<td>string</td>
+<td>Fuel grade lives here</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>items <span class="op">=</span> spark.read.parquet(<span class="st">"transaction-items-all/"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Every money column is <code>Decimal(38, x)</code>. Cast once, early — decimal arithmetic in Spark is slow and the overflow rules will surprise you.</p>
+</section>
+</div>
+<div id="d-src_gtin" class="node-detail">
+<section id="master_gtin" class="level3 bronze-head">
+<h3 class="bronze-head anchored" data-anchor-id="master_gtin">master_gtin</h3>
+<p><strong>Grain:</strong> one row per barcode. <strong>99,074 products</strong>, 35 PDI categories.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>GTIN</code></td>
+<td>string</td>
+<td>Primary key</td>
+</tr>
+<tr class="even">
+<td><code>CATEGORY</code></td>
+<td>string</td>
+<td><strong>PDI’s</strong> taxonomy — not NACS</td>
+</tr>
+<tr class="odd">
+<td><code>SUBCATEGORY</code></td>
+<td>string</td>
+<td>Finer split</td>
+</tr>
+<tr class="even">
+<td><code>BRAND</code></td>
+<td>string</td>
+<td>Monster, Red Bull, ZYN …</td>
+</tr>
+<tr class="odd">
+<td><code>UPDATED_AT</code></td>
+<td>date</td>
+<td><strong>All rows 2024-07-03</strong> — a frozen snapshot</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gtin <span class="op">=</span> (spark.read.parquet(<span class="st">"master-gtin/"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>        .select(<span class="st">"GTIN"</span>, <span class="st">"CATEGORY"</span>, <span class="st">"SUBCATEGORY"</span>, <span class="st">"BRAND"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        .dropDuplicates([<span class="st">"GTIN"</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Matches 88% of scanned lines. The master predates the transaction window, so anything launched since never matches.</p>
+</section>
+</div>
+<div id="d-src_shopper" class="node-detail">
+<section id="shopper_id" class="level3 bronze-head">
+<h3 class="bronze-head anchored" data-anchor-id="shopper_id">shopper_id</h3>
+<p><strong>Grain:</strong> one row per payment. <strong>71,790,254 rows, 8.0M shoppers.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>PAYMENT_ID</code></td>
+<td>decimal(38,0)</td>
+<td>Primary key</td>
+</tr>
+<tr class="even">
+<td><code>TRANSACTION_SET_ID</code></td>
+<td>decimal(38,0)</td>
+<td><strong>Not unique</strong> — split tender gives two rows</td>
+</tr>
+<tr class="odd">
+<td><code>SHOPPER_ID</code></td>
+<td>string</td>
+<td>32-char hash. <strong>Treat as PII</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>shopper <span class="op">=</span> (spark.read.parquet(<span class="st">"shopper-id/"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>           .select(<span class="st">"TRANSACTION_SET_ID"</span>, <span class="st">"SHOPPER_ID"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>           .dropDuplicates([<span class="st">"TRANSACTION_SET_ID"</span>]))   <span class="co"># collapse split tender</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>SHOPPER_ID = hash(card BIN + last 4 + store state)</code>. The same card in two states is <strong>two shoppers</strong>, so anything cross-border is invisible, and a few ids collide onto more than one person.</p>
+</section>
+</div>
+<div id="d-src_stores" class="node-detail">
+<section id="stores_information" class="level3 bronze-head">
+<h3 class="bronze-head anchored" data-anchor-id="stores_information">stores_information</h3>
+<p><strong>Grain:</strong> one row per store. 36,912 rows, of which <strong>940 transact</strong>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>STORE_ID</code></td>
+<td>decimal(38,0)</td>
+<td>Primary key</td>
+</tr>
+<tr class="even">
+<td><code>STATE</code>, <code>CITY</code>, <code>ZIP_CODE</code></td>
+<td>string</td>
+<td>Eight Intermountain West states in our 940</td>
+</tr>
+<tr class="odd">
+<td><code>LATITUDE</code>, <code>LONGITUDE</code></td>
+<td>double</td>
+<td>Max longitude is exactly 180 — a placeholder</td>
+</tr>
+<tr class="even">
+<td><code>START_WEEK_CONTINUOUS_DATA</code></td>
+<td>date</td>
+<td><strong>First week the store reports without gaps</strong></td>
+</tr>
+<tr class="odd">
+<td><code>CHAIN_SIZE</code></td>
+<td>decimal</td>
+<td>1–386. Independents, not national chains</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>stores <span class="op">=</span> (spark.read.parquet(<span class="st">"stores-information/"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>          .select(<span class="st">"STORE_ID"</span>, <span class="st">"STATE"</span>, <span class="st">"START_WEEK_CONTINUOUS_DATA"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Filter on <code>START_WEEK_CONTINUOUS_DATA</code> before any time series, or stores joining the panel will read as growth.</p>
+</section>
+</div>
+<div id="d-src_disc" class="node-detail">
+<section id="discounts" class="level3 bronze-head">
+<h3 class="bronze-head anchored" data-anchor-id="discounts">discounts</h3>
+<p><strong>Grain:</strong> one row per discount applied to a line. <strong>17,429,831 rows.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>DISCOUNT_ID</code></td>
+<td>decimal(38,0)</td>
+<td>Primary key</td>
+</tr>
+<tr class="even">
+<td><code>TRANSACTION_ITEM_ID</code></td>
+<td>decimal(38,0)</td>
+<td>Many discounts per line — <strong>aggregate before joining</strong></td>
+</tr>
+<tr class="odd">
+<td><code>DISCOUNT_TYPE</code></td>
+<td>decimal</td>
+<td>0 Mix&amp;Match · 1 Combo · 2 Manager · 3 Loyalty · 4–5 Cashier · 6–8 Retailer · 9 Missing</td>
+</tr>
+<tr class="even">
+<td><code>DISCOUNT_NAME</code></td>
+<td>string</td>
+<td>Not standardised. <code>ZYN</code> and <code>zyn</code> are different values</td>
+</tr>
+<tr class="odd">
+<td><code>DISCOUNT_AMOUNT</code></td>
+<td>decimal(38,4)</td>
+<td><strong>Sign is inconsistent across promotions</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Types 0,1,3,6,7 are real promotions. 2,4,5,8 are register overrides --</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># a cashier fixing a price is not an offer anyone responded to.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>PROMO_TYPES <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">7</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Redemptions, not impressions.</strong> No row exists for an offer shown and declined, so <code>P(buy | offered)</code> is not computable from this table.</p>
+</section>
+</div>
+<div id="d-line_clean" class="node-detail">
+<section id="line_clean" class="level3 silver-head">
+<h3 class="silver-head anchored" data-anchor-id="line_clean">line_clean</h3>
+<p><strong>Grain:</strong> one row per sellable line. ~110M rows after filtering.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Derivation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>transaction_id</code></td>
+<td>string</td>
+<td><code>TRANSACTION_SET_ID</code> cast to string</td>
+</tr>
+<tr class="even">
+<td><code>shopper_id</code></td>
+<td>string</td>
+<td>Joined from <code>shopper_id</code></td>
+</tr>
+<tr class="odd">
+<td><code>store_id</code></td>
+<td>int</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>ts</code></td>
+<td>timestamp</td>
+<td><code>DATE_TIME</code>, store-local</td>
+</tr>
+<tr class="odd">
+<td><code>category</code></td>
+<td>string</td>
+<td><code>coalesce(CATEGORY, NONSCAN_CATEGORY)</code></td>
+</tr>
+<tr class="even">
+<td><code>brand</code>, <code>gtin</code></td>
+<td>string</td>
+<td>Null on keyed lines</td>
+</tr>
+<tr class="odd">
+<td><code>amount</code></td>
+<td>double</td>
+<td><code>GRAND_TOTAL_AMOUNT</code> cast</td>
+</tr>
+<tr class="even">
+<td><code>fuel_grade</code></td>
+<td>string</td>
+<td><code>NONSCAN_SUBCATEGORY</code> where category is <code>FUEL</code></td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>line_clean <span class="op">=</span> (items</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"amount"</span>, F.col(<span class="st">"GRAND_TOTAL_AMOUNT"</span>).cast(<span class="st">"double"</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"qty"</span>,    F.col(<span class="st">"UNIT_QUANTITY"</span>).cast(<span class="st">"double"</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>((F.col(<span class="st">"qty"</span>) <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">&amp;</span> (F.col(<span class="st">"amount"</span>) <span class="op">&gt;</span> <span class="dv">0</span>))      <span class="co"># drop 1.2M voids</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    .join(gtin, <span class="st">"GTIN"</span>, <span class="st">"left"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    .join(shopper, <span class="st">"TRANSACTION_SET_ID"</span>, <span class="st">"inner"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"category"</span>, F.coalesce(<span class="st">"CATEGORY"</span>, <span class="st">"NONSCAN_CATEGORY"</span>))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F.col(<span class="st">"category"</span>).isNotNull()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The two filters remove <strong>481,568 voids</strong> and <strong>701,406 returns</strong>. The coalesce labels <strong>85.6%</strong> of lines — but it mixes PDI’s taxonomy with NACS, so reconcile <code>FUEL</code>/<code>Fuel Products</code> and <code>LOTTERY</code>/<code>Lottery/Gaming</code> before counting.</p>
+</section>
+</div>
+<div id="d-fuel_anchor" class="node-detail">
+<section id="fuel_anchor" class="level3 silver-head">
+<h3 class="silver-head anchored" data-anchor-id="fuel_anchor">fuel_anchor</h3>
+<p><strong>Grain:</strong> one row per fuel transaction. <strong>36,142,617 rows.</strong> Each one is a moment when a pump screen could show something.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fuel_tx</code></td>
+<td>string</td>
+<td>Primary key</td>
+</tr>
+<tr class="even">
+<td><code>shopper_id</code>, <code>store_id</code></td>
+<td>string, int</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>ts</code></td>
+<td>timestamp</td>
+<td>The moment the offer would fire</td>
+</tr>
+<tr class="even">
+<td><code>fuel_spend</code></td>
+<td>double</td>
+<td>Dollars, not gallons</td>
+</tr>
+<tr class="odd">
+<td><code>fuel_grade</code></td>
+<td>string</td>
+<td><code>REGULAR</code>, <code>DIESEL</code>, <code>MID/PLUS</code>, <code>PREMIUM</code> …</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fuel_anchor <span class="op">=</span> (line_clean</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F.col(<span class="st">"category"</span>) <span class="op">==</span> <span class="st">"FUEL"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    .groupBy(<span class="st">"transaction_id"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    .agg(F.first(<span class="st">"shopper_id"</span>).alias(<span class="st">"shopper_id"</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>         F.first(<span class="st">"store_id"</span>).alias(<span class="st">"store_id"</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>         F.<span class="bu">min</span>(<span class="st">"ts"</span>).alias(<span class="st">"ts"</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>         F.<span class="bu">sum</span>(<span class="st">"amount"</span>).alias(<span class="st">"fuel_spend"</span>),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>         F.first(<span class="st">"fuel_grade"</span>).alias(<span class="st">"fuel_grade"</span>))</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    .withColumnRenamed(<span class="st">"transaction_id"</span>, <span class="st">"fuel_tx"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</div>
+<div id="d-store_tx" class="node-detail">
+<section id="store_tx" class="level3 silver-head">
+<h3 class="silver-head anchored" data-anchor-id="store_tx">store_tx</h3>
+<p><strong>Grain:</strong> one row per in-store transaction. <strong>~32.7M rows.</strong> The candidate outcomes.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>store_tx</code></td>
+<td>string</td>
+<td>Primary key</td>
+</tr>
+<tr class="even">
+<td><code>shopper_id</code>, <code>store_id</code>, <code>ts</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>cats</code></td>
+<td>array&lt;string&gt;</td>
+<td>Distinct categories in the basket</td>
+</tr>
+<tr class="even">
+<td><code>skus</code></td>
+<td>array&lt;string&gt;</td>
+<td>Distinct GTINs</td>
+</tr>
+<tr class="odd">
+<td><code>spend</code></td>
+<td>double</td>
+<td>Basket total</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>NOT_A_PURCHASE <span class="op">=</span> [<span class="st">"FUEL"</span>, <span class="st">"SERVICES"</span>]        <span class="co"># SERVICES is 99.5% card fees</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>store_tx <span class="op">=</span> (line_clean</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(<span class="op">~</span>F.col(<span class="st">"category"</span>).isin(NOT_A_PURCHASE))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    .groupBy(<span class="st">"transaction_id"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    .agg(F.first(<span class="st">"shopper_id"</span>).alias(<span class="st">"shopper_id"</span>),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>         F.first(<span class="st">"store_id"</span>).alias(<span class="st">"store_id"</span>),</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>         F.<span class="bu">min</span>(<span class="st">"ts"</span>).alias(<span class="st">"ts"</span>),</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>         F.collect_set(<span class="st">"category"</span>).alias(<span class="st">"cats"</span>),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>         F.collect_set(<span class="st">"gtin"</span>).alias(<span class="st">"skus"</span>),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>         F.<span class="bu">sum</span>(<span class="st">"amount"</span>).alias(<span class="st">"spend"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Dropping <code>SERVICES</code> is the single most consequential filter here — it is card fees charged on the fuel sale itself, and counting it as a purchase inflated the attach rate by seven points.</p>
+</section>
+</div>
+<div id="d-visit" class="node-detail">
+<section id="visit" class="level3 orange-head">
+<h3 class="orange-head anchored" data-anchor-id="visit">visit</h3>
+<p><strong>Grain:</strong> one row per fuel visit. <strong>36,142,617 rows. The label lives here.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fuel_tx</code></td>
+<td>string</td>
+<td>Primary key</td>
+</tr>
+<tr class="even">
+<td><code>shopper_id</code>, <code>store_id</code>, <code>ts</code></td>
+<td></td>
+<td>From the anchor</td>
+</tr>
+<tr class="odd">
+<td><code>fuel_spend</code>, <code>fuel_grade</code></td>
+<td>double, string</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong><code>bought</code></strong></td>
+<td>boolean</td>
+<td><strong>The Model A label.</strong> 12.8% true</td>
+</tr>
+<tr class="odd">
+<td><code>cats</code></td>
+<td>array&lt;string&gt;</td>
+<td><strong>The Model B labels.</strong> Null when <code>bought</code> is false</td>
+</tr>
+<tr class="even">
+<td><code>store_spend</code></td>
+<td>double</td>
+<td>Median <strong>$7.87</strong> when they buy</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>BEFORE, AFTER <span class="op">=</span> <span class="dv">15</span>, <span class="dv">45</span>       <span class="co"># minutes, asymmetric: most people fuel first</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>cand <span class="op">=</span> store_tx.alias(<span class="st">"s"</span>).join(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    fuel_anchor.alias(<span class="st">"f"</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    (F.col(<span class="st">"s.shopper_id"</span>) <span class="op">==</span> F.col(<span class="st">"f.shopper_id"</span>)) <span class="op">&amp;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    (F.col(<span class="st">"s.ts"</span>).between(F.expr(<span class="ss">f"f.ts - INTERVAL </span><span class="sc">{</span>BEFORE<span class="sc">}</span><span class="ss"> MINUTES"</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                           F.expr(<span class="ss">f"f.ts + INTERVAL </span><span class="sc">{</span>AFTER<span class="sc">}</span><span class="ss"> MINUTES"</span>))),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"inner"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>visit <span class="op">=</span> (fuel_anchor.join(</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        cand.groupBy(<span class="st">"fuel_tx"</span>).agg(</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            F.array_distinct(F.flatten(F.collect_list(<span class="st">"cats"</span>))).alias(<span class="st">"cats"</span>),</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>            F.<span class="bu">sum</span>(<span class="st">"spend"</span>).alias(<span class="st">"store_spend"</span>)),</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"fuel_tx"</span>, <span class="st">"left"</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"bought"</span>, F.col(<span class="st">"cats"</span>).isNotNull()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>This column does not exist in the source data.</strong> The window is a judgement call, and it is the one a team has to defend: 77.2% of in-store purchases land within five minutes of the pump, and 16.2% happen <em>before</em> it.</p>
+</section>
+</div>
+<div id="d-feat_ctx" class="node-detail">
+<section id="feat_context" class="level3">
+<h3 class="anchored" data-anchor-id="feat_context">feat_context</h3>
+<p><strong>Grain:</strong> one row per visit. Everything knowable <strong>before the nozzle goes back</strong> — which is the leakage rule with a clock on it.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>hour</code></td>
+<td>int</td>
+<td>Attach spans 7.5% (2am) → 15.1% (6am)</td>
+</tr>
+<tr class="even">
+<td><code>daypart</code></td>
+<td>string</td>
+<td>morning 5–10 · midday 10–15 · evening 15–05</td>
+</tr>
+<tr class="odd">
+<td><code>weekday</code>, <code>month</code></td>
+<td>int</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>store_id</code></td>
+<td>int</td>
+<td>High-cardinality — index it, don’t one-hot it</td>
+</tr>
+<tr class="odd">
+<td><code>fuel_grade</code></td>
+<td>string</td>
+<td>Weak: 12.2%–13.3% across the big four</td>
+</tr>
+<tr class="even">
+<td><code>fuel_spend</code></td>
+<td>double</td>
+<td>Known mid-fill as gallons accumulate</td>
+</tr>
+<tr class="odd">
+<td><code>store_base_rate</code></td>
+<td>double</td>
+<td>The store’s own attach rate, <strong>computed on train only</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>daypart <span class="op">=</span> (F.when(F.hour(<span class="st">"ts"</span>).between(<span class="dv">5</span>, <span class="dv">9</span>),   <span class="st">"morning"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>            .when(F.hour(<span class="st">"ts"</span>).between(<span class="dv">10</span>, <span class="dv">14</span>), <span class="st">"midday"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>            .otherwise(<span class="st">"evening"</span>))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>feat_ctx <span class="op">=</span> (visit</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"hour"</span>,    F.hour(<span class="st">"ts"</span>))</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"weekday"</span>, F.dayofweek(<span class="st">"ts"</span>))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"month"</span>,   F.month(<span class="st">"ts"</span>))</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"daypart"</span>, daypart))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>store_base_rate</code> is a target encoding, so fit it on the training split alone or it leaks the label straight into the features.</p>
+</section>
+</div>
+<div id="d-feat_hist" class="node-detail">
+<section id="feat_history" class="level3">
+<h3 class="anchored" data-anchor-id="feat_history">feat_history</h3>
+<p><strong>Grain:</strong> one row per visit × category. Point-in-time: <strong>only visits strictly before the one being scored.</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fuel_tx</code>, <code>category</code></td>
+<td>string</td>
+<td>Composite key</td>
+</tr>
+<tr class="even">
+<td><code>bought_before</code></td>
+<td>int</td>
+<td>Has this shopper ever bought this category?</td>
+</tr>
+<tr class="odd">
+<td><code>prior_share</code></td>
+<td>double</td>
+<td>Share of their prior visits containing it</td>
+</tr>
+<tr class="even">
+<td><code>days_since</code></td>
+<td>int</td>
+<td>Since they last bought it. Null if never</td>
+</tr>
+<tr class="odd">
+<td><code>prior_visits</code></td>
+<td>int</td>
+<td>22.2% of visits have <strong>zero</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> (Window.partitionBy(<span class="st">"shopper_id"</span>, <span class="st">"category"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>           .orderBy(F.col(<span class="st">"ts"</span>).cast(<span class="st">"long"</span>))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>           .rowsBetween(Window.unboundedPreceding, <span class="op">-</span><span class="dv">1</span>))   <span class="co"># &lt;- excludes today</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>feat_hist <span class="op">=</span> (exploded                     <span class="co"># visit x category, one row each</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"bought_before"</span>, F.<span class="bu">max</span>(<span class="st">"hit"</span>).over(w))</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"prior_share"</span>,   F.avg(<span class="st">"hit"</span>).over(w))</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"days_since"</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                F.datediff(<span class="st">"ts"</span>, F.<span class="bu">max</span>(F.when(F.col(<span class="st">"hit"</span>) <span class="op">==</span> <span class="dv">1</span>, F.col(<span class="st">"ts"</span>))).over(w)))</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"prior_visits"</span>,  F.count(<span class="st">"*"</span>).over(w)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>rowsBetween(unboundedPreceding, -1)</code> is the whole trick. Drop the <code>-1</code> and every row sees its own outcome.</p>
+<p>History barely moves whether they come inside (12.6% with none, 12.5% with 10+), but it is the best signal for <strong>what</strong> they buy.</p>
+</section>
+</div>
+<div id="d-als_int" class="node-detail">
+<section id="als_interactions" class="level3">
+<h3 class="anchored" data-anchor-id="als_interactions">als_interactions</h3>
+<p><strong>Grain:</strong> one row per shopper × SKU × daypart. The implicit-feedback matrix.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>shopper_ix</code></td>
+<td>int</td>
+<td>ALS needs integers, not hashes</td>
+</tr>
+<tr class="even">
+<td><code>item_ix</code></td>
+<td>int</td>
+<td>Index of <code>"{gtin}@{daypart}"</code></td>
+</tr>
+<tr class="odd">
+<td><code>n</code></td>
+<td>double</td>
+<td>Purchase count = <strong>confidence</strong>, not a rating</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>inter <span class="op">=</span> (store_tx_lines                       <span class="co"># before the scoring window only</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F.col(<span class="st">"category"</span>) <span class="op">==</span> <span class="st">"Packaged Beverages (Non-Alcoholic)"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"item"</span>, F.concat_ws(<span class="st">"@"</span>, <span class="st">"gtin"</span>, daypart))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    .groupBy(<span class="st">"shopper_id"</span>, <span class="st">"item"</span>).agg(F.count(<span class="st">"*"</span>).cast(<span class="st">"double"</span>).alias(<span class="st">"n"</span>)))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>idx <span class="op">=</span> [StringIndexer(inputCol<span class="op">=</span>c, outputCol<span class="op">=</span>c <span class="op">+</span> <span class="st">"_ix"</span>).fit(inter)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>       <span class="cf">for</span> c <span class="kw">in</span> (<span class="st">"shopper_id"</span>, <span class="st">"item"</span>)]</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>als_interactions <span class="op">=</span> Pipeline(stages<span class="op">=</span>idx).fit(inter).transform(inter)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Why the daypart is in the key:</strong> same-daypart purchase pairs repeat the same SKU 18.0% of the time versus 10.0% across dayparts — 80% more likely. ALS takes no features, so the only way to give it a clock is to put one in the key.</p>
+<p><strong>Why it isn’t too sparse:</strong> 2.75M shoppers bought a beverage, 55% three or more times, averaging 16.2 purchases over 7.6 distinct SKUs.</p>
+</section>
+</div>
+<div id="d-train_a" class="node-detail">
+<section id="train_a" class="level3">
+<h3 class="anchored" data-anchor-id="train_a">train_a</h3>
+<p><strong>Grain:</strong> one row per visit. <strong>36.1M rows, one binary label.</strong> This is the table that goes into Model A.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>CAT_COLS <span class="op">=</span> [<span class="st">"daypart"</span>, <span class="st">"fuel_grade"</span>, <span class="st">"store_id"</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>NUM_COLS <span class="op">=</span> [<span class="st">"hour"</span>, <span class="st">"weekday"</span>, <span class="st">"month"</span>, <span class="st">"fuel_spend"</span>, <span class="st">"store_base_rate"</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>stages <span class="op">=</span> [StringIndexer(inputCol<span class="op">=</span>c, outputCol<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">_ix"</span>, handleInvalid<span class="op">=</span><span class="st">"keep"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> c <span class="kw">in</span> CAT_COLS]</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>stages <span class="op">+=</span> [OneHotEncoder(inputCols<span class="op">=</span>[<span class="st">"daypart_ix"</span>, <span class="st">"fuel_grade_ix"</span>],</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                         outputCols<span class="op">=</span>[<span class="st">"daypart_oh"</span>, <span class="st">"fuel_grade_oh"</span>])]</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>stages <span class="op">+=</span> [VectorAssembler(</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>NUM_COLS <span class="op">+</span> [<span class="st">"daypart_oh"</span>, <span class="st">"fuel_grade_oh"</span>, <span class="st">"store_id_ix"</span>],</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    outputCol<span class="op">=</span><span class="st">"features"</span>)]</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>prep <span class="op">=</span> Pipeline(stages<span class="op">=</span>stages).fit(feat_ctx)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>train_a <span class="op">=</span> prep.transform(feat_ctx).select(<span class="st">"fuel_tx"</span>, <span class="st">"features"</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>                                          F.col(<span class="st">"bought"</span>).cast(<span class="st">"int"</span>).alias(<span class="st">"label"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Split on time, not at random.</strong> A random split lets the model learn from next month to predict last month:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cut <span class="op">=</span> <span class="st">"2026-04-01"</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>tr, te <span class="op">=</span> train_a.<span class="bu">filter</span>(F.col(<span class="st">"ts"</span>) <span class="op">&lt;</span> cut), train_a.<span class="bu">filter</span>(F.col(<span class="st">"ts"</span>) <span class="op">&gt;=</span> cut)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>store_id</code> goes in indexed rather than one-hot — 940 levels is too many columns for a tree ensemble to spend splits on.</p>
+</section>
+</div>
+<div id="d-train_b" class="node-detail">
+<section id="train_b" class="level3">
+<h3 class="anchored" data-anchor-id="train_b">train_b</h3>
+<p><strong>Grain:</strong> one row per converting visit. <strong>4.6M rows, six binary labels</strong> — not one six-way label.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>TOP6 <span class="op">=</span> [<span class="st">"Packaged Beverages (Non-Alcoholic)"</span>, <span class="st">"Cigarettes"</span>, <span class="st">"Candy"</span>,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Salty Snacks"</span>, <span class="st">"Other Tobacco/Nicotine Products"</span>, <span class="st">"Beer"</span>]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>wide <span class="op">=</span> feat_hist.groupBy(<span class="st">"fuel_tx"</span>).pivot(<span class="st">"category"</span>, TOP6).agg(</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    F.first(<span class="st">"prior_share"</span>), F.first(<span class="st">"days_since"</span>), F.first(<span class="st">"bought_before"</span>))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>train_b <span class="op">=</span> (visit.<span class="bu">filter</span>(<span class="st">"bought"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    .join(feat_ctx, <span class="st">"fuel_tx"</span>).join(wide, <span class="st">"fuel_tx"</span>))</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat <span class="kw">in</span> TOP6:                       <span class="co"># one label column per category</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    train_b <span class="op">=</span> train_b.withColumn(</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"y_</span><span class="sc">{</span>slug(cat)<span class="sc">}</span><span class="ss">"</span>, F.array_contains(<span class="st">"cats"</span>, cat).cast(<span class="st">"int"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Why six labels and not a softmax.</strong> A basket holds several categories at once — the six shares sum to 119%, not 100%. A multiclass model would force them to compete and hand back numbers that cannot be priced.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Share of converting visits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Packaged Beverages</td>
+<td>54.5%</td>
+</tr>
+<tr class="even">
+<td>Cigarettes</td>
+<td>14.7%</td>
+</tr>
+<tr class="odd">
+<td>Candy</td>
+<td>13.5%</td>
+</tr>
+<tr class="even">
+<td>Salty Snacks</td>
+<td>13.1%</td>
+</tr>
+<tr class="odd">
+<td>Other Tobacco</td>
+<td>12.6%</td>
+</tr>
+<tr class="even">
+<td>Beer</td>
+<td>10.5%</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+<div id="d-m_a" class="node-detail">
+<section id="model_a" class="level3 teal-head">
+<h3 class="teal-head anchored" data-anchor-id="model_a">model_a</h3>
+<p><strong>Will they come inside?</strong> One <code>GBTClassifier</code> plus a calibrator.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.classification <span class="im">import</span> GBTClassifier</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>gbt <span class="op">=</span> GBTClassifier(featuresCol<span class="op">=</span><span class="st">"features"</span>, labelCol<span class="op">=</span><span class="st">"label"</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                    maxIter<span class="op">=</span><span class="dv">120</span>, maxDepth<span class="op">=</span><span class="dv">6</span>, stepSize<span class="op">=</span><span class="fl">0.08</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                    validationIndicatorCol<span class="op">=</span><span class="st">"is_val"</span>)   <span class="co"># early stopping</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>model_a <span class="op">=</span> gbt.fit(tr)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>scored <span class="op">=</span> model_a.transform(te)        <span class="co"># -&gt; probability: vector[2]</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>p_inside <span class="op">=</span> F.udf(<span class="kw">lambda</span> v: <span class="bu">float</span>(v[<span class="dv">1</span>]), <span class="st">"double"</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>scored <span class="op">=</span> scored.withColumn(<span class="st">"p_inside"</span>, p_inside(<span class="st">"probability"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Do not rebalance the 12.8% positives.</strong> The output feeds an arithmetic in dollars; trained 50/50 an average visit scores 0.5 instead of 0.128 and every expected value inflates about 4×. Use <code>weightCol</code> if you must, never SMOTE.</p>
+<p>Spark has no built-in calibrator, so fit isotonic regression on a holdout slice:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.regression <span class="im">import</span> IsotonicRegression</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>cal <span class="op">=</span> IsotonicRegression(featuresCol<span class="op">=</span><span class="st">"p_vec"</span>, labelCol<span class="op">=</span><span class="st">"label"</span>).fit(val)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>p_cal <span class="op">=</span> cal.transform(scored)         <span class="co"># &lt;- the number the decision rule uses</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Judge it on a reliability curve, not accuracy or F1. <strong>Calibration is the whole job.</strong></p>
+</section>
+</div>
+<div id="d-m_b" class="node-detail">
+<section id="model_b" class="level3 teal-head">
+<h3 class="teal-head anchored" data-anchor-id="model_b">model_b</h3>
+<p><strong>Which category?</strong> Six independent binary models — binary relevance.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>models_b <span class="op">=</span> {}</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat <span class="kw">in</span> TOP6:</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> <span class="ss">f"y_</span><span class="sc">{</span>slug(cat)<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    models_b[cat] <span class="op">=</span> GBTClassifier(featuresCol<span class="op">=</span><span class="st">"features"</span>, labelCol<span class="op">=</span>y,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                                  maxIter<span class="op">=</span><span class="dv">80</span>, maxDepth<span class="op">=</span><span class="dv">5</span>).fit(train_b_prep)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Score every category for one visit, side by side.</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> train_b_prep</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat, m <span class="kw">in</span> models_b.items():</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> (m.transform(out)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>            .withColumnRenamed(<span class="st">"probability"</span>, <span class="ss">f"p_</span><span class="sc">{</span>slug(cat)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>            .drop(<span class="st">"rawPrediction"</span>, <span class="st">"prediction"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Each model returns a real probability for <strong>its</strong> offer, which is exactly the shape the decision needs — we are scoring six candidates, not picking one label.</p>
+<p>GBT rather than logistic regression here because this is where the interactions live: <em>beer on a Friday evening</em>, <em>coffee at 6am on a weekday</em>.</p>
+</section>
+</div>
+<div id="d-m_c" class="node-detail">
+<section id="model_c" class="level3 teal-head">
+<h3 class="teal-head anchored" data-anchor-id="model_c">model_c</h3>
+<p><strong>Which SKU inside the category?</strong> <code>ALS</code> on implicit feedback.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.recommendation <span class="im">import</span> ALS</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>als <span class="op">=</span> ALS(userCol<span class="op">=</span><span class="st">"shopper_ix"</span>, itemCol<span class="op">=</span><span class="st">"item_ix"</span>, ratingCol<span class="op">=</span><span class="st">"n"</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>          implicitPrefs<span class="op">=</span><span class="va">True</span>,        <span class="co"># counts are confidence, not ratings</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>          rank<span class="op">=</span><span class="dv">32</span>, regParam<span class="op">=</span><span class="fl">0.05</span>, alpha<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>          coldStartStrategy<span class="op">=</span><span class="st">"drop"</span>, nonnegative<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>model_c <span class="op">=</span> als.fit(als_interactions)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>top <span class="op">=</span> model_c.recommendForUserSubset(live_shoppers, <span class="dv">20</span>)   <span class="co"># 20 item_ix per shopper</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Apply it <strong>per category, where the tail justifies it</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>SKUs</th>
+<th>Top 100 covers</th>
+<th>Worth ALS?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Packaged Beverages</td>
+<td>4,049</td>
+<td>45.1%</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="even">
+<td>Candy</td>
+<td>3,902</td>
+<td>43.3%</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>Cigarettes</td>
+<td>1,311</td>
+<td>85.9%</td>
+<td><strong>No</strong> — show the best seller</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Two ways to get it wrong.</strong> Fit only on interactions <em>before</em> the scoring window — ALS feels like preprocessing, which is why people forget. And <code>coldStartStrategy="drop"</code> silently removes unseen shoppers, so fall back to store-and-daypart popularity for them rather than returning nothing.</p>
+</section>
+</div>
+<div id="d-offer_cat" class="node-detail">
+<section id="offer_catalog" class="level3 red-head">
+<h3 class="red-head anchored" data-anchor-id="offer_catalog">offer_catalog</h3>
+<p><strong>Grain:</strong> one row per SKU the business will actually promote. <strong>This table does not exist — someone has to supply it.</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>gtin</code></td>
+<td>string</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>unit_margin</code></td>
+<td>double</td>
+<td><strong>No cost column anywhere in the PDI data</strong></td>
+</tr>
+<tr class="odd">
+<td><code>discount</code></td>
+<td>double</td>
+<td>What the offer gives away</td>
+</tr>
+<tr class="even">
+<td><code>funded_share</code></td>
+<td>double</td>
+<td><strong>0–1: how much of it the brand pays</strong></td>
+</tr>
+<tr class="odd">
+<td><code>in_stock</code></td>
+<td>boolean</td>
+<td>Per store, per day</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>offer_catalog <span class="op">=</span> spark.read.table(<span class="st">"murphy.offers"</span>)      <span class="co"># &lt;- the ask</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>candidates <span class="op">=</span> (top_skus</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    .join(offer_catalog, <span class="st">"gtin"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(<span class="st">"in_stock"</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Funding is a share, not a flag. A brand often covers all of a</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># discount; sometimes the retailer and the brand split it.</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"our_cost"</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>                (F.lit(<span class="fl">1.0</span>) <span class="op">-</span> F.col(<span class="st">"funded_share"</span>)) <span class="op">*</span> F.col(<span class="st">"discount"</span>))</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"effective_margin"</span>, F.col(<span class="st">"unit_margin"</span>) <span class="op">-</span> F.col(<span class="st">"our_cost"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Without <code>unit_margin</code> the expected-value rule cannot run at all — the arithmetic is in dollars and we have none of them. <code>funded_share</code> is what separates a profitable offer from a loss:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Brand funds</th>
+<th>Our cost</th>
+<th>Effective margin</th>
+<th>Uplift needed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>100%</td>
+<td>$0.00</td>
+<td>$1.30</td>
+<td>any</td>
+</tr>
+<tr class="even">
+<td>50%</td>
+<td>$0.45</td>
+<td>$0.85</td>
+<td>+53%</td>
+</tr>
+<tr class="odd">
+<td>0%</td>
+<td>$0.90</td>
+<td>$0.40</td>
+<td>+225%</td>
+</tr>
+</tbody>
+</table>
+<p>At full funding the margin per unit is untouched and the store simply sells more volume, which is why these programmes exist at all. Inverted, the same arithmetic gives the <strong>minimum share to negotiate for</strong> — see <code>negotiate.py</code>.</p>
+</section>
+</div>
+<div id="d-score_req" class="node-detail">
+<section id="score_request" class="level3">
+<h3 class="anchored" data-anchor-id="score_request">score_request</h3>
+<p><strong>Grain:</strong> one row per live fill, built at the pump in milliseconds.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Source</th>
+<th>Available?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>shopper_id</code></td>
+<td>Card read <strong>before</strong> fuel flows</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td><code>store_id</code>, <code>pump_id</code></td>
+<td>Terminal</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td><code>ts</code></td>
+<td>Clock</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td><code>fuel_grade</code></td>
+<td>Grade selected</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td><code>gallons_so_far</code></td>
+<td>Live meter</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td><code>prior_*</code></td>
+<td>Feature store lookup by <code>shopper_id</code></td>
+<td><strong>Needs a feature store</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Offline training and online scoring must share one transformer, or the</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># features drift apart and nobody notices until the money is gone.</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>prep.write().overwrite().save(<span class="st">"s3://.../prep_pipeline"</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> score(req: <span class="bu">dict</span>) <span class="op">-&gt;</span> DataFrame:</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    row <span class="op">=</span> spark.createDataFrame([req])</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    feats <span class="op">=</span> prep.transform(row.join(feature_store, <span class="st">"shopper_id"</span>, <span class="st">"left"</span>))</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> feats</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The 90-second budget is the real constraint. Model A and the six Model B calls are cheap; the <strong>feature-store lookup is the latency risk</strong>, which is an argument for precomputing <code>prior_*</code> nightly per shopper.</p>
+</section>
+</div>
+<div id="d-decision" class="node-detail">
+<section id="decision" class="level3 green-head">
+<h3 class="green-head anchored" data-anchor-id="decision">decision</h3>
+<p><strong>Grain:</strong> one row per candidate offer per fill. The arithmetic that picks one.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>EPS <span class="op">=</span> <span class="fl">0.01</span>        <span class="co"># don't bother for less than a cent of expected margin</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>dec <span class="op">=</span> (candidates</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"p_buy"</span>,  F.col(<span class="st">"p_inside"</span>) <span class="op">*</span> F.col(<span class="st">"p_category"</span>) <span class="op">*</span> F.col(<span class="st">"p_sku"</span>))</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"ev_offer"</span>, F.col(<span class="st">"p_buy_with_offer"</span>) <span class="op">*</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                            (F.col(<span class="st">"unit_margin"</span>) <span class="op">-</span> F.col(<span class="st">"our_cost"</span>)))</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"ev_none"</span>,  F.col(<span class="st">"p_buy"</span>) <span class="op">*</span> F.col(<span class="st">"unit_margin"</span>))</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"uplift_value"</span>, F.col(<span class="st">"ev_offer"</span>) <span class="op">-</span> F.col(<span class="st">"ev_none"</span>)))</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>best <span class="op">=</span> (dec.<span class="bu">filter</span>(F.col(<span class="st">"uplift_value"</span>) <span class="op">&gt;</span> EPS)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>           .orderBy(F.desc(<span class="st">"uplift_value"</span>)).limit(<span class="dv">1</span>))      <span class="co"># may return nothing</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>The naive form is wrong.</strong> <code>P(buy) × margin − cost</code> never compares against the world where no offer was shown, and it never goes negative while margin beats the discount. The real test is <code>p₁(margin − discount) &gt; p₀ × margin</code>.</p>
+<p><code>p_buy_with_offer</code> is the honest gap: <strong>we do not have it.</strong> Without a holdout there is no <code>p₁</code>, only <code>p₀</code>, so today this rule runs on an assumed lift and should be labelled as such.</p>
+<p><strong>Returning nothing is a valid answer</strong> and costs nothing to execute.</p>
+</section>
+</div>
+<div id="d-dec_log" class="node-detail">
+<section id="decision_log" class="level3 orange-head">
+<h3 class="orange-head anchored" data-anchor-id="decision_log">decision_log</h3>
+<p><strong>Grain:</strong> one row per fill where we could have shown something. This is the table that makes tomorrow’s model possible.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Why</th>
+<th>Recoverable later?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fuel_tx</code>, <code>shopper_id</code>, <code>ts</code></td>
+<td>Join key back to the visit</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td><code>candidates</code></td>
+<td>What we considered</td>
+<td><strong>No</strong></td>
+</tr>
+<tr class="odd">
+<td><code>shown_gtin</code></td>
+<td>What we showed, null if nothing</td>
+<td><strong>No</strong></td>
+</tr>
+<tr class="even">
+<td><code>propensity</code></td>
+<td><strong>The probability we showed it with</strong></td>
+<td><strong>No</strong></td>
+</tr>
+<tr class="odd">
+<td><code>is_holdout</code></td>
+<td>Whether this fill was held back</td>
+<td><strong>No</strong></td>
+</tr>
+<tr class="even">
+<td><code>model_version</code></td>
+<td>Which models produced it</td>
+<td><strong>No</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>(dec.select(<span class="st">"fuel_tx"</span>, <span class="st">"shopper_id"</span>, <span class="st">"ts"</span>, <span class="st">"candidates"</span>,</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>            <span class="st">"shown_gtin"</span>, <span class="st">"propensity"</span>, <span class="st">"is_holdout"</span>, <span class="st">"model_version"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    .write.mode(<span class="st">"append"</span>).partitionBy(<span class="st">"dt"</span>).saveAsTable(<span class="st">"gold.decision_log"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Log the propensity or lose the ability to evaluate.</strong> Off-policy methods — inverse propensity weighting, doubly robust estimation — all need the probability with which each action was taken. If it was never written down, the information does not exist and no amount of later cleverness recovers it.</p>
+<p>This log joins back to <code>visit</code> to produce the next training set, which closes the loop: the system’s own decisions become the data it learns from. That is also why the holdout matters — without it, the model only ever sees the consequences of what it already believed.</p>
+</section>
+</div>
+</div>
+</div>
+<script>
+(function () {
+  const svg = document.getElementById("pipeline-svg");
+  if (!svg) return;
+  const panes = document.querySelectorAll(".node-detail");
+  const show = (id) => {
+    let found = false;
+    panes.forEach((p) => {
+      const on = p.id === id;
+      p.classList.toggle("is-active", on);
+      if (on) found = true;
+    });
+    if (!found) show("d-start");
+  };
+  show("d-start");
+
+  svg.querySelectorAll("g.node").forEach((g) => {
+    const t = g.querySelector("title");
+    if (!t) return;
+    const name = t.textContent.trim();
+    if (!document.getElementById("d-" + name)) return;
+    g.classList.add("is-clickable");
+    const pick = () => {
+      svg.querySelectorAll("g.node").forEach((o) =>
+        o.classList.remove("is-selected"));
+      g.classList.add("is-selected");
+      show("d-" + name);
+    };
+    g.addEventListener("click", pick);
+    g.setAttribute("tabindex", "0");
+    g.setAttribute("role", "button");
+    g.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); }
+    });
+  });
+})();
+</script>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

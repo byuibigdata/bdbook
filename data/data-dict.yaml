@@ -1,0 +1,1242 @@
+$version: 0.1.0
+$learn_more: https://data-dict.tidyverse.org/
+
+name: pdi_cstore
+label: PDI Convenience Store Transactions
+description: >
+  Two years of point-of-sale data from a panel of US convenience stores,
+  covering 2024-10-01 to 2026-09-30. The grain runs from a single scanned
+  item up to a payment: `transaction_items` holds one row per line rung up,
+  `payments` one row per tender, and `shopper_id` links a payment to the
+  person who made it.
+
+  Every transaction in this extract carries a shopper id. Transactions that
+  could not be attributed to a shopper were dropped before the data was
+  handed over, so this is not a complete record of store activity and
+  store-level totals computed from it will understate reality.
+details: >
+  The data comes from PDI Technologies (formerly Skupos), which operates
+  the largest panel of point-of-sale data from independent US convenience
+  stores — roughly 80% of that market. Rows are parsed from in-store
+  transaction log (t-log) files across four POS vendors: Verifone,
+  Gilbarco, Clover and NCR. Large chains such as 7-Eleven, Buc-ee's and
+  Pilot are **not** present, because their data is restricted.
+
+  PDI publishes nine tables; seven were delivered here. The two missing
+  are Transaction Sets (the basket header) and Transaction Items Daily
+  Aggregation.
+
+  Two reference tables sit alongside the transaction tables.
+  `master_gtin` turns a scanned barcode into a product category, and
+  `stores_information` / `stores_status` describe the stores themselves.
+  Both reference tables cover a far wider universe than the transactions
+  do: the store master lists 36,912 stores while only 940 of them appear in
+  `transaction_items`.
+
+  Fuel dominates the money. It is 28% of line items and $1.55B of the
+  $2.08B total, at an average of $42.74 a line. It is also rung up on its
+  own: a fuel transaction has a median of one line item, because the pump
+  and the counter are usually two separate transactions a few minutes
+  apart. Any question about what people buy *with* fuel has to stitch
+  transactions into visits first.
+
+version:
+  date: 2026-09-30
+
+todo: |
+  - Two of PDI's nine tables were not delivered: **Transaction Sets** (the
+    basket header, keyed by `TRANSACTION_SET_ID`) and **Transaction Items
+    Daily Aggregation**. Transaction Sets is the missing transaction-grain
+    table — it holds the subtotal, tax, tender and POS vendor per basket.
+    Worth asking whether it can be obtained; without it `TRANSACTION_SET_ID`
+    is a key with no table behind it.
+  - Each table's `source` names a single part file, because `data-dict`
+    0.0.3 does not expand globs. The real dataset is the whole folder:
+    `transaction-items-all/` is 19 files, `master-gtin/` 28, and the two
+    store folders 115 each. Validation therefore checks one part, not the
+    whole table — the row counts and ranges in these descriptions were
+    measured across every file with Polars. Switch `source` to a glob once
+    the CLI supports one.
+  - Because of that, `validate-data` reports foreign-key failures that are
+    not real: a single part file holds only a slice of the ids, so keys
+    legitimately point at rows in files the validator never opened. The
+    store join was checked properly with Polars across all files — all 940
+    transacting stores resolve.
+  - Confirm the panel definition — how the 940 transacting stores were
+    chosen, and whether they are a random sample or a convenience panel.
+    This decides whether any finding generalises.
+  - There is no transaction-grain table here, because PDI's **Transaction
+    Sets** table was not delivered. `TRANSACTION_SET_ID` is the key that
+    ties line items, payments and discounts together, but nothing in this
+    extract declares it as a primary key, so the relationship between
+    `transaction_items` and `payments` is genuinely many-to-many and is
+    not listed below. Joining those two directly multiplies rows: a
+    four-item basket paid with two cards becomes eight rows. Aggregate one
+    side to the transaction first. Building a transaction-grain table
+    would make this explicit and is probably worth doing.
+
+tables:
+  # ------------------------------------------------------------------
+  - name: transaction_items
+    label: Transaction line items
+    description: >
+      One row per item rung up at the register. 128,599,042 rows across
+      71,731,311 transactions in 940 stores.
+
+      A "line" is not always a product. Fuel, lottery, foodservice and
+      service fees are keyed to a department rather than scanned, and
+      arrive with a placeholder `GTIN` and a `NONSCAN_CATEGORY` instead.
+      Which of the two category sources applies is given by `SCAN_TYPE`.
+    details: >
+      Returns and voids are present as negative quantities and amounts:
+      481,568 rows have `UNIT_QUANTITY <= 0` and 701,406 have
+      `GRAND_TOTAL_AMOUNT <= 0`. Filter both before any basket or revenue
+      work.
+
+      To get a usable category on every row, join `master_gtin` on `GTIN`
+      and coalesce `CATEGORY` with `NONSCAN_CATEGORY`. That labels 85.6%
+      of lines; the rest are scanned items absent from the product master,
+      mostly local or store-specific. Note that the two sources use
+      different taxonomies — PDI's for scanned items, NACS for keyed ones.
+
+      **Lottery is known to be miscategorised.** PDI's GTIN library has not
+      kept up with seasonal lottery products, so lottery lines land under
+      the wrong category. PDI's own advice is to filter lottery
+      transactions to whole-dollar amounts, and to exclude lines carrying a
+      discount, to clear out the miscategorised GTINs.
+    source:
+      parquet: transaction-items-all/part-00000.parquet
+    todo: |
+      - Verify that `GRAND_TOTAL_AMOUNT` never exceeds
+        `UNIT_PRICE * UNIT_QUANTITY`. It could not be written as an
+        assertion because the expression engine will not evaluate
+        arithmetic on these decimal columns.
+    columns:
+      - name: TRANSACTION_ITEM_ID
+        label: Line item ID
+        type: number(id)
+        constraints: [primary_key]
+        description: Unique identifier for this line item.
+        range: [1.8996711169965e21, 1.9690194886768e21]
+        examples: [1899671116996542000000, 1930000000000000000000, 1969019488676771000000]
+        details: >
+          A 22-digit integer stored as `Decimal(38, 0)`, too wide for a
+          64-bit integer. Keep it as a string or decimal; casting to Int64
+          overflows and casting to Float64 loses the low digits.
+
+      - name: TRANSACTION_SET_ID
+        label: Transaction ID
+        type: number(id)
+        constraints: [required]
+        description: >
+          The transaction this line belongs to. This is the basket key —
+          group by it to reconstruct what was bought together at one
+          register ring-up.
+        range: [1.8996711170199e21, 1.9690194883944e21]
+        examples: [1899671117019906000000, 1930000000000000000000, 1969019488394414000000]
+
+      - name: STORE_ID
+        label: Store ID
+        type: number(id)
+        constraints: [required, foreign_key]
+        description: The store where the sale happened.
+        range: [1658, 50964]
+        examples: [1658, 12000, 25000, 38000, 50964]
+
+      - name: DATE_TIME
+        label: Transaction time
+        type: datetime
+        time_zone: naive
+        constraints: [required]
+        description: >
+          When the transaction was rung up. All lines in a transaction
+          share the same value, so this is really a transaction attribute.
+        details: >
+          PDI documents this as "the wall clock time for the store", so it
+          is local time at the store and needs no zone conversion. Daypart
+          and hour-of-day features can be built on it directly, and a 7am
+          value means 7am to the customer standing there.
+        range: [2024-10-01T00:00:16, 2026-09-30T23:59:52]
+
+      - name: GTIN
+        label: Barcode
+        type: string
+        constraints: [required]
+        description: >
+          The scanned barcode, zero-padded to 14 digits. Join to
+          `master_gtin` for a category. Never null, but carries a
+          placeholder on non-scanned lines, so check `SCAN_TYPE` first.
+        examples: ["00000000003551", "00042238323100", "00194960214796", "00760412828066", "08904461506366"]
+        details: >
+          58.9% of lines are `SCAN_TYPE = GTIN`, and 88% of those match the
+          product master. Across all lines, 51.9% get a category this way.
+
+      - name: POS_DESCRIPTION
+        label: Register description
+        type: string
+        constraints: [required]
+        description: >
+          The item name as it appears on the receipt, typed by whoever set
+          up the store's register. Free text, inconsistently cased and
+          abbreviated, and not comparable across stores — `REGULAR`,
+          `REGULAR CR #02`, `UNLEAD CR #02` and `UNLD CR #02` are all the
+          same grade of fuel at different sites. Use it for eyeballing
+          rows, not for grouping.
+        examples: ["*CVP SANDWICH BAGS", "GROCERY", "REGULAR", "RASP PUNCH 12 oz", "santitas"]
+
+      - name: UNIT_PRICE
+        label: Unit price
+        type: number(quantity)
+        units: USD
+        constraints: [required]
+        description: Price per unit before discount.
+        range: [-1250, 3700]
+
+      - name: UNIT_QUANTITY
+        label: Quantity
+        type: number(quantity)
+        units: units
+        constraints: [required]
+        description: >
+          How many units were sold. Fractional for fuel, where it is
+          gallons rather than a count.
+        range: [0, 942.875]
+        details: >
+          481,568 rows are zero or negative — voids and returns.
+
+      - name: DISCOUNT_AMOUNT
+        label: Discount applied
+        type: number(quantity)
+        units: USD
+        constraints: [required]
+        description: >
+          Total discount applied to this line. The per-discount detail is
+          in the `discounts` table, which may hold several rows for one
+          line.
+        range: [-46, 400]
+
+      - name: TAXABLE_AMOUNT
+        label: Taxable amount
+        type: number(quantity)
+        units: USD
+        description: >
+          The portion of the line subject to sales tax. PDI notes it is
+          **0 for gas**, which together with fuel's share of the data
+          explains most of the 69,099,900 nulls (53.7%).
+        range: [-100, 1999.98]
+        todo: |
+          - PDI says gas is 0, but the column is *null* rather than zero on
+            most rows. Confirm that null can be read as "not taxable" and
+            treated as zero, rather than "not captured by this register".
+
+      - name: TAX_RATE
+        label: Tax rate
+        type: number(quantity)
+        units: percent
+        description: >
+          The sales tax rate — but **not reliably this line's rate**. PDI
+          states that when a transaction contains items taxed at different
+          rates, the column shows only one of them. Treat it as a
+          transaction-level attribute of uncertain provenance, not a line
+          attribute, and derive the real rate from `TAXABLE_AMOUNT` and the
+          tax charged if you need it per line.
+        range: [0, 82]
+        details: >
+          Null on the same 69,099,900 rows as `TAXABLE_AMOUNT`. The maximum
+          of 82 is consistent with the column carrying a rate from some
+          other item in the basket, such as a tobacco or fuel excise rate.
+
+      - name: GRAND_TOTAL_AMOUNT
+        label: Line total
+        type: number(quantity)
+        units: USD
+        constraints: [required]
+        description: >
+          What the line actually added to the bill. PDI defines it as
+          subtotal plus tax, so it is tax-inclusive. This is the column to
+          sum for revenue.
+        range: [-1250, 9352.46]
+
+      - name: SCAN_TYPE
+        label: How the item was entered
+        type: enum
+        constraints: [required]
+        values:
+          GTIN: Barcode scanned; join `master_gtin` for the category
+          NONSCAN: Keyed to a department; use `NONSCAN_CATEGORY`
+          PLU: Price-look-up code, typed at the register
+          FMT_ERR: Malformed record — 673 rows, safe to drop
+        description: >
+          Which category source applies to this row. Read this before
+          deciding where to get an item's category.
+
+      - name: NONSCAN_CATEGORY
+        label: Department
+        type: enum
+        values: [FUEL, MERCHANDISE, LOTTERY, FOODSERVICE, SERVICES, MONEY ORDER, CARDS, LICENSE, COUPON]
+        description: >
+          The department for a keyed (non-scanned) line, on the **NACS**
+          taxonomy. Null on the 85,373,882 scanned lines, where the
+          category comes from `master_gtin` instead — and that column uses
+          PDI's own taxonomy, not NACS. Coalescing the two mixes
+          vocabularies.
+        details: >
+          `FUEL` is the overwhelming majority: 36.2M lines and $1.55B.
+
+      - name: NONSCAN_SUBCATEGORY
+        label: Department subcategory
+        type: string
+        description: >
+          A finer NACS breakdown of the department. For fuel this is the grade —
+          `E10/E15`, `MID/PLUS`, `DIESEL`, `E85/90`, `KEROSENE` — which is
+          the only place fuel grade is recorded in a comparable way.
+        examples: [E10/E15, MID/PLUS, DIESEL, FOODSERVICE, LOTTERY]
+
+      - name: NONSCAN_DETAIL
+        label: Department detail
+        type: string
+        description: The finest NACS breakdown. Null on scanned lines.
+        examples: [ALCOHOL, CREDIT CARD FEE, KEROSENE, POST OFFICE, WINGS]
+
+
+  # ------------------------------------------------------------------
+  - name: payments
+    label: Payments
+    description: >
+      One row per tender on a transaction. 72,917,628 rows.
+
+      Most transactions have exactly one tender (70,611,170), but
+      1,060,787 are split across two and a few hundred across more. A
+      naive join from `transaction_items` to `payments` on
+      `TRANSACTION_SET_ID` will therefore duplicate line items. Aggregate
+      payments to the transaction first, or join on `PAYMENT_ID`.
+    source:
+      parquet: payments/part-0.parquet
+    columns:
+      - name: PAYMENT_ID
+        label: Payment ID
+        type: number(id)
+        constraints: [primary_key]
+        description: Unique identifier for this tender.
+        range: [1.8996711169965e21, 1.9690194886768e21]
+        examples: [1899671116996542000000, 1930000000000000000000, 1969019488676771000000]
+
+      - name: TRANSACTION_SET_ID
+        label: Transaction ID
+        type: number(id)
+        constraints: [required]
+        description: The transaction this tender paid for.
+        range: [1.8996711170199e21, 1.9690194883944e21]
+        examples: [1899671117019906000000, 1930000000000000000000, 1969019488394414000000]
+
+      - name: STORE_ID
+        type: number(id)
+        constraints: [required, foreign_key]
+        description: The store taking the payment.
+        range: [1658, 50964]
+        examples: [1658, 12000, 25000, 38000, 50964]
+
+      - name: DATE_TIME
+        type: datetime
+        time_zone: naive
+        constraints: [required]
+        description: When the payment was taken.
+        range: [2024-10-01T00:00:16, 2026-09-30T23:59:52]
+
+      - name: TENDER
+        label: Amount tendered
+        type: number(quantity)
+        units: USD
+        constraints: [required]
+        description: >
+          The amount the customer hands over, **or gets back as change**.
+          Because change rows are included, summing this column across a
+          transaction overstates what was spent. Filter on `PAYMENT_TYPE`
+          and `CHANGE` first.
+        range: [-9999.99, 9999.99]
+        todo: |
+          - Confirm the observed range; it was not profiled exactly.
+
+      - name: PAYMENT_TYPE
+        label: Payment method
+        type: enum
+        values: [CARD, CASH, CREDIT, DEBIT, CHECK, EBT, FLEET, GIFT CARD, HOUSE ACCOUNT, LOTTERY, COUPON, CHANGE]
+        description: >
+          How the customer paid. `CHANGE` and `LOTTERY` are not really
+          payment methods — they are register bookkeeping rows.
+        todo: |
+          - Confirm whether `CARD`, `CREDIT` and `DEBIT` are mutually
+            exclusive or whether `CARD` is a catch-all used by some
+            registers for both.
+
+      - name: CARD_TYPE
+        label: Card network
+        type: enum
+        values:
+          VI: Visa
+          MC: Mastercard
+          AX: American Express
+          DS: Discover
+          WX: Wright Express (fleet fuel card)
+          GIFT: Store gift card
+          BRAND: Store-branded card
+        description: >
+          The card network. Null on 25,793,476 rows, which are the cash and
+          non-card tenders. PDI's own description says "Debit, Personal,
+          etc.", but the observed values are networks, not account types.
+        details: >
+          This column is what the shopper link is built on — the shopper id
+          is derived from the card, so a customer paying cash is invisible
+          and the same person with two cards is two shoppers.
+
+      - name: PAYMENT_ENTRY
+        label: How the card was read
+        type: string
+        constraints: [required]
+        description: >
+          Card entry method. Empty string rather than null where not
+          applicable.
+        examples: ["", EMV_CONTACTLESS, Manual, RadioFrequency, Swipe]
+
+      - name: PAYMENT_NUMBER
+        label: Payment reference
+        type: string
+        constraints: [required]
+        description: >
+          A 13-character alphanumeric reference for the tender. PDI
+          documents it as **Clover only**, though it is non-null on every
+          row here.
+        examples: [06EQARNT4B0TC, 9M9CFVFR9MS0P, G7RMTKEPJEZ9Y, QA4537KA61QVW, ZZRHJZ96VEBBY]
+        todo: |
+          - PDI says this is populated for Clover only, but the column has
+            no nulls across 72.9M rows spanning all four vendors. Either
+            the documentation is stale or the column means something
+            broader. Worth a question before relying on it.
+
+      - name: MERCHANT_ID
+        type: string
+        description: >
+          Merchant id parsed from the t-log. **Populated for Verifone
+          only** (`POS_TYPE_ID = 1`), which is why it is null on
+          43,366,217 rows.
+        examples: ["", "0000000009993056", "00373167", "13101706011", TESO62118001]
+
+      - name: TERMINAL_ID
+        type: string
+        description: >
+          Terminal id parsed from the t-log. **Populated for Verifone
+          only**, hence null on 43,009,045 rows.
+        examples: ["", "00305387", "04823423", "4465267", CL01]
+        details: >
+          PDI does not say whether a terminal id distinguishes a pump from
+          an in-store register. If it does, it would be the cleanest way to
+          separate pay-at-pump from pay-at-counter fuel sales — but it is
+          available for at most the Verifone share of the data, so it
+          cannot carry a feature on its own.
+        todo: |
+          - Check empirically whether terminal ids split into two clusters
+            per store (pumps vs. registers) by looking at what is sold
+            under each.
+
+      - name: PAYMENT_LOCALE
+        label: Currency label
+        type: enum
+        values: [USD, "US DOLLAR", DOLLAR, Dollar, usd, "18"]
+        constraints: [required]
+        description: >
+          A free-text currency label that was never cleaned — six spellings
+          of "US dollars", including a stray `18`. Carries no information;
+          ignore it and use `CURRENCY_LOCALE`.
+
+      - name: CURRENCY_LOCALE
+        type: enum
+        values: [USD]
+        constraints: [required]
+        description: Currency. Always USD.
+
+      - name: CHANGE
+        type: enum
+        values: ["0", "1"]
+        constraints: [required]
+        description: >
+          Parsed from the t-log; indicates whether the customer got change
+          back. Use it with `PAYMENT_TYPE` to separate money taken in from
+          money handed back before summing `TENDER`.
+        todo: |
+          - Confirm `1` means change was given and `0` means none, rather
+            than the reverse.
+
+      - name: POS_TYPE_ID
+        type: number(id)
+        constraints: [required]
+        description: >
+          The POS vendor whose t-log this row was parsed from:
+          **1 Verifone, 2 Gilbarco, 3 Clover, 4 NCR**.
+        range: [1, 4]
+        examples: [1, 2, 3, 4]
+        details: >
+          This is the key to most of the dataset's inconsistency. Several
+          columns are populated by one vendor only — `MERCHANT_ID` and
+          `TERMINAL_ID` for Verifone, `PAYMENT_NUMBER` for Clover — so a
+          null often means "this vendor doesn't report it" rather than
+          "missing". The same applies to the free-text columns:
+          `POS_DESCRIPTION` and `PAYMENT_LOCALE` vary by vendor because
+          each parses its own t-log format. Group by this column before
+          concluding that a field is unreliable.
+
+  # ------------------------------------------------------------------
+  - name: shopper_id
+    label: Shopper link
+    description: >
+      Links a payment to the person who made it. 71,790,254 rows covering
+      71,731,331 transactions and 8,015,432 distinct shoppers — every
+      transaction in the extract.
+    details: >
+      There are slightly more rows than transactions because a split-tender
+      transaction contributes one row per payment.
+
+      The identity is derived from the payment card *and the store's
+      state*, so it is neither a person nor quite a card: one customer with
+      two cards is two shoppers, and one customer crossing a state line is
+      also two shoppers. A customer paying cash would not appear at all
+      (those transactions were dropped from this extract).
+
+      History per shopper is thin. The median shopper has 2 transactions,
+      36% have exactly one, and only 26% are observed over a year or more.
+      Two years of data is not two years per customer.
+    source:
+      parquet: shopper-id/part-0.parquet
+    columns:
+      - name: PAYMENT_ID
+        type: number(id)
+        constraints: [primary_key, foreign_key]
+        description: The tender this identity came from.
+        range: [1.8996711169965e21, 1.9690194886768e21]
+        examples: [1899671116996542000000, 1930000000000000000000, 1969019488676771000000]
+
+      - name: TRANSACTION_SET_ID
+        type: number(id)
+        constraints: [required]
+        description: >
+          The transaction. Not unique — a split-tender transaction has one
+          row per payment, and both rows normally carry the same shopper.
+        range: [1.8996711170199e21, 1.9690194883944e21]
+        examples: [1899671117019906000000, 1930000000000000000000, 1969019488394414000000]
+
+      - name: SHOPPER_ID
+        label: Shopper
+        type: string
+        display: restricted
+        constraints: [required]
+        description: >
+          A 32-character hexadecimal hash standing in for the customer.
+          PDI builds it by hashing the card's first six digits (the BIN),
+          its last four digits, and **the state of the store where the
+          purchase was made**. Pseudonymous, not anonymous: it is stable
+          across visits by design, so it tracks an individual over two
+          years and must be treated as personal data. Do not display it,
+          publish it, or join it to anything outside this dataset.
+        examples:
+          - 0a1b2c3d4e5f60718293a4b5c6d7e8f9
+          - 1f2e3d4c5b6a79887766554433221100
+          - 2b4d6f8a0c1e3f5a7b9d0e2f4a6c8e01
+          - 3c5e7a9b1d3f5071928374655a6b7c8d
+          - 4d6f8b0c2e4a6183950a1b2c3d4e5f60
+        details: >
+          The examples above are fabricated. They show the shape only — no
+          real shopper id appears in this file.
+
+          Two consequences of PDI's recipe:
+
+          **The id is per state.** The same card used in Colorado and Utah
+          hashes to two different shoppers, so a cross-border commuter is
+          two customers and any travel behaviour is invisible. Within a
+          single state the id is consistent.
+
+          **BIN plus last four is not unique to a card.** Two different
+          cards from the same issuer can collide, so a small share of
+          shopper ids are more than one person. Treat shopper-level counts
+          as close, not exact.
+
+          PDI states that cash and EBT payments are excluded from the
+          identity model, yet some cash payments here carry a shopper id —
+          PDI attributes that to split-tender transactions where a card was
+          also used.
+
+  # ------------------------------------------------------------------
+  - name: discounts
+    label: Discounts
+    description: >
+      One row per discount applied to a line item. 17,429,831 rows covering
+      9,215,074 transactions.
+
+      A single line may carry several discounts, so this table is at a
+      finer grain than `transaction_items` and must be aggregated before
+      joining back to it.
+    details: >
+      This is the record of offers the business already funds, which makes
+      it the natural source of treatment labels for any uplift or offer
+      work: `loyaltyDiscount`, `mixAndMatchOffer`, `managerPromotion` and
+      the brand deals (ZYN, Monster, Red Bull) are real interventions with
+      an observable before and after.
+    source:
+      parquet: discounts/part-00000.parquet
+    columns:
+      - name: DISCOUNT_ID
+        type: number(id)
+        constraints: [primary_key]
+        description: Unique identifier for the discount application.
+        range: [1.8996712973953e21, 1.9690194886768e21]
+        examples: [1899671297395251000000, 1930000000000000000000, 1969019488676771000000]
+
+      - name: TRANSACTION_ITEM_ID
+        type: number(id)
+        constraints: [required, foreign_key]
+        description: The line item this discount was applied to.
+        range: [1.8996712973953e21, 1.9690194886768e21]
+        examples: [1899671297395251000000, 1930000000000000000000, 1969019488676771000000]
+
+      - name: TRANSACTION_SET_ID
+        type: number(id)
+        constraints: [required]
+        description: The transaction the discounted line belongs to.
+        range: [1.8996712976587e21, 1.9690194883944e21]
+        examples: [1899671297658688000000, 1930000000000000000000, 1969019488394414000000]
+
+      - name: STORE_ID
+        type: number(id)
+        constraints: [required, foreign_key]
+        description: The store.
+        range: [1658, 50964]
+        examples: [1658, 12000, 25000, 38000, 50964]
+
+      - name: DATE_TIME
+        type: datetime
+        time_zone: naive
+        constraints: [required]
+        description: When the discounted transaction was rung up.
+        range: [2024-10-01T00:11:36, 2026-09-30T23:59:59]
+        details: >
+          Runs the full two years, matching the transaction tables. (An
+          earlier note here claimed the feed stopped in June 2026; that was
+          an artefact of profiling a single part file.)
+
+      - name: DISCOUNT_NAME
+        label: Discount name
+        type: string
+        constraints: [required]
+        description: >
+          Parsed from the t-log. PDI documents it as the name of the *item*
+          the discount applied to, but in practice it holds a mix of
+          promotion names (`loyaltyDiscount`, `mixAndMatchOffer`) and
+          product names (`Pepsi 20oz 2 for $4.50`, `ZYN`). Not
+          standardised: `ZYN` and `zyn` are separate values, and
+          `missing_discount` is the most common value of all at 1,281,693
+          uses — it pairs with `DISCOUNT_TYPE = 9`. Case-fold and group
+          before counting, and prefer `DISCOUNT_TYPE` when you need a
+          reliable classification.
+        examples: [loyaltyDiscount, mixAndMatchOffer, managerPromotion, Skupos, "Pepsi 20oz 2 for $4.50"]
+
+      - name: DISCOUNT_AMOUNT
+        label: Discount amount
+        type: number(quantity)
+        units: USD
+        constraints: [required]
+        description: The value of the discount.
+        range: [-102.4, 994.01]
+        todo: |
+          - The sign convention is inconsistent across promotions. Summed
+            by name, `loyaltyDiscount` and `mixAndMatchOffer` come out
+            negative while `Skupos` and `ZYN` come out positive. Is the
+            sign meaningful (a markup vs. a markdown), or does it vary by
+            register? Until this is settled, totalling this column across
+            promotions gives a meaningless number.
+
+      - name: GRAND_TOTAL_AMOUNT
+        type: number(quantity)
+        units: USD
+        constraints: [required]
+        description: The line total this discount relates to.
+        range: [-30, 1000]
+        todo: |
+          - Is this the line total before or after the discount, and is it
+            the same figure as `transaction_items.GRAND_TOTAL_AMOUNT` for
+            the matching line?
+
+      - name: QUANTITY
+        type: number(quantity)
+        units: units
+        constraints: [required]
+        description: Units the discount applied to.
+        range: [0, 298]
+
+      - name: DISCOUNT_NUMBER
+        type: string
+        description: A 13-character alphanumeric reference for the discount.
+        examples: [02K3PVN2CJQTM, 7XXR0KVN7AY6T, FZRWFM0T0TTQ2, PCY3KD8EP2JYW, ZX8GSGAECFN4A]
+
+      - name: DISCOUNT_TYPE
+        type: number(id)
+        constraints: [required]
+        description: >
+          What kind of discount this was. PDI's mapping:
+          **0** Mix & Match, **1** Combo, **2** Manager,
+          **3** Loyalty, **4** Cashier Discount, **5** Cashier Price
+          Override, **6** Retailer Discount, **7** Retailer Promo,
+          **8** Retailer Price Override, **9** Missing Discount.
+        range: [0, 9]
+        examples: [0, 1, 2, 3, 9]
+        details: >
+          This is the column that separates a *planned offer* from a
+          *register correction*. Codes 0, 1, 3, 6 and 7 are real
+          promotions, and are the ones to treat as a treatment in any
+          uplift or offer analysis. Codes 2, 4, 5 and 8 are staff
+          overrides — a cashier fixing a price is not an offer the customer
+          responded to. Code 9 is missing data, and is the single most
+          common value in the table.
+
+      - name: ADJUSTMENT_AMOUNT
+        type: number(quantity)
+        units: USD
+        constraints: [required]
+        description: >
+          PDI calls this the "discount adjustment amount". Zero on every
+          row in this extract, so it carries no information here.
+        range: [0, 0]
+
+      - name: POS_TYPE_ID
+        type: number(id)
+        constraints: [required]
+        description: >
+          The POS vendor: 1 Verifone, 2 Gilbarco, 3 Clover, 4 NCR. Same
+          codes as `payments.POS_TYPE_ID`.
+        range: [1, 4]
+        examples: [1, 2, 3, 4]
+
+      - name: CREATED_AT
+        type: datetime
+        time_zone: naive
+        constraints: [required]
+        description: >
+          When the row was written to the warehouse, not when the discount
+          happened. Constant within a file. Use `DATE_TIME` for anything
+          analytical.
+        range: [2026-06-19T22:22:52.090, 2026-06-19T22:22:52.090]
+
+      - name: UPDATED_AT
+        type: datetime
+        time_zone: naive
+        constraints: [required]
+        description: When the row was last rewritten. Same caveat as `CREATED_AT`.
+        range: [2026-06-19T22:22:52.090, 2026-06-19T22:22:52.090]
+
+  # ------------------------------------------------------------------
+  - name: master_gtin
+    label: Product master
+    description: >
+      One row per barcode. 99,074 products, each appearing exactly once,
+      classified into 35 categories.
+
+      This is what turns a scanned line into something you can analyse.
+      Without it, 59% of line items are an opaque 14-digit number.
+    details: >
+      Coverage is good but not complete: 88% of scanned lines find a match
+      here. The misses are mostly local or store-specific items. Decide
+      early whether an unmatched item becomes an `UNKNOWN` basket item or
+      gets dropped — the choice changes every support and lift figure.
+    source:
+      parquet: master-gtin/2024-07-03--data_01c774c9-020b-cf0f-0042-fa070a8184be_107_2_0.snappy.parquet
+    columns:
+      - name: GTIN
+        label: Barcode
+        type: string
+        constraints: [primary_key]
+        description: The barcode, zero-padded to 14 digits. Join key to `transaction_items`.
+        examples: ["00000000003551", "00042238323100", "00194960214796", "00760412828066", "08904461506366"]
+
+      - name: CATEGORY
+        label: Category
+        type: enum
+        constraints: [required]
+        values: [Alternative Snacks, Automotive Products, Automotive Services, Beer, Candy, Cigarettes, Cold Dispensed Beverages, Commissary & Other Packaged Products, Edible Grocery, Fluid Milk/Milk Alternative Products, Foodservice Prepared Onsite, Frozen Dispensed Beverages, Frozen Foods, Fuel Products, General Merchandise, Health & Beauty Care, Hot Dispensed Beverages, Ice, Liquor, Lottery/Gaming, Non-Edible Grocery, Other Dairy & Deli Products, Other Tobacco/Nicotine Products, Packaged Beverages (Non-Alcoholic), Packaged Bread, Packaged Ice Cream/Novelties, Packaged Sweet Snacks, Perishable Grocery, Prepaid Cards, Publications, Salty Snacks, Service Charges, Shelf Stable Products, Store Services, Wine]
+        description: >
+          PDI's own product category — not NACS, which is the taxonomy
+          `transaction_items.NONSCAN_CATEGORY` uses. This is the right
+          grain for basket analysis: the level at which "beer and
+          cigarettes go together" is a statement a store manager can act
+          on.
+        details: >
+          Note the overlap with `transaction_items.NONSCAN_CATEGORY`: both
+          have a notion of fuel (`Fuel Products` here, `FUEL` there) and
+          lottery (`Lottery/Gaming` vs `LOTTERY`). Coalescing the two
+          sources without reconciling the names leaves you with both
+          spellings as separate basket items.
+
+      - name: SUBCATEGORY
+        type: string
+        constraints: [required]
+        description: A finer product classification within `CATEGORY`.
+        examples: ["2% Milk", Frozen Novelties, Novelties, Papers, Wine]
+
+      - name: PRODUCT_DESCRIPTION
+        type: string
+        constraints: [required]
+        description: >
+          The standardised product name. Unlike
+          `transaction_items.POS_DESCRIPTION`, this is consistent across
+          stores and safe to group on.
+        examples: [Chips Ahoy Chewy Red Velvet 9.6 oz, Monster Energy 16 oz, Marlboro Red Box]
+        todo: |
+          - Confirm these examples are representative; they were taken from
+            a single file of the 28.
+
+      - name: BRAND
+        type: string
+        constraints: [required]
+        description: The product's brand.
+        examples: [Monster, Marlboro, Red Bull, Chips Ahoy, ZYN]
+
+      - name: MANUFACTURER
+        type: string
+        constraints: [required]
+        description: The manufacturer.
+        examples: [Altria, PepsiCo, Mondelez, Swedish Match, Red Bull]
+
+      - name: MANUFACTURER_PARENT
+        type: string
+        description: >
+          The manufacturer's parent company, where it differs. Null on
+          22,124 products.
+        examples: [Altria Group, PepsiCo Inc, Mondelez International]
+
+      - name: PRODUCT_TYPE
+        type: string
+        description: Product form. Null on 34,851 products.
+        examples: [10w 30, Cup, Ice Cream Cone, Puffed Wheat Snacks, Wafers]
+
+      - name: SUB_PRODUCT_TYPE
+        type: string
+        description: A finer form classification. Null on 88,789 of 99,074 products — almost always missing.
+        examples: [Savage]
+
+      - name: PACKAGE
+        type: string
+        description: >
+          The item packaging, per PDI. Null on 45,596 products.
+        examples: [Bottle, Can, Box, Bag, Carton]
+        todo: |
+          - The examples above are illustrative: the file the profiler read
+            held no non-null values. Confirm the real vocabulary.
+
+      - name: PACK_SIZE
+        type: string
+        description: >
+          The pack size, per PDI. Null on 46,620 products.
+        examples: ["1", "2", "4", "12", "20"]
+        todo: |
+          - The examples above are illustrative, as for `PACKAGE`. Confirm
+            whether this is numeric text or free text.
+
+      - name: UNIT_SIZE
+        type: string
+        description: >
+          Size of one unit, as free text with the unit embedded. Needs
+          parsing before it can be compared.
+        examples: [.5 GALLON, 3.2 OZ, 5.8 OZ, 7 LB, 9.9 OZ]
+
+      - name: FLAVOR
+        type: string
+        description: Flavour, where applicable. Null on 43,404 products.
+        examples: [Apple, Cinnamon Sugar, Milk Chocolate w/ Puffs, Sour, Yummy]
+
+      - name: CREATED_AT
+        type: date
+        constraints: [required]
+        description: When the product was added to the master.
+        range: [2021-03-09, 2024-05-24]
+
+      - name: UPDATED_AT
+        type: date
+        constraints: [required]
+        description: When the product record was last changed.
+        range: [2024-07-03, 2024-07-03]
+        details: >
+          Every row carries the same date, so this copy of the master is a
+          frozen snapshot taken before the transaction window even opens.
+          PDI separately notes that the GTIN library was last refreshed at
+          the start of 2025 and that lottery coverage declines as a result.
+          Products launched during the two years of transactions will never
+          match, which accounts for part of the 12% of scanned lines that
+          find no category.
+        todo: |
+          - Ask whether a newer GTIN master can be supplied. A 2026 refresh
+            would lift category coverage and fix the lottery gap.
+
+  # ------------------------------------------------------------------
+  - name: stores_information
+    label: Store master
+    description: >
+      One row per store. 36,912 stores across 52 states and 22,396 chains.
+
+      Far wider than the transaction data, which touches only 940 of these
+      stores. Treat this as a reference universe, not as the panel.
+
+      All 940 transacting stores are present here, so the join never drops
+      a row. They sit in eight Intermountain West states — CO (221), UT
+      (164), AZ (158), ID (111), NV (97), NM (93), MT (76) and WY (20).
+      Nothing found in this data should be generalised to the rest of the
+      country without saying so.
+    source:
+      parquet: stores-information/2026-06-09--data_01c774ca-020b-cf0f-0042-fa070a818536_207_4_0.snappy.parquet
+    columns:
+      - name: STORE_ID
+        type: number(id)
+        constraints: [primary_key]
+        description: Unique store identifier. Join key to the transaction tables.
+        range: [42, 51004]
+        examples: [42, 12000, 25000, 38000, 51004]
+
+      - name: STORE_NAME
+        type: string
+        constraints: [required]
+        description: The store's name.
+        examples: [Kwik Trip 123, Casey's General Store, Maverik 456]
+        todo: |
+          - Confirm these examples; they were not read from the data.
+
+      - name: STORE_CHAIN_ID
+        type: number(id)
+        constraints: [required]
+        description: The chain the store belongs to.
+        range: [25, 30711]
+        examples: [25, 8000, 15000, 22000, 30711]
+
+      - name: STORE_CHAIN_NAME
+        type: string
+        constraints: [required]
+        description: The chain's name.
+        examples: [Kwik Trip, Casey's, Maverik, Sheetz, Wawa]
+        todo: |
+          - Confirm these examples; they were not read from the data.
+
+      - name: CHAIN_SIZE
+        type: number(quantity)
+        units: stores
+        constraints: [required]
+        description: >
+          How many stores the chain operates. Ranges from 1 to 386, so this
+          panel is mostly small and mid-sized operators rather than the
+          national chains.
+        range: [1, 386]
+
+      - name: STREET_ADDRESS
+        type: string
+        constraints: [required]
+        description: Street address.
+        examples: [123 Main St, 456 Oak Ave, 789 Elm Dr]
+        todo: |
+          - Confirm these examples; they were not read from the data.
+
+      - name: CITY
+        type: string
+        constraints: [required]
+        description: City. Inconsistently cased — `england` appears lowercase.
+        examples: [Alachua, Eustis, Marshall, Reeds Spring, england]
+
+      - name: STATE
+        type: string
+        constraints: [required]
+        description: Two-letter state code. 52 distinct values.
+        examples: [AK, ID, NC, PA, WY]
+        todo: |
+          - 52 values for 50 states — presumably DC and a territory.
+            Confirm which, since it affects any state-level rollup.
+
+      - name: ZIP_CODE
+        type: string
+        constraints: [required]
+        description: ZIP code. A string, so leading zeros survive.
+        examples: ["01876", "32819", "58647", "74021", "98577"]
+
+      - name: LATITUDE
+        type: number(quantity)
+        units: degrees
+        constraints: [required]
+        description: Store latitude. Spans Hawaii to Alaska.
+        range: [18.409, 64.8524]
+
+      - name: LONGITUDE
+        type: number(quantity)
+        units: degrees
+        constraints: [required]
+        description: Store longitude.
+        range: [-157.9133681, 180]
+        todo: |
+          - A maximum of exactly 180 is suspicious — that is the
+            antimeridian, not a US location. Likely a placeholder for a
+            missing coordinate. How many rows, and should they be treated
+            as null?
+
+      - name: START_DATE
+        type: date
+        description: >
+          When the store entered the panel. Null for 35 stores.
+        range: [2016-01-01, 2026-05-26]
+
+      - name: START_WEEK_CONTINUOUS_DATA
+        type: date
+        description: >
+          The first week from which this store reports without gaps. This
+          is the column that says when a store's data becomes trustworthy —
+          filter on it before any time series work, or an apparent growth
+          trend will just be stores joining the panel.
+        range: [2016-06-27, 2026-06-01]
+
+      - name: CREATED_AT
+        type: number
+        constraints: [required]
+        description: >
+          Row creation time as a Unix timestamp in milliseconds, stored as
+          a number rather than a datetime. Divide by 1000 to convert.
+        range: [1689890610962, 1779992788328]
+        examples: [1689890610962, 1720000000000, 1779992788328]
+
+      - name: UPDATED_AT
+        type: number
+        constraints: [required]
+        description: >
+          Row update time as Unix milliseconds. Identical on every row —
+          the whole table was rewritten at once.
+        range: [1781036256497, 1781036256497]
+        examples: [1781036256497]
+
+  # ------------------------------------------------------------------
+  - name: stores_status
+    label: Store status
+    description: >
+      The same 36,912 stores as `stores_information`, with two extra
+      columns describing whether the store is currently active.
+    details: >
+      Every other column duplicates `stores_information`. Join on
+      `STORE_ID` and take only `ACTIVE_STATUS` and `STORE_FLAG`, or you
+      will get fifteen pairs of conflicting duplicates.
+    source:
+      parquet: stores-status/2026-06-09--data_01c774c8-020b-cfd1-0042-fa070a8178b6_207_4_0.snappy.parquet
+    todo: |
+      - Why are these two tables separate when they share fifteen of
+        seventeen columns and the same row count? If `stores_status` is
+        simply the newer export, `stores_information` may be redundant.
+      - Confirm the shared columns hold identical values in both tables. If
+        they drift, which one wins?
+    columns:
+      - name: STORE_ID
+        type: number(id)
+        constraints: [primary_key, foreign_key]
+        description: Unique store identifier.
+        range: [42, 51004]
+        examples: [42, 12000, 25000, 38000, 51004]
+
+      - name: ACTIVE_STATUS
+        type: enum
+        values:
+          A: Active
+          I: Inactive
+        constraints: [required]
+        description: >
+          Whether the store is currently active in PDI's panel. PDI
+          suggests using this to exclude inactive stores from time-series
+          aggregates.
+        todo: |
+          - Confirm the A/I expansion, and whether "inactive" means closed,
+            left the panel, or merely stopped delivering.
+
+      - name: STORE_FLAG
+        type: enum
+        values: ["TRUE", "FALSE"]
+        constraints: [required]
+        description: >
+          A boolean stored as the strings `TRUE` and `FALSE`. Not a copy of
+          `ACTIVE_STATUS`, though it is close: 13,747 stores are A/TRUE,
+          4,618 are A/FALSE and 18,547 are I/FALSE. No store is I/TRUE.
+        todo: |
+          - What does this flag mark? It splits the active stores into two
+            groups and PDI's dictionary defines it only as "Store flag".
+            The narrative mentions stores being "active, on hold, or
+            otherwise excluded from delivery", so this may be the on-hold
+            marker — confirm.
+
+      - name: STORE_NAME
+        type: string
+        description: Duplicate of `stores_information.STORE_NAME`.
+        examples: [Kwik Trip 123, Casey's General Store, Maverik 456]
+      - name: STORE_CHAIN_ID
+        type: number(id)
+        description: Duplicate of `stores_information.STORE_CHAIN_ID`.
+        range: [25, 30711]
+        examples: [25, 8000, 15000, 22000, 30711]
+      - name: STORE_CHAIN_NAME
+        type: string
+        description: Duplicate of `stores_information.STORE_CHAIN_NAME`.
+        examples: [Kwik Trip, Casey's, Maverik, Sheetz, Wawa]
+      - name: CHAIN_SIZE
+        type: number(quantity)
+        units: stores
+        description: Duplicate of `stores_information.CHAIN_SIZE`.
+        range: [1, 386]
+      - name: STREET_ADDRESS
+        type: string
+        description: Duplicate of `stores_information.STREET_ADDRESS`.
+        examples: [123 Main St, 456 Oak Ave, 789 Elm Dr]
+      - name: CITY
+        type: string
+        description: Duplicate of `stores_information.CITY`.
+        examples: [Alachua, Eustis, Marshall, Reeds Spring, england]
+      - name: STATE
+        type: string
+        description: Duplicate of `stores_information.STATE`.
+        examples: [AK, ID, NC, PA, WY]
+      - name: ZIP_CODE
+        type: string
+        description: Duplicate of `stores_information.ZIP_CODE`.
+        examples: ["01876", "32819", "58647", "74021", "98577"]
+      - name: LATITUDE
+        type: number(quantity)
+        units: degrees
+        description: Duplicate of `stores_information.LATITUDE`.
+        range: [18.409, 64.8524]
+      - name: LONGITUDE
+        type: number(quantity)
+        units: degrees
+        description: Duplicate of `stores_information.LONGITUDE`.
+        range: [-157.9133681, 180]
+      - name: START_DATE
+        type: date
+        description: Duplicate of `stores_information.START_DATE`.
+        range: [2016-01-01, 2026-05-26]
+      - name: START_WEEK_CONTINUOUS_DATA
+        type: date
+        description: Duplicate of `stores_information.START_WEEK_CONTINUOUS_DATA`.
+        range: [2016-06-27, 2026-06-01]
+      - name: CREATED_AT
+        type: number
+        description: Unix milliseconds. Duplicate of `stores_information.CREATED_AT`.
+        range: [1689890610962, 1779992788328]
+        examples: [1689890610962, 1720000000000, 1779992788328]
+      - name: UPDATED_AT
+        type: number
+        description: Unix milliseconds, identical on every row.
+        range: [1781038159720, 1781038159720]
+        examples: [1781038159720]
+
+relationships:
+  - join: payments.PAYMENT_ID = shopper_id.PAYMENT_ID
+    cardinality: one-to-one
+    description: >
+      Each tender has at most one shopper identity. This is the safe way to
+      attach a shopper, because it does not multiply rows.
+
+  - join: transaction_items.GTIN = master_gtin.GTIN
+    cardinality: many-to-one
+    description: >
+      Attaches a category to a scanned item. A left join is required: 12%
+      of scanned lines have no match, and non-scanned lines never will.
+
+  - join: transaction_items.STORE_ID = stores_information.STORE_ID
+    cardinality: many-to-one
+    description: Attaches store geography and panel start dates to a line item.
+
+  - join: payments.STORE_ID = stores_information.STORE_ID
+    cardinality: many-to-one
+    description: Attaches store attributes to a payment.
+
+  - join: discounts.STORE_ID = stores_information.STORE_ID
+    cardinality: many-to-one
+    description: Attaches store attributes to a discount.
+
+  - join: discounts.TRANSACTION_ITEM_ID = transaction_items.TRANSACTION_ITEM_ID
+    cardinality: many-to-one
+    description: >
+      A line item may carry several discounts, so aggregate discounts to
+      the line before joining back.
+    conflicts: [STORE_ID, DATE_TIME, GRAND_TOTAL_AMOUNT]
+
+  - join: stores_status.STORE_ID = stores_information.STORE_ID
+    cardinality: one-to-one
+    description: >
+      The same stores in both tables. Select only `ACTIVE_STATUS` and
+      `STORE_FLAG` from `stores_status`; everything else is duplicated.
+    conflicts: [STORE_NAME, STORE_CHAIN_ID, STORE_CHAIN_NAME, CHAIN_SIZE, STREET_ADDRESS, CITY, STATE, ZIP_CODE, LATITUDE, LONGITUDE, START_DATE, START_WEEK_CONTINUOUS_DATA, CREATED_AT, UPDATED_AT]
+
+glossary:
+  basket: >
+    The set of items bought together. Here it means the items sharing a
+    `TRANSACTION_SET_ID` — one register ring-up.
+
+  visit: >
+    One trip to the store by one shopper, which may span several
+    transactions. At a convenience store the pump and the counter are
+    usually rung up separately, so a visit is reconstructed by grouping
+    transactions with the same shopper and store within a short time
+    window (30 minutes is the usual choice). A visit is the right grain
+    for any question about what people buy alongside fuel; a transaction
+    is not.
+
+  GTIN: >
+    Global Trade Item Number — the number encoded in a product's barcode.
+    Zero-padded to 14 digits here, which means a UPC-A barcode carries two
+    leading zeros.
+
+  PLU: >
+    Price Look-Up code: a short number typed at the register for items
+    that are not scanned, such as loose goods.
+
+  non-scan: >
+    A line keyed to a department rather than scanned — fuel, lottery,
+    foodservice, fees. It has no real barcode, so its category comes from
+    `NONSCAN_CATEGORY` rather than the product master.
+
+  attach rate: >
+    The share of fuel visits that also include an in-store purchase. At
+    the transaction grain this is misleadingly low, because the pump and
+    the counter are separate transactions; it has to be measured at the
+    visit grain.
+
+  fleet card: >
+    A fuel card issued to a business for its vehicles, shown as
+    `CARD_TYPE = WX`. Fleet transactions are company purchases rather than
+    personal shopping, so they behave differently and may deserve
+    exclusion from customer-level models.
+
+  panel: >
+    The set of stores that report data to PDI. A store joins on
+    `START_DATE` and becomes reliable on `START_WEEK_CONTINUOUS_DATA`.
+    Because stores join over time, raw totals rise even when sales per
+    store do not. PDI's panel covers roughly 80% of the independent
+    convenience-store market; large chains such as 7-Eleven, Buc-ee's and
+    Pilot are excluded by data rights, so this is independents only.
+
+  t-log: >
+    Transaction log — the raw file a point-of-sale system writes for every
+    sale. Every row in this dataset was parsed from one. The four
+    supported vendors (Verifone, Gilbarco, Clover, NCR) each write their
+    own format, which is why some columns are populated for one vendor
+    only and free-text columns vary so much between stores.
+
+  NACS: >
+    The National Association of Convenience Stores, whose product
+    taxonomy labels the keyed, non-scanned lines
+    (`NONSCAN_CATEGORY` and friends). Distinct from PDI's own taxonomy in
+    `master_gtin.CATEGORY` — the two are different vocabularies and should
+    be reconciled before being combined.
+
+  BIN: >
+    Bank Identification Number — the first six digits of a payment card,
+    identifying the issuer. PDI hashes it with the card's last four digits
+    and the store's state to build `SHOPPER_ID`.
+
+  identity resolution: >
+    PDI's method for recognising a repeat customer without storing
+    personal data. Here it is a hash of card BIN, card last four, and
+    store state. It is approximate in both directions: one person can
+    become several shoppers (two cards, or two states), and two people can
+    collide into one.

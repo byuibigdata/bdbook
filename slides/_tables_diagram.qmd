@@ -1,0 +1,403 @@
+```{=html}
+<svg id="pipeline-svg"  
+ viewBox="0.00 0.00 1150.00 858.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 853.73)">
+<title>pump_tables</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-853.73 1146.15,-853.73 1146.15,4 -4,4"/>
+<g id="clust1" class="cluster">
+<title>cluster_src</title>
+<path fill="white" stroke="#bdd3e5" d="M20,-762.51C20,-762.51 786,-762.51 786,-762.51 792,-762.51 798,-768.51 798,-774.51 798,-774.51 798,-829.73 798,-829.73 798,-835.73 792,-841.73 786,-841.73 786,-841.73 20,-841.73 20,-841.73 14,-841.73 8,-835.73 8,-829.73 8,-829.73 8,-774.51 8,-774.51 8,-768.51 14,-762.51 20,-762.51"/>
+<text xml:space="preserve" text-anchor="middle" x="100.38" y="-827.28" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#426a8a"> &#160;Bronze · as delivered &#160;</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_silver</title>
+<path fill="white" stroke="#4d93ac" d="M132,-559.07C132,-559.07 472,-559.07 472,-559.07 478,-559.07 484,-565.07 484,-571.07 484,-571.07 484,-719.26 484,-719.26 484,-725.26 478,-731.26 472,-731.26 472,-731.26 132,-731.26 132,-731.26 126,-731.26 120,-725.26 120,-719.26 120,-719.26 120,-571.07 120,-571.07 120,-565.07 126,-559.07 132,-559.07"/>
+<text xml:space="preserve" text-anchor="middle" x="195.5" y="-716.81" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#4d93ac"> &#160;Silver · cleaned &#160;</text>
+</g>
+<g id="clust5" class="cluster">
+<title>cluster_feat</title>
+<path fill="white" stroke="#bdd3e5" d="M292,-365.88C292,-365.88 794,-365.88 794,-365.88 800,-365.88 806,-371.88 806,-377.88 806,-377.88 806,-433.1 806,-433.1 806,-439.1 800,-445.1 794,-445.1 794,-445.1 292,-445.1 292,-445.1 286,-445.1 280,-439.1 280,-433.1 280,-433.1 280,-377.88 280,-377.88 280,-371.88 286,-365.88 292,-365.88"/>
+<text xml:space="preserve" text-anchor="middle" x="328.5" y="-430.65" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#426a8a"> &#160;Features &#160;</text>
+</g>
+<g id="clust8" class="cluster">
+<title>cluster_models</title>
+<path fill="white" stroke="#4d93ac" d="M368,-172.69C368,-172.69 756,-172.69 756,-172.69 762,-172.69 768,-178.69 768,-184.69 768,-184.69 768,-239.91 768,-239.91 768,-245.91 762,-251.91 756,-251.91 756,-251.91 368,-251.91 368,-251.91 362,-251.91 356,-245.91 356,-239.91 356,-239.91 356,-184.69 356,-184.69 356,-178.69 362,-172.69 368,-172.69"/>
+<text xml:space="preserve" text-anchor="middle" x="421.38" y="-237.46" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#4d93ac"> &#160;Fitted models &#160;</text>
+</g>
+<!-- src_items -->
+<g id="n&#45;src_items" class="node">
+<title>src_items</title>
+<g id="a_n&#45;src_items"><a xlink:title="Click for the schema and the code">
+<path fill="white" stroke="#bdd3e5" stroke-width="1.2" d="M160.15,-812.23C160.15,-812.23 27.85,-812.23 27.85,-812.23 21.85,-812.23 15.85,-806.23 15.85,-800.23 15.85,-800.23 15.85,-782.51 15.85,-782.51 15.85,-776.51 21.85,-770.51 27.85,-770.51 27.85,-770.51 160.15,-770.51 160.15,-770.51 166.15,-770.51 172.15,-776.51 172.15,-782.51 172.15,-782.51 172.15,-800.23 172.15,-800.23 172.15,-806.23 166.15,-812.23 160.15,-812.23"/>
+<text xml:space="preserve" text-anchor="start" x="30.25" y="-791.52" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">transaction_items</text>
+<text xml:space="preserve" text-anchor="start" x="66.25" y="-781.37" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">128.6M lines</text>
+</a>
+</g>
+</g>
+<!-- line_clean -->
+<g id="n&#45;line_clean" class="node">
+<title>line_clean</title>
+<g id="a_n&#45;line_clean"><a xlink:title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M272.9,-701.76C272.9,-701.76 163.1,-701.76 163.1,-701.76 157.1,-701.76 151.1,-695.76 151.1,-689.76 151.1,-689.76 151.1,-672.04 151.1,-672.04 151.1,-666.04 157.1,-660.04 163.1,-660.04 163.1,-660.04 272.9,-660.04 272.9,-660.04 278.9,-660.04 284.9,-666.04 284.9,-672.04 284.9,-672.04 284.9,-689.76 284.9,-689.76 284.9,-695.76 278.9,-701.76 272.9,-701.76"/>
+<text xml:space="preserve" text-anchor="start" x="180.5" y="-681.05" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">line_clean</text>
+<text xml:space="preserve" text-anchor="start" x="165.5" y="-670.9" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">one row per sellable line</text>
+</a>
+</g>
+</g>
+<!-- src_items&#45;&gt;line_clean -->
+<g id="edge1" class="edge">
+<title>src_items&#45;&gt;line_clean</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M117.32,-769.97C137.15,-752.62 165.78,-727.58 187.44,-708.64"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="189.01,-710.98 193.19,-703.61 185.32,-706.77 189.01,-710.98"/>
+</g>
+<!-- src_gtin -->
+<g id="n&#45;src_gtin" class="node">
+<title>src_gtin</title>
+<g id="a_n&#45;src_gtin"><a xlink:title="Click for the schema and the code">
+<path fill="white" stroke="#bdd3e5" stroke-width="1.2" d="M303.65,-812.23C303.65,-812.23 216.35,-812.23 216.35,-812.23 210.35,-812.23 204.35,-806.23 204.35,-800.23 204.35,-800.23 204.35,-782.51 204.35,-782.51 204.35,-776.51 210.35,-770.51 216.35,-770.51 216.35,-770.51 303.65,-770.51 303.65,-770.51 309.65,-770.51 315.65,-776.51 315.65,-782.51 315.65,-782.51 315.65,-800.23 315.65,-800.23 315.65,-806.23 309.65,-812.23 303.65,-812.23"/>
+<text xml:space="preserve" text-anchor="start" x="218.75" y="-791.52" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">master_gtin</text>
+<text xml:space="preserve" text-anchor="start" x="231.88" y="-781.37" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">99k products</text>
+</a>
+</g>
+</g>
+<!-- src_gtin&#45;&gt;line_clean -->
+<g id="edge2" class="edge">
+<title>src_gtin&#45;&gt;line_clean</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M252.1,-769.97C245.71,-753.45 236.61,-729.97 229.43,-711.41"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="232.13,-710.64 226.63,-704.19 226.91,-712.66 232.13,-710.64"/>
+<text xml:space="preserve" text-anchor="middle" x="256" y="-741.01" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">GTIN</text>
+</g>
+<!-- src_shopper -->
+<g id="n&#45;src_shopper" class="node">
+<title>src_shopper</title>
+<g id="a_n&#45;src_shopper"><a xlink:title="Click for the schema and the code">
+<path fill="white" stroke="#bdd3e5" stroke-width="1.2" d="M439.9,-812.23C439.9,-812.23 360.1,-812.23 360.1,-812.23 354.1,-812.23 348.1,-806.23 348.1,-800.23 348.1,-800.23 348.1,-782.51 348.1,-782.51 348.1,-776.51 354.1,-770.51 360.1,-770.51 360.1,-770.51 439.9,-770.51 439.9,-770.51 445.9,-770.51 451.9,-776.51 451.9,-782.51 451.9,-782.51 451.9,-800.23 451.9,-800.23 451.9,-806.23 445.9,-812.23 439.9,-812.23"/>
+<text xml:space="preserve" text-anchor="start" x="362.5" y="-791.52" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">shopper_id</text>
+<text xml:space="preserve" text-anchor="start" x="363.62" y="-781.37" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">71.8M payments</text>
+</a>
+</g>
+</g>
+<!-- fuel_anchor -->
+<g id="n&#45;fuel_anchor" class="node">
+<title>fuel_anchor</title>
+<g id="a_n&#45;fuel_anchor"><a xlink:title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M463.77,-608.79C463.77,-608.79 338.23,-608.79 338.23,-608.79 332.23,-608.79 326.23,-602.79 326.23,-596.79 326.23,-596.79 326.23,-579.07 326.23,-579.07 326.23,-573.07 332.23,-567.07 338.23,-567.07 338.23,-567.07 463.77,-567.07 463.77,-567.07 469.77,-567.07 475.77,-573.07 475.77,-579.07 475.77,-579.07 475.77,-596.79 475.77,-596.79 475.77,-602.79 469.77,-608.79 463.77,-608.79"/>
+<text xml:space="preserve" text-anchor="start" x="359.75" y="-588.08" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">fuel_anchor</text>
+<text xml:space="preserve" text-anchor="start" x="340.62" y="-577.93" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">one row per fuel transaction</text>
+</a>
+</g>
+</g>
+<!-- src_shopper&#45;&gt;fuel_anchor -->
+<g id="edge5" class="edge">
+<title>src_shopper&#45;&gt;fuel_anchor</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M400.1,-769.95C400.28,-734.43 400.64,-661.11 400.85,-619.51"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="403.65,-619.54 400.89,-611.53 398.05,-619.51 403.65,-619.54"/>
+<text xml:space="preserve" text-anchor="middle" x="433.26" y="-677.03" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">SHOPPER_ID</text>
+</g>
+<!-- store_tx -->
+<g id="n&#45;store_tx" class="node">
+<title>store_tx</title>
+<g id="a_n&#45;store_tx"><a xlink:title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M282.02,-608.79C282.02,-608.79 139.97,-608.79 139.97,-608.79 133.97,-608.79 127.97,-602.79 127.97,-596.79 127.97,-596.79 127.97,-579.07 127.97,-579.07 127.97,-573.07 133.97,-567.07 139.97,-567.07 139.97,-567.07 282.02,-567.07 282.02,-567.07 288.02,-567.07 294.02,-573.07 294.02,-579.07 294.02,-579.07 294.02,-596.79 294.02,-596.79 294.02,-602.79 288.02,-608.79 282.02,-608.79"/>
+<text xml:space="preserve" text-anchor="start" x="181" y="-588.08" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">store_tx</text>
+<text xml:space="preserve" text-anchor="start" x="142.38" y="-577.93" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">one row per in&#45;store transaction</text>
+</a>
+</g>
+</g>
+<!-- src_shopper&#45;&gt;store_tx -->
+<g id="edge6" class="edge">
+<title>src_shopper&#45;&gt;store_tx</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M394.76,-770.03C385.02,-736.16 361.03,-668.03 317,-628.79 310.53,-623.03 303.15,-618.07 295.36,-613.8"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="297.07,-611.53 288.66,-610.4 294.53,-616.52 297.07,-611.53"/>
+</g>
+<!-- src_stores -->
+<g id="n&#45;src_stores" class="node">
+<title>src_stores</title>
+<g id="a_n&#45;src_stores"><a xlink:title="Click for the schema and the code">
+<path fill="white" stroke="#bdd3e5" stroke-width="1.2" d="M635.9,-812.23C635.9,-812.23 496.1,-812.23 496.1,-812.23 490.1,-812.23 484.1,-806.23 484.1,-800.23 484.1,-800.23 484.1,-782.51 484.1,-782.51 484.1,-776.51 490.1,-770.51 496.1,-770.51 496.1,-770.51 635.9,-770.51 635.9,-770.51 641.9,-770.51 647.9,-776.51 647.9,-782.51 647.9,-782.51 647.9,-800.23 647.9,-800.23 647.9,-806.23 641.9,-812.23 635.9,-812.23"/>
+<text xml:space="preserve" text-anchor="start" x="498.5" y="-791.52" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">stores_information</text>
+<text xml:space="preserve" text-anchor="start" x="539" y="-781.37" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">36.9k stores</text>
+</a>
+</g>
+</g>
+<!-- feat_ctx -->
+<g id="n&#45;feat_ctx" class="node">
+<title>feat_ctx</title>
+<g id="a_n&#45;feat_ctx"><a xlink:title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M605.52,-415.6C605.52,-415.6 490.48,-415.6 490.48,-415.6 484.48,-415.6 478.48,-409.6 478.48,-403.6 478.48,-403.6 478.48,-385.88 478.48,-385.88 478.48,-379.88 484.48,-373.88 490.48,-373.88 490.48,-373.88 605.52,-373.88 605.52,-373.88 611.52,-373.88 617.52,-379.88 617.52,-385.88 617.52,-385.88 617.52,-403.6 617.52,-403.6 617.52,-409.6 611.52,-415.6 605.52,-415.6"/>
+<text xml:space="preserve" text-anchor="start" x="503" y="-394.89" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">feat_context</text>
+<text xml:space="preserve" text-anchor="start" x="492.88" y="-384.74" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">visit · known at the pump</text>
+</a>
+</g>
+</g>
+<!-- src_stores&#45;&gt;feat_ctx -->
+<g id="edge11" class="edge">
+<title>src_stores&#45;&gt;feat_ctx</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M566,-769.98C566,-748.18 566,-712.6 566,-681.9 566,-681.9 566,-681.9 566,-493.96 566,-470.89 561.14,-445.26 556.46,-425.97"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="559.2,-425.35 554.51,-418.29 553.77,-426.73 559.2,-425.35"/>
+</g>
+<!-- src_disc -->
+<g id="n&#45;src_disc" class="node">
+<title>src_disc</title>
+<g id="a_n&#45;src_disc"><a xlink:title="Click for the schema and the code">
+<path fill="white" stroke="#bdd3e5" stroke-width="1.2" d="M778.27,-812.23C778.27,-812.23 691.73,-812.23 691.73,-812.23 685.73,-812.23 679.73,-806.23 679.73,-800.23 679.73,-800.23 679.73,-782.51 679.73,-782.51 679.73,-776.51 685.73,-770.51 691.73,-770.51 691.73,-770.51 778.27,-770.51 778.27,-770.51 784.27,-770.51 790.27,-776.51 790.27,-782.51 790.27,-782.51 790.27,-800.23 790.27,-800.23 790.27,-806.23 784.27,-812.23 778.27,-812.23"/>
+<text xml:space="preserve" text-anchor="start" x="701.25" y="-791.52" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">discounts</text>
+<text xml:space="preserve" text-anchor="start" x="694.12" y="-781.37" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">17.4M applications</text>
+</a>
+</g>
+</g>
+<!-- line_clean&#45;&gt;fuel_anchor -->
+<g id="edge3" class="edge">
+<title>line_clean&#45;&gt;fuel_anchor</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M258.23,-659.36C276.71,-649.97 298.93,-638.75 319,-628.79 328.77,-623.94 339.22,-618.82 349.28,-613.91"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="350.5,-616.43 356.47,-610.42 348.05,-611.4 350.5,-616.43"/>
+<text xml:space="preserve" text-anchor="middle" x="356.5" y="-630.54" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">category = FUEL</text>
+</g>
+<!-- line_clean&#45;&gt;store_tx -->
+<g id="edge4" class="edge">
+<title>line_clean&#45;&gt;store_tx</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M195.16,-659.48C190.21,-653.74 185.66,-647.11 183,-640.04 180.19,-632.58 181.76,-624.88 185.28,-617.78"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="187.65,-619.26 189.48,-610.99 182.89,-616.32 187.65,-619.26"/>
+<text xml:space="preserve" text-anchor="middle" x="192" y="-630.54" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">else</text>
+</g>
+<!-- visit -->
+<g id="n&#45;visit" class="node">
+<title>visit</title>
+<g id="a_n&#45;visit"><a xlink:title="Click for the schema and the code">
+<path fill="#fef5e9" stroke="#f59625" stroke-width="2.2" d="M439.15,-515.82C439.15,-515.82 294.85,-515.82 294.85,-515.82 288.85,-515.82 282.85,-509.82 282.85,-503.82 282.85,-503.82 282.85,-486.1 282.85,-486.1 282.85,-480.1 288.85,-474.1 294.85,-474.1 294.85,-474.1 439.15,-474.1 439.15,-474.1 445.15,-474.1 451.15,-480.1 451.15,-486.1 451.15,-486.1 451.15,-503.82 451.15,-503.82 451.15,-509.82 445.15,-515.82 439.15,-515.82"/>
+<text xml:space="preserve" text-anchor="start" x="348.25" y="-495.11" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">visit</text>
+<text xml:space="preserve" text-anchor="start" x="297.25" y="-484.96" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">one row per fuel visit · </text>
+<text xml:space="preserve" text-anchor="start" x="397" y="-484.96" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">the label</text>
+</a>
+</g>
+</g>
+<!-- fuel_anchor&#45;&gt;visit -->
+<g id="edge7" class="edge">
+<title>fuel_anchor&#45;&gt;visit</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M393.45,-566.74C388.98,-554.78 383.23,-539.39 378.24,-526.02"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="380.93,-525.22 375.5,-518.71 375.68,-527.18 380.93,-525.22"/>
+</g>
+<!-- store_tx&#45;&gt;visit -->
+<g id="edge8" class="edge">
+<title>store_tx&#45;&gt;visit</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M246.01,-566.51C268.65,-553.31 298.32,-536.01 322.61,-521.84"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="323.97,-524.3 329.47,-517.85 321.15,-519.46 323.97,-524.3"/>
+<text xml:space="preserve" text-anchor="middle" x="328.72" y="-537.57" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">−15 / +45 min</text>
+</g>
+<!-- als_int -->
+<g id="n&#45;als_int" class="node">
+<title>als_int</title>
+<g id="a_n&#45;als_int"><a xlink:title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M786.4,-415.6C786.4,-415.6 661.6,-415.6 661.6,-415.6 655.6,-415.6 649.6,-409.6 649.6,-403.6 649.6,-403.6 649.6,-385.88 649.6,-385.88 649.6,-379.88 655.6,-373.88 661.6,-373.88 661.6,-373.88 786.4,-373.88 786.4,-373.88 792.4,-373.88 798.4,-379.88 798.4,-385.88 798.4,-385.88 798.4,-403.6 798.4,-403.6 798.4,-409.6 792.4,-415.6 786.4,-415.6"/>
+<text xml:space="preserve" text-anchor="start" x="664" y="-394.89" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">als_interactions</text>
+<text xml:space="preserve" text-anchor="start" x="671.5" y="-384.74" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">shopper × sku@daypart</text>
+</a>
+</g>
+</g>
+<!-- store_tx&#45;&gt;als_int -->
+<g id="edge12" class="edge">
+<title>store_tx&#45;&gt;als_int</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M281.69,-566.42C291.18,-563.84 300.81,-561.33 310,-559.07 335.14,-552.89 341.95,-553.61 367,-547.07 489.91,-515 519.68,-500.48 634,-445.1 649.14,-437.77 665.35,-429.13 679.79,-421.15"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="681.05,-423.65 686.67,-417.31 678.32,-418.76 681.05,-423.65"/>
+</g>
+<!-- visit&#45;&gt;feat_ctx -->
+<g id="edge9" class="edge">
+<title>visit&#45;&gt;feat_ctx</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M407.13,-473.07C419.57,-466.63 433.34,-459.54 446,-453.1 453.09,-449.5 454.99,-448.86 462,-445.1 476.06,-437.56 491.22,-429 504.83,-421.16"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="506.17,-423.62 511.69,-417.19 503.36,-418.78 506.17,-423.62"/>
+</g>
+<!-- feat_hist -->
+<g id="n&#45;feat_hist" class="node">
+<title>feat_hist</title>
+<g id="a_n&#45;feat_hist"><a xlink:title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M434.27,-415.6C434.27,-415.6 299.73,-415.6 299.73,-415.6 293.73,-415.6 287.73,-409.6 287.73,-403.6 287.73,-403.6 287.73,-385.88 287.73,-385.88 287.73,-379.88 293.73,-373.88 299.73,-373.88 299.73,-373.88 434.27,-373.88 434.27,-373.88 440.27,-373.88 446.27,-379.88 446.27,-385.88 446.27,-385.88 446.27,-403.6 446.27,-403.6 446.27,-409.6 440.27,-415.6 434.27,-415.6"/>
+<text xml:space="preserve" text-anchor="start" x="322" y="-394.89" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">feat_history</text>
+<text xml:space="preserve" text-anchor="start" x="302.12" y="-384.74" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">visit × category · point&#45;in&#45;time</text>
+</a>
+</g>
+</g>
+<!-- visit&#45;&gt;feat_hist -->
+<g id="edge10" class="edge">
+<title>visit&#45;&gt;feat_hist</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M367,-473.13C367,-459.5 367,-441.45 367,-426.21"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="369.8,-426.32 367,-418.32 364.2,-426.32 369.8,-426.32"/>
+</g>
+<!-- train_a -->
+<g id="n&#45;train_a" class="node">
+<title>train_a</title>
+<g id="a_n&#45;train_a"><a xlink:title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M616.65,-332.88C616.65,-332.88 523.35,-332.88 523.35,-332.88 517.35,-332.88 511.35,-326.88 511.35,-320.88 511.35,-320.88 511.35,-303.16 511.35,-303.16 511.35,-297.16 517.35,-291.16 523.35,-291.16 523.35,-291.16 616.65,-291.16 616.65,-291.16 622.65,-291.16 628.65,-297.16 628.65,-303.16 628.65,-303.16 628.65,-320.88 628.65,-320.88 628.65,-326.88 622.65,-332.88 616.65,-332.88"/>
+<text xml:space="preserve" text-anchor="start" x="543.75" y="-312.17" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">train_a</text>
+<text xml:space="preserve" text-anchor="start" x="525.75" y="-302.02" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">36.1M rows · 1 label</text>
+</a>
+</g>
+</g>
+<!-- feat_ctx&#45;&gt;train_a -->
+<g id="edge13" class="edge">
+<title>feat_ctx&#45;&gt;train_a</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M553.55,-373.37C556.05,-364.19 559.06,-353.17 561.81,-343.07"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="564.49,-343.88 563.89,-335.43 559.09,-342.41 564.49,-343.88"/>
+</g>
+<!-- train_b -->
+<g id="n&#45;train_b" class="node">
+<title>train_b</title>
+<g id="a_n&#45;train_b"><a xlink:title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M464.65,-332.88C464.65,-332.88 371.35,-332.88 371.35,-332.88 365.35,-332.88 359.35,-326.88 359.35,-320.88 359.35,-320.88 359.35,-303.16 359.35,-303.16 359.35,-297.16 365.35,-291.16 371.35,-291.16 371.35,-291.16 464.65,-291.16 464.65,-291.16 470.65,-291.16 476.65,-297.16 476.65,-303.16 476.65,-303.16 476.65,-320.88 476.65,-320.88 476.65,-326.88 470.65,-332.88 464.65,-332.88"/>
+<text xml:space="preserve" text-anchor="start" x="391.75" y="-312.17" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">train_b</text>
+<text xml:space="preserve" text-anchor="start" x="373.75" y="-302.02" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">4.6M rows · 6 labels</text>
+</a>
+</g>
+</g>
+<!-- feat_ctx&#45;&gt;train_b -->
+<g id="edge14" class="edge">
+<title>feat_ctx&#45;&gt;train_b</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M515.2,-373.37C498.11,-362.76 477.04,-349.68 458.9,-338.42"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="460.87,-336.34 452.59,-334.5 457.91,-341.1 460.87,-336.34"/>
+</g>
+<!-- feat_hist&#45;&gt;train_b -->
+<g id="edge15" class="edge">
+<title>feat_hist&#45;&gt;train_b</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M379.87,-373.37C385.91,-363.81 393.21,-352.25 399.81,-341.81"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="402.1,-343.43 404,-335.17 397.36,-340.44 402.1,-343.43"/>
+</g>
+<!-- m_c -->
+<g id="n&#45;m_c" class="node">
+<title>m_c</title>
+<g id="a_n&#45;m_c"><a xlink:title="Click for the schema and the code">
+<path fill="#eef5f8" stroke="#4d93ac" stroke-width="1.8" d="M747.65,-222.41C747.65,-222.41 690.35,-222.41 690.35,-222.41 684.35,-222.41 678.35,-216.41 678.35,-210.41 678.35,-210.41 678.35,-192.69 678.35,-192.69 678.35,-186.69 684.35,-180.69 690.35,-180.69 690.35,-180.69 747.65,-180.69 747.65,-180.69 753.65,-180.69 759.65,-186.69 759.65,-192.69 759.65,-192.69 759.65,-210.41 759.65,-210.41 759.65,-216.41 753.65,-222.41 747.65,-222.41"/>
+<text xml:space="preserve" text-anchor="start" x="692.75" y="-201.7" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">model_c</text>
+<text xml:space="preserve" text-anchor="start" x="696.5" y="-191.55" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">ALSModel</text>
+</a>
+</g>
+</g>
+<!-- als_int&#45;&gt;m_c -->
+<g id="edge18" class="edge">
+<title>als_int&#45;&gt;m_c</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M723.46,-373.28C722.59,-339.66 720.83,-272.55 719.8,-233.22"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="722.6,-233.19 719.59,-225.27 717,-233.34 722.6,-233.19"/>
+</g>
+<!-- m_a -->
+<g id="n&#45;m_a" class="node">
+<title>m_a</title>
+<g id="a_n&#45;m_a"><a xlink:title="Click for the schema and the code">
+<path fill="#eef5f8" stroke="#4d93ac" stroke-width="1.8" d="M634.02,-222.41C634.02,-222.41 515.98,-222.41 515.98,-222.41 509.98,-222.41 503.98,-216.41 503.98,-210.41 503.98,-210.41 503.98,-192.69 503.98,-192.69 503.98,-186.69 509.98,-180.69 515.98,-180.69 515.98,-180.69 634.02,-180.69 634.02,-180.69 640.02,-180.69 646.02,-186.69 646.02,-192.69 646.02,-192.69 646.02,-210.41 646.02,-210.41 646.02,-216.41 640.02,-222.41 634.02,-222.41"/>
+<text xml:space="preserve" text-anchor="start" x="548.75" y="-201.7" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">model_a</text>
+<text xml:space="preserve" text-anchor="start" x="518.38" y="-191.55" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">GBTClassifier + calibrator</text>
+</a>
+</g>
+</g>
+<!-- train_a&#45;&gt;m_a -->
+<g id="edge16" class="edge">
+<title>train_a&#45;&gt;m_a</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M570.94,-290.62C571.69,-274.43 572.74,-251.56 573.59,-233.18"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="576.38,-233.47 573.95,-225.35 570.78,-233.21 576.38,-233.47"/>
+</g>
+<!-- m_b -->
+<g id="n&#45;m_b" class="node">
+<title>m_b</title>
+<g id="a_n&#45;m_b"><a xlink:title="Click for the schema and the code">
+<path fill="#eef5f8" stroke="#4d93ac" stroke-width="1.8" d="M459.77,-222.41C459.77,-222.41 376.23,-222.41 376.23,-222.41 370.23,-222.41 364.23,-216.41 364.23,-210.41 364.23,-210.41 364.23,-192.69 364.23,-192.69 364.23,-186.69 370.23,-180.69 376.23,-180.69 376.23,-180.69 459.77,-180.69 459.77,-180.69 465.77,-180.69 471.77,-186.69 471.77,-192.69 471.77,-192.69 471.77,-210.41 471.77,-210.41 471.77,-216.41 465.77,-222.41 459.77,-222.41"/>
+<text xml:space="preserve" text-anchor="start" x="391.75" y="-201.7" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">model_b</text>
+<text xml:space="preserve" text-anchor="start" x="378.62" y="-191.55" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">6 × GBTClassifier</text>
+</a>
+</g>
+</g>
+<!-- train_b&#45;&gt;m_b -->
+<g id="edge17" class="edge">
+<title>train_b&#45;&gt;m_b</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M418,-290.62C418,-274.43 418,-251.56 418,-233.18"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="420.8,-233.35 418,-225.35 415.2,-233.35 420.8,-233.35"/>
+</g>
+<!-- decision -->
+<g id="n&#45;decision" class="node">
+<title>decision</title>
+<g id="a_n&#45;decision"><a xlink:title="Click for the schema and the code">
+<path fill="#edf7f2" stroke="#1f8a5b" stroke-width="2.2" d="M785.15,-124.44C785.15,-124.44 652.85,-124.44 652.85,-124.44 646.85,-124.44 640.85,-118.44 640.85,-112.44 640.85,-112.44 640.85,-94.72 640.85,-94.72 640.85,-88.72 646.85,-82.72 652.85,-82.72 652.85,-82.72 785.15,-82.72 785.15,-82.72 791.15,-82.72 797.15,-88.72 797.15,-94.72 797.15,-94.72 797.15,-112.44 797.15,-112.44 797.15,-118.44 791.15,-124.44 785.15,-124.44"/>
+<text xml:space="preserve" text-anchor="start" x="689" y="-103.73" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">decision</text>
+<text xml:space="preserve" text-anchor="start" x="655.25" y="-93.58" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">expected value per candidate</text>
+</a>
+</g>
+</g>
+<!-- m_a&#45;&gt;decision -->
+<g id="edge19" class="edge">
+<title>m_a&#45;&gt;decision</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M605.89,-179.96C627.38,-165.64 656.22,-146.42 679.4,-130.97"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="680.8,-133.41 685.9,-126.64 677.69,-128.75 680.8,-133.41"/>
+<text xml:space="preserve" text-anchor="middle" x="674.75" y="-146.19" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">P(inside)</text>
+</g>
+<!-- m_b&#45;&gt;decision -->
+<g id="edge20" class="edge">
+<title>m_b&#45;&gt;decision</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M468.26,-179.9C474.87,-177.38 481.57,-174.91 488,-172.69 535.03,-156.44 588.25,-140.58 631.74,-128.26"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="632.46,-130.96 639.4,-126.1 630.94,-125.57 632.46,-130.96"/>
+<text xml:space="preserve" text-anchor="middle" x="595.06" y="-146.19" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">P(category)</text>
+</g>
+<!-- m_c&#45;&gt;decision -->
+<g id="edge21" class="edge">
+<title>m_c&#45;&gt;decision</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M719,-180.2C719,-167.05 719,-149.71 719,-134.96"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="721.8,-135.35 719,-127.35 716.2,-135.35 721.8,-135.35"/>
+<text xml:space="preserve" text-anchor="middle" x="740.38" y="-146.19" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">top SKUs</text>
+</g>
+<!-- offer_cat -->
+<g id="n&#45;offer_cat" class="node">
+<title>offer_cat</title>
+<g id="a_n&#45;offer_cat"><a xlink:title="Click for the schema and the code">
+<path fill="white" stroke="#c7352b" stroke-width="1.4" stroke-dasharray="5,2" d="M972.15,-227.41C972.15,-227.41 869.85,-227.41 869.85,-227.41 863.85,-227.41 857.85,-221.41 857.85,-215.41 857.85,-215.41 857.85,-187.69 857.85,-187.69 857.85,-181.69 863.85,-175.69 869.85,-175.69 869.85,-175.69 972.15,-175.69 972.15,-175.69 978.15,-175.69 984.15,-181.69 984.15,-187.69 984.15,-187.69 984.15,-215.41 984.15,-215.41 984.15,-221.41 978.15,-227.41 972.15,-227.41"/>
+<text xml:space="preserve" text-anchor="start" x="872.25" y="-206.7" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">offer_catalog</text>
+<text xml:space="preserve" text-anchor="start" x="873.75" y="-196.55" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">sku · margin · funding</text>
+<text xml:space="preserve" text-anchor="start" x="888.38" y="-186.55" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">does not exist</text>
+</a>
+</g>
+</g>
+<!-- offer_cat&#45;&gt;decision -->
+<g id="edge22" class="edge">
+<title>offer_cat&#45;&gt;decision</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M867.4,-175.08C837.85,-161.04 801.29,-143.68 771.86,-129.69"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="773.31,-127.28 764.88,-126.38 770.9,-132.34 773.31,-127.28"/>
+<text xml:space="preserve" text-anchor="middle" x="860.93" y="-146.19" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">margin · funding</text>
+</g>
+<!-- score_req -->
+<g id="n&#45;score_req" class="node">
+<title>score_req</title>
+<g id="a_n&#45;score_req"><a xlink:title="Click for the schema and the code">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M1130.15,-222.41C1130.15,-222.41 1027.85,-222.41 1027.85,-222.41 1021.85,-222.41 1015.85,-216.41 1015.85,-210.41 1015.85,-210.41 1015.85,-192.69 1015.85,-192.69 1015.85,-186.69 1021.85,-180.69 1027.85,-180.69 1027.85,-180.69 1130.15,-180.69 1130.15,-180.69 1136.15,-180.69 1142.15,-186.69 1142.15,-192.69 1142.15,-192.69 1142.15,-210.41 1142.15,-210.41 1142.15,-216.41 1136.15,-222.41 1130.15,-222.41"/>
+<text xml:space="preserve" text-anchor="start" x="1030.25" y="-201.7" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">score_request</text>
+<text xml:space="preserve" text-anchor="start" x="1038.12" y="-191.55" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">one row per live fill</text>
+</a>
+</g>
+</g>
+<!-- score_req&#45;&gt;decision -->
+<g id="edge23" class="edge">
+<title>score_req&#45;&gt;decision</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M1022.16,-180.1C1014.73,-177.55 1007.2,-175.02 1000,-172.69 957.68,-159.01 947.1,-155.41 904,-144.44 872.83,-136.51 838.44,-128.81 807.86,-122.33"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="808.55,-119.62 800.14,-120.71 807.39,-125.1 808.55,-119.62"/>
+</g>
+<!-- dec_log -->
+<g id="n&#45;dec_log" class="node">
+<title>dec_log</title>
+<g id="a_n&#45;dec_log"><a xlink:title="Click for the schema and the code">
+<path fill="#fef5e9" stroke="#f59625" stroke-width="2" d="M821.52,-41.72C821.52,-41.72 616.48,-41.72 616.48,-41.72 610.48,-41.72 604.48,-35.72 604.48,-29.72 604.48,-29.72 604.48,-12 604.48,-12 604.48,-6 610.48,0 616.48,0 616.48,0 821.52,0 821.52,0 827.52,0 833.52,-6 833.52,-12 833.52,-12 833.52,-29.72 833.52,-29.72 833.52,-35.72 827.52,-41.72 821.52,-41.72"/>
+<text xml:space="preserve" text-anchor="start" x="674" y="-21.01" font-family="Fira Code, DejaVu Sans Mono, monospace" font-weight="bold" font-size="13.00" fill="#111111">decision_log</text>
+<text xml:space="preserve" text-anchor="start" x="618.88" y="-10.86" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">what we showed · </text>
+<text xml:space="preserve" text-anchor="start" x="701.38" y="-10.86" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">and with what probability</text>
+</a>
+</g>
+</g>
+<!-- decision&#45;&gt;dec_log -->
+<g id="edge24" class="edge">
+<title>decision&#45;&gt;dec_log</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M719,-81.79C719,-72.85 719,-62.21 719,-52.4"/>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="721.8,-52.7 719,-44.7 716.2,-52.7 721.8,-52.7"/>
+</g>
+<!-- dec_log&#45;&gt;visit -->
+<g id="edge25" class="edge">
+<title>dec_log&#45;&gt;visit</title>
+<path fill="none" stroke="#f59625" stroke-width="1.4" stroke-dasharray="5,2" d="M769.8,-42.54C786.64,-52.12 803.5,-65.32 813,-82.72 848.04,-146.89 823.91,-434.05 814,-445.1 790.94,-470.81 586.18,-484.32 461.93,-490.22"/>
+<polygon fill="#f59625" stroke="#f59625" stroke-width="1.4" points="462,-487.41 454.14,-490.58 462.26,-493 462,-487.41"/>
+<text xml:space="preserve" text-anchor="middle" x="883.15" y="-261.66" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#b5721f">tomorrow&#39;s training data</text>
+</g>
+</g>
+</svg>
+
+```

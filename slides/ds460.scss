@@ -329,6 +329,25 @@ $code-color: $ds-slate;
   color: $ds-spark-orange;
 }
 
+// Links in slide body copy. Without this they inherit the body colour and
+// nobody can tell they are clickable.
+.reveal .slides section a {
+  color: $ds-teal;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(77, 147, 172, 0.5);
+  &:hover {
+    color: $ds-course-orange;
+    text-decoration-color: $ds-course-orange;
+  }
+}
+.reveal .slides section.dark a,
+.reveal .slides section .dark a {
+  color: $ds-course-orange;
+  text-decoration-color: rgba(245, 150, 37, 0.5);
+}
+
 // Footer and slide number.
 .reveal .footer {
   color: $ds-ridge-blue;
@@ -341,10 +360,18 @@ $code-color: $ds-slate;
   }
 }
 .reveal .slide-number {
-  color: $ds-ridge-blue;
+  color: $ds-summit-navy;
   background: transparent;
   font-family: "Fira Code", monospace;
+  font-weight: 700;
 }
+// reveal.js puts this class on .reveal when the current slide's background
+// is dark, which is the only hook the counter has -- it lives outside the
+// section, so it can't see the slide's own class.
+.reveal.has-dark-background .slide-number {
+  color: $ds-sky-ice;
+}
+
 .reveal .slide-logo {
   max-height: 1.6em !important;
 }

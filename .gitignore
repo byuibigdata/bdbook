@@ -5,3 +5,13 @@ features/data/lets-plot-images/
 slides/.quarto/
 slides/_site/
 slides/_old_agendas/*
+data/
+# ...but the analysis scripts and the data dictionary are source, not data.
+!data/
+data/*
+!data/*.py
+!data/data-dict.yaml
+!data/data_documentation.md
+!data/pipeline_analysis/
+data/pipeline_analysis/artifacts/
+__pycache__/

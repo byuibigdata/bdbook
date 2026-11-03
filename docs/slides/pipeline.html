@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.20">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Pump Screen Pipeline</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./DS460_Hex.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-c71942d98dfb179c90dde172f45c29e1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-05b73876ec8e91609299e25bc831f6fc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-c71942d98dfb179c90dde172f45c29e1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-42cc18e8bcad72787945a0a75b489242.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-42cc18e8bcad72787945a0a75b489242.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-42cc18e8bcad72787945a0a75b489242.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="pipeline.css">
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Pump Screen Pipeline</h1>
+<p class="subtitle lead">Click any box to see how that step looks in our data</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This is the end-to-end workflow behind <a href="day16_pump_screen_offers.html">Day 16</a> — from the raw PDI tables to a single offer on the pump screen. <strong>Scroll inside the diagram</strong> to move through the pipeline, and <strong>click any box</strong> — the detail appears underneath.</p>
+<p><strong>This page answers <em>why</em></strong> — why the label looks like that, why three models, why the decision is priced the way it is. For <strong><em>what to build</em></strong> — table schemas, grains and the PySpark that feeds each one to the model — see <a href="pipeline2.html"><strong>pipeline v2 →</strong></a>. Every column in the source data is described in the <a href="data-dict.html"><strong>data dictionary →</strong></a>.</p>
+<p>The diagram is generated, not drawn: <a href="img/pump_pipeline.py"><code>img/pump_pipeline.py</code></a> renders it with Graphviz, so it cannot drift from the design. There is also a <a href="img/pump_pipeline.png">flat PNG</a> for slides and printing.</p>
+<div class="pipeline-layout">
+<div id="pipeline-top" class="pipeline-diagram">
+<svg id="pipeline-svg" viewbox="0.00 0.00 869.00 1122.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 1117.86)">
+<title>pump_pipeline</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-1117.86 865.34,-1117.86 865.34,4 -4,4"></polygon>
+<g id="clust1" class="cluster">
+<title>cluster_raw</title>
+<path fill="white" stroke="#bdd3e5" d="M20,-1024.08C20,-1024.08 644,-1024.08 644,-1024.08 650,-1024.08 656,-1030.08 656,-1036.08 656,-1036.08 656,-1093.86 656,-1093.86 656,-1099.86 650,-1105.86 644,-1105.86 644,-1105.86 20,-1105.86 20,-1105.86 14,-1105.86 8,-1099.86 8,-1093.86 8,-1093.86 8,-1036.08 8,-1036.08 8,-1030.08 14,-1024.08 20,-1024.08"></path>
+<text space="preserve" text-anchor="middle" x="63.25" y="-1091.41" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#426a8a"> &nbsp;PDI tables &nbsp;</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_models</title>
+<path fill="white" stroke="#4d93ac" d="M441,-362.87C441,-362.87 756,-362.87 756,-362.87 762,-362.87 768,-368.87 768,-374.87 768,-374.87 768,-536.18 768,-536.18 768,-542.18 762,-548.18 756,-548.18 756,-548.18 441,-548.18 441,-548.18 435,-548.18 429,-542.18 429,-536.18 429,-536.18 429,-374.87 429,-374.87 429,-368.87 435,-362.87 441,-362.87"></path>
+<text space="preserve" text-anchor="middle" x="484.25" y="-533.73" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#4d93ac"> &nbsp;The models &nbsp;</text>
+</g>
+<!-- items -->
+<g id="n-items" class="node">
+<title>items</title>
+<g id="a_n-items"><a title="Click for how this looks in our data">
+<polygon fill="white" stroke="#bdd3e5" stroke-width="1.4" points="183.83,-1076.36 16.17,-1076.36 16.17,-1032.08 183.83,-1032.08 183.83,-1076.36"></polygon>
+<text space="preserve" text-anchor="middle" x="100" y="-1057.27" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">transaction-items-all</text>
+<text space="preserve" text-anchor="middle" x="100" y="-1043.77" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">128.6M lines</text>
+</a>
+</g>
+</g>
+<!-- clean -->
+<g id="n-clean" class="node">
+<title>clean</title>
+<g id="a_n-clean"><a title="Click for how this looks in our data">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M313.08,-984.83C313.08,-984.83 224.91,-984.83 224.91,-984.83 218.91,-984.83 212.91,-978.83 212.91,-972.83 212.91,-972.83 212.91,-946.55 212.91,-946.55 212.91,-940.55 218.91,-934.55 224.91,-934.55 224.91,-934.55 313.08,-934.55 313.08,-934.55 319.08,-934.55 325.08,-940.55 325.08,-946.55 325.08,-946.55 325.08,-972.83 325.08,-972.83 325.08,-978.83 319.08,-984.83 313.08,-984.83"></path>
+<text space="preserve" text-anchor="start" x="233.38" y="-964.84" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Clean lines</text>
+<text space="preserve" text-anchor="start" x="225.88" y="-954.69" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">qty &gt; 0, amount &gt; 0</text>
+<text space="preserve" text-anchor="start" x="229.25" y="-944.69" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">coalesce category</text>
+</a>
+</g>
+</g>
+<!-- items&#45;&gt;clean -->
+<g id="edge1" class="edge">
+<title>items-&gt;clean</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M139.62,-1031.53C162.04,-1019.25 190.39,-1003.73 214.84,-990.34"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="216.12,-992.83 221.8,-986.54 213.43,-987.92 216.12,-992.83"></polygon>
+</g>
+<!-- shopper -->
+<g id="n-shopper" class="node">
+<title>shopper</title>
+<g id="a_n-shopper"><a title="Click for how this looks in our data">
+<polygon fill="white" stroke="#bdd3e5" stroke-width="1.4" points="467.83,-1076.36 354.17,-1076.36 354.17,-1032.08 467.83,-1032.08 467.83,-1076.36"></polygon>
+<text space="preserve" text-anchor="middle" x="411" y="-1057.27" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">shopper-id</text>
+<text space="preserve" text-anchor="middle" x="411" y="-1043.77" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">8.0M shoppers</text>
+</a>
+</g>
+</g>
+<!-- visit -->
+<g id="n-visit" class="node">
+<title>visit</title>
+<g id="a_n-visit"><a title="Click for how this looks in our data">
+<path fill="#fef5e9" stroke="#f59625" stroke-width="2.2" d="M459.83,-800.02C459.83,-800.02 358.17,-800.02 358.17,-800.02 352.17,-800.02 346.17,-794.02 346.17,-788.02 346.17,-788.02 346.17,-761.74 346.17,-761.74 346.17,-755.74 352.17,-749.74 358.17,-749.74 358.17,-749.74 459.83,-749.74 459.83,-749.74 465.83,-749.74 471.83,-755.74 471.83,-761.74 471.83,-761.74 471.83,-788.02 471.83,-788.02 471.83,-794.02 465.83,-800.02 459.83,-800.02"></path>
+<text space="preserve" text-anchor="start" x="379.75" y="-780.03" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Fuel visit</text>
+<text space="preserve" text-anchor="start" x="378.25" y="-769.88" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">anchor on fuel</text>
+<text space="preserve" text-anchor="start" x="359.12" y="-759.88" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">window: −15 / +45 min</text>
+</a>
+</g>
+</g>
+<!-- shopper&#45;&gt;visit -->
+<g id="edge3" class="edge">
+<title>shopper-&gt;visit</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M410.84,-1031.46C410.5,-983.63 409.67,-869.03 409.25,-810.92"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="412.05,-811.19 409.2,-803.22 406.45,-811.24 412.05,-811.19"></polygon>
+<text space="preserve" text-anchor="middle" x="442.62" y="-907.05" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">SHOPPER_ID</text>
+</g>
+<!-- gtin -->
+<g id="n-gtin" class="node">
+<title>gtin</title>
+<g id="a_n-gtin"><a title="Click for how this looks in our data">
+<polygon fill="white" stroke="#bdd3e5" stroke-width="1.4" points="322.46,-1076.36 215.54,-1076.36 215.54,-1032.08 322.46,-1032.08 322.46,-1076.36"></polygon>
+<text space="preserve" text-anchor="middle" x="269" y="-1057.27" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">master-gtin</text>
+<text space="preserve" text-anchor="middle" x="269" y="-1043.77" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">99k products</text>
+</a>
+</g>
+</g>
+<!-- gtin&#45;&gt;clean -->
+<g id="edge2" class="edge">
+<title>gtin-&gt;clean</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M269,-1031.76C269,-1020.91 269,-1007.49 269,-995.24"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="271.8,-995.42 269,-987.42 266.2,-995.42 271.8,-995.42"></polygon>
+<text space="preserve" text-anchor="middle" x="281" y="-1004.58" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">GTIN</text>
+</g>
+<!-- stores -->
+<g id="n-stores" class="node">
+<title>stores</title>
+<g id="a_n-stores"><a title="Click for how this looks in our data">
+<polygon fill="white" stroke="#bdd3e5" stroke-width="1.4" points="647.71,-1076.36 500.29,-1076.36 500.29,-1032.08 647.71,-1032.08 647.71,-1076.36"></polygon>
+<text space="preserve" text-anchor="middle" x="574" y="-1057.27" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">stores-information</text>
+<text space="preserve" text-anchor="middle" x="574" y="-1043.77" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">940 transacting</text>
+</a>
+</g>
+</g>
+<!-- ctx -->
+<g id="n-ctx" class="node">
+<title>ctx</title>
+<g id="a_n-ctx"><a title="Click for how this looks in our data">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M634.21,-625.46C634.21,-625.46 513.79,-625.46 513.79,-625.46 507.79,-625.46 501.79,-619.46 501.79,-613.46 501.79,-613.46 501.79,-587.18 501.79,-587.18 501.79,-581.18 507.79,-575.18 513.79,-575.18 513.79,-575.18 634.21,-575.18 634.21,-575.18 640.21,-575.18 646.21,-581.18 646.21,-587.18 646.21,-587.18 646.21,-613.46 646.21,-613.46 646.21,-619.46 640.21,-625.46 634.21,-625.46"></path>
+<text space="preserve" text-anchor="start" x="520.75" y="-605.47" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Context features</text>
+<text space="preserve" text-anchor="start" x="515.12" y="-595.32" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">hour (store local), weekday</text>
+<text space="preserve" text-anchor="start" x="514.75" y="-585.32" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">store, pump, grade, gallons</text>
+</a>
+</g>
+</g>
+<!-- stores&#45;&gt;ctx -->
+<g id="edge4" class="edge">
+<title>stores-&gt;ctx</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M574,-1031.53C574,-1012.78 574,-984.95 574,-960.69 574,-960.69 574,-960.69 574,-686.6 574,-669.84 574,-651.23 574,-635.68"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="576.8,-636.07 574,-628.07 571.2,-636.07 576.8,-636.07"></polygon>
+</g>
+<!-- drop -->
+<g id="n-drop" class="node">
+<title>drop</title>
+<g id="a_n-drop"><a title="Click for how this looks in our data">
+<path fill="#fbefee" stroke="#c7352b" stroke-width="1.4" d="M345.96,-887.3C345.96,-887.3 212.04,-887.3 212.04,-887.3 206.04,-887.3 200.04,-881.3 200.04,-875.3 200.04,-875.3 200.04,-849.02 200.04,-849.02 200.04,-843.02 206.04,-837.02 212.04,-837.02 212.04,-837.02 345.96,-837.02 345.96,-837.02 351.96,-837.02 357.96,-843.02 357.96,-849.02 357.96,-849.02 357.96,-875.3 357.96,-875.3 357.96,-881.3 351.96,-887.3 345.96,-887.3"></path>
+<text space="preserve" text-anchor="start" x="213" y="-867.31" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Drop non-purchases</text>
+<text space="preserve" text-anchor="start" x="237" y="-857.16" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">FUEL is the anchor</text>
+<text space="preserve" text-anchor="start" x="226.88" y="-847.16" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">SERVICES = card fees</text>
+</a>
+</g>
+</g>
+<!-- clean&#45;&gt;drop -->
+<g id="edge5" class="edge">
+<title>clean-&gt;drop</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M271.58,-934.09C272.74,-922.95 274.14,-909.58 275.41,-897.48"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="278.16,-898.03 276.21,-889.79 272.6,-897.45 278.16,-898.03"></polygon>
+</g>
+<!-- drop&#45;&gt;visit -->
+<g id="edge6" class="edge">
+<title>drop-&gt;visit</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M316.6,-836.49C330.9,-827.11 347.37,-816.31 362.4,-806.45"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="363.66,-808.97 368.81,-802.25 360.58,-804.29 363.66,-808.97"></polygon>
+</g>
+<!-- label -->
+<g id="n-label" class="node">
+<title>label</title>
+<g id="a_n-label"><a title="Click for how this looks in our data">
+<path fill="#fef5e9" stroke="#f59625" stroke-width="2.2" d="M449.71,-712.74C449.71,-712.74 368.29,-712.74 368.29,-712.74 362.29,-712.74 356.29,-706.74 356.29,-700.74 356.29,-700.74 356.29,-674.46 356.29,-674.46 356.29,-668.46 362.29,-662.46 368.29,-662.46 368.29,-662.46 449.71,-662.46 449.71,-662.46 455.71,-662.46 461.71,-668.46 461.71,-674.46 461.71,-674.46 461.71,-700.74 461.71,-700.74 461.71,-706.74 455.71,-712.74 449.71,-712.74"></path>
+<text space="preserve" text-anchor="start" x="379.75" y="-692.75" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">The label</text>
+<text space="preserve" text-anchor="start" x="382.38" y="-682.6" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">36.1M visits</text>
+<text space="preserve" text-anchor="start" x="369.25" y="-672.6" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">12.8% buy inside</text>
+</a>
+</g>
+</g>
+<!-- visit&#45;&gt;label -->
+<g id="edge7" class="edge">
+<title>visit-&gt;label</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M409,-748.75C409,-740.86 409,-732 409,-723.55"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="411.8,-723.66 409,-715.66 406.2,-723.66 411.8,-723.66"></polygon>
+</g>
+<!-- label&#45;&gt;ctx -->
+<g id="edge8" class="edge">
+<title>label-&gt;ctx</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M457.61,-661.47C479.19,-650.32 504.51,-637.23 526.02,-626.12"></path>
+</g>
+<!-- hist -->
+<g id="n-hist" class="node">
+<title>hist</title>
+<g id="a_n-hist"><a title="Click for how this looks in our data">
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M457.33,-625.46C457.33,-625.46 352.67,-625.46 352.67,-625.46 346.67,-625.46 340.67,-619.46 340.67,-613.46 340.67,-613.46 340.67,-587.18 340.67,-587.18 340.67,-581.18 346.67,-575.18 352.67,-575.18 352.67,-575.18 457.33,-575.18 457.33,-575.18 463.33,-575.18 469.33,-581.18 469.33,-587.18 469.33,-587.18 469.33,-613.46 469.33,-613.46 469.33,-619.46 463.33,-625.46 457.33,-625.46"></path>
+<text space="preserve" text-anchor="start" x="353.62" y="-605.47" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">History features</text>
+<text space="preserve" text-anchor="start" x="361.12" y="-595.32" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">per category, strictly</text>
+<text space="preserve" text-anchor="start" x="371.62" y="-585.32" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">before this visit</text>
+</a>
+</g>
+</g>
+<!-- label&#45;&gt;hist -->
+<g id="edge9" class="edge">
+<title>label-&gt;hist</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M407.82,-661.47C407.3,-650.27 406.68,-637.12 406.16,-625.97"></path>
+</g>
+<!-- A -->
+<g id="n-A" class="node">
+<title>A</title>
+<g id="a_n-A"><a title="Click for how this looks in our data">
+<path fill="#eef5f8" stroke="#4d93ac" stroke-width="1.8" d="M748.46,-518.68C748.46,-518.68 635.54,-518.68 635.54,-518.68 629.54,-518.68 623.54,-512.68 623.54,-506.68 623.54,-506.68 623.54,-480.4 623.54,-480.4 623.54,-474.4 629.54,-468.4 635.54,-468.4 635.54,-468.4 748.46,-468.4 748.46,-468.4 754.46,-468.4 760.46,-474.4 760.46,-480.4 760.46,-480.4 760.46,-506.68 760.46,-506.68 760.46,-512.68 754.46,-518.68 748.46,-518.68"></path>
+<text space="preserve" text-anchor="start" x="638.38" y="-498.69" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">A · Come inside?</text>
+<text space="preserve" text-anchor="start" x="645.5" y="-488.54" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">GBTClassifier, binary</text>
+<text space="preserve" text-anchor="start" x="636.5" y="-478.54" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">context only — calibrated</text>
+</a>
+</g>
+</g>
+<!-- ctx&#45;&gt;A -->
+<g id="edge10" class="edge">
+<title>ctx-&gt;A</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M601.96,-574.49C618.3,-559.98 639.08,-541.53 656.56,-526.01"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="658.12,-528.37 662.24,-520.96 654.4,-524.18 658.12,-528.37"></polygon>
+</g>
+<!-- B -->
+<g id="n-B" class="node">
+<title>B</title>
+<g id="a_n-B"><a title="Click for how this looks in our data">
+<path fill="#eef5f8" stroke="#4d93ac" stroke-width="1.8" d="M579.46,-518.68C579.46,-518.68 448.54,-518.68 448.54,-518.68 442.54,-518.68 436.54,-512.68 436.54,-506.68 436.54,-506.68 436.54,-480.4 436.54,-480.4 436.54,-474.4 442.54,-468.4 448.54,-468.4 448.54,-468.4 579.46,-468.4 579.46,-468.4 585.46,-468.4 591.46,-474.4 591.46,-480.4 591.46,-480.4 591.46,-506.68 591.46,-506.68 591.46,-512.68 585.46,-518.68 579.46,-518.68"></path>
+<text space="preserve" text-anchor="start" x="449.5" y="-498.69" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">B · Which category?</text>
+<text space="preserve" text-anchor="start" x="480.62" y="-488.54" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">6 × binary GBT</text>
+<text space="preserve" text-anchor="start" x="463" y="-478.54" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">multi-label, not softmax</text>
+</a>
+</g>
+</g>
+<!-- ctx&#45;&gt;B -->
+<g id="edge11" class="edge">
+<title>ctx-&gt;B</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M559.78,-574.49C551.84,-560.63 541.85,-543.17 533.22,-528.1"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="535.78,-526.95 529.38,-521.4 530.92,-529.73 535.78,-526.95"></polygon>
+</g>
+<!-- hist&#45;&gt;B -->
+<g id="edge12" class="edge">
+<title>hist-&gt;B</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M430.83,-574.49C445.79,-560.11 464.78,-541.86 480.83,-526.42"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="482.62,-528.59 486.45,-521.02 478.74,-524.55 482.62,-528.59"></polygon>
+</g>
+<!-- C -->
+<g id="n-C" class="node">
+<title>C</title>
+<g id="a_n-C"><a title="Click for how this looks in our data">
+<path fill="#eef5f8" stroke="#4d93ac" stroke-width="1.8" d="M565.59,-421.15C565.59,-421.15 462.42,-421.15 462.42,-421.15 456.42,-421.15 450.42,-415.15 450.42,-409.15 450.42,-409.15 450.42,-382.87 450.42,-382.87 450.42,-376.87 456.42,-370.87 462.42,-370.87 462.42,-370.87 565.59,-370.87 565.59,-370.87 571.59,-370.87 577.59,-376.87 577.59,-382.87 577.59,-382.87 577.59,-409.15 577.59,-409.15 577.59,-415.15 571.59,-421.15 565.59,-421.15"></path>
+<text space="preserve" text-anchor="start" x="463.38" y="-401.16" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">C · Which SKU?</text>
+<text space="preserve" text-anchor="start" x="464.88" y="-391.01" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">ALS, implicit feedback</text>
+<text space="preserve" text-anchor="start" x="466" y="-381.01" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">item = SKU × daypart</text>
+</a>
+</g>
+</g>
+<!-- hist&#45;&gt;C -->
+<g id="edge13" class="edge">
+<title>hist-&gt;C</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M402.58,-574.89C401.01,-547.2 402.04,-501.61 421,-468.4 430.2,-452.29 444.63,-438.61 459.41,-427.66"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="460.97,-429.99 465.89,-423.08 457.74,-425.41 460.97,-429.99"></polygon>
+</g>
+<!-- ev -->
+<g id="n-ev" class="node">
+<title>ev</title>
+<g id="a_n-ev"><a title="Click for how this looks in our data">
+<path fill="#edf7f2" stroke="#1f8a5b" stroke-width="2.2" d="M700.84,-236.34C700.84,-236.34 545.16,-236.34 545.16,-236.34 539.16,-236.34 533.16,-230.34 533.16,-224.34 533.16,-224.34 533.16,-198.06 533.16,-198.06 533.16,-192.06 539.16,-186.06 545.16,-186.06 545.16,-186.06 700.84,-186.06 700.84,-186.06 706.84,-186.06 712.84,-192.06 712.84,-198.06 712.84,-198.06 712.84,-224.34 712.84,-224.34 712.84,-230.34 706.84,-236.34 700.84,-236.34"></path>
+<text space="preserve" text-anchor="start" x="573.88" y="-216.35" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Expected value</text>
+<text space="preserve" text-anchor="start" x="605.75" y="-206.2" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">show iff</text>
+<text space="preserve" text-anchor="start" x="546.12" y="-196.2" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">p₁(margin − discount) &gt; p₀ × margin</text>
+</a>
+</g>
+</g>
+<!-- A&#45;&gt;ev -->
+<g id="edge14" class="edge">
+<title>A-&gt;ev</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M685.88,-467.66C673.56,-417.6 645.74,-304.59 631.6,-247.15"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="634.35,-246.58 629.72,-239.48 628.91,-247.92 634.35,-246.58"></polygon>
+<text space="preserve" text-anchor="middle" x="676.62" y="-343.37" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">P(inside)</text>
+</g>
+<!-- B&#45;&gt;C -->
+<g id="edge15" class="edge">
+<title>B-&gt;C</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M514,-467.94C514,-456.99 514,-443.91 514,-431.97"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="516.8,-431.98 514,-423.98 511.2,-431.98 516.8,-431.98"></polygon>
+<text space="preserve" text-anchor="middle" x="541" y="-440.9" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">top category</text>
+</g>
+<!-- rank -->
+<g id="n-rank" class="node">
+<title>rank</title>
+<g id="a_n-rank"><a title="Click for how this looks in our data">
+<path fill="#fef5e9" stroke="#f59625" stroke-width="2" d="M588.96,-323.62C588.96,-323.62 497.04,-323.62 497.04,-323.62 491.04,-323.62 485.04,-317.62 485.04,-311.62 485.04,-311.62 485.04,-285.34 485.04,-285.34 485.04,-279.34 491.04,-273.34 497.04,-273.34 497.04,-273.34 588.96,-273.34 588.96,-273.34 594.96,-273.34 600.96,-279.34 600.96,-285.34 600.96,-285.34 600.96,-311.62 600.96,-311.62 600.96,-317.62 594.96,-323.62 588.96,-323.62"></path>
+<text space="preserve" text-anchor="start" x="517.88" y="-303.63" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Re-rank</text>
+<text space="preserve" text-anchor="start" x="511.88" y="-293.48" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">margin · stock</text>
+<text space="preserve" text-anchor="start" x="498" y="-283.48" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">who funds the offer</text>
+</a>
+</g>
+</g>
+<!-- C&#45;&gt;rank -->
+<g id="edge16" class="edge">
+<title>C-&gt;rank</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M521.47,-370.41C524.86,-359.24 528.92,-345.85 532.61,-333.72"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="535.2,-334.83 534.84,-326.36 529.84,-333.2 535.2,-334.83"></polygon>
+<text space="preserve" text-anchor="middle" x="557.49" y="-343.37" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">top 20 SKUs</text>
+</g>
+<!-- rank&#45;&gt;ev -->
+<g id="edge17" class="edge">
+<title>rank-&gt;ev</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M566.57,-272.35C574.79,-263.59 584.13,-253.64 592.81,-244.38"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="594.72,-246.44 598.15,-238.69 590.63,-242.61 594.72,-246.44"></polygon>
+</g>
+<!-- screen -->
+<g id="n-screen" class="node">
+<title>screen</title>
+<g id="a_n-screen"><a title="Click for how this looks in our data">
+<path fill="#022f4a" stroke="#022f4a" stroke-width="2" d="M679.46,-149.06C679.46,-149.06 566.54,-149.06 566.54,-149.06 560.54,-149.06 554.54,-143.06 554.54,-137.06 554.54,-137.06 554.54,-120.78 554.54,-120.78 554.54,-114.78 560.54,-108.78 566.54,-108.78 566.54,-108.78 679.46,-108.78 679.46,-108.78 685.46,-108.78 691.46,-114.78 691.46,-120.78 691.46,-120.78 691.46,-137.06 691.46,-137.06 691.46,-143.06 685.46,-149.06 679.46,-149.06"></path>
+<text space="preserve" text-anchor="start" x="567.5" y="-129.07" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="white">The pump screen</text>
+<text space="preserve" text-anchor="start" x="572.38" y="-118.92" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">one offer — or </text>
+<text space="preserve" text-anchor="start" x="637.62" y="-118.92" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">nothing</text>
+</a>
+</g>
+</g>
+<!-- ev&#45;&gt;screen -->
+<g id="edge18" class="edge">
+<title>ev-&gt;screen</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M623,-185.24C623,-177.28 623,-168.38 623,-160.09"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="625.8,-160.15 623,-152.15 620.2,-160.15 625.8,-160.15"></polygon>
+</g>
+<!-- holdout -->
+<g id="n-holdout" class="node">
+<title>holdout</title>
+<g id="a_n-holdout"><a title="Click for how this looks in our data">
+<path fill="white" stroke="#c7352b" stroke-width="1.4" stroke-dasharray="5,2" d="M664.84,-50.28C664.84,-50.28 581.16,-50.28 581.16,-50.28 575.16,-50.28 569.16,-44.28 569.16,-38.28 569.16,-38.28 569.16,-12 569.16,-12 569.16,-6 575.16,0 581.16,0 581.16,0 664.84,0 664.84,0 670.84,0 676.84,-6 676.84,-12 676.84,-12 676.84,-38.28 676.84,-38.28 676.84,-44.28 670.84,-50.28 664.84,-50.28"></path>
+<text space="preserve" text-anchor="start" x="597.5" y="-30.29" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Holdout</text>
+<text space="preserve" text-anchor="start" x="590.75" y="-20.14" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">no offer shown</text>
+<text space="preserve" text-anchor="start" x="582.12" y="-10.14" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">does not exist yet</text>
+</a>
+</g>
+</g>
+<!-- screen&#45;&gt;holdout -->
+<g id="edge19" class="edge">
+<title>screen-&gt;holdout</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M623,-107.81C623,-94.41 623,-76.45 623,-60.78"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="625.8,-61 623,-53 620.2,-61 625.8,-61"></polygon>
+<text space="preserve" text-anchor="middle" x="644" y="-81.28" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">hold back</text>
+<text space="preserve" text-anchor="middle" x="644" y="-70.03" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">a slice</text>
+</g>
+<!-- holdout&#45;&gt;ev -->
+<g id="edge20" class="edge">
+<title>holdout-&gt;ev</title>
+<path fill="none" stroke="#c7352b" stroke-width="1.4" stroke-dasharray="5,2" d="M660.49,-50.73C678.66,-65.13 698.39,-85.14 707,-108.78 713.12,-125.6 715.12,-133.11 707,-149.06 701.07,-160.72 691.76,-170.68 681.45,-178.96"></path>
+<polygon fill="#c7352b" stroke="#c7352b" stroke-width="1.4" points="679.85,-176.67 675.12,-183.7 683.2,-181.15 679.85,-176.67"></polygon>
+<text space="preserve" text-anchor="middle" x="745.74" y="-125.05" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#c7352b">measures uplift</text>
+</g>
+<!-- did -->
+<g id="n-did" class="node">
+<title>did</title>
+<g id="a_n-did"><a title="Click for how this looks in our data">
+<path fill="white" stroke="#c7352b" stroke-width="1.4" stroke-dasharray="5,2" d="M849.34,-50.28C849.34,-50.28 720.66,-50.28 720.66,-50.28 714.66,-50.28 708.66,-44.28 708.66,-38.28 708.66,-38.28 708.66,-12 708.66,-12 708.66,-6 714.66,0 720.66,0 720.66,0 849.34,0 849.34,0 855.34,0 861.34,-6 861.34,-12 861.34,-12 861.34,-38.28 861.34,-38.28 861.34,-44.28 855.34,-50.28 849.34,-50.28"></path>
+<text space="preserve" text-anchor="start" x="721.62" y="-30.29" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Staggered adoption</text>
+<text space="preserve" text-anchor="start" x="735.88" y="-20.14" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">stores start promos on</text>
+<text space="preserve" text-anchor="start" x="731.75" y="-10.14" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">different dates — biased</text>
+</a>
+</g>
+</g>
+<!-- did&#45;&gt;ev -->
+<g id="edge21" class="edge">
+<title>did-&gt;ev</title>
+<path fill="none" stroke="#c7352b" stroke-width="1.4" stroke-dasharray="5,2" d="M793.19,-50.73C800.45,-77.43 807.09,-120.13 787,-149.06 771.94,-170.75 748.21,-184.76 723.42,-193.8"></path>
+<polygon fill="#c7352b" stroke="#c7352b" stroke-width="1.4" points="722.58,-191.13 715.9,-196.35 724.37,-196.44 722.58,-191.13"></polygon>
+<text space="preserve" text-anchor="middle" x="826.54" y="-125.05" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#c7352b">second best</text>
+</g>
+</g>
+</svg>
+
+</div>
+<div class="pipeline-detail">
+<div class="detail-nav">
+<p><span>Detail</span> <a href="#pipeline-top">↑ back to the diagram</a></p>
+</div>
+<div id="d-start" class="node-detail">
+<section id="pick-a-box" class="level3">
+<h3 class="anchored" data-anchor-id="pick-a-box">Pick a box</h3>
+<p>Every step below is something a team has to actually build. The boxes in <strong>orange</strong> are the ones we constructed rather than read — the unit of analysis and its label. Those are where the real decisions live.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Colour</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Orange</td>
+<td>We constructed it</td>
+</tr>
+<tr class="even">
+<td>Red</td>
+<td>A trap, or something we don’t have</td>
+</tr>
+<tr class="odd">
+<td>Teal</td>
+<td>A trained model</td>
+</tr>
+<tr class="even">
+<td>Green</td>
+<td>The decision, in dollars</td>
+</tr>
+</tbody>
+</table>
+<p>The scripts behind every figure live in <code>data/</code> in the course repo: <code>explore.py</code>, <code>pump_visit_labels.py</code>, <code>daypart_signal.py</code>, <code>uplift_feasibility.py</code>, <code>promo_event_study.py</code> and <code>data-dict.yaml</code>.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Example conclusions.</strong> Every figure comes from one run over the PDI extract — 940 stores in eight Intermountain West states, October 2024 to September 2026. Worked examples for class, not a finished analysis.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div id="d-items" class="node-detail">
+<section id="transaction-items-all" class="level3">
+<h3 class="anchored" data-anchor-id="transaction-items-all">transaction-items-all</h3>
+<p><strong>128,599,042 rows</strong>, one per item rung up, across 71.7M transactions and 940 stores.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pl.scan_parquet(<span class="st">"transaction-items-all/*.parquet"</span>).select(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"TRANSACTION_SET_ID"</span>,  <span class="co"># the basket key</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"STORE_ID"</span>, <span class="st">"DATE_TIME"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GTIN"</span>,                <span class="co"># barcode, or a placeholder when keyed</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"UNIT_QUANTITY"</span>, <span class="st">"GRAND_TOTAL_AMOUNT"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SCAN_TYPE"</span>,           <span class="co"># GTIN | NONSCAN | PLU | FMT_ERR</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NONSCAN_CATEGORY"</span>,    <span class="co"># NACS dept for keyed lines — FUEL lives here</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NONSCAN_SUBCATEGORY"</span>, <span class="co"># fuel grade lives here</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>58.9% of lines are scanned barcodes; the rest are keyed departments. <strong>Fuel is 28% of lines and $1.55B of $2.08B revenue.</strong></p>
+</section>
+</div>
+<div id="d-shopper" class="node-detail">
+<section id="shopper-id" class="level3">
+<h3 class="anchored" data-anchor-id="shopper-id">shopper-id</h3>
+<p><strong>71,790,254 rows</strong>, one per payment. Every transaction in this extract has a shopper — the unidentified ones were dropped before delivery.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>shopper <span class="op">=</span> (pl.scan_parquet(<span class="st">"shopper-id/*.parquet"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    .select(<span class="st">"TRANSACTION_SET_ID"</span>, <span class="st">"SHOPPER_ID"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    .unique(subset<span class="op">=</span><span class="st">"TRANSACTION_SET_ID"</span>))  <span class="co"># split tender → duplicate rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>SHOPPER_ID</code> is <code>hash(card BIN + last 4 + store state)</code>. Two consequences worth stating to a client:</p>
+<ul>
+<li>The same card in <strong>two states is two shoppers</strong>, so cross-border travel is invisible.</li>
+<li>BIN + last 4 is not unique to a card, so a few ids are more than one person.</li>
+</ul>
+<p>8.0M shoppers, median <strong>2 transactions</strong> each.</p>
+</section>
+</div>
+<div id="d-gtin" class="node-detail">
+<section id="master-gtin" class="level3">
+<h3 class="anchored" data-anchor-id="master-gtin">master-gtin</h3>
+<p><strong>99,074 products</strong>, one row per barcode, 35 PDI categories.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gtin <span class="op">=</span> (pl.scan_parquet(<span class="st">"master-gtin/*.parquet"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    .select(<span class="st">"GTIN"</span>, <span class="st">"CATEGORY"</span>, <span class="st">"SUBCATEGORY"</span>, <span class="st">"BRAND"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    .unique(subset<span class="op">=</span><span class="st">"GTIN"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Matches <strong>88% of scanned lines</strong>. Two cautions:</p>
+<ul>
+<li><code>CATEGORY</code> is PDI’s taxonomy; <code>NONSCAN_CATEGORY</code> is NACS. Coalescing them mixes vocabularies.</li>
+<li>Every row was last updated <strong>2024-07-03</strong>, before our transaction window opens. Products launched since will never match.</li>
+</ul>
+</section>
+</div>
+<div id="d-stores" class="node-detail">
+<section id="stores-information" class="level3">
+<h3 class="anchored" data-anchor-id="stores-information">stores-information</h3>
+<p>36,912 stores in the master, but only <strong>940 appear in our transactions</strong> — all of them resolvable, in eight Intermountain West states.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>State</th>
+<th>Stores</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CO</td>
+<td>221</td>
+</tr>
+<tr class="even">
+<td>UT</td>
+<td>164</td>
+</tr>
+<tr class="odd">
+<td>AZ</td>
+<td>158</td>
+</tr>
+<tr class="even">
+<td>ID</td>
+<td>111</td>
+</tr>
+<tr class="odd">
+<td>NV, NM, MT, WY</td>
+<td>286</td>
+</tr>
+</tbody>
+</table>
+<p>The column that matters most is <code>START_WEEK_CONTINUOUS_DATA</code> — the first week a store reports without gaps. <strong>Filter on it before any time series</strong>, or stores joining the panel will look like growth.</p>
+</section>
+</div>
+<div id="d-clean" class="node-detail">
+<section id="clean-lines" class="level3">
+<h3 class="anchored" data-anchor-id="clean-lines">Clean lines</h3>
+<p>Two filters and a coalesce. This is the whole of it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lines <span class="op">=</span> (items</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>((pl.col(<span class="st">"UNIT_QUANTITY"</span>).cast(pl.Float64) <span class="op">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>            <span class="op">&amp;</span> (pl.col(<span class="st">"GRAND_TOTAL_AMOUNT"</span>).cast(pl.Float64) <span class="op">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    .join(gtin, on<span class="op">=</span><span class="st">"GTIN"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    .with_columns(category<span class="op">=</span>pl.coalesce(<span class="st">"CATEGORY"</span>, <span class="st">"NONSCAN_CATEGORY"</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    .drop_nulls(<span class="st">"category"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The filters remove <strong>481,568 voids</strong> and <strong>701,406 returns</strong>. The coalesce labels <strong>85.6% of lines</strong>; the rest are scanned items missing from the master.</p>
+<p>Every money column is <code>Decimal(38, x)</code>. Cast to <code>Float64</code> on read or the arithmetic is slow and occasionally surprising.</p>
+</section>
+</div>
+<div id="d-drop" class="node-detail">
+<section id="drop-non-purchases" class="level3">
+<h3 class="anchored" data-anchor-id="drop-non-purchases">Drop non-purchases</h3>
+<p>The rule is <strong>not</strong> “drop SERVICES”. It is <strong>drop anything the customer didn’t choose.</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>NOT_A_PURCHASE <span class="op">=</span> [<span class="st">"FUEL"</span>, <span class="st">"SERVICES"</span>]   <span class="co"># fuel is the anchor, not the outcome</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>SERVICES</code> is <strong>99.5% card-processing fees</strong> of about $0.35, charged on the fuel sale itself:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>NONSCAN_DETAIL</th>
+<th>Lines</th>
+<th>Avg</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CREDIT CARD FEE</td>
+<td>3,940,565</td>
+<td>$0.35</td>
+</tr>
+<tr class="even">
+<td>LABOR</td>
+<td>5,030</td>
+<td>$68.69</td>
+</tr>
+<tr class="odd">
+<td>POST OFFICE</td>
+<td>666</td>
+<td>$21.05</td>
+</tr>
+</tbody>
+</table>
+<p>Counting the fee as an in-store purchase leaks the fuel transaction into its own label. <strong>It inflated the attach rate by about seven points.</strong> A model trained on it learns <em>“customers who pay by card buy SERVICES”</em> — perfectly accurate, perfectly useless.</p>
+</section>
+</div>
+<div id="d-visit" class="node-detail">
+<section id="fuel-visit" class="level3 orange-head">
+<h3 class="orange-head anchored" data-anchor-id="fuel-visit">Fuel visit</h3>
+<p>The unit of analysis, and the decision a team has to defend. A visit is every purchase by the same shopper from <strong>15 minutes before</strong> the fuel transaction to <strong>45 minutes after</strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>BEFORE, AFTER <span class="op">=</span> <span class="dv">15</span>, <span class="dv">45</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Hour buckets keep the join small; the window spans at most three of them,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># so each candidate is offered to its bucket and both neighbours.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>shifted <span class="op">=</span> pl.concat([</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    store.with_columns(bucket<span class="op">=</span>pl.col(<span class="st">"bucket"</span>) <span class="op">+</span> pl.duration(hours<span class="op">=</span>k))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> (<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)])</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>delta <span class="op">=</span> (pl.col(<span class="st">"ts_store"</span>) <span class="op">-</span> pl.col(<span class="st">"ts"</span>)).dt.total_minutes()</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>hit <span class="op">=</span> fuel.join(shifted, on<span class="op">=</span>[<span class="st">"SHOPPER_ID"</span>, <span class="st">"bucket"</span>], how<span class="op">=</span><span class="st">"left"</span>).<span class="bu">filter</span>(</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    (delta <span class="op">&gt;=</span> <span class="op">-</span>BEFORE) <span class="op">&amp;</span> (delta <span class="op">&lt;=</span> AFTER))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Asymmetric because most people fuel first. The timing says it’s generous, not tight:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Relative to the pump</th>
+<th>Share</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>−15 to 0 <em>(shopped first)</em></td>
+<td>16.2%</td>
+</tr>
+<tr class="even">
+<td><strong>0 to 5 min</strong></td>
+<td><strong>77.2%</strong></td>
+</tr>
+<tr class="odd">
+<td>5 to 15 min</td>
+<td>5.3%</td>
+</tr>
+<tr class="even">
+<td>15 to 45 min</td>
+<td>1.3%</td>
+</tr>
+</tbody>
+</table>
+<p>Only 48,113 of 4.6M converting visits involve a second store, so dropping the same-store constraint costs nothing.</p>
+</section>
+</div>
+<div id="d-label" class="node-detail">
+<section id="the-label" class="level3 orange-head">
+<h3 class="orange-head anchored" data-anchor-id="the-label">The label</h3>
+<p><strong>36,142,617 fuel visits. 12.8% buy something inside.</strong> Median in-store spend when they do: <strong>$7.87</strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>basket <span class="op">=</span> fuel.join(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    hit.group_by(<span class="st">"fuel_tx"</span>).agg(n_store_tx<span class="op">=</span>pl.col(<span class="st">"store_tx"</span>).n_unique()),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span><span class="st">"fuel_tx"</span>, how<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>).with_columns(bought<span class="op">=</span>pl.col(<span class="st">"n_store_tx"</span>).fill_null(<span class="dv">0</span>) <span class="op">&gt;</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This column does not exist in the data. <strong>We built it</strong>, and every number downstream inherits whatever we got wrong here. That is why the window and the <code>SERVICES</code> filter are worth a slide each.</p>
+<p>About 1 in 8 — the base rate every model has to beat.</p>
+</section>
+</div>
+<div id="d-ctx" class="node-detail">
+<section id="context-features" class="level3">
+<h3 class="anchored" data-anchor-id="context-features">Context features</h3>
+<p>Everything knowable <strong>before the nozzle goes back</strong>. The card is read before the fuel flows, so identity is available too.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ctx <span class="op">=</span> basket.with_columns(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    hour<span class="op">=</span>pl.col(<span class="st">"ts"</span>).dt.hour(),        <span class="co"># store wall-clock, per PDI</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    weekday<span class="op">=</span>pl.col(<span class="st">"ts"</span>).dt.weekday(),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    month<span class="op">=</span>pl.col(<span class="st">"ts"</span>).dt.month(),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># grade comes from NONSCAN_SUBCATEGORY: REGULAR, DIESEL, MID/PLUS, ...</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>DATE_TIME</code> is documented as <strong>the wall clock time for the store</strong>, so dayparts need no timezone conversion — worth confirming, because the panel spans four time zones.</p>
+<p>Signal strength, measured:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Spread in attach</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hour</td>
+<td>7.5% (2am) → <strong>15.1%</strong> (6am)</td>
+</tr>
+<tr class="even">
+<td>Fuel grade</td>
+<td>12.2% → 13.3% — <em>almost nothing</em></td>
+</tr>
+</tbody>
+</table>
+<p>A variable being available doesn’t make it useful.</p>
+</section>
+</div>
+<div id="d-hist" class="node-detail">
+<section id="history-features" class="level3">
+<h3 class="anchored" data-anchor-id="history-features">History features</h3>
+<p>Per category, computed <strong>strictly from visits before the one being scored</strong>. This is the leakage rule with a clock on it.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> Window</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> (Window.partitionBy(<span class="st">"SHOPPER_ID"</span>, <span class="st">"category"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>          .orderBy(<span class="st">"ts"</span>).rowsBetween(Window.unboundedPreceding, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> (df</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  .withColumn(<span class="st">"bought_before"</span>, F.<span class="bu">max</span>(<span class="st">"bought"</span>).over(w))</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  .withColumn(<span class="st">"prior_share"</span>,   F.avg(<span class="st">"bought"</span>).over(w))</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  .withColumn(<span class="st">"days_since"</span>,    F.datediff(<span class="st">"ts"</span>, F.<span class="bu">max</span>(<span class="st">"ts"</span>).over(w))))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>rowsBetween(..., -1)</code> is the whole trick — it excludes the current row.</p>
+<p><strong>History barely predicts whether they come inside</strong> (12.6% with none, 12.5% with 10+), but it is the best signal for <em>what</em> they buy. That asymmetry is why there are three models instead of one.</p>
+</section>
+</div>
+<div id="d-A" class="node-detail">
+<section id="model-a-will-they-come-inside" class="level3">
+<h3 class="anchored" data-anchor-id="model-a-will-they-come-inside">Model A · Will they come inside?</h3>
+<p>Binary classifier over all <strong>36.1M</strong> visits. Context only.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.classification <span class="im">import</span> GBTClassifier</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>gbt <span class="op">=</span> GBTClassifier(featuresCol<span class="op">=</span><span class="st">"features"</span>, labelCol<span class="op">=</span><span class="st">"bought"</span>, maxIter<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> gbt.fit(train)   <span class="co"># no rebalancing — see below</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Do not rebalance the 12.8% positive class.</strong> The output feeds an arithmetic in dollars, so a model trained 50/50 scores an average visit at 0.5 instead of 0.128 and inflates every expected value about 4×. If you must, use <code>weightCol</code> rather than resampling, and correct the odds back by the sampling fraction.</p>
+<p>Check calibration with a reliability curve; fix with isotonic regression on a held-out slice. <strong>Accuracy and F1 are irrelevant here — calibration is the whole job.</strong></p>
+<p>Because history adds so little, this model works identically for the 22.2% of visits by a shopper we have never seen.</p>
+</section>
+</div>
+<div id="d-B" class="node-detail">
+<section id="model-b-which-category" class="level3">
+<h3 class="anchored" data-anchor-id="model-b-which-category">Model B · Which category?</h3>
+<p><strong>Six binary classifiers, not one multiclass model.</strong> A basket holds several categories at once — our six shares sum to 119%, so a softmax would force them to compete and return numbers we cannot price.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>TOP <span class="op">=</span> [<span class="st">"Packaged Beverages (Non-Alcoholic)"</span>, <span class="st">"Cigarettes"</span>, <span class="st">"Candy"</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>       <span class="st">"Salty Snacks"</span>, <span class="st">"Other Tobacco/Nicotine Products"</span>, <span class="st">"Beer"</span>]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> {}</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat <span class="kw">in</span> TOP:                      <span class="co"># binary relevance</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> F.array_contains(<span class="st">"cats"</span>, cat).cast(<span class="st">"int"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    models[cat] <span class="op">=</span> GBTClassifier(labelCol<span class="op">=</span><span class="st">"y"</span>).fit(converters.withColumn(<span class="st">"y"</span>, y))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Trained on the <strong>4.6M converting visits</strong> only. Shares of those visits:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Share</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Packaged Beverages</td>
+<td><strong>54.5%</strong></td>
+</tr>
+<tr class="even">
+<td>Cigarettes</td>
+<td>14.7%</td>
+</tr>
+<tr class="odd">
+<td>Candy</td>
+<td>13.5%</td>
+</tr>
+<tr class="even">
+<td>Salty Snacks</td>
+<td>13.1%</td>
+</tr>
+<tr class="odd">
+<td>Other Tobacco</td>
+<td>12.6%</td>
+</tr>
+<tr class="even">
+<td>Beer</td>
+<td>10.5%</td>
+</tr>
+</tbody>
+</table>
+<p>GBT rather than logistic regression, because this is where interactions live — <em>beer on a Friday evening</em>.</p>
+</section>
+</div>
+<div id="d-C" class="node-detail">
+<section id="model-c-which-sku" class="level3">
+<h3 class="anchored" data-anchor-id="model-c-which-sku">Model C · Which SKU?</h3>
+<p>A category is not an offer. <em>“Buy a beverage”</em> sells nothing; <em>“$1 off a 16oz Monster”</em> does. Inside Packaged Beverages there are <strong>4,049 SKUs</strong> and the top 100 cover only 45% — a real catalog with a long tail.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.recommendation <span class="im">import</span> ALS</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Three dayparts, wrapping overnight. Attach jumps at 5am and falls after</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 11pm; that tail is 3.2% of visits, so it rides with evening.</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>daypart <span class="op">=</span> (F.when(F.hour(<span class="st">"ts"</span>).between(<span class="dv">5</span>, <span class="dv">9</span>),   <span class="st">"morning"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>            .when(F.hour(<span class="st">"ts"</span>).between(<span class="dv">10</span>, <span class="dv">14</span>), <span class="st">"midday"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>            .otherwise(<span class="st">"evening"</span>))</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># The clock goes in the key: ALS takes no features.</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.withColumn(<span class="st">"item"</span>, F.concat_ws(<span class="st">"@"</span>, <span class="st">"GTIN"</span>, daypart))</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>als <span class="op">=</span> ALS(userCol<span class="op">=</span><span class="st">"shopper_ix"</span>, itemCol<span class="op">=</span><span class="st">"item_ix"</span>, ratingCol<span class="op">=</span><span class="st">"n_purchases"</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>          implicitPrefs<span class="op">=</span><span class="va">True</span>, rank<span class="op">=</span><span class="dv">32</span>, regParam<span class="op">=</span><span class="fl">0.05</span>, alpha<span class="op">=</span><span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Why daypart belongs in the key.</strong> For shoppers with 2+ beverage purchases, pairs in the same daypart repeat the same SKU <strong>18.0%</strong> of the time versus <strong>10.0%</strong> across dayparts — 80% more likely.</p>
+<p><strong>Why it isn’t too sparse.</strong> 2.75M shoppers bought a beverage, 55% three or more times, averaging 16.2 purchases over 7.6 distinct SKUs. People repeat items.</p>
+<p>Apply it per category: beverages yes, <strong>cigarettes no</strong> (top 100 = 86%, nothing to learn). Train only on purchases <em>before</em> the scoring window — ALS feels like preprocessing, which is exactly why people forget.</p>
+</section>
+</div>
+<div id="d-rank" class="node-detail">
+<section id="re-rank" class="level3 orange-head">
+<h3 class="orange-head anchored" data-anchor-id="re-rank">Re-rank</h3>
+<p>ALS hands you 20 plausible SKUs. This step picks among them on business terms, and it is <strong>the most important input in the pipeline</strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>candidates <span class="op">=</span> (als_top20</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    .join(margins, on<span class="op">=</span><span class="st">"GTIN"</span>)          <span class="co"># not in the data — ask for it</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    .join(in_stock, on<span class="op">=</span>[<span class="st">"STORE_ID"</span>, <span class="st">"GTIN"</span>])</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    .join(funded, on<span class="op">=</span><span class="st">"GTIN"</span>)           <span class="co"># vendor-funded promotions</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"our_cost"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        F.when(F.col(<span class="st">"vendor_funded"</span>), F.lit(<span class="fl">0.0</span>)).otherwise(F.col(<span class="st">"discount"</span>))))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Your <code>discounts</code> table is full of <strong>vendor-funded</strong> programs — Skupos, ZYN, Monster, Red Bull, Gatorade. When the brand pays the discount, your cost is zero and the offer is always worth showing.</p>
+<p>A category-level model cannot spend that money. This is the step that turns a better prediction into <strong>a new revenue line</strong>.</p>
+</section>
+</div>
+<div id="d-ev" class="node-detail">
+<section id="expected-value" class="level3 green-head">
+<h3 class="green-head anchored" data-anchor-id="expected-value">Expected value</h3>
+<p>The naive form is wrong:</p>
+<pre><code>P(buys) × margin − cost        ← never negative while margin &gt; discount</code></pre>
+<p>It never asks what would have happened with <strong>no offer</strong>. The real comparison is between two worlds:</p>
+<pre><code>show iff   p₁ × (margin − discount)  &gt;  p₀ × margin</code></pre>
+<p>Worked, per 1,000 fuel visits at 2am. A beverage averages <strong>$3.25</strong>; assume 40% margin and a <strong>$0.90</strong> discount, the going rate in your own data:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>No offer</th>
+<th>Offer shown</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Buy</td>
+<td>75</td>
+<td>90 <em>(assume +1.5 pts)</em></td>
+</tr>
+<tr class="even">
+<td>Margin each</td>
+<td>$1.30</td>
+<td>$0.40</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td><strong>$97.50</strong></td>
+<td><strong>$36.00</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>−$61.50.</strong> And it gets <em>worse</em> at 6am (−$129.90), because the discount reaches more people who were already buying.</p>
+<p>To break even you’d need to more than <strong>triple</strong> the purchase rate. A self-funded discount of this size cannot pay for itself out of that basket — at any hour. Which is precisely why every promotion in the data is a vendor program.</p>
+<p><em>Margin and lift are assumptions; the data has no cost column. The $3.25 and $0.90 are real.</em></p>
+</section>
+</div>
+<div id="d-screen" class="node-detail">
+<section id="the-pump-screen" class="level3">
+<h3 class="anchored" data-anchor-id="the-pump-screen">The pump screen</h3>
+<p>One offer, or none. The constraints the product has to live inside:</p>
+<ul>
+<li><strong>Fire during the fill.</strong> 77% of in-store purchases happen within five minutes of the fuel transaction.</li>
+<li><strong>16.2% already shopped</strong> before fuelling. They are not addressable by a pump screen, so your real audience is the other 84%.</li>
+<li>Ninety seconds, one screen, and a customer watching the gallons tick.</li>
+</ul>
+<p>Showing nothing is a legitimate output. It needs no model to execute and it never loses money — which makes it the baseline every offer must beat.</p>
+</section>
+</div>
+<div id="d-holdout" class="node-detail">
+<section id="holdout" class="level3 red-head">
+<h3 class="red-head anchored" data-anchor-id="holdout">Holdout</h3>
+<p><strong>This does not exist, and it is the single thing worth asking Murphy for.</strong></p>
+<p>A slice of pumps that show no offer, assigned at random. Without it you can measure what people <em>do</em>, never what an offer <em>changed</em>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random at the visit level, logged with the decision.</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>holdout <span class="op">=</span> F.<span class="bu">hash</span>(<span class="st">"fuel_tx"</span>) <span class="op">%</span> <span class="dv">100</span> <span class="op">&lt;</span> <span class="dv">5</span>     <span class="co"># 5% see nothing</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Log the offer you showed <strong>and the probability you showed it with</strong>. Without logged propensities you cannot evaluate offline later, and that mistake is unrecoverable — the information was never captured.</p>
+<p>With a holdout you can finally model <strong>uplift</strong> rather than propensity, and separate the persuadable customers from the ones who would have bought anyway.</p>
+</section>
+</div>
+<div id="d-did" class="node-detail">
+<section id="staggered-adoption" class="level3 red-head">
+<h3 class="red-head anchored" data-anchor-id="staggered-adoption">Staggered adoption</h3>
+<p>The second-best design, available today — and the one whose assumptions our data violates.</p>
+<p>Your <code>discounts</code> table records <strong>redemptions, not impressions</strong>: 9,215,074 transactions with a discount applied, and <strong>zero</strong> records of an offer shown and declined. <code>P(buy | offered)</code> has no denominator.</p>
+<p>But stores switch promotions on at different dates:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Promotion</th>
+<th>Stores</th>
+<th>First</th>
+<th>Median</th>
+<th>Last</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>loyaltyDiscount</code></td>
+<td>188</td>
+<td>10/2024</td>
+<td><strong>01/2026</strong></td>
+<td>09/2026</td>
+</tr>
+<tr class="even">
+<td><code>Skupos</code></td>
+<td>167</td>
+<td>10/2024</td>
+<td>11/2024</td>
+<td>07/2026</td>
+</tr>
+</tbody>
+</table>
+<p>Monster’s share of beverage lines around each store’s promo start:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Weeks</th>
+<th>Stores</th>
+<th>Share</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>−12</td>
+<td>24</td>
+<td>8.82%</td>
+</tr>
+<tr class="even">
+<td>−1</td>
+<td>49</td>
+<td>10.95%</td>
+</tr>
+<tr class="odd">
+<td><strong>0</strong></td>
+<td><strong>280</strong></td>
+<td>11.55%</td>
+</tr>
+<tr class="even">
+<td>+12</td>
+<td>273</td>
+<td>11.79%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Don’t believe the +1.7 points.</strong> The store count jumps 49 → 280 at week 0, so almost nobody has a pre-period, and the apparent pre-trend is the sample growing from 24 to 49 stores rather than behaviour changing.</p>
+<p>The design is sound; this estimate is not. A balanced panel of late adopters would fix it — and it is a better argument for the holdout than any methodology lecture.</p>
+</section>
+</div>
+</div>
+</div>
+<script>
+(function () {
+  const svg = document.getElementById("pipeline-svg");
+  if (!svg) return;
+  const panes = document.querySelectorAll(".node-detail");
+  const show = (id) => {
+    let found = false;
+    panes.forEach((p) => {
+      const on = p.id === id;
+      p.classList.toggle("is-active", on);
+      if (on) found = true;
+    });
+    if (!found) show("d-start");
+  };
+  show("d-start");
+
+  svg.querySelectorAll("g.node").forEach((g) => {
+    const t = g.querySelector("title");
+    if (!t) return;
+    const name = t.textContent.trim();
+    if (!document.getElementById("d-" + name)) return;
+    g.classList.add("is-clickable");
+    const pick = () => {
+      svg.querySelectorAll("g.node").forEach((o) =>
+        o.classList.remove("is-selected"));
+      g.classList.add("is-selected");
+      show("d-" + name);
+    };
+    g.addEventListener("click", pick);
+    g.setAttribute("tabindex", "0");
+    g.setAttribute("role", "button");
+    g.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); }
+    });
+  });
+})();
+</script>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,564 @@
+---
+title: "Pump Screen Pipeline"
+subtitle: "Click any box to see how that step looks in our data"
+format:
+  html:
+    toc: false
+    page-layout: full
+    theme: cosmo
+    css: pipeline.css
+---
+
+This is the end-to-end workflow behind [Day 16](day16_pump_screen_offers.html) —
+from the raw PDI tables to a single offer on the pump screen. **Scroll inside
+the diagram** to move through the pipeline, and **click any box** — the detail
+appears underneath.
+
+**This page answers *why*** — why the label looks like that, why three models,
+why the decision is priced the way it is. For ***what to build*** — table
+schemas, grains and the PySpark that feeds each one to the model — see
+[**pipeline v2 →**](pipeline2.html). Every column in the source data is
+described in the [**data dictionary →**](data-dict.html).
+
+The diagram is generated, not drawn: [`img/pump_pipeline.py`](img/pump_pipeline.py)
+renders it with Graphviz, so it cannot drift from the design. There is also a
+[flat PNG](img/pump_pipeline.png) for slides and printing.
+
+::: {.pipeline-layout}
+
+::: {.pipeline-diagram #pipeline-top}
+{{< include _pipeline_diagram.qmd >}}
+:::
+
+::: {.pipeline-detail}
+
+::: {.detail-nav}
+[Detail]{} [↑ back to the diagram](#pipeline-top)
+:::
+
+::: {#d-start .node-detail}
+### Pick a box
+
+Every step below is something a team has to actually build. The boxes in
+**orange** are the ones we constructed rather than read — the unit of
+analysis and its label. Those are where the real decisions live.
+
+| Colour | Meaning |
+|---|---|
+| Orange | We constructed it |
+| Red | A trap, or something we don't have |
+| Teal | A trained model |
+| Green | The decision, in dollars |
+
+The scripts behind every figure live in `data/` in the course repo:
+`explore.py`, `pump_visit_labels.py`, `daypart_signal.py`,
+`uplift_feasibility.py`, `promo_event_study.py` and `data-dict.yaml`.
+
+::: {.callout-note appearance="simple"}
+**Example conclusions.** Every figure comes from one run over the PDI extract
+— 940 stores in eight Intermountain West states, October 2024 to September
+2026. Worked examples for class, not a finished analysis.
+:::
+:::
+
+::: {#d-items .node-detail}
+### transaction-items-all
+
+**128,599,042 rows**, one per item rung up, across 71.7M transactions and 940
+stores.
+
+```python
+pl.scan_parquet("transaction-items-all/*.parquet").select(
+    "TRANSACTION_SET_ID",  # the basket key
+    "STORE_ID", "DATE_TIME",
+    "GTIN",                # barcode, or a placeholder when keyed
+    "UNIT_QUANTITY", "GRAND_TOTAL_AMOUNT",
+    "SCAN_TYPE",           # GTIN | NONSCAN | PLU | FMT_ERR
+    "NONSCAN_CATEGORY",    # NACS dept for keyed lines — FUEL lives here
+    "NONSCAN_SUBCATEGORY", # fuel grade lives here
+)
+```
+
+58.9% of lines are scanned barcodes; the rest are keyed departments. **Fuel is
+28% of lines and $1.55B of $2.08B revenue.**
+:::
+
+::: {#d-shopper .node-detail}
+### shopper-id
+
+**71,790,254 rows**, one per payment. Every transaction in this extract has a
+shopper — the unidentified ones were dropped before delivery.
+
+```python
+shopper = (pl.scan_parquet("shopper-id/*.parquet")
+    .select("TRANSACTION_SET_ID", "SHOPPER_ID")
+    .unique(subset="TRANSACTION_SET_ID"))  # split tender → duplicate rows
+```
+
+`SHOPPER_ID` is `hash(card BIN + last 4 + store state)`. Two consequences worth
+stating to a client:
+
+- The same card in **two states is two shoppers**, so cross-border travel is invisible.
+- BIN + last 4 is not unique to a card, so a few ids are more than one person.
+
+8.0M shoppers, median **2 transactions** each.
+:::
+
+::: {#d-gtin .node-detail}
+### master-gtin
+
+**99,074 products**, one row per barcode, 35 PDI categories.
+
+```python
+gtin = (pl.scan_parquet("master-gtin/*.parquet")
+    .select("GTIN", "CATEGORY", "SUBCATEGORY", "BRAND")
+    .unique(subset="GTIN"))
+```
+
+Matches **88% of scanned lines**. Two cautions:
+
+- `CATEGORY` is PDI's taxonomy; `NONSCAN_CATEGORY` is NACS. Coalescing them
+  mixes vocabularies.
+- Every row was last updated **2024-07-03**, before our transaction window
+  opens. Products launched since will never match.
+:::
+
+::: {#d-stores .node-detail}
+### stores-information
+
+36,912 stores in the master, but only **940 appear in our transactions** — all
+of them resolvable, in eight Intermountain West states.
+
+| State | Stores |
+|---|---|
+| CO | 221 |
+| UT | 164 |
+| AZ | 158 |
+| ID | 111 |
+| NV, NM, MT, WY | 286 |
+
+The column that matters most is `START_WEEK_CONTINUOUS_DATA` — the first week a
+store reports without gaps. **Filter on it before any time series**, or stores
+joining the panel will look like growth.
+:::
+
+::: {#d-clean .node-detail}
+### Clean lines
+
+Two filters and a coalesce. This is the whole of it:
+
+```python
+lines = (items
+    .filter((pl.col("UNIT_QUANTITY").cast(pl.Float64) > 0)
+            & (pl.col("GRAND_TOTAL_AMOUNT").cast(pl.Float64) > 0))
+    .join(gtin, on="GTIN", how="left")
+    .with_columns(category=pl.coalesce("CATEGORY", "NONSCAN_CATEGORY"))
+    .drop_nulls("category"))
+```
+
+The filters remove **481,568 voids** and **701,406 returns**. The coalesce
+labels **85.6% of lines**; the rest are scanned items missing from the master.
+
+Every money column is `Decimal(38, x)`. Cast to `Float64` on read or the
+arithmetic is slow and occasionally surprising.
+:::
+
+::: {#d-drop .node-detail}
+### Drop non-purchases
+
+The rule is **not** "drop SERVICES". It is **drop anything the customer didn't
+choose.**
+
+```python
+NOT_A_PURCHASE = ["FUEL", "SERVICES"]   # fuel is the anchor, not the outcome
+```
+
+`SERVICES` is **99.5% card-processing fees** of about $0.35, charged on the fuel
+sale itself:
+
+| NONSCAN_DETAIL | Lines | Avg |
+|---|---|---|
+| CREDIT CARD FEE | 3,940,565 | $0.35 |
+| LABOR | 5,030 | $68.69 |
+| POST OFFICE | 666 | $21.05 |
+
+Counting the fee as an in-store purchase leaks the fuel transaction into its own
+label. **It inflated the attach rate by about seven points.** A model trained on
+it learns *"customers who pay by card buy SERVICES"* — perfectly accurate,
+perfectly useless.
+:::
+
+::: {#d-visit .node-detail}
+### Fuel visit {.orange-head}
+
+The unit of analysis, and the decision a team has to defend. A visit is every
+purchase by the same shopper from **15 minutes before** the fuel transaction to
+**45 minutes after**.
+
+```python
+BEFORE, AFTER = 15, 45
+
+# Hour buckets keep the join small; the window spans at most three of them,
+# so each candidate is offered to its bucket and both neighbours.
+shifted = pl.concat([
+    store.with_columns(bucket=pl.col("bucket") + pl.duration(hours=k))
+    for k in (-1, 0, 1)])
+
+delta = (pl.col("ts_store") - pl.col("ts")).dt.total_minutes()
+hit = fuel.join(shifted, on=["SHOPPER_ID", "bucket"], how="left").filter(
+    (delta >= -BEFORE) & (delta <= AFTER))
+```
+
+Asymmetric because most people fuel first. The timing says it's generous, not
+tight:
+
+| Relative to the pump | Share |
+|---|---|
+| −15 to 0 *(shopped first)* | 16.2% |
+| **0 to 5 min** | **77.2%** |
+| 5 to 15 min | 5.3% |
+| 15 to 45 min | 1.3% |
+
+Only 48,113 of 4.6M converting visits involve a second store, so dropping the
+same-store constraint costs nothing.
+:::
+
+::: {#d-label .node-detail}
+### The label {.orange-head}
+
+**36,142,617 fuel visits. 12.8% buy something inside.** Median in-store spend
+when they do: **$7.87**.
+
+```python
+basket = fuel.join(
+    hit.group_by("fuel_tx").agg(n_store_tx=pl.col("store_tx").n_unique()),
+    on="fuel_tx", how="left",
+).with_columns(bought=pl.col("n_store_tx").fill_null(0) > 0)
+```
+
+This column does not exist in the data. **We built it**, and every number
+downstream inherits whatever we got wrong here. That is why the window and the
+`SERVICES` filter are worth a slide each.
+
+About 1 in 8 — the base rate every model has to beat.
+:::
+
+::: {#d-ctx .node-detail}
+### Context features
+
+Everything knowable **before the nozzle goes back**. The card is read before the
+fuel flows, so identity is available too.
+
+```python
+ctx = basket.with_columns(
+    hour=pl.col("ts").dt.hour(),        # store wall-clock, per PDI
+    weekday=pl.col("ts").dt.weekday(),
+    month=pl.col("ts").dt.month(),
+    # grade comes from NONSCAN_SUBCATEGORY: REGULAR, DIESEL, MID/PLUS, ...
+)
+```
+
+`DATE_TIME` is documented as **the wall clock time for the store**, so dayparts
+need no timezone conversion — worth confirming, because the panel spans four
+time zones.
+
+Signal strength, measured:
+
+| Feature | Spread in attach |
+|---|---|
+| Hour | 7.5% (2am) → **15.1%** (6am) |
+| Fuel grade | 12.2% → 13.3% — *almost nothing* |
+
+A variable being available doesn't make it useful.
+:::
+
+::: {#d-hist .node-detail}
+### History features
+
+Per category, computed **strictly from visits before the one being scored**.
+This is the leakage rule with a clock on it.
+
+```python
+from pyspark.sql import Window
+w = (Window.partitionBy("SHOPPER_ID", "category")
+          .orderBy("ts").rowsBetween(Window.unboundedPreceding, -1))
+
+df = (df
+  .withColumn("bought_before", F.max("bought").over(w))
+  .withColumn("prior_share",   F.avg("bought").over(w))
+  .withColumn("days_since",    F.datediff("ts", F.max("ts").over(w))))
+```
+
+`rowsBetween(..., -1)` is the whole trick — it excludes the current row.
+
+**History barely predicts whether they come inside** (12.6% with none, 12.5%
+with 10+), but it is the best signal for *what* they buy. That asymmetry is why
+there are three models instead of one.
+:::
+
+::: {#d-A .node-detail}
+### Model A · Will they come inside?
+
+Binary classifier over all **36.1M** visits. Context only.
+
+```python
+from pyspark.ml.classification import GBTClassifier
+
+gbt = GBTClassifier(featuresCol="features", labelCol="bought", maxIter=100)
+model = gbt.fit(train)   # no rebalancing — see below
+```
+
+**Do not rebalance the 12.8% positive class.** The output feeds an arithmetic in
+dollars, so a model trained 50/50 scores an average visit at 0.5 instead of
+0.128 and inflates every expected value about 4×. If you must, use `weightCol`
+rather than resampling, and correct the odds back by the sampling fraction.
+
+Check calibration with a reliability curve; fix with isotonic regression on a
+held-out slice. **Accuracy and F1 are irrelevant here — calibration is the
+whole job.**
+
+Because history adds so little, this model works identically for the 22.2% of
+visits by a shopper we have never seen.
+:::
+
+::: {#d-B .node-detail}
+### Model B · Which category?
+
+**Six binary classifiers, not one multiclass model.** A basket holds several
+categories at once — our six shares sum to 119%, so a softmax would force them
+to compete and return numbers we cannot price.
+
+```python
+TOP = ["Packaged Beverages (Non-Alcoholic)", "Cigarettes", "Candy",
+       "Salty Snacks", "Other Tobacco/Nicotine Products", "Beer"]
+
+models = {}
+for cat in TOP:                      # binary relevance
+    y = F.array_contains("cats", cat).cast("int")
+    models[cat] = GBTClassifier(labelCol="y").fit(converters.withColumn("y", y))
+```
+
+Trained on the **4.6M converting visits** only. Shares of those visits:
+
+| Category | Share |
+|---|---|
+| Packaged Beverages | **54.5%** |
+| Cigarettes | 14.7% |
+| Candy | 13.5% |
+| Salty Snacks | 13.1% |
+| Other Tobacco | 12.6% |
+| Beer | 10.5% |
+
+GBT rather than logistic regression, because this is where interactions live —
+*beer on a Friday evening*.
+:::
+
+::: {#d-C .node-detail}
+### Model C · Which SKU?
+
+A category is not an offer. *"Buy a beverage"* sells nothing; *"$1 off a 16oz
+Monster"* does. Inside Packaged Beverages there are **4,049 SKUs** and the top
+100 cover only 45% — a real catalog with a long tail.
+
+```python
+from pyspark.ml.recommendation import ALS
+
+# Three dayparts, wrapping overnight. Attach jumps at 5am and falls after
+# 11pm; that tail is 3.2% of visits, so it rides with evening.
+daypart = (F.when(F.hour("ts").between(5, 9),   "morning")
+            .when(F.hour("ts").between(10, 14), "midday")
+            .otherwise("evening"))
+
+# The clock goes in the key: ALS takes no features.
+df = df.withColumn("item", F.concat_ws("@", "GTIN", daypart))
+
+als = ALS(userCol="shopper_ix", itemCol="item_ix", ratingCol="n_purchases",
+          implicitPrefs=True, rank=32, regParam=0.05, alpha=20)
+```
+
+**Why daypart belongs in the key.** For shoppers with 2+ beverage purchases,
+pairs in the same daypart repeat the same SKU **18.0%** of the time versus
+**10.0%** across dayparts — 80% more likely.
+
+**Why it isn't too sparse.** 2.75M shoppers bought a beverage, 55% three or more
+times, averaging 16.2 purchases over 7.6 distinct SKUs. People repeat items.
+
+Apply it per category: beverages yes, **cigarettes no** (top 100 = 86%, nothing
+to learn). Train only on purchases *before* the scoring window — ALS feels like
+preprocessing, which is exactly why people forget.
+:::
+
+::: {#d-rank .node-detail}
+### Re-rank {.orange-head}
+
+ALS hands you 20 plausible SKUs. This step picks among them on business terms,
+and it is **the most important input in the pipeline**.
+
+```python
+candidates = (als_top20
+    .join(margins, on="GTIN")          # not in the data — ask for it
+    .join(in_stock, on=["STORE_ID", "GTIN"])
+    .join(funded, on="GTIN")           # vendor-funded promotions
+    .withColumn("our_cost",
+        F.when(F.col("vendor_funded"), F.lit(0.0)).otherwise(F.col("discount"))))
+```
+
+Your `discounts` table is full of **vendor-funded** programs — Skupos, ZYN,
+Monster, Red Bull, Gatorade. When the brand pays the discount, your cost is zero
+and the offer is always worth showing.
+
+A category-level model cannot spend that money. This is the step that turns a
+better prediction into **a new revenue line**.
+:::
+
+::: {#d-ev .node-detail}
+### Expected value {.green-head}
+
+The naive form is wrong:
+
+```
+P(buys) × margin − cost        ← never negative while margin > discount
+```
+
+It never asks what would have happened with **no offer**. The real comparison is
+between two worlds:
+
+```
+show iff   p₁ × (margin − discount)  >  p₀ × margin
+```
+
+Worked, per 1,000 fuel visits at 2am. A beverage averages **$3.25**; assume 40%
+margin and a **$0.90** discount, the going rate in your own data:
+
+| | No offer | Offer shown |
+|---|---|---|
+| Buy | 75 | 90 *(assume +1.5 pts)* |
+| Margin each | $1.30 | $0.40 |
+| **Total** | **$97.50** | **$36.00** |
+
+**−$61.50.** And it gets *worse* at 6am (−$129.90), because the discount reaches
+more people who were already buying.
+
+To break even you'd need to more than **triple** the purchase rate. A
+self-funded discount of this size cannot pay for itself out of that basket — at
+any hour. Which is precisely why every promotion in the data is a vendor
+program.
+
+*Margin and lift are assumptions; the data has no cost column. The $3.25 and
+$0.90 are real.*
+:::
+
+::: {#d-screen .node-detail}
+### The pump screen
+
+One offer, or none. The constraints the product has to live inside:
+
+- **Fire during the fill.** 77% of in-store purchases happen within five minutes
+  of the fuel transaction.
+- **16.2% already shopped** before fuelling. They are not addressable by a pump
+  screen, so your real audience is the other 84%.
+- Ninety seconds, one screen, and a customer watching the gallons tick.
+
+Showing nothing is a legitimate output. It needs no model to execute and it
+never loses money — which makes it the baseline every offer must beat.
+:::
+
+::: {#d-holdout .node-detail}
+### Holdout {.red-head}
+
+**This does not exist, and it is the single thing worth asking Murphy for.**
+
+A slice of pumps that show no offer, assigned at random. Without it you can
+measure what people *do*, never what an offer *changed*.
+
+```python
+# Random at the visit level, logged with the decision.
+holdout = F.hash("fuel_tx") % 100 < 5     # 5% see nothing
+```
+
+Log the offer you showed **and the probability you showed it with**. Without
+logged propensities you cannot evaluate offline later, and that mistake is
+unrecoverable — the information was never captured.
+
+With a holdout you can finally model **uplift** rather than propensity, and
+separate the persuadable customers from the ones who would have bought anyway.
+:::
+
+::: {#d-did .node-detail}
+### Staggered adoption {.red-head}
+
+The second-best design, available today — and the one whose assumptions our data
+violates.
+
+Your `discounts` table records **redemptions, not impressions**: 9,215,074
+transactions with a discount applied, and **zero** records of an offer shown and
+declined. `P(buy | offered)` has no denominator.
+
+But stores switch promotions on at different dates:
+
+| Promotion | Stores | First | Median | Last |
+|---|---|---|---|---|
+| `loyaltyDiscount` | 188 | 10/2024 | **01/2026** | 09/2026 |
+| `Skupos` | 167 | 10/2024 | 11/2024 | 07/2026 |
+
+Monster's share of beverage lines around each store's promo start:
+
+| Weeks | Stores | Share |
+|---|---|---|
+| −12 | 24 | 8.82% |
+| −1 | 49 | 10.95% |
+| **0** | **280** | 11.55% |
+| +12 | 273 | 11.79% |
+
+**Don't believe the +1.7 points.** The store count jumps 49 → 280 at week 0, so
+almost nobody has a pre-period, and the apparent pre-trend is the sample growing
+from 24 to 49 stores rather than behaviour changing.
+
+The design is sound; this estimate is not. A balanced panel of late adopters
+would fix it — and it is a better argument for the holdout than any methodology
+lecture.
+:::
+
+:::
+
+:::
+
+```{=html}
+<script>
+(function () {
+  const svg = document.getElementById("pipeline-svg");
+  if (!svg) return;
+  const panes = document.querySelectorAll(".node-detail");
+  const show = (id) => {
+    let found = false;
+    panes.forEach((p) => {
+      const on = p.id === id;
+      p.classList.toggle("is-active", on);
+      if (on) found = true;
+    });
+    if (!found) show("d-start");
+  };
+  show("d-start");
+
+  svg.querySelectorAll("g.node").forEach((g) => {
+    const t = g.querySelector("title");
+    if (!t) return;
+    const name = t.textContent.trim();
+    if (!document.getElementById("d-" + name)) return;
+    g.classList.add("is-clickable");
+    const pick = () => {
+      svg.querySelectorAll("g.node").forEach((o) =>
+        o.classList.remove("is-selected"));
+      g.classList.add("is-selected");
+      show("d-" + name);
+    };
+    g.addEventListener("click", pick);
+    g.setAttribute("tabindex", "0");
+    g.setAttribute("role", "button");
+    g.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); }
+    });
+  });
+})();
+</script>
+```
