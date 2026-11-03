@@ -783,14 +783,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="d-A" class="node-detail">
 <section id="model-a-will-they-come-inside" class="level3">
 <h3 class="anchored" data-anchor-id="model-a-will-they-come-inside">Model A · Will they come inside?</h3>
-<p>Binary classifier over all <strong>36.1M</strong> visits. Context only.</p>
+<p>Binary classifier over all <strong>36.1M</strong> visits.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.classification <span class="im">import</span> GBTClassifier</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>gbt <span class="op">=</span> GBTClassifier(featuresCol<span class="op">=</span><span class="st">"features"</span>, labelCol<span class="op">=</span><span class="st">"bought"</span>, maxIter<span class="op">=</span><span class="dv">100</span>)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> gbt.fit(train)   <span class="co"># no rebalancing — see below</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Do not rebalance the 12.8% positive class.</strong> The output feeds an arithmetic in dollars, so a model trained 50/50 scores an average visit at 0.5 instead of 0.128 and inflates every expected value about 4×. If you must, use <code>weightCol</code> rather than resampling, and correct the odds back by the sampling fraction.</p>
 <p>Check calibration with a reliability curve; fix with isotonic regression on a held-out slice. <strong>Accuracy and F1 are irrelevant here — calibration is the whole job.</strong></p>
-<p>Because history adds so little, this model works identically for the 22.2% of visits by a shopper we have never seen.</p>
+<p><strong>The feature that matters most is the shopper’s own prior attach rate.</strong> How <em>many</em> times we have seen someone is worth +0.004 AUC; what <em>share</em> of those visits ended inside is worth +0.109, taking the model from 0.703 to 0.827 out of time. For the 22.2% we have never seen there is only context, and they are genuinely harder to call.</p>
 </section>
 </div>
 <div id="d-B" class="node-detail">

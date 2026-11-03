@@ -1,0 +1,282 @@
+---
+title: "One Customer, End to End"
+subtitle: "A real fill, traced through the data and the three models"
+format:
+  html:
+    toc: true
+    toc-location: left
+    page-layout: full
+    theme: cosmo
+    css: pipeline.css
+---
+
+[pipeline v1](pipeline.html) draws the reasoning. [pipeline v2](pipeline2.html)
+draws the tables. **This one follows a single customer** from the moment the
+card is read to the offer on the screen, with the numbers the models actually
+produced.
+
+Every figure below came out of `explain.py`, which prints this trace for any
+shopper:
+
+```bash
+uv run --with polars --with scikit-learn --with joblib --with implicit \
+    python explain.py --demo
+```
+
+::: {.callout-note appearance="simple"}
+**Example conclusions.** A 25-store build of the PDI extract. The columns and
+the code are real; the margins are assumed, because the data has no cost
+column.
+:::
+
+## 1 · A car pulls up
+
+A card is dipped at the pump. It is read **before the fuel flows**, so
+identity arrives at the *start* of the fill, not the end. Everything here is
+known without touching a database:
+
+| | |
+|---|---|
+| shopper | `a37306b69b70…` — hash of card BIN + last 4 + store state |
+| clock | 2026-06-15 07:12 → daypart **morning** |
+| grade | REGULAR |
+| dollars pumped | $38.82, live off the meter |
+| store | 8228 |
+
+**These are the gas features.** Seven columns, no history, and they are all
+Model A needs.
+
+## 2 · One lookup
+
+A single read against a shopper-keyed table — precomputed nightly, not
+scanned live:
+
+| | |
+|---|---|
+| prior fuel visits | **57** |
+| of those, went inside | **52 (91%)** |
+
+| Category | Bought before | Share of prior visits |
+|---|---|---|
+| Packaged Beverages | yes | **86.0%** |
+| Cigarettes | yes | 36.8% |
+| Candy | yes | 14.0% |
+| Salty Snacks | yes | 7.0% |
+| Other Tobacco / Nicotine | no | 0.0% |
+| Beer | no | 0.0% |
+
+This is a regular, and a creature of habit: nine fills in ten end with a
+drink. **Every figure is computed strictly from visits before this one** — the
+window excludes the current row, which is the difference between a model that
+works and one that reads its own answer.
+
+## 3 · Model A — will they come inside?
+
+```
+P(inside) = 0.0979        base rate across all visits 0.1411
+```
+
+**Below average** — 7:12 in the morning at this store is not a strong attach
+moment, and the model says so.
+
+The number that moves this is **the shopper's own prior attach rate**, not
+the number of visits behind it. Bucketed by visit count the attach rate is
+flat — 12.6% with no history, 12.5% with ten or more. Bucketed by their own
+attach rate it runs from 2.9% to 71.6%, a 25× spread, and adding it takes
+Model A from 0.703 to 0.827 out of time.
+
+For a shopper we have never seen there is only context, and the model says so.
+
+## 4 · Model B — which category?
+
+Six independent binary models, each answering one question:
+
+| Category | P(category given inside) | Offerable? |
+|---|---|---|
+| **Packaged Beverages** | **0.970** | yes |
+| Cigarettes | 0.431 | **no — regulated** |
+| Candy | 0.063 | yes |
+| Salty Snacks | 0.031 | yes |
+| Other Tobacco / Nicotine | 0.009 | **no — regulated** |
+| Beer | 0.000 | yes |
+
+**Here the 57 visits do their work.** An 86% historical beverage rate drives
+the score near the top of its range, and the two categories this shopper has
+never touched sit at zero. Note that cigarettes score 0.431 and are still not
+offered — that is a business rule, not a model output. See §7. Against context alone, knowing the customer
+is worth **+0.08 to +0.22 AUC** depending on the category — the single
+largest effect measured anywhere in this project.
+
+::: {.callout-warning appearance="simple"}
+**Read saturated scores carefully.** Isotonic calibration is a step function,
+so for a shopper whose history is emphatic enough it will return the top or
+bottom step — 1.0 or 0.0 exactly. Both are clamped (to 1 − 1e-5 and 1e-5) so
+a zero cannot wipe out the arithmetic downstream, but a score at either rail
+means "as confident as the calibrator can express", not a certainty.
+:::
+
+## 5 · Model C — which SKU?
+
+This shopper **is** in the ALS factor matrix, so the ranking is personal
+rather than a best-seller list. That puts them in the minority: only 19% of
+next-period shoppers have enough category history to qualify.
+
+| Brand | P(sku) | Margin | Brand funds | Our cost |
+|---|---|---|---|---|
+| **Monster** | 0.0075 | $1.60 | 100% | $0.00 |
+| Monster | 0.0071 | $1.68 | 100% | $0.00 |
+| Mountain Dew | 0.0037 | $3.83 | 0% | $0.90 |
+| Dr Pepper | 0.0031 | $4.30 | 0% | $0.90 |
+
+`P(sku)` is normalised **within the category** — "given they buy a drink,
+which drink" — which is what the decision rule multiplies against
+`P(category)`.
+
+Ranked by **expected value, not by P(sku)** — a thin margin on a likely item
+can lose to a fat margin on a less likely one, and a fully funded offer beats
+a self-funded one at equal probability because it costs us nothing.
+
+## 6 · The decision
+
+```
+  P(inside)        0.0979
+x P(category)      0.9697
+x P(sku)           0.0075
+  ------------------------
+  P(buys this)     0.000708
+x effective margin $1.60 - $0.00 = $1.60
+  ------------------------
+  expected value   $0.00114 per fill
+```
+
+> **Show: Monster.**
+
+Mountain Dew carries more than twice the margin, and still loses: it is
+self-funded, so $0.90 of that $3.83 is ours to give away.
+
+A tenth of a cent sounds like nothing. Across 36.1M fuel visits it is not —
+and more to the point, it is **positive**, which a self-funded version of the
+same offer would not be.
+
+## 7 · Five customers, one pump, one minute
+
+One trace shows the mechanism. Five show what the customer id is actually
+worth. These are **real shoppers** picked to typify an archetype, then run
+through the *identical* context — same store, same 07:12, same REGULAR fill —
+so the only thing that varies is who they are.
+
+[`personas.py`](https://github.com/byuibigdata/bdbook) picks and runs them.
+
+### What they did before
+
+| Persona | Fuel visits | Went inside | Soda | Cigs | Salty | Beer |
+|---|---|---|---|---|---|---|
+| Never bought | 858 | **0%** | 0% | 0% | 0% | 0% |
+| Soda regular | 16 | 100% | **100%** | 0% | 0% | 0% |
+| Cigarette regular | 9 | 100% | 0% | **100%** | 0% | 0% |
+| Salty snack regular | 13 | 100% | 0% | 0% | **100%** | 0% |
+| Beer regular | 8 | 100% | 0% | 0% | 0% | **100%** |
+
+The first one is worth pausing on: **858 fills, never once walked inside.**
+That is a real customer type, and no amount of offer design changes it.
+
+### Model A separates them completely
+
+| Persona | Prior attach | P(inside) |
+|---|---|---|
+| Never bought | 0% of 858 | **0.0000** |
+| Soda regular | 100% of 16 | 0.8693 |
+| Cigarette regular | 100% of 9 | 0.8320 |
+| Salty snack regular | 100% of 13 | 0.8942 |
+| Beer regular | 100% of 8 | **0.9291** |
+
+A spread of **0.93**, on identical context. The customer who has fuelled 858
+times and never once walked inside is scored as close to zero as the
+calibrator can express — which is the correct answer, and a cheaper one than
+any offer.
+
+### Model B does
+
+| Persona | Soda | Cigs | Salty | Beer |
+|---|---|---|---|---|
+| Never bought | 0.234 | 0.015 | 0.011 | 0.000 |
+| **Soda regular** | **0.885** | 0.000 | 0.000 | 0.000 |
+| **Cigarette regular** | 0.051 | **1.000** | 0.018 | 0.004 |
+| **Salty snack regular** | 0.331 | 0.025 | **0.800** | 0.000 |
+| **Beer regular** | 0.051 | 0.009 | 0.011 | **0.933** |
+
+From 0.000 to 1.000 on cigarettes alone. **Both models want the customer id,
+but different facts about them** — A wants their overall attach habit, B wants
+their category mix. That is why they are separate models, not because one of
+them ignores identity.
+
+### And the offers differ
+
+| Persona | Offer | Expected value |
+|---|---|---|
+| Never bought | Red Bull | **$0.00000** |
+| Soda regular | Monster | $0.01352 |
+| Cigarette regular | **Monster** | $0.00278 |
+| Salty snack regular | Dot's Pretzels | $0.01311 |
+| Beer regular | **Modelo Especial** | **$0.06906** |
+
+Two of these deserve comment.
+
+**The cigarette regular is offered a drink.** The model is 94.9% sure they
+want cigarettes and we will not show them — tobacco is excluded as a business
+rule, because it carries the highest margin and the shortest SKU tail, so
+expected value alone would push it at *everyone*, including the customer who
+has never bought anything. Targeted tobacco promotion is restricted in most
+jurisdictions. The system knows the right answer and is correctly forbidden
+from acting on it, so it falls back to the next thing it believes.
+
+**The never-bought customer is worth $0.00000.** 858 fills, never once inside,
+and the model prices the offer at nothing. It still *names* a best guess — the
+screen has to show something — but the arithmetic says this is not a customer
+to spend a funded discount on. The beer regular, at **$0.069**, is worth
+roughly seventy times more than the five-cent average.
+
+## What the same trace says about the deal
+
+Read backwards, the rule prices the negotiation:
+
+| If the offer lifts purchase by | Brand must fund at least |
+|---|---|
+| +25% | **64%** |
+| +50% | **41%** |
+| +100% | **11%** |
+
+So: *"At the lift we think this offer produces, we need you at roughly half."*
+The arithmetic has a useful property — **the customer's purchase probability
+cancels out**. How likely they were to buy decides how much the deal is worth;
+the margin-to-discount ratio and the lift decide who should pay for it.
+
+## What this trace does not show
+
+**No p1.** Every number is a prediction of what this customer does anyway,
+not of what the offer *changes*. The expected value is priced at `p0` on both
+sides, which is why a self-funded discount can never win here. Fixing that
+needs a holdout — a slice of pumps that show nothing — and it does not exist.
+
+**No logged propensity.** A production version would write what it showed
+**and the probability it showed it with**. Without that, no off-policy
+evaluation is possible later and the information cannot be reconstructed.
+
+**Assumed margins.** `unit_margin` is average price times 40%. The PDI extract
+has no cost column, so the dollar figures move the moment someone supplies
+real ones.
+
+## Run it yourself
+
+```bash
+cd data/pipeline_analysis
+UV="uv run --with polars --with scikit-learn --with joblib --with implicit"
+
+$UV python explain.py --demo
+$UV python explain.py --shopper <id> --time "2026-06-15 17:45" --grade DIESEL
+$UV python explain.py --demo --json          # the same trace as a dict
+```
+
+`serve.py` gives the answer; `explain.py` gives the reasoning;
+`negotiate.py` gives the funding floor. All three read the same artifacts and
+are covered by the 50 checks in `validate.py`.

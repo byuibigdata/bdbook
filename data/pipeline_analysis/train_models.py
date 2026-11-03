@@ -29,6 +29,10 @@ from sklearn.metrics import brier_score_loss, roc_auc_score
 import config as C
 
 CTX_NUM = ["hour", "weekday", "month", "fuel_spend"]
+# Model A gets the shopper's own prior attach rate. An earlier version was
+# context-only, justified by a table bucketed on prior visit COUNT -- the
+# wrong variable. Count is worth +0.004 AUC; the rate is worth +0.109.
+A_HIST = ["prior_n", "prior_attach"]
 CTX_CAT = ["daypart", "fuel_grade", "store_id"]
 HIST_NUM = ["prior_n", "bought_before", "prior_share"]
 
@@ -106,7 +110,7 @@ def main() -> None:
     a, cat_maps = encode(a, CTX_CAT)
     a = a.sample(fraction=1.0, shuffle=True, seed=C.RANDOM_SEED)
     k = int(a.height * (1 - C.CALIB_FRACTION))
-    cols = CTX_CAT + CTX_NUM                       # categoricals first
+    cols = CTX_CAT + CTX_NUM + A_HIST              # categoricals first
     Xa = a.select(cols).fill_null(0).to_numpy()
     ya = a["bought"].cast(pl.Int8).to_numpy()
     model_a, stats_a = fit_binary(Xa[:k], ya[:k], Xa[k:], ya[k:], "model_a")

@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.20">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>One Customer, End to End</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./DS460_Hex.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-c71942d98dfb179c90dde172f45c29e1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-05b73876ec8e91609299e25bc831f6fc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-c71942d98dfb179c90dde172f45c29e1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-42cc18e8bcad72787945a0a75b489242.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-42cc18e8bcad72787945a0a75b489242.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-42cc18e8bcad72787945a0a75b489242.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="pipeline.css">
+</head>
+
+<body class="floating quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#a-car-pulls-up" id="toc-a-car-pulls-up" class="nav-link active" data-scroll-target="#a-car-pulls-up">1 · A car pulls up</a></li>
+  <li><a href="#one-lookup" id="toc-one-lookup" class="nav-link" data-scroll-target="#one-lookup">2 · One lookup</a></li>
+  <li><a href="#model-a-will-they-come-inside" id="toc-model-a-will-they-come-inside" class="nav-link" data-scroll-target="#model-a-will-they-come-inside">3 · Model A — will they come inside?</a></li>
+  <li><a href="#model-b-which-category" id="toc-model-b-which-category" class="nav-link" data-scroll-target="#model-b-which-category">4 · Model B — which category?</a></li>
+  <li><a href="#model-c-which-sku" id="toc-model-c-which-sku" class="nav-link" data-scroll-target="#model-c-which-sku">5 · Model C — which SKU?</a></li>
+  <li><a href="#the-decision" id="toc-the-decision" class="nav-link" data-scroll-target="#the-decision">6 · The decision</a></li>
+  <li><a href="#five-customers-one-pump-one-minute" id="toc-five-customers-one-pump-one-minute" class="nav-link" data-scroll-target="#five-customers-one-pump-one-minute">7 · Five customers, one pump, one minute</a>
+  <ul class="collapse">
+  <li><a href="#what-they-did-before" id="toc-what-they-did-before" class="nav-link" data-scroll-target="#what-they-did-before">What they did before</a></li>
+  <li><a href="#model-a-separates-them-completely" id="toc-model-a-separates-them-completely" class="nav-link" data-scroll-target="#model-a-separates-them-completely">Model A separates them completely</a></li>
+  <li><a href="#model-b-does" id="toc-model-b-does" class="nav-link" data-scroll-target="#model-b-does">Model B does</a></li>
+  <li><a href="#and-the-offers-differ" id="toc-and-the-offers-differ" class="nav-link" data-scroll-target="#and-the-offers-differ">And the offers differ</a></li>
+  </ul></li>
+  <li><a href="#what-the-same-trace-says-about-the-deal" id="toc-what-the-same-trace-says-about-the-deal" class="nav-link" data-scroll-target="#what-the-same-trace-says-about-the-deal">What the same trace says about the deal</a></li>
+  <li><a href="#what-this-trace-does-not-show" id="toc-what-this-trace-does-not-show" class="nav-link" data-scroll-target="#what-this-trace-does-not-show">What this trace does not show</a></li>
+  <li><a href="#run-it-yourself" id="toc-run-it-yourself" class="nav-link" data-scroll-target="#run-it-yourself">Run it yourself</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">One Customer, End to End</h1>
+<p class="subtitle lead">A real fill, traced through the data and the three models</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="pipeline.html">pipeline v1</a> draws the reasoning. <a href="pipeline2.html">pipeline v2</a> draws the tables. <strong>This one follows a single customer</strong> from the moment the card is read to the offer on the screen, with the numbers the models actually produced.</p>
+<p>Every figure below came out of <code>explain.py</code>, which prints this trace for any shopper:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run <span class="at">--with</span> polars <span class="at">--with</span> scikit-learn <span class="at">--with</span> joblib <span class="at">--with</span> implicit <span class="dt">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    python explain.py <span class="at">--demo</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Example conclusions.</strong> A 25-store build of the PDI extract. The columns and the code are real; the margins are assumed, because the data has no cost column.</p>
+</div>
+</div>
+</div>
+<section id="a-car-pulls-up" class="level2">
+<h2 class="anchored" data-anchor-id="a-car-pulls-up">1 · A car pulls up</h2>
+<p>A card is dipped at the pump. It is read <strong>before the fuel flows</strong>, so identity arrives at the <em>start</em> of the fill, not the end. Everything here is known without touching a database:</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>shopper</td>
+<td><code>a37306b69b70…</code> — hash of card BIN + last 4 + store state</td>
+</tr>
+<tr class="even">
+<td>clock</td>
+<td>2026-06-15 07:12 → daypart <strong>morning</strong></td>
+</tr>
+<tr class="odd">
+<td>grade</td>
+<td>REGULAR</td>
+</tr>
+<tr class="even">
+<td>dollars pumped</td>
+<td>$38.82, live off the meter</td>
+</tr>
+<tr class="odd">
+<td>store</td>
+<td>8228</td>
+</tr>
+</tbody>
+</table>
+<p><strong>These are the gas features.</strong> Seven columns, no history, and they are all Model A needs.</p>
+</section>
+<section id="one-lookup" class="level2">
+<h2 class="anchored" data-anchor-id="one-lookup">2 · One lookup</h2>
+<p>A single read against a shopper-keyed table — precomputed nightly, not scanned live:</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>prior fuel visits</td>
+<td><strong>57</strong></td>
+</tr>
+<tr class="even">
+<td>of those, went inside</td>
+<td><strong>52 (91%)</strong></td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Bought before</th>
+<th>Share of prior visits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Packaged Beverages</td>
+<td>yes</td>
+<td><strong>86.0%</strong></td>
+</tr>
+<tr class="even">
+<td>Cigarettes</td>
+<td>yes</td>
+<td>36.8%</td>
+</tr>
+<tr class="odd">
+<td>Candy</td>
+<td>yes</td>
+<td>14.0%</td>
+</tr>
+<tr class="even">
+<td>Salty Snacks</td>
+<td>yes</td>
+<td>7.0%</td>
+</tr>
+<tr class="odd">
+<td>Other Tobacco / Nicotine</td>
+<td>no</td>
+<td>0.0%</td>
+</tr>
+<tr class="even">
+<td>Beer</td>
+<td>no</td>
+<td>0.0%</td>
+</tr>
+</tbody>
+</table>
+<p>This is a regular, and a creature of habit: nine fills in ten end with a drink. <strong>Every figure is computed strictly from visits before this one</strong> — the window excludes the current row, which is the difference between a model that works and one that reads its own answer.</p>
+</section>
+<section id="model-a-will-they-come-inside" class="level2">
+<h2 class="anchored" data-anchor-id="model-a-will-they-come-inside">3 · Model A — will they come inside?</h2>
+<pre><code>P(inside) = 0.0979        base rate across all visits 0.1411</code></pre>
+<p><strong>Below average</strong> — 7:12 in the morning at this store is not a strong attach moment, and the model says so.</p>
+<p>The number that moves this is <strong>the shopper’s own prior attach rate</strong>, not the number of visits behind it. Bucketed by visit count the attach rate is flat — 12.6% with no history, 12.5% with ten or more. Bucketed by their own attach rate it runs from 2.9% to 71.6%, a 25× spread, and adding it takes Model A from 0.703 to 0.827 out of time.</p>
+<p>For a shopper we have never seen there is only context, and the model says so.</p>
+</section>
+<section id="model-b-which-category" class="level2">
+<h2 class="anchored" data-anchor-id="model-b-which-category">4 · Model B — which category?</h2>
+<p>Six independent binary models, each answering one question:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>P(category given inside)</th>
+<th>Offerable?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Packaged Beverages</strong></td>
+<td><strong>0.970</strong></td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td>Cigarettes</td>
+<td>0.431</td>
+<td><strong>no — regulated</strong></td>
+</tr>
+<tr class="odd">
+<td>Candy</td>
+<td>0.063</td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td>Salty Snacks</td>
+<td>0.031</td>
+<td>yes</td>
+</tr>
+<tr class="odd">
+<td>Other Tobacco / Nicotine</td>
+<td>0.009</td>
+<td><strong>no — regulated</strong></td>
+</tr>
+<tr class="even">
+<td>Beer</td>
+<td>0.000</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Here the 57 visits do their work.</strong> An 86% historical beverage rate drives the score near the top of its range, and the two categories this shopper has never touched sit at zero. Note that cigarettes score 0.431 and are still not offered — that is a business rule, not a model output. See §7. Against context alone, knowing the customer is worth <strong>+0.08 to +0.22 AUC</strong> depending on the category — the single largest effect measured anywhere in this project.</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Read saturated scores carefully.</strong> Isotonic calibration is a step function, so for a shopper whose history is emphatic enough it will return the top or bottom step — 1.0 or 0.0 exactly. Both are clamped (to 1 − 1e-5 and 1e-5) so a zero cannot wipe out the arithmetic downstream, but a score at either rail means “as confident as the calibrator can express”, not a certainty.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="model-c-which-sku" class="level2">
+<h2 class="anchored" data-anchor-id="model-c-which-sku">5 · Model C — which SKU?</h2>
+<p>This shopper <strong>is</strong> in the ALS factor matrix, so the ranking is personal rather than a best-seller list. That puts them in the minority: only 19% of next-period shoppers have enough category history to qualify.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Brand</th>
+<th>P(sku)</th>
+<th>Margin</th>
+<th>Brand funds</th>
+<th>Our cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Monster</strong></td>
+<td>0.0075</td>
+<td>$1.60</td>
+<td>100%</td>
+<td>$0.00</td>
+</tr>
+<tr class="even">
+<td>Monster</td>
+<td>0.0071</td>
+<td>$1.68</td>
+<td>100%</td>
+<td>$0.00</td>
+</tr>
+<tr class="odd">
+<td>Mountain Dew</td>
+<td>0.0037</td>
+<td>$3.83</td>
+<td>0%</td>
+<td>$0.90</td>
+</tr>
+<tr class="even">
+<td>Dr Pepper</td>
+<td>0.0031</td>
+<td>$4.30</td>
+<td>0%</td>
+<td>$0.90</td>
+</tr>
+</tbody>
+</table>
+<p><code>P(sku)</code> is normalised <strong>within the category</strong> — “given they buy a drink, which drink” — which is what the decision rule multiplies against <code>P(category)</code>.</p>
+<p>Ranked by <strong>expected value, not by P(sku)</strong> — a thin margin on a likely item can lose to a fat margin on a less likely one, and a fully funded offer beats a self-funded one at equal probability because it costs us nothing.</p>
+</section>
+<section id="the-decision" class="level2">
+<h2 class="anchored" data-anchor-id="the-decision">6 · The decision</h2>
+<pre><code>  P(inside)        0.0979
+x P(category)      0.9697
+x P(sku)           0.0075
+  ------------------------
+  P(buys this)     0.000708
+x effective margin $1.60 - $0.00 = $1.60
+  ------------------------
+  expected value   $0.00114 per fill</code></pre>
+<blockquote class="blockquote">
+<p><strong>Show: Monster.</strong></p>
+</blockquote>
+<p>Mountain Dew carries more than twice the margin, and still loses: it is self-funded, so $0.90 of that $3.83 is ours to give away.</p>
+<p>A tenth of a cent sounds like nothing. Across 36.1M fuel visits it is not — and more to the point, it is <strong>positive</strong>, which a self-funded version of the same offer would not be.</p>
+</section>
+<section id="five-customers-one-pump-one-minute" class="level2">
+<h2 class="anchored" data-anchor-id="five-customers-one-pump-one-minute">7 · Five customers, one pump, one minute</h2>
+<p>One trace shows the mechanism. Five show what the customer id is actually worth. These are <strong>real shoppers</strong> picked to typify an archetype, then run through the <em>identical</em> context — same store, same 07:12, same REGULAR fill — so the only thing that varies is who they are.</p>
+<p><a href="https://github.com/byuibigdata/bdbook"><code>personas.py</code></a> picks and runs them.</p>
+<section id="what-they-did-before" class="level3">
+<h3 class="anchored" data-anchor-id="what-they-did-before">What they did before</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Persona</th>
+<th>Fuel visits</th>
+<th>Went inside</th>
+<th>Soda</th>
+<th>Cigs</th>
+<th>Salty</th>
+<th>Beer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Never bought</td>
+<td>858</td>
+<td><strong>0%</strong></td>
+<td>0%</td>
+<td>0%</td>
+<td>0%</td>
+<td>0%</td>
+</tr>
+<tr class="even">
+<td>Soda regular</td>
+<td>16</td>
+<td>100%</td>
+<td><strong>100%</strong></td>
+<td>0%</td>
+<td>0%</td>
+<td>0%</td>
+</tr>
+<tr class="odd">
+<td>Cigarette regular</td>
+<td>9</td>
+<td>100%</td>
+<td>0%</td>
+<td><strong>100%</strong></td>
+<td>0%</td>
+<td>0%</td>
+</tr>
+<tr class="even">
+<td>Salty snack regular</td>
+<td>13</td>
+<td>100%</td>
+<td>0%</td>
+<td>0%</td>
+<td><strong>100%</strong></td>
+<td>0%</td>
+</tr>
+<tr class="odd">
+<td>Beer regular</td>
+<td>8</td>
+<td>100%</td>
+<td>0%</td>
+<td>0%</td>
+<td>0%</td>
+<td><strong>100%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The first one is worth pausing on: <strong>858 fills, never once walked inside.</strong> That is a real customer type, and no amount of offer design changes it.</p>
+</section>
+<section id="model-a-separates-them-completely" class="level3">
+<h3 class="anchored" data-anchor-id="model-a-separates-them-completely">Model A separates them completely</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Persona</th>
+<th>Prior attach</th>
+<th>P(inside)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Never bought</td>
+<td>0% of 858</td>
+<td><strong>0.0000</strong></td>
+</tr>
+<tr class="even">
+<td>Soda regular</td>
+<td>100% of 16</td>
+<td>0.8693</td>
+</tr>
+<tr class="odd">
+<td>Cigarette regular</td>
+<td>100% of 9</td>
+<td>0.8320</td>
+</tr>
+<tr class="even">
+<td>Salty snack regular</td>
+<td>100% of 13</td>
+<td>0.8942</td>
+</tr>
+<tr class="odd">
+<td>Beer regular</td>
+<td>100% of 8</td>
+<td><strong>0.9291</strong></td>
+</tr>
+</tbody>
+</table>
+<p>A spread of <strong>0.93</strong>, on identical context. The customer who has fuelled 858 times and never once walked inside is scored as close to zero as the calibrator can express — which is the correct answer, and a cheaper one than any offer.</p>
+</section>
+<section id="model-b-does" class="level3">
+<h3 class="anchored" data-anchor-id="model-b-does">Model B does</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Persona</th>
+<th>Soda</th>
+<th>Cigs</th>
+<th>Salty</th>
+<th>Beer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Never bought</td>
+<td>0.234</td>
+<td>0.015</td>
+<td>0.011</td>
+<td>0.000</td>
+</tr>
+<tr class="even">
+<td><strong>Soda regular</strong></td>
+<td><strong>0.885</strong></td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<td><strong>Cigarette regular</strong></td>
+<td>0.051</td>
+<td><strong>1.000</strong></td>
+<td>0.018</td>
+<td>0.004</td>
+</tr>
+<tr class="even">
+<td><strong>Salty snack regular</strong></td>
+<td>0.331</td>
+<td>0.025</td>
+<td><strong>0.800</strong></td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<td><strong>Beer regular</strong></td>
+<td>0.051</td>
+<td>0.009</td>
+<td>0.011</td>
+<td><strong>0.933</strong></td>
+</tr>
+</tbody>
+</table>
+<p>From 0.000 to 1.000 on cigarettes alone. <strong>Both models want the customer id, but different facts about them</strong> — A wants their overall attach habit, B wants their category mix. That is why they are separate models, not because one of them ignores identity.</p>
+</section>
+<section id="and-the-offers-differ" class="level3">
+<h3 class="anchored" data-anchor-id="and-the-offers-differ">And the offers differ</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Persona</th>
+<th>Offer</th>
+<th>Expected value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Never bought</td>
+<td>Red Bull</td>
+<td><strong>$0.00000</strong></td>
+</tr>
+<tr class="even">
+<td>Soda regular</td>
+<td>Monster</td>
+<td>$0.01352</td>
+</tr>
+<tr class="odd">
+<td>Cigarette regular</td>
+<td><strong>Monster</strong></td>
+<td>$0.00278</td>
+</tr>
+<tr class="even">
+<td>Salty snack regular</td>
+<td>Dot’s Pretzels</td>
+<td>$0.01311</td>
+</tr>
+<tr class="odd">
+<td>Beer regular</td>
+<td><strong>Modelo Especial</strong></td>
+<td><strong>$0.06906</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Two of these deserve comment.</p>
+<p><strong>The cigarette regular is offered a drink.</strong> The model is 94.9% sure they want cigarettes and we will not show them — tobacco is excluded as a business rule, because it carries the highest margin and the shortest SKU tail, so expected value alone would push it at <em>everyone</em>, including the customer who has never bought anything. Targeted tobacco promotion is restricted in most jurisdictions. The system knows the right answer and is correctly forbidden from acting on it, so it falls back to the next thing it believes.</p>
+<p><strong>The never-bought customer is worth $0.00000.</strong> 858 fills, never once inside, and the model prices the offer at nothing. It still <em>names</em> a best guess — the screen has to show something — but the arithmetic says this is not a customer to spend a funded discount on. The beer regular, at <strong>$0.069</strong>, is worth roughly seventy times more than the five-cent average.</p>
+</section>
+</section>
+<section id="what-the-same-trace-says-about-the-deal" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-same-trace-says-about-the-deal">What the same trace says about the deal</h2>
+<p>Read backwards, the rule prices the negotiation:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>If the offer lifts purchase by</th>
+<th>Brand must fund at least</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>+25%</td>
+<td><strong>64%</strong></td>
+</tr>
+<tr class="even">
+<td>+50%</td>
+<td><strong>41%</strong></td>
+</tr>
+<tr class="odd">
+<td>+100%</td>
+<td><strong>11%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>So: <em>“At the lift we think this offer produces, we need you at roughly half.”</em> The arithmetic has a useful property — <strong>the customer’s purchase probability cancels out</strong>. How likely they were to buy decides how much the deal is worth; the margin-to-discount ratio and the lift decide who should pay for it.</p>
+</section>
+<section id="what-this-trace-does-not-show" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-trace-does-not-show">What this trace does not show</h2>
+<p><strong>No p1.</strong> Every number is a prediction of what this customer does anyway, not of what the offer <em>changes</em>. The expected value is priced at <code>p0</code> on both sides, which is why a self-funded discount can never win here. Fixing that needs a holdout — a slice of pumps that show nothing — and it does not exist.</p>
+<p><strong>No logged propensity.</strong> A production version would write what it showed <strong>and the probability it showed it with</strong>. Without that, no off-policy evaluation is possible later and the information cannot be reconstructed.</p>
+<p><strong>Assumed margins.</strong> <code>unit_margin</code> is average price times 40%. The PDI extract has no cost column, so the dollar figures move the moment someone supplies real ones.</p>
+</section>
+<section id="run-it-yourself" class="level2">
+<h2 class="anchored" data-anchor-id="run-it-yourself">Run it yourself</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> data/pipeline_analysis</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">UV</span><span class="op">=</span><span class="st">"uv run --with polars --with scikit-learn --with joblib --with implicit"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="va">$UV</span> python explain.py <span class="at">--demo</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="va">$UV</span> python explain.py <span class="at">--shopper</span> <span class="op">&lt;</span>id<span class="op">&gt;</span> --time <span class="st">"2026-06-15 17:45"</span> <span class="at">--grade</span> DIESEL</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="va">$UV</span> python explain.py <span class="at">--demo</span> <span class="at">--json</span>          <span class="co"># the same trace as a dict</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>serve.py</code> gives the answer; <code>explain.py</code> gives the reasoning; <code>negotiate.py</code> gives the funding floor. All three read the same artifacts and are covered by the 50 checks in <code>validate.py</code>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

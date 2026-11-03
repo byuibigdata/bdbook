@@ -127,6 +127,9 @@ class OfferEngine:
             columns=["shopper_id", "store_id", "ts", "cats", "bought", "fuel_spend"],
         )
         self.hist = pl.read_parquet(C.ART / "feat_history.parquet")
+        self.gtin_category = dict(
+            zip(self.catalog["gtin"].to_list(),
+                self.catalog["category"].to_list()))
         # Median fill, used when the caller does not supply one.
         self.default_spend = float(self.visit["fuel_spend"].median())
 
@@ -151,6 +154,10 @@ class OfferEngine:
         )
         out = {}
         n = prior.height
+        # Model A's two: how often we have seen them, and how often that
+        # ended with them walking inside.
+        out["prior_n"] = n
+        out["prior_attach"] = float(prior["bought"].mean()) if n else -1.0
         for cat in C.TARGET_CATEGORIES:
             hits = (prior["cats"].list.contains(cat).fill_null(False).sum()
                     if n else 0)
@@ -167,7 +174,7 @@ class OfferEngine:
     P_FLOOR = 1e-5
 
     def _p_inside(self, ctx: dict) -> float:
-        X = np.array([[ctx[c] for c in self.cols_a]], dtype=float)
+        X = np.array([[ctx.get(c, 0) for c in self.cols_a]], dtype=float)
         p = float(self.model_a.predict_proba(X)[0, 1])
         return min(max(p, self.P_FLOOR), 1.0 - self.P_FLOOR)
 
@@ -201,11 +208,27 @@ class OfferEngine:
             user_vec = self.als.user_factors[ix]
             raw = self.als.item_factors[idx] @ user_vec
         raw = np.clip(np.asarray(raw, dtype=float), 0, None)
-        total = raw.sum()
-        if total <= 0:
+        if raw.sum() <= 0:
             return {}
-        return {self.items[i].split("@")[0]: float(v / total)
-                for i, v in zip(idx, raw)}
+
+        # Normalise WITHIN each category, so the number means "given they
+        # buy this category, how likely is this SKU" -- which is what the
+        # decision rule multiplies against P(category).
+        by_cat: dict[str, list[tuple[str, float]]] = {}
+        for i, v in zip(idx, raw):
+            gtin = self.items[i].split("@")[0]
+            cat = self.gtin_category.get(gtin)
+            if cat is not None:
+                by_cat.setdefault(cat, []).append((gtin, float(v)))
+
+        out: dict[str, float] = {}
+        for pairs in by_cat.values():
+            total = sum(v for _, v in pairs)
+            if total <= 0:
+                continue
+            for gtin, v in pairs:
+                out[gtin] = v / total
+        return out
 
     # -- the decision -----------------------------------------------------
     def decide(self, shopper_id: str, when: str | datetime,
@@ -224,13 +247,14 @@ class OfferEngine:
             "weekday": ts.isoweekday(), "month": ts.month,
             "fuel_spend": fuel_spend if fuel_spend is not None else self.default_spend,
         })
-        p_in = self._p_inside(ctx)
-        p_cat = self._p_categories(ctx, self._history(shopper_id, ts))
+        hist = self._history(shopper_id, ts)
+        p_in = self._p_inside({**ctx, **hist})
+        p_cat = self._p_categories(ctx, hist)
         p_sku = self._sku_scores(shopper_id, daypart_of(ts))
 
         offers: list[Offer] = []
         for r in self.catalog.iter_rows(named=True):
-            if not r["in_stock"]:
+            if not r["in_stock"] or not r.get("offerable", True):
                 continue
             pc = p_cat.get(r["category"])
             ps = p_sku.get(r["gtin"])

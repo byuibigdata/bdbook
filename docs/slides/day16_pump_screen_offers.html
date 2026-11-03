@@ -193,7 +193,7 @@ J. Hathaway
 <h2>Where we are going</h2>
 <ul>
 <li><span class="step">1</span> <strong>The visit table.</strong> Anchor on fuel, sweep −15/+45, drop the card fees. Everything below depends on this being right.</li>
-<li><span class="step">2</span> <strong>Model A, context only.</strong> A calibrated <code>P(inside)</code>. Beat the 12.8% base rate.</li>
+<li><span class="step">2</span> <strong>Model A.</strong> Context plus their own attach rate. A calibrated <code>P(inside)</code>.</li>
 <li><span class="step">3</span> <strong>Model B on converters.</strong> Six binary models, six categories.</li>
 <li><span class="step">4</span> <strong>Model C where the tail justifies it.</strong> ALS inside beverages first.</li>
 <li><span class="step">5</span> <strong>The expected value rule</strong> — including the decision to show nothing.</li>
@@ -351,8 +351,8 @@ J. Hathaway
 </ul>
 <p><span class="muted" style="font-size:0.65em"><strong>Example conclusions.</strong></span></p>
 </section>
-<section id="history-does-not-predict-conversion" class="slide level2 smaller">
-<h2>History does not predict conversion</h2>
+<section id="how-often-weve-seen-them-tells-us-nothing" class="slide level2 smaller">
+<h2>How often we’ve seen them tells us nothing</h2>
 <p><span class="muted"><strong>Attach rate</strong> — of the fuel visits in this group, the share where the shopper also made a real in-store purchase inside the window. Our label, as a percentage.</span></p>
 <table class="caption-top">
 <thead>
@@ -385,12 +385,52 @@ J. Hathaway
 </tr>
 </tbody>
 </table>
-<p><strong>Flat.</strong> Knowing a customer for two years tells us essentially nothing about whether they will come inside today.</p>
-<p><span class="muted" style="font-size:0.7em">One caveat: this is a <strong>marginal</strong> table. Prior visits correlate with store and daypart, so history could still carry signal once those are controlled. Flat here means flat <em>unconditionally</em>.</span></p>
-<div class="takeaway">
-<p>This is good news. The <strong>cold-start problem mostly disappears</strong> — a first-time shopper is as predictable as a regular.</p>
-</div>
+<p><strong>Flat.</strong> Two years of knowing someone, and the attach rate does not move.</p>
 <p><span class="muted" style="font-size:0.65em"><strong>Example conclusions.</strong></span></p>
+</section>
+<section id="but-what-they-did-tells-us-everything" class="slide level2 smaller">
+<h2>But what they did tells us everything</h2>
+<p>That table asked the wrong question. It bucketed on <strong>how many</strong> visits, never on <strong>what happened</strong> on them:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Their own prior attach rate</th>
+<th>Visits</th>
+<th>Attach on this visit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0%</td>
+<td>571,908</td>
+<td><strong>2.9%</strong></td>
+</tr>
+<tr class="even">
+<td>1–25%</td>
+<td>180,774</td>
+<td>12.3%</td>
+</tr>
+<tr class="odd">
+<td>25–50%</td>
+<td>121,023</td>
+<td>30.2%</td>
+</tr>
+<tr class="even">
+<td>50–75%</td>
+<td>69,098</td>
+<td>50.0%</td>
+</tr>
+<tr class="odd">
+<td><strong>75–100%</strong></td>
+<td>39,212</td>
+<td><strong>71.6%</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="takeaway">
+<p><strong>A 25× spread.</strong> Frequency is worth <strong>+0.004 AUC</strong>; their own attach rate is worth <strong>+0.109</strong>. People are creatures of habit, and the habit is the feature.</p>
+</div>
+<p><span class="muted" style="font-size:0.65em"><strong>Example conclusions.</strong> A lesson in choosing the variable: the first table is true and almost useless.</span></p>
 </section>
 <section id="context-does-predict-it" class="slide level2 smaller">
 <h2>Context does predict it</h2>
@@ -511,7 +551,7 @@ J. Hathaway
 <div class="card">
 <p><span class="card-title">Model A</span></p>
 <p><em>Will they come inside?</em></p>
-<p><strong>Context.</strong> History adds almost nothing.</p>
+<p>Context <strong>+ their own attach rate.</strong></p>
 </div>
 <div class="card">
 <p><span class="card-title">Model B</span></p>
@@ -524,11 +564,56 @@ J. Hathaway
 <p><strong>Who else buys like them.</strong></p>
 </div>
 </div>
-<p>One model mashing these together would let the strong personal signal in B and C hide the fact that A barely depends on identity at all.</p>
+<p>All three want the customer id. They want <strong>different facts</strong> about the person: A their attach habit, B their category mix, C who else buys like them.</p>
+</section>
+<section id="is-the-split-worth-it" class="slide level2 smaller">
+<h2>Is the split worth it?</h2>
+<p><code>P(category) = P(inside) × P(category | inside)</code> is an <strong>identity</strong>, not a modelling choice. So we tested it — two stages against one direct model, same features, same split:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Two-stage</th>
+<th>One-stage</th>
+<th>Diff</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Packaged Beverages</td>
+<td>0.815</td>
+<td>0.815</td>
+<td>+0.000</td>
+</tr>
+<tr class="even">
+<td>Cigarettes</td>
+<td>0.901</td>
+<td>0.901</td>
+<td>−0.000</td>
+</tr>
+<tr class="odd">
+<td>Beer</td>
+<td>0.895</td>
+<td>0.893</td>
+<td>−0.002</td>
+</tr>
+<tr class="even">
+<td>Candy</td>
+<td>0.789</td>
+<td>0.786</td>
+<td>−0.003</td>
+</tr>
+</tbody>
+</table>
+<div class="card bad">
+<p><span class="card-title">The split buys no accuracy</span></p>
+<p>Identical to three decimals. Anyone claiming a decomposition like this <em>predicts better</em> should be asked for this table.</p>
+</div>
+<p><strong>What it does buy:</strong> roughly <strong>3.4× cheaper training</strong> — B fits on the 13% who convert — plus an explicit <code>P(inside)</code> to gate the show-nothing call, and a failure you can locate. Engineering and communication, not accuracy.</p>
 </section>
 <section id="model-a-will-they-come-inside" class="slide level2 smaller">
 <h2>Model A · Will they come inside?</h2>
-<p><strong>Binary classifier over all 36.1M visits. Context only.</strong></p>
+<p><strong>Binary classifier over all 36.1M visits.</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Features</strong>, all known at the pump</p>
@@ -536,6 +621,7 @@ J. Hathaway
 <li>Hour, weekday, month</li>
 <li>Store, fuel grade</li>
 <li>Dollars pumped so far</li>
+<li><strong>Their own prior attach rate</strong></li>
 </ul>
 </div><div class="column" style="width:50%;">
 <p><strong>Choices</strong></p>
@@ -546,7 +632,7 @@ J. Hathaway
 </ul>
 </div></div>
 <div class="takeaway">
-<p>Because history adds so little, this works identically for the <strong>22% of visits by a shopper we have never seen</strong>.</p>
+<p>Out-of-time AUC <strong>0.703 → 0.827</strong> when the attach rate goes in. For the <strong>22% we have never seen</strong>, context is all there is — and they genuinely are harder.</p>
 </div>
 </section>
 <section id="why-we-dont-rebalance" class="slide level2 smaller">
@@ -588,6 +674,62 @@ J. Hathaway
 <p>Per category, from visits <strong>before</strong> this one: bought it before? what share of prior baskets? how long since?</p>
 </div></div>
 <p><span class="orange"><code>GBTClassifier</code> here — this is where interactions live. <em>Beer on a Friday evening.</em></span></p>
+</section>
+<section id="does-the-customer-id-earn-its-place" class="slide level2 smaller">
+<h2>Does the customer id earn its place?</h2>
+<p>Fit every category twice — context alone, then context plus <strong>who they are</strong> — and compare on the held-out period:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Context</th>
+<th><strong>+ customer</strong></th>
+<th>Gain</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cigarettes</td>
+<td>0.667</td>
+<td><strong>0.884</strong></td>
+<td><strong>+0.217</strong></td>
+</tr>
+<tr class="even">
+<td>Other Tobacco / Nicotine</td>
+<td>0.617</td>
+<td><strong>0.838</strong></td>
+<td><strong>+0.221</strong></td>
+</tr>
+<tr class="odd">
+<td>Packaged Beverages</td>
+<td>0.642</td>
+<td>0.750</td>
+<td>+0.109</td>
+</tr>
+<tr class="even">
+<td>Beer</td>
+<td>0.764</td>
+<td>0.870</td>
+<td>+0.106</td>
+</tr>
+<tr class="odd">
+<td>Salty Snacks</td>
+<td>0.599</td>
+<td>0.695</td>
+<td>+0.096</td>
+</tr>
+<tr class="even">
+<td>Candy</td>
+<td>0.643</td>
+<td>0.726</td>
+<td>+0.083</td>
+</tr>
+</tbody>
+</table>
+<div class="takeaway">
+<p><strong>This is why A and B are separate models.</strong> Identity does nothing for <em>whether</em> they come in and almost everything for <em>what</em> they buy — most of all for the habitual categories.</p>
+</div>
+<p><span class="muted" style="font-size:0.65em">Out-of-time AUC, 218,657 train / 78,259 test converting visits. <strong>Example conclusions.</strong></span></p>
 </section>
 <section id="model-c-which-sku" class="slide level2 smaller">
 <h2>Model C · Which SKU?</h2>
@@ -807,11 +949,17 @@ J. Hathaway
 <p><span class="muted">margin · stock · who funds it</span></p>
 </div>
 </div>
+<div class="cards">
 <div class="card good">
-<p><span class="card-title">Why stage C pays for itself</span></p>
-<p>Our discounts table is full of <strong>brand-funded</strong> promotions — ZYN, Monster, Red Bull, Gatorade. A category model cannot spend that money. A SKU model can, and can price the split.</p>
+<p><span class="card-title">Going SKU-level is the revenue line</span></p>
+<p>Brand-funded promotions — ZYN, Monster, Red Bull — are priced per SKU. A category model cannot spend that money.</p>
 </div>
-<p><span class="orange">Stage C is not a better prediction. It’s <strong>a new revenue line.</strong></span></p>
+<div class="card">
+<p><span class="card-title">ALS is a refinement on top</span></p>
+<p><strong>2× better than a best-seller list</strong> — but only for the <strong>19%</strong> of shoppers with history in that category.</p>
+</div>
+</div>
+<p><span class="orange">Build the best-seller fallback <strong>first</strong>: it is the primary path for four fills in five, not a degraded one.</span></p>
 <p><span class="muted" style="font-size:0.7em"><strong>Serving budget:</strong> all four stages must return inside the fill. The models are cheap; the risk is the history lookup, which argues for precomputing each shopper’s <code>prior_*</code> features nightly.</span></p>
 <p><span class="muted" style="font-size:0.7em">Reference: <a href="pipeline.html"><strong>pipeline</strong></a> · <a href="pipeline2.html"><strong>tables and model code</strong></a> · <a href="data-dict.html"><strong>data dictionary</strong></a></span></p>
 </section>
@@ -1095,7 +1243,7 @@ J. Hathaway
 <h2>The build order</h2>
 <ul>
 <li><span class="step">1</span> <strong>The visit table.</strong> Anchor on fuel, sweep −15/+45, drop the card fees. Everything below depends on this being right.</li>
-<li><span class="step">2</span> <strong>Model A, context only.</strong> A calibrated <code>P(inside)</code>. Beat the 12.8% base rate.</li>
+<li><span class="step">2</span> <strong>Model A.</strong> Context plus their own attach rate. A calibrated <code>P(inside)</code>.</li>
 <li><span class="step">3</span> <strong>Model B on converters.</strong> Six binary models, six categories.</li>
 <li><span class="step">4</span> <strong>Model C where the tail justifies it.</strong> ALS inside beverages first.</li>
 <li><span class="step">5</span> <strong>The expected value rule</strong> — including the decision to show nothing.</li>

@@ -156,6 +156,23 @@ def build_visit(lines: pl.DataFrame) -> pl.DataFrame:
             daypart=daypart_expr(pl.col("ts")),
         )
         .drop("n_store_tx")
+        .sort(["shopper_id", "ts", "fuel_tx"])
+        # The shopper's OWN attach rate, strictly before this visit. How
+        # MANY times we have seen someone says almost nothing (+0.004 AUC);
+        # what SHARE of those visits ended inside says a great deal
+        # (+0.109). -1 marks a shopper with no history at all, which the
+        # tree reads as its own group rather than as a low rate.
+        .with_columns(
+            prior_n=(pl.col("bought").cast(pl.Int8).cum_count()
+                     .over("shopper_id").cast(pl.Int32) - 1),
+            prior_in=(pl.col("bought").cast(pl.Int8).cum_sum().over("shopper_id")
+                      - pl.col("bought").cast(pl.Int8)),
+        )
+        .with_columns(
+            prior_attach=pl.when(pl.col("prior_n") > 0)
+            .then(pl.col("prior_in") / pl.col("prior_n"))
+            .otherwise(-1.0)
+        )
         .sort("ts")
     )
 
@@ -251,6 +268,8 @@ def build_offer_catalog(lines: pl.DataFrame) -> pl.DataFrame:
             .then(pl.lit(0.50))         # typical split with the retailer
             .otherwise(pl.lit(0.00)),   # nobody is funding it but us
             in_stock=pl.lit(True),
+            # A business rule, not a modelling one. See config.NOT_OFFERABLE.
+            offerable=~pl.col("category").is_in(C.NOT_OFFERABLE),
         )
         .with_columns(
             our_cost=((1 - pl.col("funded_share")) * pl.col("discount")).round(3)

@@ -67,7 +67,7 @@ Whatever that shopper did on previous visits — if there were any.
 ## Where we are going {.smaller}
 
 - [1]{.step} **The visit table.** Anchor on fuel, sweep −15/+45, drop the card fees. Everything below depends on this being right.
-- [2]{.step} **Model A, context only.** A calibrated `P(inside)`. Beat the 12.8% base rate.
+- [2]{.step} **Model A.** Context plus their own attach rate. A calibrated `P(inside)`.
 - [3]{.step} **Model B on converters.** Six binary models, six categories.
 - [4]{.step} **Model C where the tail justifies it.** ALS inside beverages first.
 - [5]{.step} **The expected value rule** — including the decision to show nothing.
@@ -211,7 +211,7 @@ Two things follow, and both constrain the product:
 
 [**Example conclusions.**]{.muted style="font-size:0.65em"}
 
-## History does not predict conversion {.smaller}
+## How often we've seen them tells us nothing {.smaller}
 
 [**Attach rate** — of the fuel visits in this group, the share where the shopper also made a real in-store purchase inside the window. Our label, as a percentage.]{.muted}
 
@@ -222,15 +222,27 @@ Two things follow, and both constrain the product:
 | 3–9 | 24.0% | **13.2%** |
 | 10+ | 36.1% | 12.5% |
 
-**Flat.** Knowing a customer for two years tells us essentially nothing about whether they will come inside today.
-
-[One caveat: this is a **marginal** table. Prior visits correlate with store and daypart, so history could still carry signal once those are controlled. Flat here means flat *unconditionally*.]{.muted style="font-size:0.7em"}
-
-::: {.takeaway}
-This is good news. The **cold-start problem mostly disappears** — a first-time shopper is as predictable as a regular.
-:::
+**Flat.** Two years of knowing someone, and the attach rate does not move.
 
 [**Example conclusions.**]{.muted style="font-size:0.65em"}
+
+## But what they did tells us everything {.smaller}
+
+That table asked the wrong question. It bucketed on **how many** visits, never on **what happened** on them:
+
+| Their own prior attach rate | Visits | Attach on this visit |
+|---|---|---|
+| 0% | 571,908 | **2.9%** |
+| 1–25% | 180,774 | 12.3% |
+| 25–50% | 121,023 | 30.2% |
+| 50–75% | 69,098 | 50.0% |
+| **75–100%** | 39,212 | **71.6%** |
+
+::: {.takeaway}
+**A 25× spread.** Frequency is worth **+0.004 AUC**; their own attach rate is worth **+0.109**. People are creatures of habit, and the habit is the feature.
+:::
+
+[**Example conclusions.** A lesson in choosing the variable: the first table is true and almost useless.]{.muted style="font-size:0.65em"}
 
 ## Context does predict it {.smaller}
 
@@ -291,7 +303,7 @@ The data told us something structural: **whether** they come in, **what kind** o
 
 *Will they come inside?*
 
-**Context.** History adds almost nothing.
+Context **+ their own attach rate.**
 :::
 ::: {.card}
 [Model B]{.card-title}
@@ -309,11 +321,30 @@ The data told us something structural: **whether** they come in, **what kind** o
 :::
 :::
 
-One model mashing these together would let the strong personal signal in B and C hide the fact that A barely depends on identity at all.
+All three want the customer id. They want **different facts** about the person: A their attach habit, B their category mix, C who else buys like them.
+
+## Is the split worth it? {.smaller}
+
+`P(category) = P(inside) × P(category | inside)` is an **identity**, not a modelling choice. So we tested it — two stages against one direct model, same features, same split:
+
+| Category | Two-stage | One-stage | Diff |
+|---|---|---|---|
+| Packaged Beverages | 0.815 | 0.815 | +0.000 |
+| Cigarettes | 0.901 | 0.901 | −0.000 |
+| Beer | 0.895 | 0.893 | −0.002 |
+| Candy | 0.789 | 0.786 | −0.003 |
+
+::: {.card .bad}
+[The split buys no accuracy]{.card-title}
+
+Identical to three decimals. Anyone claiming a decomposition like this *predicts better* should be asked for this table.
+:::
+
+**What it does buy:** roughly **3.4× cheaper training** — B fits on the 13% who convert — plus an explicit `P(inside)` to gate the show-nothing call, and a failure you can locate. Engineering and communication, not accuracy.
 
 ## Model A · Will they come inside? {.smaller}
 
-**Binary classifier over all 36.1M visits. Context only.**
+**Binary classifier over all 36.1M visits.**
 
 ::: {.columns}
 ::: {.column width="50%"}
@@ -322,6 +353,7 @@ One model mashing these together would let the strong personal signal in B and C
 - Hour, weekday, month
 - Store, fuel grade
 - Dollars pumped so far
+- **Their own prior attach rate**
 :::
 ::: {.column width="50%"}
 **Choices**
@@ -333,7 +365,7 @@ One model mashing these together would let the strong personal signal in B and C
 :::
 
 ::: {.takeaway}
-Because history adds so little, this works identically for the **22% of visits by a shopper we have never seen**.
+Out-of-time AUC **0.703 → 0.827** when the attach rate goes in. For the **22% we have never seen**, context is all there is — and they genuinely are harder.
 :::
 
 ## Why we don't rebalance {.smaller}
@@ -390,6 +422,25 @@ Per category, from visits **before** this one: bought it before? what share of p
 :::
 
 [`GBTClassifier` here — this is where interactions live. *Beer on a Friday evening.*]{.orange}
+
+## Does the customer id earn its place? {.smaller}
+
+Fit every category twice — context alone, then context plus **who they are** — and compare on the held-out period:
+
+| Category | Context | **+ customer** | Gain |
+|---|---|---|---|
+| Cigarettes | 0.667 | **0.884** | **+0.217** |
+| Other Tobacco / Nicotine | 0.617 | **0.838** | **+0.221** |
+| Packaged Beverages | 0.642 | 0.750 | +0.109 |
+| Beer | 0.764 | 0.870 | +0.106 |
+| Salty Snacks | 0.599 | 0.695 | +0.096 |
+| Candy | 0.643 | 0.726 | +0.083 |
+
+::: {.takeaway}
+**This is why A and B are separate models.** Identity does nothing for *whether* they come in and almost everything for *what* they buy — most of all for the habitual categories.
+:::
+
+[Out-of-time AUC, 218,657 train / 78,259 test converting visits. **Example conclusions.**]{.muted style="font-size:0.65em"}
 
 ## Model C · Which SKU? {.smaller}
 
@@ -542,13 +593,20 @@ Same-daypart pairs are often same-store, same-routine. Some of that 80% is *"sam
 :::
 :::
 
+::: {.cards}
 ::: {.card .good}
-[Why stage C pays for itself]{.card-title}
+[Going SKU-level is the revenue line]{.card-title}
 
-Our discounts table is full of **brand-funded** promotions — ZYN, Monster, Red Bull, Gatorade. A category model cannot spend that money. A SKU model can, and can price the split.
+Brand-funded promotions — ZYN, Monster, Red Bull — are priced per SKU. A category model cannot spend that money.
+:::
+::: {.card}
+[ALS is a refinement on top]{.card-title}
+
+**2× better than a best-seller list** — but only for the **19%** of shoppers with history in that category.
+:::
 :::
 
-[Stage C is not a better prediction. It's **a new revenue line.**]{.orange}
+[Build the best-seller fallback **first**: it is the primary path for four fills in five, not a degraded one.]{.orange}
 
 [**Serving budget:** all four stages must return inside the fill. The models are cheap; the risk is the history lookup, which argues for precomputing each shopper's `prior_*` features nightly.]{.muted style="font-size:0.7em"}
 
@@ -737,7 +795,7 @@ The design is sound. **This estimate is not.** Fixing it means a balanced panel 
 ## The build order {.smaller}
 
 - [1]{.step} **The visit table.** Anchor on fuel, sweep −15/+45, drop the card fees. Everything below depends on this being right.
-- [2]{.step} **Model A, context only.** A calibrated `P(inside)`. Beat the 12.8% base rate.
+- [2]{.step} **Model A.** Context plus their own attach rate. A calibrated `P(inside)`.
 - [3]{.step} **Model B on converters.** Six binary models, six categories.
 - [4]{.step} **Model C where the tail justifies it.** ALS inside beverages first.
 - [5]{.step} **The expected value rule** — including the decision to show nothing.

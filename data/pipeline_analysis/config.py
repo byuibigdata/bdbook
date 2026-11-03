@@ -56,10 +56,25 @@ TARGET_CATEGORIES = [
     "Beer",
 ]
 
-# Model C (SKU choice) only earns its place where the tail is long. Top-100
-# SKUs cover 45% of beverages but 86% of cigarettes -- there is nothing to
-# personalise in the second case.
-SKU_MODEL_CATEGORIES = ["Packaged Beverages (Non-Alcoholic)"]
+# Model C (SKU choice) earns its place where the tail is long. Measured
+# offline against a best-seller baseline, hit@10 over all six categories is
+# 16.2% for ALS against 5.3% for popularity -- a 3.0x lift, better than the
+# 2.0x from beverages alone, and it covers 23.9% of next-period shoppers
+# rather than 19.0%.
+#
+# Note it is SKU and not brand: at brand level ALS scores 0.88x, i.e. WORSE
+# than simply showing the best seller. With only a handful of brands that
+# matter there is nothing personal left to learn; the long tail of SKUs is
+# what gives the model something to do.
+SKU_MODEL_CATEGORIES = TARGET_CATEGORIES
+
+# Categories we will not put on a pump screen whatever the arithmetic says.
+# Tobacco carries the highest margin and the shortest SKU tail, so expected
+# value alone pushes it at everyone -- including customers who have never
+# bought it. Targeted tobacco promotion is restricted in most jurisdictions
+# and is a reputational problem everywhere, so it is excluded as a business
+# rule rather than left to the model.
+NOT_OFFERABLE = ["Cigarettes", "Other Tobacco/Nicotine Products"]
 
 # --- training ------------------------------------------------------------
 # Train on everything before the cut, evaluate after it. Never split at

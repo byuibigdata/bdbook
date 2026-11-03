@@ -13,7 +13,8 @@ format:
 materialise, with a grain, a schema and a job that writes it. For ***why***
 each one looks the way it does — why the window is −15/+45, why three models,
 why the decision is priced against a no-offer world — read
-[**pipeline v1 →**](pipeline.html) first.
+[**pipeline v1 →**](pipeline.html) first, and for one customer walked all the
+way to an offer, [**v3 →**](pipeline3.html).
 
 The five Bronze tables are documented column by column in the
 [**data dictionary →**](data-dict.html) — types, null rates, join keys and the
