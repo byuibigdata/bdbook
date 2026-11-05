@@ -483,6 +483,13 @@
     "text": "The label, honestly\n\n\n36.1M fuel visits\n\n\n12.8% buy something inside\n\n\n$7.87 median in-store spend when they do\n\n\nAbout 1 in 8. That is the number every model below has to beat, and the number that sets how much a discount can be worth.\n940 stores across 8 states, October 2024 to September 2026 — that is the exploration set. The models are fitted on a pinned 24-store pilot (2.4M visits); scaling to all 940 needs the store identifier re-encoded, because gradient boosting caps a categorical at 255 levels. Every figure comes from that extract unless labelled an assumption."
   },
   {
+    "objectID": "day16_pump_screen_offers.html#how-we-judge-ourselves",
+    "href": "day16_pump_screen_offers.html#how-we-judge-ourselves",
+    "title": "One Prediction on the Pump Screen",
+    "section": "How we judge ourselves",
+    "text": "How we judge ourselves\nOne date decides whether any number in this deck is worth anything.\n\n\n\n\nWindow\nFuel visits\n\n\n\n\nTrain\nOct 2024 → 31 Mar 2026\n1.85M\n\n\nValidate\n1 Apr 2026 → Sep 2026\n584k\n\n\n\n\nNever a random split\nShuffle these rows and a model learns from next month to predict last month. It scores beautifully and the score is uncollectable — nobody can buy a prediction that needed the future to make it.\n\nThe cutoff binds everything, not just the classifiers. The recommender is factored on purchases before that date, and the complement table is built from baskets before it. Both are easy to forget — they feel like preparation rather than modelling, so they are where the future leaks back in.\nFeatures are point-in-time too: a shopper’s history on any fill counts only the visits strictly before it. Every held-out figure quoted later — the calibration, the hit rates, the second-item result — comes from those six months the models never saw."
+  },
+  {
     "objectID": "day16_pump_screen_offers.html#the-sale-happens-fast",
     "href": "day16_pump_screen_offers.html#the-sale-happens-fast",
     "title": "One Prediction on the Pump Screen",
