@@ -1,8 +1,9 @@
 """The pump-screen pipeline, drawn with Graphviz.
 
 Produces the end-to-end workflow the Day 16 deck links to: raw PDI tables on
-the left, the constructed visit label in the middle, the three models, and
-the expected-value decision on the right.
+the left, the constructed visit label in the middle, the two models, and the
+two-stage decision on the right -- then the second item, and the checks that
+say any of it works.
 
 The deck can only show one stage at a time. This is the whole thing on one
 page, which is what you want when someone asks "where does that number come
@@ -109,23 +110,38 @@ def build() -> graphviz.Digraph:
         c.attr("node", shape="box", style="rounded,filled", color=TEAL,
                fillcolor="#EEF5F8", fontname=SANS, fontsize="13",
                penwidth="1.8", margin="0.18,0.12")
-        node(c, "A", "A · Come inside?",
-             "GBTClassifier, binary<br/>context only — calibrated")
-        node(c, "B", "B · Which category?",
-             "6 × binary GBT<br/>multi-label, not softmax")
-        node(c, "C", "C · Which SKU?",
+        node(c, "relevance", "Category Relevance",
+             "classification<br/>6 × calibrated binary (GBT)")
+        node(c, "affinity", "SKU Affinity",
              "ALS, implicit feedback<br/>item = SKU × daypart")
-        c.body.append("{rank=same; A; B}")
+        node(c, "bestseller", "Best-Seller",
+             "popularity fallback<br/>~68% of fills", color=RIDGE,
+             fillcolor="#F4F7F9")
+        c.body.append("{rank=same; affinity; bestseller}")
 
     # --- decision ------------------------------------------------------
-    node(g, "rank", "Re-rank",
-         "margin · stock<br/><b>who funds the offer</b>", color=ORANGE,
+    node(g, "stage1", "Stage one · the category",
+         "highest P(category) we<br/>are <b>allowed</b> to show", color=ORANGE,
          fillcolor="#FEF5E9", penwidth="2")
+    node(g, "stage2", "Stage two · the SKU",
+         "ranked on <b>P(buys)</b>, inside<br/>that one category only",
+         color=ORANGE, fillcolor="#FEF5E9", penwidth="2")
     # The naive P x margin - cost form is wrong: it never compares against
     # the world where no offer was shown. See the Day 16 decision rule.
-    node(g, "ev", "Expected value",
+    node(g, "ev", "Offer Economics",
          "show iff<br/>p₁(margin − discount) &gt; p₀ × margin", color=GOOD,
          fillcolor="#EDF7F2", penwidth="2.2")
+    # The anchor is what they buy anyway, so it is the wrong thing to
+    # discount. The second item is a different question off a different table.
+    node(g, "pairs", "Pair affinity",
+         "cohort index &amp; excess<br/>exposure controlled", color=TEAL,
+         fillcolor="#EEF5F8", penwidth="1.8")
+    node(g, "second", "The second item",
+         "the complement a discount<br/>could actually <b>add</b>",
+         color=GOOD, fillcolor="#EDF7F2", penwidth="2")
+    node(g, "valid", "Validation",
+         "calibration by decile<br/>hit@10 vs the best seller", color=GOOD,
+         fillcolor="#EDF7F2", penwidth="1.8")
     node(g, "screen", "The pump screen",
          "one offer — or <b>nothing</b>", color=NAVY, fillcolor=NAVY,
          fontcolor="white", penwidth="2")
@@ -150,16 +166,27 @@ def build() -> graphviz.Digraph:
 
     g.body.append("{rank=same; ctx; hist}")
 
-    g.edge("ctx", "A")
-    g.edge("ctx", "B", style="dashed")
-    g.edge("hist", "B")
-    g.edge("hist", "C")
+    g.edge("ctx", "relevance")
+    g.edge("hist", "relevance")
+    g.edge("hist", "affinity")
+    g.edge("ctx", "bestseller", style="dashed")
 
-    g.edge("A", "ev", label="P(inside)")
-    g.edge("B", "C", label="top category")
-    g.edge("C", "rank", label="top 20 SKUs")
-    g.edge("rank", "ev")
+    g.edge("relevance", "stage1", label="P(category)")
+    g.edge("stage1", "affinity", label="the chosen\\ncategory")
+    g.edge("affinity", "stage2", label="personalised")
+    g.edge("bestseller", "stage2", label="no history", style="dashed")
+    g.edge("stage2", "ev")
     g.edge("ev", "screen")
+    g.edge("stage1", "pairs", style="dashed", label="the anchor")
+    g.edge("pairs", "second")
+    g.edge("second", "screen", style="dashed")
+    # Validation hangs off the two STAGES, not off the model objects: what
+    # gets checked is the probability we wrote down and the SKU we ranked
+    # first, which is also what keeps the edges short.
+    g.edge("stage1", "valid", style="dashed", label="calibration",
+           color=GOOD, fontcolor=GOOD)
+    g.edge("stage2", "valid", style="dashed", label="hit@10",
+           color=GOOD, fontcolor=GOOD)
     g.edge("screen", "holdout", style="dashed", label="hold back\\na slice")
     g.edge("holdout", "ev", style="dashed", constraint="false",
            label="measures uplift", color=BAD, fontcolor=BAD)

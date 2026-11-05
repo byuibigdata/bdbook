@@ -89,12 +89,7 @@ def main() -> None:
             continue
         p = prof.filter(pl.col("shopper_id") == sid).row(0, named=True)
         d = eng.decide(sid, when, args.grade, top=10_000)
-        ctx = eng._encode({
-            "daypart": daypart_of(when), "fuel_grade": args.grade,
-            "store_id": str(d.store_id), "hour": when.hour,
-            "weekday": when.isoweekday(), "month": when.month,
-            "fuel_spend": eng.default_spend})
-        pcat = eng._p_categories(ctx, eng._history(sid, when))
+        pcat = eng.category_probs(sid, when, args.grade, store_id=d.store_id)
         best = d.show
         rows.append((label, sid, p, d, pcat, best))
 
@@ -107,22 +102,20 @@ def main() -> None:
         print(f"  {label:<21}{p['visits']:>7}{inside:>8.0%}"
               f"{p[BEV]:>8.0%}{p[CIG]:>7.0%}{p[SALT]:>7.0%}{p[BEER]:>7.0%}")
 
-    # ---- model A ------------------------------------------------------
-    print("\n  MODEL A — will they come inside?  (context + own attach rate)")
-    for label, sid, p, d, *_ in rows:
-        print(f"  {label:<21}P(inside) {d.p_inside:.4f}")
-    spread = max(r[3].p_inside for r in rows) - min(r[3].p_inside for r in rows)
-    print(f"  {'':<21}spread across personas: {spread:.4f}")
-
-    # ---- model B ------------------------------------------------------
-    print("\n  MODEL B — which category?  (this is where identity bites)")
+    # ---- category relevance -------------------------------------------
+    print("\n  CATEGORY RELEVANCE (Binary Relevance) — P(buys it on this fill)")
     print(f"  {'persona':<21}{'soda':>9}{'cigs':>9}{'salty':>9}{'beer':>9}")
     for label, sid, p, d, pcat, _ in rows:
         print(f"  {label:<21}{pcat.get(BEV,0):>9.3f}{pcat.get(CIG,0):>9.3f}"
               f"{pcat.get(SALT,0):>9.3f}{pcat.get(BEER,0):>9.3f}")
 
+    tops = [max(r[4].values()) for r in rows if r[4]]
+    if tops:
+        print(f"  {'':<21}spread on the leading category: "
+              f"{max(tops) - min(tops):.4f}")
+
     # ---- decision -----------------------------------------------------
-    print("\n  THE OFFER")
+    print("\n  THE OFFER  (SKU Affinity + Offer Economics)")
     for label, sid, p, d, pcat, best in rows:
         if best is None:
             print(f"  {label:<21}show nothing")

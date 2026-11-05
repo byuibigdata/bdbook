@@ -132,7 +132,7 @@
 
 <section id="title-slide" data-background-color="#022F4A" data-background-image="DS460_Hex.png" data-background-position="90% 50%" data-background-size="20%" class="quarto-title-block center">
   <h1 class="title">One Prediction on the Pump Screen</h1>
-  <p class="subtitle">Day 16: Designing the model from the data up</p>
+  <p class="subtitle">What to show a customer while the tank fills — and how we would know it worked</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -142,25 +142,6 @@ J. Hathaway
 </div>
 </div>
 
-</section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
-<p>We build one thing, end to end: <strong>a prediction we can put on the pump screen.</strong></p>
-<div class="cards">
-<div class="card">
-<p><span class="card-title">Step 1</span></p>
-<p><strong>Build a label that doesn’t exist.</strong> No column says <em>“did they come inside?”</em></p>
-</div>
-<div class="card">
-<p><span class="card-title">Step 2</span></p>
-<p><strong>Read what the data says</strong> — and what it refuses to say.</p>
-</div>
-<div class="card">
-<p><span class="card-title">Step 3</span></p>
-<p><strong>Three models</strong>, then turn a probability into an offer in dollars.</p>
-</div>
-</div>
-<p>And at the end, the one thing we have to ask the client for.</p>
 </section>
 <section id="the-ask" class="slide level2 dark" data-background-color="#022F4A">
 <h2>The ask</h2>
@@ -192,43 +173,47 @@ J. Hathaway
 <section id="where-we-are-going" class="slide level2 smaller">
 <h2>Where we are going</h2>
 <ul>
-<li><span class="step">1</span> <strong>The visit table.</strong> Anchor on fuel, sweep −15/+45, drop the card fees. Everything below depends on this being right.</li>
-<li><span class="step">2</span> <strong>Model A.</strong> Context plus their own attach rate. A calibrated <code>P(inside)</code>.</li>
-<li><span class="step">3</span> <strong>Model B on converters.</strong> Six binary models, six categories.</li>
-<li><span class="step">4</span> <strong>Model C where the tail justifies it.</strong> ALS inside beverages first.</li>
-<li><span class="step">5</span> <strong>The expected value rule</strong> — including the decision to show nothing.</li>
-<li><span class="step">6</span> <strong>Ask for the holdout</strong>, then measure uplift in dollars.</li>
+<li><span class="step">1</span> <strong>The label.</strong> Anchor on fuel, sweep −15/+45, drop the card fees. There is no column for <em>“did they come inside?”</em> — we have to build one.</li>
+<li><span class="step">2</span> <strong>What the data says.</strong> Where the signal is, and where it is not. This decides what the models are even allowed to be.</li>
+<li><span class="step">3</span> <strong>Two models.</strong> <em>Which category</em> on probability, then <em>which item</em> inside it — plus the checks that say both are working.</li>
+<li><span class="step">4</span> <strong>The economics.</strong> Who funds the discount, and when the answer is to show nothing.</li>
+<li><span class="step">5</span> <strong>The second item</strong>, which is the one actually worth discounting.</li>
 </ul>
 <div class="takeaway">
-<p>Steps 1 and 2 are a semester’s worth of real work. <strong>Today is step 1</strong> — and it is the one everything else inherits.</p>
+<p>Step 1 is the one everything else inherits. Get the label wrong and every number after it is confident and false.</p>
 </div>
-<p><span class="muted" style="font-size:0.7em">Reference: <a href="pipeline.html"><strong>pipeline</strong></a> · <a href="pipeline2.html"><strong>tables and model code</strong></a> · <a href="data-dict.html"><strong>data dictionary</strong></a></span></p>
+</section>
+<section id="three-pages-three-different-questions" class="slide level2 smaller">
+<h2>Three pages, three different questions</h2>
+<p>This deck is the argument. Everything behind it is written up, and each page answers a different question — so you can check the part you care about without reading the other two.</p>
+<div class="cards">
+<div class="card">
+<p><span class="card-title"><a href="pipeline.html"><strong>pipeline</strong></a></span></p>
+<p><strong>Why does it work this way?</strong></p>
+<p>The reasoning, end to end — raw tables, the window we chose, the two models, the two-stage decision. <strong>Click any box</strong> in the diagram for the detail behind it.</p>
+</div>
+<div class="card">
+<p><span class="card-title"><a href="pipeline2.html"><strong>pipeline v2</strong></a></span></p>
+<p><strong>What would we have to build?</strong></p>
+<p>Every table a team has to materialise, with its grain, its schema and the job that writes it — plus the one table that <strong>does not exist</strong> and has to come from you.</p>
+</div>
+<div class="card good">
+<p><span class="card-title"><a href="pipeline3.html"><strong>pipeline v3</strong></a></span></p>
+<p><strong>Does it actually work?</strong></p>
+<p>Ten real customers, each carried from the raw rows we trained on, to the prediction we wrote down, to <strong>what they actually did</strong> afterwards. Plus the calibration on all 583,583 held-out fills.</p>
+</div>
+</div>
+<p><span class="muted" style="font-size:0.7em">The <a href="data-dict.html"><strong>data dictionary</strong></a> covers the five source tables column by column — types, null rates and join keys.</span></p>
 </section>
 <section>
-<section id="step-1-the-label" class="title-slide slide level1 center">
-<h1>Step 1 · The label</h1>
+<section id="part-1-the-label" class="title-slide slide level1 center">
+<h1>Part 1 · The label</h1>
 
 </section>
-<section id="there-is-no-label-in-the-data" class="slide level2">
-<h2>There is no label in the data</h2>
-<p>We want to predict <em>“will this person come inside and buy something?”</em></p>
-<p><strong>No column says that.</strong> The pump and the counter are two separate transactions, minutes apart, tied together only by the shopper id and the clock.</p>
-<div class="flow">
-<div class="box">
-<p><strong>10:41</strong></p>
-<p><span class="muted">fuel, $43.10</span></p>
-</div>
-<p><span class="arrow">→</span></p>
-<div class="box hl">
-<p><strong>10:46</strong></p>
-<p><span class="muted">coffee, $2.19</span></p>
-</div>
-</div>
-<p>Same person, same store, five minutes apart, <strong>two rows that never meet</strong>. Our first job is to join them.</p>
-</section>
-<section id="defining-the-joint-basket" class="slide level2">
-<h2>Defining the joint basket</h2>
-<p>We anchor a window on the <strong>fuel transaction</strong> and sweep up everything that shopper bought nearby.</p>
+<section id="the-label-does-not-exist.-we-build-it." class="slide level2 smaller">
+<h2>The label does not exist. We build it.</h2>
+<p>We want to predict <em>“will this person come inside and buy something?”</em> <strong>No column says that.</strong> The pump and the counter are two separate transactions — fuel at 10:41, coffee at 10:46 — tied together only by the shopper id and the clock.</p>
+<p>So we anchor a window on the <strong>fuel transaction</strong> and sweep up everything that shopper bought nearby:</p>
 <div class="flow">
 <div class="box">
 <p><strong>−15 min</strong></p>
@@ -245,8 +230,7 @@ J. Hathaway
 <p><span class="muted">filled, then shopped</span></p>
 </div>
 </div>
-<p>Asymmetric on purpose: a few people buy first and fuel second, but most fuel first. Forty-five minutes after leaves room for a queue.</p>
-<p><span class="orange">This is a <strong>unit of analysis</strong> decision, and it is ours to defend.</span></p>
+<p>Asymmetric on purpose: most people fuel first, and 45 minutes after leaves room for a queue. <strong>This is a unit-of-analysis decision, and it is ours to defend</strong> — every number in this deck inherits it.</p>
 </section>
 <section id="a-trap-in-the-label" class="slide level2 smaller">
 <h2>A trap in the label</h2>
@@ -259,7 +243,6 @@ J. Hathaway
 <div class="takeaway">
 <p><strong>Look at what our positive class is made of before we train on it.</strong> Removing the fees moved the answer by seven points.</p>
 </div>
-<p><span class="muted" style="font-size:0.65em"><strong>Example conclusions.</strong></span></p>
 </section>
 <section id="the-label-honestly" class="slide level2 smaller">
 <h2>The label, honestly</h2>
@@ -275,45 +258,11 @@ J. Hathaway
 </div>
 </div>
 <p>About <strong>1 in 8</strong>. That is the number every model below has to beat, and the number that sets how much a discount can be worth.</p>
-<p><span class="muted" style="font-size:0.65em"><strong>Example conclusions</strong> — 940 stores, 8 states, 10/2024 to 9/2026.</span></p>
-</section>
-<section id="what-is-a-point-worth" class="slide level2 smaller">
-<h2>What is a point worth?</h2>
-<p>Before building anything, price the ceiling. One point of attach rate, across the panel:</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th></th>
-<th>Per point of attach</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Extra baskets, 2 years</td>
-<td>361,426</td>
-</tr>
-<tr class="even">
-<td>Revenue at the <strong>$7.87</strong> median</td>
-<td>$2.84M</td>
-</tr>
-<tr class="odd">
-<td>Margin at an assumed 40%</td>
-<td>$1.14M</td>
-</tr>
-<tr class="even">
-<td><strong>Per store, per year</strong></td>
-<td><strong>$605</strong></td>
-</tr>
-</tbody>
-</table>
-<div class="takeaway">
-<p>Six hundred dollars a store. <strong>That is the whole in-store prize</strong>, and it is why a self-funded discount can never pay for itself — a conclusion we will reach again the hard way in Step 3.</p>
-</div>
-<p><span class="muted" style="font-size:0.65em">Using the $11.84 mean basket instead gives $910. Margin is <strong>assumed</strong> — the data has no cost column. <strong>Example conclusions.</strong></span></p>
+<p><span class="muted" style="font-size:0.65em">940 stores across 8 states, October 2024 to September 2026 — that is the <strong>exploration</strong> set. The <strong>models</strong> are fitted on a pinned 24-store pilot (2.4M visits); scaling to all 940 needs the store identifier re-encoded, because gradient boosting caps a categorical at 255 levels. Every figure comes from that extract unless labelled an assumption.</span></p>
 </section></section>
 <section>
-<section id="step-2-what-the-data-says" class="title-slide slide level1 center">
-<h1>Step 2 · What the data says</h1>
+<section id="part-2-what-the-data-says" class="title-slide slide level1 center">
+<h1>Part 2 · What the data says</h1>
 
 </section>
 <section id="the-sale-happens-fast" class="slide level2 smaller">
@@ -344,160 +293,12 @@ J. Hathaway
 </tr>
 </tbody>
 </table>
-<p>Two things follow, and both constrain the product:</p>
+<p>Two things follow, and both shape the product:</p>
 <ul>
 <li>The offer must appear <strong>during the fill</strong>. Three in four decisions are made within five minutes of the nozzle going back.</li>
-<li>The 16.2% who shopped first are <strong>not addressable</strong> — they were already inside. But that is 16.2% of <em>conversions</em>, which is only <strong>2.1% of visits</strong>, so we can still reach <strong>97.9%</strong> of fills.</li>
+<li><strong>Attach runs 7.5% at 2am and 15.1% at 6am</strong> — a 2× spread on the clock alone, which is why the hour is in every model below.</li>
+<li>The 16.2% who shopped first have <strong>already converted</strong> — an offer on the screen cannot cause a basket they bought ten minutes ago. We <strong>keep</strong> those visits: the basket is real evidence about what goes with a tank of gas, and it is the training signal either way. What an offer can win there is a <em>second</em> trip inside, which happens on under 5% of those fills — upside, not the core of the case.</li>
 </ul>
-<p><span class="muted" style="font-size:0.65em"><strong>Example conclusions.</strong></span></p>
-</section>
-<section id="how-often-weve-seen-them-tells-us-nothing" class="slide level2 smaller">
-<h2>How often we’ve seen them tells us nothing</h2>
-<p><span class="muted"><strong>Attach rate</strong> — of the fuel visits in this group, the share where the shopper also made a real in-store purchase inside the window. Our label, as a percentage.</span></p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Prior fuel visits</th>
-<th>Share of visits</th>
-<th>Attach rate</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>None — never seen before</td>
-<td>22.2%</td>
-<td>12.6%</td>
-</tr>
-<tr class="even">
-<td>1–2</td>
-<td>17.7%</td>
-<td>13.0%</td>
-</tr>
-<tr class="odd">
-<td>3–9</td>
-<td>24.0%</td>
-<td><strong>13.2%</strong></td>
-</tr>
-<tr class="even">
-<td>10+</td>
-<td>36.1%</td>
-<td>12.5%</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Flat.</strong> Two years of knowing someone, and the attach rate does not move.</p>
-<p><span class="muted" style="font-size:0.65em"><strong>Example conclusions.</strong></span></p>
-</section>
-<section id="but-what-they-did-tells-us-everything" class="slide level2 smaller">
-<h2>But what they did tells us everything</h2>
-<p>That table asked the wrong question. It bucketed on <strong>how many</strong> visits, never on <strong>what happened</strong> on them:</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Their own prior attach rate</th>
-<th>Visits</th>
-<th>Attach on this visit</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>0%</td>
-<td>571,908</td>
-<td><strong>2.9%</strong></td>
-</tr>
-<tr class="even">
-<td>1–25%</td>
-<td>180,774</td>
-<td>12.3%</td>
-</tr>
-<tr class="odd">
-<td>25–50%</td>
-<td>121,023</td>
-<td>30.2%</td>
-</tr>
-<tr class="even">
-<td>50–75%</td>
-<td>69,098</td>
-<td>50.0%</td>
-</tr>
-<tr class="odd">
-<td><strong>75–100%</strong></td>
-<td>39,212</td>
-<td><strong>71.6%</strong></td>
-</tr>
-</tbody>
-</table>
-<div class="takeaway">
-<p><strong>A 25× spread.</strong> Frequency is worth <strong>+0.004 AUC</strong>; their own attach rate is worth <strong>+0.109</strong>. People are creatures of habit, and the habit is the feature.</p>
-</div>
-<p><span class="muted" style="font-size:0.65em"><strong>Example conclusions.</strong> A lesson in choosing the variable: the first table is true and almost useless.</span></p>
-</section>
-<section id="context-does-predict-it" class="slide level2 smaller">
-<h2>Context does predict it</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>By hour</strong> (store wall clock)</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Hour</th>
-<th>Attach</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>2am</td>
-<td>7.5%</td>
-</tr>
-<tr class="even">
-<td>6am</td>
-<td><strong>15.1%</strong></td>
-</tr>
-<tr class="odd">
-<td>noon</td>
-<td>12.7%</td>
-</tr>
-<tr class="even">
-<td>5pm</td>
-<td>13.4%</td>
-</tr>
-<tr class="odd">
-<td>11pm</td>
-<td>9.7%</td>
-</tr>
-</tbody>
-</table>
-</div><div class="column" style="width:50%;">
-<p><strong>By fuel grade</strong></p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Grade</th>
-<th>Attach</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Diesel</td>
-<td>13.3%</td>
-</tr>
-<tr class="even">
-<td>Regular</td>
-<td>12.7%</td>
-</tr>
-<tr class="odd">
-<td>Premium</td>
-<td>12.8%</td>
-</tr>
-<tr class="even">
-<td>Mid/Plus</td>
-<td>12.2%</td>
-</tr>
-</tbody>
-</table>
-</div></div>
-<p>Hour gives a <strong>2× spread</strong>. Grade barely moves among the four that matter — a reminder that a variable being <em>available</em> doesn’t make it <em>useful</em>.</p>
-<p><span class="muted" style="font-size:0.65em"><strong>Example conclusions.</strong></span></p>
 </section>
 <section id="but-what-they-buy-is-concentrated" class="slide level2 smaller">
 <h2>But what they buy is concentrated</h2>
@@ -537,130 +338,41 @@ J. Hathaway
 </tbody>
 </table>
 <p>Six categories cover almost everything. <strong>This is a small problem, not a 35-class one</strong> — and it is the part of the question where a person’s past actually matters.</p>
-<p><span class="muted" style="font-size:0.65em"><strong>Example conclusions.</strong></span></p>
 </section></section>
 <section>
-<section id="step-3-the-models" class="title-slide slide level1 center">
-<h1>Step 3 · The models</h1>
+<section id="part-3-the-models" class="title-slide slide level1 center">
+<h1>Part 3 · The models</h1>
 
 </section>
-<section id="three-questions-three-models" class="slide level2 smaller">
-<h2>Three questions, three models</h2>
-<p>The data told us something structural: <strong>whether</strong> they come in, <strong>what kind</strong> of thing they buy, and <strong>which exact item</strong> are driven by different signals.</p>
+<section id="two-models-named-for-the-method" class="slide level2 smaller">
+<h2>Two models, named for the method</h2>
 <div class="cards">
 <div class="card">
-<p><span class="card-title">Model A</span></p>
-<p><em>Will they come inside?</em></p>
-<p>Context <strong>+ their own attach rate.</strong></p>
-</div>
-<div class="card">
-<p><span class="card-title">Model B</span></p>
-<p><em>Which category?</em></p>
-<p><strong>The person</strong>, plus context.</p>
+<p><span class="card-title">Category Relevance</span></p>
+<p><em>Will they buy a drink on this fill?</em></p>
+<p><strong>Classification</strong> — six calibrated binary classifiers (GBT).</p>
 </div>
 <div class="card hl">
-<p><span class="card-title">Model C</span></p>
-<p><em>Which SKU in it?</em></p>
-<p><strong>Who else buys like them.</strong></p>
+<p><span class="card-title">SKU Affinity</span></p>
+<p><em>Which drink?</em></p>
+<p><strong>ALS</strong> matrix factorisation on implicit feedback.</p>
 </div>
-</div>
-<p>All three want the customer id. They want <strong>different facts</strong> about the person: A their attach habit, B their category mix, C who else buys like them.</p>
-</section>
-<section id="is-the-split-worth-it" class="slide level2 smaller">
-<h2>Is the split worth it?</h2>
-<p><code>P(category) = P(inside) × P(category | inside)</code> is an <strong>identity</strong>, not a modelling choice. So we tested it — two stages against one direct model, same features, same split:</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Category</th>
-<th>Two-stage</th>
-<th>One-stage</th>
-<th>Diff</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Packaged Beverages</td>
-<td>0.815</td>
-<td>0.815</td>
-<td>+0.000</td>
-</tr>
-<tr class="even">
-<td>Cigarettes</td>
-<td>0.901</td>
-<td>0.901</td>
-<td>−0.000</td>
-</tr>
-<tr class="odd">
-<td>Beer</td>
-<td>0.895</td>
-<td>0.893</td>
-<td>−0.002</td>
-</tr>
-<tr class="even">
-<td>Candy</td>
-<td>0.789</td>
-<td>0.786</td>
-<td>−0.003</td>
-</tr>
-</tbody>
-</table>
-<div class="card bad">
-<p><span class="card-title">The split buys no accuracy</span></p>
-<p>Identical to three decimals. Anyone claiming a decomposition like this <em>predicts better</em> should be asked for this table.</p>
-</div>
-<p><strong>What it does buy:</strong> roughly <strong>3.4× cheaper training</strong> — B fits on the 13% who convert — plus an explicit <code>P(inside)</code> to gate the show-nothing call, and a failure you can locate. Engineering and communication, not accuracy.</p>
-</section>
-<section id="model-a-will-they-come-inside" class="slide level2 smaller">
-<h2>Model A · Will they come inside?</h2>
-<p><strong>Binary classifier over all 36.1M visits.</strong></p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>Features</strong>, all known at the pump</p>
-<ul>
-<li>Hour, weekday, month</li>
-<li>Store, fuel grade</li>
-<li>Dollars pumped so far</li>
-<li><strong>Their own prior attach rate</strong></li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p><strong>Choices</strong></p>
-<ul>
-<li><code>GBTClassifier</code>; logistic regression as the baseline</li>
-<li>12.8% positive — <strong>don’t rebalance</strong></li>
-<li><strong>Calibrate it</strong></li>
-</ul>
-</div></div>
-<div class="takeaway">
-<p>Out-of-time AUC <strong>0.703 → 0.827</strong> when the attach rate goes in. For the <strong>22% we have never seen</strong>, context is all there is — and they genuinely are harder.</p>
-</div>
-</section>
-<section id="why-we-dont-rebalance" class="slide level2 smaller">
-<h2>Why we don’t rebalance</h2>
-<p>12.8% positive looks like class imbalance. The reflex is to resample to 50/50.</p>
-<div class="card bad">
-<p><span class="card-title">It would break the arithmetic</span></p>
-<p>Trained 50/50, an average visit scores <strong>0.5 instead of 0.128</strong> — every expected value inflates about 4×, and we’d show discounts that lose money.</p>
 </div>
 <div class="cards">
 <div class="card">
-<p><span class="card-title">Do nothing</span></p>
-<p>One in eight is not severe. A GBT handles it.</p>
+<p><span class="card-title">Best-Seller</span></p>
+<p>The popularity fallback — and the path for <strong>~68% of fills</strong>.</p>
 </div>
-<div class="card">
-<p><span class="card-title">Or weight</span></p>
-<p><code>weightCol</code> changes the loss without touching the data.</p>
-</div>
-<div class="card bad">
-<p><span class="card-title">Never SMOTE</span></p>
-<p>It invents customers who don’t exist.</p>
+<div class="card good">
+<p><span class="card-title">Offer Economics</span></p>
+<p>Not a model. The two above find the item they buy <strong>anyway</strong>, which needs no discount — so the money goes on the <strong>second</strong> item, priced under a funding share.</p>
 </div>
 </div>
-<p><span class="orange">We aren’t classifying, we’re <strong>pricing</strong>. Accuracy doesn’t matter; calibration is the whole job.</span></p>
+<p><span class="orange"><strong>Relevance picks the category. Affinity picks the item inside it</strong> — on probability, never on margin, because an assumed 40% should not get to choose what we show.</span></p>
 </section>
-<section id="model-b-what-will-they-buy" class="slide level2 smaller">
-<h2>Model B · What will they buy?</h2>
-<p><strong>Six binary classifiers — one per category.</strong> Trained on the 4.6M converting visits.</p>
+<section id="category-relevance-what-will-they-buy" class="slide level2 smaller">
+<h2>Category Relevance · What will they buy?</h2>
+<p><strong>Six binary classifiers — one per category</strong>, fitted over every fuel visit, not only the ones that converted.</p>
 <div class="card bad">
 <p><span class="card-title">Not a multiclass model</span></p>
 <p>A basket holds several categories at once; our six shares sum to 119%, not 100%. A softmax would force them to compete and return numbers we can’t price.</p>
@@ -668,7 +380,7 @@ J. Hathaway
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Each model answers one question</strong></p>
-<p><code>P(beer | inside)</code>, <code>P(coffee | inside)</code>, … — independently, so each is a real probability for <em>its</em> offer.</p>
+<p><code>P(buys beer on this fill)</code>, <code>P(buys a drink on this fill)</code>, … — independently, so each is a real probability for <em>its</em> offer. Walking inside is already inside that number.</p>
 </div><div class="column" style="width:50%;">
 <p><strong>Where the person enters</strong></p>
 <p>Per category, from visits <strong>before</strong> this one: bought it before? what share of prior baskets? how long since?</p>
@@ -727,13 +439,13 @@ J. Hathaway
 </tbody>
 </table>
 <div class="takeaway">
-<p><strong>This is why A and B are separate models.</strong> Identity does nothing for <em>whether</em> they come in and almost everything for <em>what</em> they buy — most of all for the habitual categories.</p>
+<p><strong>Identity does almost nothing for <em>whether</em> they come in, and almost everything for <em>what</em> they buy</strong> — most of all for the habitual categories. That asymmetry is why the customer id is worth the engineering it costs.</p>
 </div>
-<p><span class="muted" style="font-size:0.65em">Out-of-time AUC, 218,657 train / 78,259 test converting visits. <strong>Example conclusions.</strong></span></p>
+<p><span class="muted" style="font-size:0.65em">Out-of-time AUC from an ablation on converting visits, 218,657 train / 78,259 test.</span></p>
 </section>
-<section id="model-c-which-sku" class="slide level2 smaller">
-<h2>Model C · Which SKU?</h2>
-<p>A category is not an offer. <em>“Buy a beverage”</em> sells nothing; <em>“$1 off a 16oz Monster”</em> does.</p>
+<section id="sku-affinity-which-item-inside-the-category" class="slide level2 smaller">
+<h2>SKU Affinity · which item inside the category?</h2>
+<p>A category is not an offer. <em>“Buy a beverage”</em> sells nothing; <em>“$1 off a 16oz Monster”</em> does. But only where the tail is long enough to be worth narrowing:</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -754,49 +466,31 @@ J. Hathaway
 <td>43.3%</td>
 </tr>
 <tr class="odd">
-<td>Salty Snacks</td>
-<td>2,681</td>
-<td>51.9%</td>
-</tr>
-<tr class="even">
 <td>Cigarettes</td>
 <td>1,311</td>
 <td><strong>85.9%</strong></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Now there is a catalog worth narrowing.</strong> Beverages has a long tail, so the store best-seller leaves most of the distribution on the table. Cigarettes does not — show the top seller and move on.</p>
-<p><span class="orange">Decide per category by looking at the tail. Don’t apply one answer to all six.</span></p>
-<p><span class="muted" style="font-size:0.7em"><strong>The baseline to beat is the store’s own best seller</strong> — not random. Given those top-100 numbers it is a strong baseline, and ALS has to earn its place against it.</span></p>
+<p>Beverages leaves most of the distribution on the table if you show only the best seller. Cigarettes does not — <strong>decide per category by looking at the tail.</strong></p>
+<div class="takeaway">
+<p>The objection to a recommender here is sparsity: the median shopper has two transactions. <strong>Conditioning on the category fixes it.</strong> Of the 2.75M who bought a beverage, <strong>55% bought three or more</strong> — people repeat items rather than sampling, and a repeated choice is a preference worth factoring.</p>
+</div>
+<p><span class="muted" style="font-size:0.7em">The baseline to beat is the store’s <strong>own best seller</strong>, not random.</span></p>
 </section>
-<section id="why-als-works-here" class="slide level2 smaller">
-<h2>Why ALS works here</h2>
-<p>Earlier the objection was sparsity: the median shopper has two transactions. <strong>Conditioning on the category fixes that.</strong></p>
-<div class="cards">
-<div class="card">
-<p><span class="stat">2.75M</span> shoppers bought a beverage</p>
-</div>
-<div class="card good">
-<p><span class="stat">55%</span> bought three or more</p>
-</div>
-<div class="card">
-<p><span class="stat">16.2 / 7.6</span> purchases per distinct SKU, for those</p>
-</div>
-</div>
-<p>Two purchases per SKU means people <strong>repeat items</strong> rather than sampling. That is a latent preference <code>ALS</code> can factor — implicit feedback, counts as confidence, not ratings.</p>
-<p><span class="muted" style="font-size:0.65em"><strong>Example conclusions.</strong></span></p>
-</section>
-<section id="giving-als-a-clock" class="slide level2 smaller">
-<h2>Giving ALS a clock</h2>
-<p><code>ALS</code> takes no features, so it can’t know it’s 6am. <strong>But we can put the time in the key.</strong></p>
-<p>Share of beverage purchases, on the three dayparts we settle on two slides from now:</p>
+<section id="als-has-no-clock-so-we-put-the-time-in-the-key" class="slide level2 smaller">
+<h2>ALS has no clock, so we put the time in the key</h2>
+<p><code>ALS</code> takes no features — it cannot know it is 6am. But the <strong>item</strong> can carry the hour: <em>“Red Bull@morning”</em> becomes its own item.</p>
+<div class="columns">
+<div class="column" style="width:54%;">
+<p><strong>Daypart changes what sells</strong> — share of beverage purchases:</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
 <th>Brand</th>
-<th>Morning 5–10</th>
-<th>Midday 10–3</th>
-<th>Evening 3–5</th>
+<th>Morning</th>
+<th>Midday</th>
+<th>Evening</th>
 </tr>
 </thead>
 <tbody>
@@ -818,308 +512,200 @@ J. Hathaway
 <td>12.5%</td>
 <td><strong>15.6%</strong></td>
 </tr>
-<tr class="even">
-<td>Gatorade</td>
-<td>12.1%</td>
-<td>16.7%</td>
-<td><strong>18.5%</strong></td>
-</tr>
 </tbody>
 </table>
-<p>Energy drinks are a morning product. Coke <strong>two and a half times</strong> its morning share by evening.</p>
-<p><span class="muted" style="font-size:0.65em"><strong>Example conclusions.</strong></span></p>
-</section>
-<section id="it-holds-inside-one-person" class="slide level2 smaller">
-<h2>It holds inside one person</h2>
-<p>That table could just be different people shopping at different times. So test the individual: take every pair of purchases by the same shopper.</p>
+</div><div class="column" style="width:46%;">
+<p><strong>And it holds inside one person</strong> — every pair of purchases by the same shopper:</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
 <th>The pair</th>
 <th>Same SKU</th>
-<th>Same brand</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><strong>Same daypart</strong></td>
 <td><strong>18.0%</strong></td>
-<td><strong>32.4%</strong></td>
 </tr>
 <tr class="even">
 <td>Different daypart</td>
 <td>10.0%</td>
-<td>20.7%</td>
 </tr>
 </tbody>
 </table>
+</div></div>
 <div class="takeaway">
-<p>Same-daypart pairs are <strong>80% more likely to be the same item</strong>. Knowing the hour nearly doubles what we can say about a known shopper.</p>
+<p>The left table alone could just be <em>different people</em> shopping at different times. The right one is the control: hold the person fixed and same-daypart pairs are still <strong>80% more likely to be the same item</strong>.</p>
 </div>
-<p><span class="muted" style="font-size:0.65em">1.96M shoppers, 154M pairs, on the same three dayparts. <strong>Example conclusions.</strong></span></p>
+<p><span class="muted" style="font-size:0.7em">Three dayparts, not four — morning 5–10 (21.8% of visits), midday 10–3 (35.2%), evening 3–5am (43.1%). Afternoon and night behave almost identically, so a fourth bucket would fragment the data for nothing.</span></p>
 </section>
-<section id="putting-the-clock-in-the-key" class="slide level2 smaller">
-<h2>Putting the clock in the key</h2>
+<section id="does-it-work-two-models-two-different-checks" class="slide level2 smaller">
+<h2>Does it work? Two models, two different checks</h2>
+<p>We said calibration is the whole job, so here is the calibration. Every <strong>583,583</strong> fill in the held-out period, sorted by predicted <code>P(buys a beverage)</code> and cut into ten equal buckets:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Decile</th>
+<th>Predicted</th>
+<th>Actual</th>
+<th>Gap</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1 (lowest)</td>
+<td>0.0001</td>
+<td>0.0005</td>
+<td>+0.0004</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>0.0385</td>
+<td>0.0395</td>
+<td>+0.0009</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>0.1400</td>
+<td>0.1407</td>
+<td>+0.0008</td>
+</tr>
+<tr class="even">
+<td><strong>10 (highest)</strong></td>
+<td><strong>0.3430</strong></td>
+<td><strong>0.3287</strong></td>
+<td><strong>−0.0144</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The middle is calibrated to within a tenth of a point. <strong>The top decile is the one to watch</strong> — the model says 34.3%, the customers deliver 32.9%, so it is mildly over-confident exactly where we are most willing to spend. An offer priced off that decile buys about <strong>4% less attach than the arithmetic assumes</strong>.</p>
+<div class="takeaway">
+<p>Stage one is judged on calibration because its output is <strong>multiplied by dollars</strong>. A model that ranks well but is scaled wrong prices every offer wrong, and AUC would never show it.</p>
+</div>
+<p><span class="orange"><strong>The full audit — ten real customers, raw data to prediction to outcome — is at <a href="pipeline3.html">One Customer, End to End</a>.</strong></span></p>
+</section>
+<section id="and-did-stage-two-name-the-right-item" class="slide level2 smaller">
+<h2>And did stage two name the right item?</h2>
+<p>Calibration says nothing about the SKU. The direct test: <strong>when a customer bought something in the category we offered, was the item they bought in our top k?</strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>k</th>
+<th>SKU Affinity</th>
+<th>Store best seller</th>
+<th>Lift</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>1 — what the screen shows</strong></td>
+<td><strong>9.1%</strong></td>
+<td>3.2%</td>
+<td><strong>2.8×</strong></td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>24.2%</td>
+<td>11.4%</td>
+<td>2.1×</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>34.3%</td>
+<td>16.9%</td>
+<td>2.0×</td>
+</tr>
+</tbody>
+</table>
+<p><span class="muted" style="font-size:0.7em">25,894 held-out fills where ALS ran. <strong>Both rankings scored on the same rows</strong> — comparing ALS rows against fallback rows would compare two populations and flatter ALS for reasons unrelated to the model. Across <em>all</em> fills, personalised and fallback together, hit@1 is <strong>6.2%</strong> against 2.9%.</span></p>
 <div class="cards">
 <div class="card good">
-<p><span class="card-title">Item = SKU × daypart</span></p>
-<p><em>“Red Bull@morning”</em> is its own item. 4,049 → ~16k, still ~1,600 interactions each. <strong>Start here.</strong></p>
+<p><span class="card-title">Where it earns most</span></p>
+<p>Beer <strong>3.1×</strong>, Candy 2.3×, Beverages 1.9×. The longer the tail, the more ALS is worth.</p>
 </div>
 <div class="card">
-<p><span class="card-title">User = shopper × daypart</span></p>
-<p><em>“Me in the morning.”</em> Better semantics, but splits 2.75M users into 11M. Only for the heavy 20%.</p>
-</div>
-<div class="card bad">
-<p><span class="card-title">Both — tensor factorization</span></p>
-<p>The principled version. Not in Spark ML. Don’t.</p>
+<p><span class="card-title">The control that matters</span></p>
+<p>On fallback rows the two rankings agree <strong>100.000%</strong> of the time — they are the same ranking by construction. If that ever drifts, the harness is broken.</p>
 </div>
 </div>
-<p><strong>Use three dayparts, not four</strong> — afternoon and night behave almost identically, so splitting them fragments the data for nothing:</p>
+</section>
+<section id="the-offer-worth-funding-is-the-second-item" class="slide level2 smaller">
+<h2>The offer worth funding is the second item</h2>
+<p>The model above finds what they were going to buy <strong>anyway</strong>. Discounting that is the one promotion certain to cost margin and change nothing.</p>
+<p>So ask the other question. <strong>46.5% of drink baskets are drink-only</strong> — that is the addressable population: someone buying a drink regardless, who might add something.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Daypart</th>
-<th>Hours</th>
-<th>Share of visits</th>
-<th>Why it’s its own bucket</th>
+<th>Second category</th>
+<th>Their rate</th>
+<th>Equally frequent others</th>
+<th>Index</th>
+<th>Excess</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Morning</strong></td>
-<td>5am – 10am</td>
-<td>21.8%</td>
-<td>The outlier. Energy drinks peak, colas bottom out</td>
+<td><strong>Alternative Snacks</strong></td>
+<td>6.0%</td>
+<td>3.5%</td>
+<td><strong>1.74</strong></td>
+<td>2.6 pts</td>
 </tr>
 <tr class="even">
-<td><strong>Midday</strong></td>
-<td>10am – 3pm</td>
-<td>35.2%</td>
-<td>Sits between the two</td>
+<td>Commissary</td>
+<td>3.2%</td>
+<td>1.9%</td>
+<td>1.64</td>
+<td>1.2 pts</td>
 </tr>
 <tr class="odd">
-<td><strong>Evening</strong></td>
-<td>3pm – 5am</td>
-<td>43.1%</td>
-<td>Colas and Gatorade peak; afternoon and night match</td>
+<td>Packaged Sweet Snacks</td>
+<td>6.7%</td>
+<td>4.7%</td>
+<td>1.41</td>
+<td>2.0 pts</td>
+</tr>
+<tr class="even">
+<td><strong>Salty Snacks</strong></td>
+<td>12.2%</td>
+<td>9.4%</td>
+<td>1.30</td>
+<td><strong>2.8 pts</strong></td>
+</tr>
+<tr class="odd">
+<td>Candy</td>
+<td>12.2%</td>
+<td>11.4%</td>
+<td>1.07</td>
+<td>0.8 pts</td>
 </tr>
 </tbody>
 </table>
-<p><span class="muted" style="font-size:0.7em">Attach jumps from 9.8% to 13.2% at <strong>5am</strong> and falls back after <strong>11pm</strong>. That overnight tail is only 3.2% of visits, so it rides with evening rather than earning a fourth bucket.</span></p>
-</section>
-<section id="two-ways-to-still-get-it-wrong" class="slide level2">
-<h2>Two ways to still get it wrong</h2>
-<div class="cards">
 <div class="card bad">
-<p><span class="card-title">It leaks quietly</span></p>
-<p>Factor only on purchases <strong>before</strong> our scoring window. ALS feels like preprocessing, which is exactly why people forget — a model fit on all two years has already seen the answer.</p>
+<p><span class="card-title">Candy is the trap</span></p>
+<p>Candy is <strong>18.2%</strong> of every second item in a drink basket, which makes it look like the obvious pair. Drink regulars buy it <strong>1.07×</strong> as often as shoppers who come in just as much and don’t buy drinks. It is not a complement — it is just everywhere.</p>
 </div>
+<p><span class="muted" style="font-size:0.7em">Compared against shoppers who come in <strong>just as often</strong> but don’t buy the anchor — without that control every cohort indexes high on everything, because every cohort is a cohort of heavy shoppers.</span></p>
 <div class="card bad">
-<p><span class="card-title">Daypart is partly a proxy</span></p>
-<p>Same-daypart pairs are often same-store, same-routine. Some of that 80% is <em>“same mission”</em>, not time. Fine to use — but we shouldn’t claim we measured a clock effect.</p>
+<p><span class="card-title">And this is the one claim we cannot settle</span></p>
+<p>Scored on held-out data, our pair offer lands <strong>10.8%</strong> against <strong>14.0%</strong> for simply picking the most popular second category. That is <strong>by design</strong> — where a shopper already buys salty snacks constantly we steer elsewhere — but it means we trade a <strong>26%</strong> chance of naming something they’d have bought anyway for a <strong>4.5%</strong> chance on something incremental. <strong>Only a holdout can say which is worth more.</strong></p>
 </div>
-</div>
-</section>
-<section id="the-full-stack" class="slide level2 smaller">
-<h2>The full stack</h2>
-<div class="flow">
-<div class="box">
-<p><strong>A</strong> · GBT</p>
-<p><span class="muted">come inside?</span></p>
-</div>
-<p><span class="arrow">→</span></p>
-<div class="box">
-<p><strong>B</strong> · 6 × GBT</p>
-<p><span class="muted">which category?</span></p>
-</div>
-<p><span class="arrow">→</span></p>
-<div class="box hl">
-<p><strong>C</strong> · ALS</p>
-<p><span class="muted"><strong>which SKU?</strong></span></p>
-</div>
-<p><span class="arrow">→</span></p>
-<div class="box">
-<p><strong>Decide</strong></p>
-<p><span class="muted">margin · stock · who funds it</span></p>
-</div>
-</div>
-<div class="cards">
-<div class="card good">
-<p><span class="card-title">Going SKU-level is the revenue line</span></p>
-<p>Brand-funded promotions — ZYN, Monster, Red Bull — are priced per SKU. A category model cannot spend that money.</p>
-</div>
-<div class="card">
-<p><span class="card-title">ALS is a refinement on top</span></p>
-<p><strong>2× better than a best-seller list</strong> — but only for the <strong>19%</strong> of shoppers with history in that category.</p>
-</div>
-</div>
-<p><span class="orange">Build the best-seller fallback <strong>first</strong>: it is the primary path for four fills in five, not a degraded one.</span></p>
-<p><span class="muted" style="font-size:0.7em"><strong>Serving budget:</strong> all four stages must return inside the fill. The models are cheap; the risk is the history lookup, which argues for precomputing each shopper’s <code>prior_*</code> features nightly.</span></p>
-<p><span class="muted" style="font-size:0.7em">Reference: <a href="pipeline.html"><strong>pipeline</strong></a> · <a href="pipeline2.html"><strong>tables and model code</strong></a> · <a href="data-dict.html"><strong>data dictionary</strong></a></span></p>
-</section>
-<section id="the-decision-rule" class="slide level2 smaller">
-<h2>The decision rule</h2>
-<p>The naive version, and why it’s wrong:</p>
-<div class="card bad">
-<p><span class="card-title"><code>P(buys) × margin − cost</code></span></p>
-<p>This never goes negative while margin beats the discount. It also never asks the real question: <strong>what would have happened if we’d shown nothing?</strong></p>
-</div>
-<p>The comparison that matters is between two worlds:</p>
-<div class="statement">
-<p>show the offer iff p₁ × (margin − discount) &gt; p₀ × margin</p>
-</div>
-<p><span class="muted">p₀ = they buy anyway · p₁ = they buy when shown the offer</span></p>
-</section>
-<section id="show-the-math" class="slide level2 smaller">
-<h2>Show the math</h2>
-<p><strong>Per 1,000 fuel visits at 2am.</strong> A packaged beverage averages <strong>$3.25</strong> — assume 40% margin and a <strong>$0.90</strong> discount, the going rate in our own discounts table.</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th></th>
-<th>No offer</th>
-<th>Offer shown</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Buy</td>
-<td>75 <em>(7.5%)</em></td>
-<td>90 <em>(assume +1.5 pts)</em></td>
-</tr>
-<tr class="even">
-<td>Margin each</td>
-<td>$1.30</td>
-<td>$0.40</td>
-</tr>
-<tr class="odd">
-<td><strong>Total</strong></td>
-<td><strong>$97.50</strong></td>
-<td><strong>$36.00</strong></td>
-</tr>
-</tbody>
-</table>
-<div class="takeaway">
-<p><strong>−$61.50.</strong> We paid 90 people $0.90 each to win 15 extra buyers worth $1.30.</p>
-</div>
-<div class="card bad">
-<p><span class="card-title">How wrong could the assumption be?</span></p>
-<p>We assumed <strong>+1.5 points</strong>. Break-even needs <code>p₁/p₀ &gt; margin ÷ (margin − discount)</code> = <strong>3.25×</strong> — at 2am that is <strong>+16.9 points</strong>, not 1.5. The conclusion is not sensitive to the guess.</p>
-</div>
-<p><span class="muted" style="font-size:0.65em">Margin and lift are <strong>assumptions</strong> — the data has no cost column. The $3.25 and the $0.90 are real.</span></p>
-</section>
-<section id="it-gets-worse-when-business-is-good" class="slide level2 smaller">
-<h2>It gets worse when business is good</h2>
-<p>Same offer at 6am, where attach runs <strong>15.1%</strong>:</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th></th>
-<th>No offer</th>
-<th>Offer shown</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Buy</td>
-<td>151</td>
-<td>166</td>
-</tr>
-<tr class="even">
-<td><strong>Total</strong></td>
-<td><strong>$196.30</strong></td>
-<td><strong>$66.40</strong></td>
-</tr>
-</tbody>
-</table>
-<p><strong>−$129.90.</strong> The busy hour loses <em>more</em>, because the discount goes to more people who were already buying.</p>
-<div class="card bad">
-<p><span class="card-title">Traffic does not decide this</span></p>
-<p><code>net = uplift × margin − (p₀ + uplift) × discount</code> gets <strong>more</strong> negative as traffic rises. Under a constant <em>relative</em> lift, p₀ cancels out entirely. <strong>The margin-to-discount ratio decides, not the hour.</strong></p>
-</div>
-</section>
-<section id="funding-is-a-dial-not-a-switch" class="slide level2 smaller">
-<h2>Funding is a dial, not a switch</h2>
-<p>The brand often pays most or all of the discount. Sometimes the retailer and the brand <strong>split</strong> it. That share decides everything:</p>
-<div class="statement">
-<p>our cost = discount × (1 − funded share)</p>
-</div>
-<table class="caption-top">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Brand funds</th>
-<th>Our cost</th>
-<th>Effective margin</th>
-<th>Uplift needed to break even</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>100%</strong></td>
-<td>$0.00</td>
-<td><strong>$1.30</strong></td>
-<td><strong>any</strong> — margin per unit is untouched</td>
-</tr>
-<tr class="even">
-<td>75%</td>
-<td>$0.23</td>
-<td>$1.07</td>
-<td>+21%</td>
-</tr>
-<tr class="odd">
-<td>50%</td>
-<td>$0.45</td>
-<td>$0.85</td>
-<td>+53%</td>
-</tr>
-<tr class="even">
-<td>25%</td>
-<td>$0.68</td>
-<td>$0.62</td>
-<td>+108%</td>
-</tr>
-<tr class="odd">
-<td>0%</td>
-<td>$0.90</td>
-<td>$0.40</td>
-<td>+225%</td>
-</tr>
-</tbody>
-</table>
-<p><span class="orange">At full funding we are not buying volume <em>with</em> margin — we keep the same margin per unit and simply sell more of them.</span></p>
-</section>
-<section id="the-model-is-a-negotiating-tool" class="slide level2 smaller">
-<h2>The model is a negotiating tool</h2>
-<p>Read the decision rule backwards and it answers a commercial question instead:</p>
-<div class="statement">
-<p>minimum funded share = 1 − (margin ÷ discount) × r ÷ (1 + r)</p>
-</div>
-<p><span class="muted">r = the relative lift we think the offer produces</span></p>
-<div class="takeaway">
-<p><strong>p₀ cancels out.</strong> How likely this customer was to buy decides <em>how much the deal is worth</em> — not <em>who should pay for it</em>. The floor depends only on the margin-to-discount ratio and how far the offer moves people.</p>
-</div>
-<p>So we can walk into the brand conversation with a number: <em>“at the lift we observe for Monster in the morning, we need you at 51% or better.”</em></p>
-<p><span class="muted" style="font-size:0.7em"><code>negotiate.py</code> prints that table per SKU and daypart.</span></p>
 </section>
 <section id="what-we-cannot-claim" class="slide level2">
 <h2>What we cannot claim</h2>
 <p>Every number above is a <strong>prediction</strong>, not a <strong>causal effect</strong>. We have shown what people do, not what an offer would change.</p>
 <div class="cards">
 <div class="card bad">
-<p><span class="card-title">The trap</span></p>
-<p>Our best-scoring offer is usually the thing they were <strong>already</strong> going to buy. Discounting it just gives away margin.</p>
+<p><span class="card-title">The gap</span></p>
+<p>A high score says <em>this person buys drinks</em>. It does not say <em>a discount makes them buy one</em>. Nothing in our data separates the two.</p>
 </div>
 <div class="card">
 <p><span class="card-title">What exists</span></p>
@@ -1130,127 +716,32 @@ J. Hathaway
 <p>Assignment wasn’t random. Stores promoted what they expected to sell, so the comparison is biased.</p>
 </div>
 </div>
-<p><span class="orange"><strong>The ask for Murphy: a holdout.</strong> Some pumps show no offer. Without it, uplift is unmeasurable.</span></p>
+<p><span class="orange"><strong>The one thing we need from you: a holdout.</strong> Some pumps show no offer. Without it, uplift is not measurable — by us or by anyone.</span></p>
 </section>
-<section id="could-we-measure-it-anyway" class="slide level2 smaller">
-<h2>Could we measure it anyway?</h2>
-<p>The discounts table records <strong>redemptions, not impressions.</strong></p>
-<div class="cards">
-<div class="card">
-<p><span class="stat">9,215,074</span> transactions with a discount applied</p>
-</div>
+<section id="could-we-measure-it-from-what-we-have" class="slide level2 smaller">
+<h2>Could we measure it from what we have?</h2>
+<p>The discounts table records <strong>redemptions, not impressions</strong> — 9.2M discounts applied, and <strong>zero</strong> records of an offer shown and declined. <code>P(buy | offered)</code> has no denominator.</p>
+<p>Stores switched promotions on at different dates, though, and that stagger is a natural experiment. Monster’s share of beverage lines gives a clean <strong>+1.7 points</strong> for treated stores.</p>
 <div class="card bad">
-<p><span class="stat">0</span> records of an offer shown and <strong>declined</strong></p>
-</div>
-</div>
-<p><code>P(buy | offered)</code> has no denominator. But stores switch promotions on at <strong>different dates</strong>, and that stagger is a natural experiment:</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Promotion</th>
-<th>Stores</th>
-<th>First start</th>
-<th>Median</th>
-<th>Last</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>loyaltyDiscount</code></td>
-<td>188</td>
-<td>10/2024</td>
-<td><strong>01/2026</strong></td>
-<td>09/2026</td>
-</tr>
-<tr class="even">
-<td><code>Skupos</code></td>
-<td>167</td>
-<td>10/2024</td>
-<td>11/2024</td>
-<td>07/2026</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="a-difference-in-differences" class="slide level2 smaller">
-<h2>A difference-in-differences</h2>
-<p>Monster’s share of beverage lines, by week relative to each store’s promo start:</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Weeks from start</th>
-<th>Stores</th>
-<th>Monster share</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>−12</td>
-<td>24</td>
-<td>8.82%</td>
-</tr>
-<tr class="even">
-<td>−6</td>
-<td>30</td>
-<td>10.77%</td>
-</tr>
-<tr class="odd">
-<td>−1</td>
-<td>49</td>
-<td>10.95%</td>
-</tr>
-<tr class="even">
-<td><strong>0</strong></td>
-<td><strong>280</strong></td>
-<td>11.55%</td>
-</tr>
-<tr class="odd">
-<td>+6</td>
-<td>279</td>
-<td>12.21%</td>
-</tr>
-<tr class="even">
-<td>+12</td>
-<td>273</td>
-<td>11.79%</td>
-</tr>
-</tbody>
-</table>
-<p>Treated <strong>10.37% → 12.06%</strong>, a gain of 1.7 points. Never-treated stores sit at 10.01%.</p>
-<p><span class="muted" style="font-size:0.65em"><strong>Example conclusions.</strong></span></p>
-</section>
-<section id="why-not-to-believe-it-yet" class="slide level2 smaller">
-<h2>Why not to believe it yet</h2>
-<div class="cards">
-<div class="card bad">
-<p><span class="card-title">Look at the store count</span></p>
-<p>49 → <strong>280</strong> at week 0. Most stores were already running the promo when our data starts, so almost nobody has a pre-period.</p>
-</div>
-<div class="card bad">
-<p><span class="card-title">The pre-trend is composition</span></p>
-<p>The sample grows from 24 to 49 stores across those weeks. The rising line may be <strong>different stores entering the average</strong>, not behaviour changing.</p>
-</div>
-<div class="card bad">
-<p><span class="card-title">Parallel trends fails</span></p>
-<p>Share was climbing <em>before</em> the promo and plateaus after — the opposite of the shape a causal effect makes.</p>
-</div>
+<p><span class="card-title">We should not believe it</span></p>
+<p>Store count goes <strong>49 → 280</strong> at week zero: almost nobody has a pre-period. The rising pre-trend is <strong>different stores entering the average</strong>, not behaviour changing — and the share was climbing <em>before</em> the promo and plateaus after, the opposite of the shape a causal effect makes.</p>
 </div>
 <div class="takeaway">
-<p>The design is sound. <strong>This estimate is not.</strong> Fixing it means a balanced panel of late adopters — a real project, and a better argument for the holdout than any methodology lecture.</p>
+<p>The design is sound. <strong>This estimate is not.</strong> A balanced panel of late adopters would fix it — and that is a better argument for the holdout than any amount of methodology.</p>
 </div>
 </section>
 <section id="the-build-order" class="slide level2 smaller">
 <h2>The build order</h2>
 <ul>
 <li><span class="step">1</span> <strong>The visit table.</strong> Anchor on fuel, sweep −15/+45, drop the card fees. Everything below depends on this being right.</li>
-<li><span class="step">2</span> <strong>Model A.</strong> Context plus their own attach rate. A calibrated <code>P(inside)</code>.</li>
-<li><span class="step">3</span> <strong>Model B on converters.</strong> Six binary models, six categories.</li>
-<li><span class="step">4</span> <strong>Model C where the tail justifies it.</strong> ALS inside beverages first.</li>
-<li><span class="step">5</span> <strong>The expected value rule</strong> — including the decision to show nothing.</li>
-<li><span class="step">6</span> <strong>Ask for the holdout</strong>, then measure uplift in dollars.</li>
+<li><span class="step">2</span> <strong>Category Relevance.</strong> Six calibrated models. The best-seller fallback ships with it, because it carries ~68% of fills.</li>
+<li><span class="step">3</span> <strong>SKU Affinity</strong> where the tail justifies it.</li>
+<li><span class="step">4</span> <strong>The expected value rule</strong>, priced against showing nothing — and the funding share that decides who pays.</li>
+<li><span class="step">5</span> <strong>The second item.</strong> The complement table, which is where a discount can actually change a basket.</li>
+<li><span class="step">6</span> <strong>The holdout</strong>, then uplift in dollars.</li>
 </ul>
 <div class="takeaway">
-<p>Steps 1 and 2 are a semester’s worth of real work. Steps 4 to 6 are where the money is.</p>
+<p>Steps 1 to 3 are the engineering. <strong>Steps 4 to 6 are where the money is</strong> — and step 6 is the one we cannot do without you.</p>
 </div>
 <p><span class="muted" style="font-size:0.7em">Reference: <a href="pipeline.html"><strong>pipeline</strong></a> · <a href="pipeline2.html"><strong>tables and model code</strong></a> · <a href="data-dict.html"><strong>data dictionary</strong></a></span></p>
 

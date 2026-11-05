@@ -146,32 +146,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This is the end-to-end workflow behind <a href="day16_pump_screen_offers.html">Day 16</a> — from the raw PDI tables to a single offer on the pump screen. <strong>Scroll inside the diagram</strong> to move through the pipeline, and <strong>click any box</strong> — the detail appears underneath.</p>
-<p><strong>This page answers <em>why</em></strong> — why the label looks like that, why three models, why the decision is priced the way it is. For <strong><em>what to build</em></strong> — table schemas, grains and the PySpark that feeds each one to the model — see <a href="pipeline2.html"><strong>pipeline v2 →</strong></a>. Every column in the source data is described in the <a href="data-dict.html"><strong>data dictionary →</strong></a>.</p>
+<p>This is the end-to-end workflow behind <a href="day16_pump_screen_offers.html">the pitch</a> — from the raw PDI tables to a single offer on the pump screen. <strong>Scroll inside the diagram</strong> to move through the pipeline, and <strong>click any box</strong> — the detail appears underneath.</p>
+<p><strong>This page answers <em>why</em></strong> — why the label looks like that, why two models, why the decision is priced the way it is. For <strong><em>what to build</em></strong> — table schemas, grains and the PySpark that feeds each one to the model — see <a href="pipeline2.html"><strong>pipeline v2 →</strong></a>. Every column in the source data is described in the <a href="data-dict.html"><strong>data dictionary →</strong></a>.</p>
 <p>The diagram is generated, not drawn: <a href="img/pump_pipeline.py"><code>img/pump_pipeline.py</code></a> renders it with Graphviz, so it cannot drift from the design. There is also a <a href="img/pump_pipeline.png">flat PNG</a> for slides and printing.</p>
 <div class="pipeline-layout">
 <div id="pipeline-top" class="pipeline-diagram">
-<svg id="pipeline-svg" viewbox="0.00 0.00 869.00 1122.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 1117.86)">
+<svg id="pipeline-svg" viewbox="0.00 0.00 807.00 1143.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 1139.36)">
 <title>pump_pipeline</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-1117.86 865.34,-1117.86 865.34,4 -4,4"></polygon>
+<polygon fill="white" stroke="none" points="-4,4 -4,-1139.36 803.34,-1139.36 803.34,4 -4,4"></polygon>
 <g id="clust1" class="cluster">
 <title>cluster_raw</title>
-<path fill="white" stroke="#bdd3e5" d="M20,-1024.08C20,-1024.08 644,-1024.08 644,-1024.08 650,-1024.08 656,-1030.08 656,-1036.08 656,-1036.08 656,-1093.86 656,-1093.86 656,-1099.86 650,-1105.86 644,-1105.86 644,-1105.86 20,-1105.86 20,-1105.86 14,-1105.86 8,-1099.86 8,-1093.86 8,-1093.86 8,-1036.08 8,-1036.08 8,-1030.08 14,-1024.08 20,-1024.08"></path>
-<text space="preserve" text-anchor="middle" x="63.25" y="-1091.41" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#426a8a"> &nbsp;PDI tables &nbsp;</text>
+<path fill="white" stroke="#bdd3e5" d="M20,-1045.58C20,-1045.58 644,-1045.58 644,-1045.58 650,-1045.58 656,-1051.58 656,-1057.58 656,-1057.58 656,-1115.36 656,-1115.36 656,-1121.36 650,-1127.36 644,-1127.36 644,-1127.36 20,-1127.36 20,-1127.36 14,-1127.36 8,-1121.36 8,-1115.36 8,-1115.36 8,-1057.58 8,-1057.58 8,-1051.58 14,-1045.58 20,-1045.58"></path>
+<text space="preserve" text-anchor="middle" x="63.25" y="-1112.91" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#426a8a"> &nbsp;PDI tables &nbsp;</text>
 </g>
 <g id="clust3" class="cluster">
 <title>cluster_models</title>
-<path fill="white" stroke="#4d93ac" d="M441,-362.87C441,-362.87 756,-362.87 756,-362.87 762,-362.87 768,-368.87 768,-374.87 768,-374.87 768,-536.18 768,-536.18 768,-542.18 762,-548.18 756,-548.18 756,-548.18 441,-548.18 441,-548.18 435,-548.18 429,-542.18 429,-536.18 429,-536.18 429,-374.87 429,-374.87 429,-368.87 435,-362.87 441,-362.87"></path>
-<text space="preserve" text-anchor="middle" x="484.25" y="-533.73" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#4d93ac"> &nbsp;The models &nbsp;</text>
+<path fill="white" stroke="#4d93ac" d="M272,-481.9C272,-481.9 711,-481.9 711,-481.9 717,-481.9 723,-487.9 723,-493.9 723,-493.9 723,-557.68 723,-557.68 723,-563.68 717,-569.68 711,-569.68 711,-569.68 272,-569.68 272,-569.68 266,-569.68 260,-563.68 260,-557.68 260,-557.68 260,-493.9 260,-493.9 260,-487.9 266,-481.9 272,-481.9"></path>
+<text space="preserve" text-anchor="middle" x="315.25" y="-555.23" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#4d93ac"> &nbsp;The models &nbsp;</text>
 </g>
 <!-- items -->
 <g id="n-items" class="node">
 <title>items</title>
 <g id="a_n-items"><a title="Click for how this looks in our data">
-<polygon fill="white" stroke="#bdd3e5" stroke-width="1.4" points="183.83,-1076.36 16.17,-1076.36 16.17,-1032.08 183.83,-1032.08 183.83,-1076.36"></polygon>
-<text space="preserve" text-anchor="middle" x="100" y="-1057.27" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">transaction-items-all</text>
-<text space="preserve" text-anchor="middle" x="100" y="-1043.77" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">128.6M lines</text>
+<polygon fill="white" stroke="#bdd3e5" stroke-width="1.4" points="321.83,-1097.86 154.17,-1097.86 154.17,-1053.58 321.83,-1053.58 321.83,-1097.86"></polygon>
+<text space="preserve" text-anchor="middle" x="238" y="-1078.77" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">transaction-items-all</text>
+<text space="preserve" text-anchor="middle" x="238" y="-1065.27" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">128.6M lines</text>
 </a>
 </g>
 </g>
@@ -179,26 +179,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <g id="n-clean" class="node">
 <title>clean</title>
 <g id="a_n-clean"><a title="Click for how this looks in our data">
-<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M313.08,-984.83C313.08,-984.83 224.91,-984.83 224.91,-984.83 218.91,-984.83 212.91,-978.83 212.91,-972.83 212.91,-972.83 212.91,-946.55 212.91,-946.55 212.91,-940.55 218.91,-934.55 224.91,-934.55 224.91,-934.55 313.08,-934.55 313.08,-934.55 319.08,-934.55 325.08,-940.55 325.08,-946.55 325.08,-946.55 325.08,-972.83 325.08,-972.83 325.08,-978.83 319.08,-984.83 313.08,-984.83"></path>
-<text space="preserve" text-anchor="start" x="233.38" y="-964.84" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Clean lines</text>
-<text space="preserve" text-anchor="start" x="225.88" y="-954.69" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">qty &gt; 0, amount &gt; 0</text>
-<text space="preserve" text-anchor="start" x="229.25" y="-944.69" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">coalesce category</text>
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M282.08,-1006.33C282.08,-1006.33 193.91,-1006.33 193.91,-1006.33 187.91,-1006.33 181.91,-1000.33 181.91,-994.33 181.91,-994.33 181.91,-968.05 181.91,-968.05 181.91,-962.05 187.91,-956.05 193.91,-956.05 193.91,-956.05 282.08,-956.05 282.08,-956.05 288.08,-956.05 294.08,-962.05 294.08,-968.05 294.08,-968.05 294.08,-994.33 294.08,-994.33 294.08,-1000.33 288.08,-1006.33 282.08,-1006.33"></path>
+<text space="preserve" text-anchor="start" x="202.38" y="-986.34" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Clean lines</text>
+<text space="preserve" text-anchor="start" x="194.88" y="-976.19" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">qty &gt; 0, amount &gt; 0</text>
+<text space="preserve" text-anchor="start" x="198.25" y="-966.19" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">coalesce category</text>
 </a>
 </g>
 </g>
 <!-- items&#45;&gt;clean -->
 <g id="edge1" class="edge">
 <title>items-&gt;clean</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M139.62,-1031.53C162.04,-1019.25 190.39,-1003.73 214.84,-990.34"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="216.12,-992.83 221.8,-986.54 213.43,-987.92 216.12,-992.83"></polygon>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M238,-1053.26C238,-1042.41 238,-1028.99 238,-1016.74"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="240.8,-1016.92 238,-1008.92 235.2,-1016.92 240.8,-1016.92"></polygon>
 </g>
 <!-- shopper -->
 <g id="n-shopper" class="node">
 <title>shopper</title>
 <g id="a_n-shopper"><a title="Click for how this looks in our data">
-<polygon fill="white" stroke="#bdd3e5" stroke-width="1.4" points="467.83,-1076.36 354.17,-1076.36 354.17,-1032.08 467.83,-1032.08 467.83,-1076.36"></polygon>
-<text space="preserve" text-anchor="middle" x="411" y="-1057.27" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">shopper-id</text>
-<text space="preserve" text-anchor="middle" x="411" y="-1043.77" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">8.0M shoppers</text>
+<polygon fill="white" stroke="#bdd3e5" stroke-width="1.4" points="467.83,-1097.86 354.17,-1097.86 354.17,-1053.58 467.83,-1053.58 467.83,-1097.86"></polygon>
+<text space="preserve" text-anchor="middle" x="411" y="-1078.77" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">shopper-id</text>
+<text space="preserve" text-anchor="middle" x="411" y="-1065.27" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">8.0M shoppers</text>
 </a>
 </g>
 </g>
@@ -206,44 +206,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <g id="n-visit" class="node">
 <title>visit</title>
 <g id="a_n-visit"><a title="Click for how this looks in our data">
-<path fill="#fef5e9" stroke="#f59625" stroke-width="2.2" d="M459.83,-800.02C459.83,-800.02 358.17,-800.02 358.17,-800.02 352.17,-800.02 346.17,-794.02 346.17,-788.02 346.17,-788.02 346.17,-761.74 346.17,-761.74 346.17,-755.74 352.17,-749.74 358.17,-749.74 358.17,-749.74 459.83,-749.74 459.83,-749.74 465.83,-749.74 471.83,-755.74 471.83,-761.74 471.83,-761.74 471.83,-788.02 471.83,-788.02 471.83,-794.02 465.83,-800.02 459.83,-800.02"></path>
-<text space="preserve" text-anchor="start" x="379.75" y="-780.03" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Fuel visit</text>
-<text space="preserve" text-anchor="start" x="378.25" y="-769.88" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">anchor on fuel</text>
-<text space="preserve" text-anchor="start" x="359.12" y="-759.88" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">window: −15 / +45 min</text>
+<path fill="#fef5e9" stroke="#f59625" stroke-width="2.2" d="M457.83,-821.52C457.83,-821.52 356.17,-821.52 356.17,-821.52 350.17,-821.52 344.17,-815.52 344.17,-809.52 344.17,-809.52 344.17,-783.24 344.17,-783.24 344.17,-777.24 350.17,-771.24 356.17,-771.24 356.17,-771.24 457.83,-771.24 457.83,-771.24 463.83,-771.24 469.83,-777.24 469.83,-783.24 469.83,-783.24 469.83,-809.52 469.83,-809.52 469.83,-815.52 463.83,-821.52 457.83,-821.52"></path>
+<text space="preserve" text-anchor="start" x="377.75" y="-801.53" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Fuel visit</text>
+<text space="preserve" text-anchor="start" x="376.25" y="-791.38" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">anchor on fuel</text>
+<text space="preserve" text-anchor="start" x="357.12" y="-781.38" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">window: −15 / +45 min</text>
 </a>
 </g>
 </g>
 <!-- shopper&#45;&gt;visit -->
 <g id="edge3" class="edge">
 <title>shopper-&gt;visit</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M410.84,-1031.46C410.5,-983.63 409.67,-869.03 409.25,-810.92"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="412.05,-811.19 409.2,-803.22 406.45,-811.24 412.05,-811.19"></polygon>
-<text space="preserve" text-anchor="middle" x="442.62" y="-907.05" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">SHOPPER_ID</text>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M410.69,-1052.96C410,-1005.13 408.34,-890.53 407.51,-832.42"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="410.31,-832.67 407.39,-824.72 404.71,-832.75 410.31,-832.67"></polygon>
+<text space="preserve" text-anchor="middle" x="441.62" y="-928.55" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">SHOPPER_ID</text>
 </g>
 <!-- gtin -->
 <g id="n-gtin" class="node">
 <title>gtin</title>
 <g id="a_n-gtin"><a title="Click for how this looks in our data">
-<polygon fill="white" stroke="#bdd3e5" stroke-width="1.4" points="322.46,-1076.36 215.54,-1076.36 215.54,-1032.08 322.46,-1032.08 322.46,-1076.36"></polygon>
-<text space="preserve" text-anchor="middle" x="269" y="-1057.27" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">master-gtin</text>
-<text space="preserve" text-anchor="middle" x="269" y="-1043.77" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">99k products</text>
+<polygon fill="white" stroke="#bdd3e5" stroke-width="1.4" points="122.46,-1097.86 15.54,-1097.86 15.54,-1053.58 122.46,-1053.58 122.46,-1097.86"></polygon>
+<text space="preserve" text-anchor="middle" x="69" y="-1078.77" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">master-gtin</text>
+<text space="preserve" text-anchor="middle" x="69" y="-1065.27" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">99k products</text>
 </a>
 </g>
 </g>
 <!-- gtin&#45;&gt;clean -->
 <g id="edge2" class="edge">
 <title>gtin-&gt;clean</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M269,-1031.76C269,-1020.91 269,-1007.49 269,-995.24"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="271.8,-995.42 269,-987.42 266.2,-995.42 271.8,-995.42"></polygon>
-<text space="preserve" text-anchor="middle" x="281" y="-1004.58" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">GTIN</text>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M108.62,-1053.03C131.04,-1040.75 159.39,-1025.23 183.84,-1011.84"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="185.12,-1014.33 190.8,-1008.04 182.43,-1009.42 185.12,-1014.33"></polygon>
+<text space="preserve" text-anchor="middle" x="170.57" y="-1026.08" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">GTIN</text>
 </g>
 <!-- stores -->
 <g id="n-stores" class="node">
 <title>stores</title>
 <g id="a_n-stores"><a title="Click for how this looks in our data">
-<polygon fill="white" stroke="#bdd3e5" stroke-width="1.4" points="647.71,-1076.36 500.29,-1076.36 500.29,-1032.08 647.71,-1032.08 647.71,-1076.36"></polygon>
-<text space="preserve" text-anchor="middle" x="574" y="-1057.27" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">stores-information</text>
-<text space="preserve" text-anchor="middle" x="574" y="-1043.77" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">940 transacting</text>
+<polygon fill="white" stroke="#bdd3e5" stroke-width="1.4" points="647.71,-1097.86 500.29,-1097.86 500.29,-1053.58 647.71,-1053.58 647.71,-1097.86"></polygon>
+<text space="preserve" text-anchor="middle" x="574" y="-1078.77" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">stores-information</text>
+<text space="preserve" text-anchor="middle" x="574" y="-1065.27" font-family="Fira Code, DejaVu Sans Mono, monospace" font-size="11.00" fill="#111111">940 transacting</text>
 </a>
 </g>
 </g>
@@ -251,246 +251,336 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <g id="n-ctx" class="node">
 <title>ctx</title>
 <g id="a_n-ctx"><a title="Click for how this looks in our data">
-<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M634.21,-625.46C634.21,-625.46 513.79,-625.46 513.79,-625.46 507.79,-625.46 501.79,-619.46 501.79,-613.46 501.79,-613.46 501.79,-587.18 501.79,-587.18 501.79,-581.18 507.79,-575.18 513.79,-575.18 513.79,-575.18 634.21,-575.18 634.21,-575.18 640.21,-575.18 646.21,-581.18 646.21,-587.18 646.21,-587.18 646.21,-613.46 646.21,-613.46 646.21,-619.46 640.21,-625.46 634.21,-625.46"></path>
-<text space="preserve" text-anchor="start" x="520.75" y="-605.47" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Context features</text>
-<text space="preserve" text-anchor="start" x="515.12" y="-595.32" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">hour (store local), weekday</text>
-<text space="preserve" text-anchor="start" x="514.75" y="-585.32" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">store, pump, grade, gallons</text>
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M634.21,-646.96C634.21,-646.96 513.79,-646.96 513.79,-646.96 507.79,-646.96 501.79,-640.96 501.79,-634.96 501.79,-634.96 501.79,-608.68 501.79,-608.68 501.79,-602.68 507.79,-596.68 513.79,-596.68 513.79,-596.68 634.21,-596.68 634.21,-596.68 640.21,-596.68 646.21,-602.68 646.21,-608.68 646.21,-608.68 646.21,-634.96 646.21,-634.96 646.21,-640.96 640.21,-646.96 634.21,-646.96"></path>
+<text space="preserve" text-anchor="start" x="520.75" y="-626.97" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Context features</text>
+<text space="preserve" text-anchor="start" x="515.12" y="-616.82" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">hour (store local), weekday</text>
+<text space="preserve" text-anchor="start" x="514.75" y="-606.82" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">store, pump, grade, gallons</text>
 </a>
 </g>
 </g>
 <!-- stores&#45;&gt;ctx -->
 <g id="edge4" class="edge">
 <title>stores-&gt;ctx</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M574,-1031.53C574,-1012.78 574,-984.95 574,-960.69 574,-960.69 574,-960.69 574,-686.6 574,-669.84 574,-651.23 574,-635.68"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="576.8,-636.07 574,-628.07 571.2,-636.07 576.8,-636.07"></polygon>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M574,-1053.03C574,-1034.28 574,-1006.45 574,-982.19 574,-982.19 574,-982.19 574,-708.1 574,-691.34 574,-672.73 574,-657.18"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="576.8,-657.57 574,-649.57 571.2,-657.57 576.8,-657.57"></polygon>
 </g>
 <!-- drop -->
 <g id="n-drop" class="node">
 <title>drop</title>
 <g id="a_n-drop"><a title="Click for how this looks in our data">
-<path fill="#fbefee" stroke="#c7352b" stroke-width="1.4" d="M345.96,-887.3C345.96,-887.3 212.04,-887.3 212.04,-887.3 206.04,-887.3 200.04,-881.3 200.04,-875.3 200.04,-875.3 200.04,-849.02 200.04,-849.02 200.04,-843.02 206.04,-837.02 212.04,-837.02 212.04,-837.02 345.96,-837.02 345.96,-837.02 351.96,-837.02 357.96,-843.02 357.96,-849.02 357.96,-849.02 357.96,-875.3 357.96,-875.3 357.96,-881.3 351.96,-887.3 345.96,-887.3"></path>
-<text space="preserve" text-anchor="start" x="213" y="-867.31" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Drop non-purchases</text>
-<text space="preserve" text-anchor="start" x="237" y="-857.16" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">FUEL is the anchor</text>
-<text space="preserve" text-anchor="start" x="226.88" y="-847.16" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">SERVICES = card fees</text>
+<path fill="#fbefee" stroke="#c7352b" stroke-width="1.4" d="M336.96,-908.8C336.96,-908.8 203.04,-908.8 203.04,-908.8 197.04,-908.8 191.04,-902.8 191.04,-896.8 191.04,-896.8 191.04,-870.52 191.04,-870.52 191.04,-864.52 197.04,-858.52 203.04,-858.52 203.04,-858.52 336.96,-858.52 336.96,-858.52 342.96,-858.52 348.96,-864.52 348.96,-870.52 348.96,-870.52 348.96,-896.8 348.96,-896.8 348.96,-902.8 342.96,-908.8 336.96,-908.8"></path>
+<text space="preserve" text-anchor="start" x="204" y="-888.81" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Drop non-purchases</text>
+<text space="preserve" text-anchor="start" x="228" y="-878.66" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">FUEL is the anchor</text>
+<text space="preserve" text-anchor="start" x="217.88" y="-868.66" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">SERVICES = card fees</text>
 </a>
 </g>
 </g>
 <!-- clean&#45;&gt;drop -->
 <g id="edge5" class="edge">
 <title>clean-&gt;drop</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M271.58,-934.09C272.74,-922.95 274.14,-909.58 275.41,-897.48"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="278.16,-898.03 276.21,-889.79 272.6,-897.45 278.16,-898.03"></polygon>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M246.24,-955.59C250.01,-944.33 254.54,-930.82 258.63,-918.61"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="261.23,-919.66 261.11,-911.19 255.92,-917.88 261.23,-919.66"></polygon>
 </g>
 <!-- drop&#45;&gt;visit -->
 <g id="edge6" class="edge">
 <title>drop-&gt;visit</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M316.6,-836.49C330.9,-827.11 347.37,-816.31 362.4,-806.45"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="363.66,-808.97 368.81,-802.25 360.58,-804.29 363.66,-808.97"></polygon>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M309.63,-857.99C324.83,-848.53 342.37,-837.61 358.33,-827.68"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="359.4,-830.31 364.71,-823.7 356.44,-825.55 359.4,-830.31"></polygon>
 </g>
 <!-- label -->
 <g id="n-label" class="node">
 <title>label</title>
 <g id="a_n-label"><a title="Click for how this looks in our data">
-<path fill="#fef5e9" stroke="#f59625" stroke-width="2.2" d="M449.71,-712.74C449.71,-712.74 368.29,-712.74 368.29,-712.74 362.29,-712.74 356.29,-706.74 356.29,-700.74 356.29,-700.74 356.29,-674.46 356.29,-674.46 356.29,-668.46 362.29,-662.46 368.29,-662.46 368.29,-662.46 449.71,-662.46 449.71,-662.46 455.71,-662.46 461.71,-668.46 461.71,-674.46 461.71,-674.46 461.71,-700.74 461.71,-700.74 461.71,-706.74 455.71,-712.74 449.71,-712.74"></path>
-<text space="preserve" text-anchor="start" x="379.75" y="-692.75" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">The label</text>
-<text space="preserve" text-anchor="start" x="382.38" y="-682.6" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">36.1M visits</text>
-<text space="preserve" text-anchor="start" x="369.25" y="-672.6" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">12.8% buy inside</text>
+<path fill="#fef5e9" stroke="#f59625" stroke-width="2.2" d="M447.71,-734.24C447.71,-734.24 366.29,-734.24 366.29,-734.24 360.29,-734.24 354.29,-728.24 354.29,-722.24 354.29,-722.24 354.29,-695.96 354.29,-695.96 354.29,-689.96 360.29,-683.96 366.29,-683.96 366.29,-683.96 447.71,-683.96 447.71,-683.96 453.71,-683.96 459.71,-689.96 459.71,-695.96 459.71,-695.96 459.71,-722.24 459.71,-722.24 459.71,-728.24 453.71,-734.24 447.71,-734.24"></path>
+<text space="preserve" text-anchor="start" x="377.75" y="-714.25" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">The label</text>
+<text space="preserve" text-anchor="start" x="380.38" y="-704.1" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">36.1M visits</text>
+<text space="preserve" text-anchor="start" x="367.25" y="-694.1" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">12.8% buy inside</text>
 </a>
 </g>
 </g>
 <!-- visit&#45;&gt;label -->
 <g id="edge7" class="edge">
 <title>visit-&gt;label</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M409,-748.75C409,-740.86 409,-732 409,-723.55"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="411.8,-723.66 409,-715.66 406.2,-723.66 411.8,-723.66"></polygon>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M407,-770.25C407,-762.36 407,-753.5 407,-745.05"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="409.8,-745.16 407,-737.16 404.2,-745.16 409.8,-745.16"></polygon>
 </g>
 <!-- label&#45;&gt;ctx -->
 <g id="edge8" class="edge">
 <title>label-&gt;ctx</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M457.61,-661.47C479.19,-650.32 504.51,-637.23 526.02,-626.12"></path>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M456.2,-682.97C478.04,-671.82 503.67,-658.73 525.44,-647.62"></path>
 </g>
 <!-- hist -->
 <g id="n-hist" class="node">
 <title>hist</title>
 <g id="a_n-hist"><a title="Click for how this looks in our data">
-<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M457.33,-625.46C457.33,-625.46 352.67,-625.46 352.67,-625.46 346.67,-625.46 340.67,-619.46 340.67,-613.46 340.67,-613.46 340.67,-587.18 340.67,-587.18 340.67,-581.18 346.67,-575.18 352.67,-575.18 352.67,-575.18 457.33,-575.18 457.33,-575.18 463.33,-575.18 469.33,-581.18 469.33,-587.18 469.33,-587.18 469.33,-613.46 469.33,-613.46 469.33,-619.46 463.33,-625.46 457.33,-625.46"></path>
-<text space="preserve" text-anchor="start" x="353.62" y="-605.47" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">History features</text>
-<text space="preserve" text-anchor="start" x="361.12" y="-595.32" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">per category, strictly</text>
-<text space="preserve" text-anchor="start" x="371.62" y="-585.32" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">before this visit</text>
+<path fill="#f4f7f9" stroke="#bdd3e5" stroke-width="1.4" d="M457.33,-646.96C457.33,-646.96 352.67,-646.96 352.67,-646.96 346.67,-646.96 340.67,-640.96 340.67,-634.96 340.67,-634.96 340.67,-608.68 340.67,-608.68 340.67,-602.68 346.67,-596.68 352.67,-596.68 352.67,-596.68 457.33,-596.68 457.33,-596.68 463.33,-596.68 469.33,-602.68 469.33,-608.68 469.33,-608.68 469.33,-634.96 469.33,-634.96 469.33,-640.96 463.33,-646.96 457.33,-646.96"></path>
+<text space="preserve" text-anchor="start" x="353.62" y="-626.97" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">History features</text>
+<text space="preserve" text-anchor="start" x="361.12" y="-616.82" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">per category, strictly</text>
+<text space="preserve" text-anchor="start" x="371.62" y="-606.82" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">before this visit</text>
 </a>
 </g>
 </g>
 <!-- label&#45;&gt;hist -->
 <g id="edge9" class="edge">
 <title>label-&gt;hist</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M407.82,-661.47C407.3,-650.27 406.68,-637.12 406.16,-625.97"></path>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M406.41,-682.97C406.15,-671.77 405.84,-658.62 405.58,-647.47"></path>
 </g>
-<!-- A -->
-<g id="n-A" class="node">
-<title>A</title>
-<g id="a_n-A"><a title="Click for how this looks in our data">
-<path fill="#eef5f8" stroke="#4d93ac" stroke-width="1.8" d="M748.46,-518.68C748.46,-518.68 635.54,-518.68 635.54,-518.68 629.54,-518.68 623.54,-512.68 623.54,-506.68 623.54,-506.68 623.54,-480.4 623.54,-480.4 623.54,-474.4 629.54,-468.4 635.54,-468.4 635.54,-468.4 748.46,-468.4 748.46,-468.4 754.46,-468.4 760.46,-474.4 760.46,-480.4 760.46,-480.4 760.46,-506.68 760.46,-506.68 760.46,-512.68 754.46,-518.68 748.46,-518.68"></path>
-<text space="preserve" text-anchor="start" x="638.38" y="-498.69" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">A · Come inside?</text>
-<text space="preserve" text-anchor="start" x="645.5" y="-488.54" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">GBTClassifier, binary</text>
-<text space="preserve" text-anchor="start" x="636.5" y="-478.54" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">context only — calibrated</text>
+<!-- relevance -->
+<g id="n-relevance" class="node">
+<title>relevance</title>
+<g id="a_n-relevance"><a title="Click for how this looks in our data">
+<path fill="#eef5f8" stroke="#4d93ac" stroke-width="1.8" d="M410.46,-540.18C410.46,-540.18 279.54,-540.18 279.54,-540.18 273.54,-540.18 267.54,-534.18 267.54,-528.18 267.54,-528.18 267.54,-501.9 267.54,-501.9 267.54,-495.9 273.54,-489.9 279.54,-489.9 279.54,-489.9 410.46,-489.9 410.46,-489.9 416.46,-489.9 422.46,-495.9 422.46,-501.9 422.46,-501.9 422.46,-528.18 422.46,-528.18 422.46,-534.18 416.46,-540.18 410.46,-540.18"></path>
+<text space="preserve" text-anchor="start" x="280.5" y="-520.19" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Category Relevance</text>
+<text space="preserve" text-anchor="start" x="316.5" y="-510.04" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">classification</text>
+<text space="preserve" text-anchor="start" x="286.12" y="-500.04" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">6 × calibrated binary (GBT)</text>
 </a>
 </g>
 </g>
-<!-- ctx&#45;&gt;A -->
+<!-- ctx&#45;&gt;relevance -->
 <g id="edge10" class="edge">
-<title>ctx-&gt;A</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M601.96,-574.49C618.3,-559.98 639.08,-541.53 656.56,-526.01"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="658.12,-528.37 662.24,-520.96 654.4,-524.18 658.12,-528.37"></polygon>
+<title>ctx-&gt;relevance</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M502.37,-596.06C481.64,-588.27 459.18,-579.19 439,-569.68 424.08,-562.65 408.34,-554.13 394.1,-545.98"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="395.6,-543.61 387.27,-542.03 392.79,-548.46 395.6,-543.61"></polygon>
 </g>
-<!-- B -->
-<g id="n-B" class="node">
-<title>B</title>
-<g id="a_n-B"><a title="Click for how this looks in our data">
-<path fill="#eef5f8" stroke="#4d93ac" stroke-width="1.8" d="M579.46,-518.68C579.46,-518.68 448.54,-518.68 448.54,-518.68 442.54,-518.68 436.54,-512.68 436.54,-506.68 436.54,-506.68 436.54,-480.4 436.54,-480.4 436.54,-474.4 442.54,-468.4 448.54,-468.4 448.54,-468.4 579.46,-468.4 579.46,-468.4 585.46,-468.4 591.46,-474.4 591.46,-480.4 591.46,-480.4 591.46,-506.68 591.46,-506.68 591.46,-512.68 585.46,-518.68 579.46,-518.68"></path>
-<text space="preserve" text-anchor="start" x="449.5" y="-498.69" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">B · Which category?</text>
-<text space="preserve" text-anchor="start" x="480.62" y="-488.54" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">6 × binary GBT</text>
-<text space="preserve" text-anchor="start" x="463" y="-478.54" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">multi-label, not softmax</text>
+<!-- bestseller -->
+<g id="n-bestseller" class="node">
+<title>bestseller</title>
+<g id="a_n-bestseller"><a title="Click for how this looks in our data">
+<path fill="#f4f7f9" stroke="#426a8a" stroke-width="1.8" d="M703.34,-540.18C703.34,-540.18 622.66,-540.18 622.66,-540.18 616.66,-540.18 610.66,-534.18 610.66,-528.18 610.66,-528.18 610.66,-501.9 610.66,-501.9 610.66,-495.9 616.66,-489.9 622.66,-489.9 622.66,-489.9 703.34,-489.9 703.34,-489.9 709.34,-489.9 715.34,-495.9 715.34,-501.9 715.34,-501.9 715.34,-528.18 715.34,-528.18 715.34,-534.18 709.34,-540.18 703.34,-540.18"></path>
+<text space="preserve" text-anchor="start" x="627.75" y="-520.19" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Best-Seller</text>
+<text space="preserve" text-anchor="start" x="623.62" y="-510.04" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">popularity fallback</text>
+<text space="preserve" text-anchor="start" x="635.62" y="-500.04" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">~68% of fills</text>
 </a>
 </g>
 </g>
-<!-- ctx&#45;&gt;B -->
-<g id="edge11" class="edge">
-<title>ctx-&gt;B</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M559.78,-574.49C551.84,-560.63 541.85,-543.17 533.22,-528.1"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="535.78,-526.95 529.38,-521.4 530.92,-529.73 535.78,-526.95"></polygon>
-</g>
-<!-- hist&#45;&gt;B -->
-<g id="edge12" class="edge">
-<title>hist-&gt;B</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M430.83,-574.49C445.79,-560.11 464.78,-541.86 480.83,-526.42"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="482.62,-528.59 486.45,-521.02 478.74,-524.55 482.62,-528.59"></polygon>
-</g>
-<!-- C -->
-<g id="n-C" class="node">
-<title>C</title>
-<g id="a_n-C"><a title="Click for how this looks in our data">
-<path fill="#eef5f8" stroke="#4d93ac" stroke-width="1.8" d="M565.59,-421.15C565.59,-421.15 462.42,-421.15 462.42,-421.15 456.42,-421.15 450.42,-415.15 450.42,-409.15 450.42,-409.15 450.42,-382.87 450.42,-382.87 450.42,-376.87 456.42,-370.87 462.42,-370.87 462.42,-370.87 565.59,-370.87 565.59,-370.87 571.59,-370.87 577.59,-376.87 577.59,-382.87 577.59,-382.87 577.59,-409.15 577.59,-409.15 577.59,-415.15 571.59,-421.15 565.59,-421.15"></path>
-<text space="preserve" text-anchor="start" x="463.38" y="-401.16" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">C · Which SKU?</text>
-<text space="preserve" text-anchor="start" x="464.88" y="-391.01" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">ALS, implicit feedback</text>
-<text space="preserve" text-anchor="start" x="466" y="-381.01" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">item = SKU × daypart</text>
-</a>
-</g>
-</g>
-<!-- hist&#45;&gt;C -->
+<!-- ctx&#45;&gt;bestseller -->
 <g id="edge13" class="edge">
-<title>hist-&gt;C</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M402.58,-574.89C401.01,-547.2 402.04,-501.61 421,-468.4 430.2,-452.29 444.63,-438.61 459.41,-427.66"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="460.97,-429.99 465.89,-423.08 457.74,-425.41 460.97,-429.99"></polygon>
+<title>ctx-&gt;bestseller</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M595.09,-595.99C607.09,-581.87 622.25,-564.01 635.21,-548.76"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="637.33,-550.58 640.38,-542.67 633.07,-546.96 637.33,-550.58"></polygon>
+</g>
+<!-- hist&#45;&gt;relevance -->
+<g id="edge11" class="edge">
+<title>hist-&gt;relevance</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M390.78,-595.99C382.84,-582.13 372.85,-564.67 364.22,-549.6"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="366.78,-548.45 360.38,-542.9 361.92,-551.23 366.78,-548.45"></polygon>
+</g>
+<!-- affinity -->
+<g id="n-affinity" class="node">
+<title>affinity</title>
+<g id="a_n-affinity"><a title="Click for how this looks in our data">
+<path fill="#eef5f8" stroke="#4d93ac" stroke-width="1.8" d="M567.09,-540.18C567.09,-540.18 466.92,-540.18 466.92,-540.18 460.92,-540.18 454.92,-534.18 454.92,-528.18 454.92,-528.18 454.92,-501.9 454.92,-501.9 454.92,-495.9 460.92,-489.9 466.92,-489.9 466.92,-489.9 567.09,-489.9 567.09,-489.9 573.09,-489.9 579.09,-495.9 579.09,-501.9 579.09,-501.9 579.09,-528.18 579.09,-528.18 579.09,-534.18 573.09,-540.18 567.09,-540.18"></path>
+<text space="preserve" text-anchor="start" x="478.38" y="-520.19" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">SKU Affinity</text>
+<text space="preserve" text-anchor="start" x="467.88" y="-510.04" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">ALS, implicit feedback</text>
+<text space="preserve" text-anchor="start" x="469" y="-500.04" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">item = SKU × daypart</text>
+</a>
+</g>
+</g>
+<!-- hist&#45;&gt;affinity -->
+<g id="edge12" class="edge">
+<title>hist-&gt;affinity</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M431.54,-595.99C446.91,-581.61 466.42,-563.36 482.92,-547.92"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="484.78,-550.01 488.71,-542.5 480.96,-545.92 484.78,-550.01"></polygon>
+</g>
+<!-- stage1 -->
+<g id="n-stage1" class="node">
+<title>stage1</title>
+<g id="a_n-stage1"><a title="Click for how this looks in our data">
+<path fill="#fef5e9" stroke="#f59625" stroke-width="2" d="M482.96,-431.4C482.96,-431.4 325.04,-431.4 325.04,-431.4 319.04,-431.4 313.04,-425.4 313.04,-419.4 313.04,-419.4 313.04,-393.12 313.04,-393.12 313.04,-387.12 319.04,-381.12 325.04,-381.12 325.04,-381.12 482.96,-381.12 482.96,-381.12 488.96,-381.12 494.96,-387.12 494.96,-393.12 494.96,-393.12 494.96,-419.4 494.96,-419.4 494.96,-425.4 488.96,-431.4 482.96,-431.4"></path>
+<text space="preserve" text-anchor="start" x="326" y="-411.41" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Stage one · the category</text>
+<text space="preserve" text-anchor="start" x="353.75" y="-401.26" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">highest P(category) we</text>
+<text space="preserve" text-anchor="start" x="359" y="-391.26" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">are </text>
+<text space="preserve" text-anchor="start" x="375.5" y="-391.26" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">allowed</text>
+<text space="preserve" text-anchor="start" x="411.5" y="-391.26" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a"> to show</text>
+</a>
+</g>
+</g>
+<!-- relevance&#45;&gt;stage1 -->
+<g id="edge14" class="edge">
+<title>relevance-&gt;stage1</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M358.83,-489C366.75,-474.68 376.78,-456.52 385.38,-440.95"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="387.81,-442.35 389.23,-433.99 382.91,-439.64 387.81,-442.35"></polygon>
+<text space="preserve" text-anchor="middle" x="404.91" y="-456.77" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">P(category)</text>
+</g>
+<!-- stage2 -->
+<g id="n-stage2" class="node">
+<title>stage2</title>
+<g id="a_n-stage2"><a title="Click for how this looks in our data">
+<path fill="#fef5e9" stroke="#f59625" stroke-width="2" d="M695.34,-431.4C695.34,-431.4 566.66,-431.4 566.66,-431.4 560.66,-431.4 554.66,-425.4 554.66,-419.4 554.66,-419.4 554.66,-393.12 554.66,-393.12 554.66,-387.12 560.66,-381.12 566.66,-381.12 566.66,-381.12 695.34,-381.12 695.34,-381.12 701.34,-381.12 707.34,-387.12 707.34,-393.12 707.34,-393.12 707.34,-419.4 707.34,-419.4 707.34,-425.4 701.34,-431.4 695.34,-431.4"></path>
+<text space="preserve" text-anchor="start" x="567.62" y="-411.41" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Stage two · the SKU</text>
+<text space="preserve" text-anchor="start" x="574.75" y="-401.26" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">ranked on </text>
+<text space="preserve" text-anchor="start" x="620.5" y="-401.26" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">P(buys)</text>
+<text space="preserve" text-anchor="start" x="655.75" y="-401.26" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">, inside</text>
+<text space="preserve" text-anchor="start" x="582.62" y="-391.26" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">that one category only</text>
+</a>
+</g>
+</g>
+<!-- affinity&#45;&gt;stage2 -->
+<g id="edge16" class="edge">
+<title>affinity-&gt;stage2</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M540.62,-489.29C552.56,-477.04 567.42,-462.17 581.25,-449.4 585.1,-445.85 589.18,-442.2 593.28,-438.62"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="594.82,-440.99 599.04,-433.64 591.16,-436.75 594.82,-440.99"></polygon>
+<text space="preserve" text-anchor="middle" x="608.62" y="-456.77" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">personalised</text>
+</g>
+<!-- bestseller&#45;&gt;stage2 -->
+<g id="edge17" class="edge">
+<title>bestseller-&gt;stage2</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M655.5,-489C651.28,-474.95 645.96,-457.2 641.36,-441.83"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="644.04,-441.03 639.06,-434.17 638.68,-442.64 644.04,-441.03"></polygon>
+<text space="preserve" text-anchor="middle" x="671.24" y="-456.77" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">no history</text>
+</g>
+<!-- stage1&#45;&gt;affinity -->
+<g id="edge15" class="edge">
+<title>stage1-&gt;affinity</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M430.33,-432.14C446.16,-447.1 466.48,-466.3 483.46,-482.34"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="481.23,-484.09 488.97,-487.55 485.07,-480.02 481.23,-484.09"></polygon>
+<text space="preserve" text-anchor="middle" x="494.62" y="-462.4" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">the chosen</text>
+<text space="preserve" text-anchor="middle" x="494.62" y="-451.15" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">category</text>
+</g>
+<!-- pairs -->
+<g id="n-pairs" class="node">
+<title>pairs</title>
+<g id="a_n-pairs"><a title="Click for how this looks in our data">
+<path fill="#eef5f8" stroke="#4d93ac" stroke-width="1.8" d="M405.71,-333.87C405.71,-333.87 306.29,-333.87 306.29,-333.87 300.29,-333.87 294.29,-327.87 294.29,-321.87 294.29,-321.87 294.29,-295.59 294.29,-295.59 294.29,-289.59 300.29,-283.59 306.29,-283.59 306.29,-283.59 405.71,-283.59 405.71,-283.59 411.71,-283.59 417.71,-289.59 417.71,-295.59 417.71,-295.59 417.71,-321.87 417.71,-321.87 417.71,-327.87 411.71,-333.87 405.71,-333.87"></path>
+<text space="preserve" text-anchor="start" x="319.25" y="-313.88" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Pair affinity</text>
+<text space="preserve" text-anchor="start" x="307.25" y="-303.73" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">cohort index &amp; excess</text>
+<text space="preserve" text-anchor="start" x="313.62" y="-293.73" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">exposure controlled</text>
+</a>
+</g>
+</g>
+<!-- stage1&#45;&gt;pairs -->
+<g id="edge20" class="edge">
+<title>stage1-&gt;pairs</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M391.39,-380.16C385.77,-368.97 379.06,-355.62 373,-343.57"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="375.57,-342.45 369.48,-336.56 370.57,-344.96 375.57,-342.45"></polygon>
+<text space="preserve" text-anchor="middle" x="404.31" y="-353.62" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">the anchor</text>
+</g>
+<!-- valid -->
+<g id="n-valid" class="node">
+<title>valid</title>
+<g id="a_n-valid"><a title="Click for how this looks in our data">
+<path fill="#edf7f2" stroke="#1f8a5b" stroke-width="1.8" d="M572.71,-333.87C572.71,-333.87 461.29,-333.87 461.29,-333.87 455.29,-333.87 449.29,-327.87 449.29,-321.87 449.29,-321.87 449.29,-295.59 449.29,-295.59 449.29,-289.59 455.29,-283.59 461.29,-283.59 461.29,-283.59 572.71,-283.59 572.71,-283.59 578.71,-283.59 584.71,-289.59 584.71,-295.59 584.71,-295.59 584.71,-321.87 584.71,-321.87 584.71,-327.87 578.71,-333.87 572.71,-333.87"></path>
+<text space="preserve" text-anchor="start" x="485.5" y="-313.88" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Validation</text>
+<text space="preserve" text-anchor="start" x="473.88" y="-303.73" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">calibration by decile</text>
+<text space="preserve" text-anchor="start" x="462.25" y="-293.73" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">hit@10 vs the best seller</text>
+</a>
+</g>
+</g>
+<!-- stage1&#45;&gt;valid -->
+<g id="edge23" class="edge">
+<title>stage1-&gt;valid</title>
+<path fill="none" stroke="#1f8a5b" stroke-width="1.4" stroke-dasharray="5,2" d="M433.69,-380.16C447.83,-368.2 464.9,-353.78 479.89,-341.11"></path>
+<polygon fill="#1f8a5b" stroke="#1f8a5b" stroke-width="1.4" points="481.59,-343.33 485.89,-336.03 477.97,-339.06 481.59,-343.33"></polygon>
+<text space="preserve" text-anchor="middle" x="486.01" y="-353.62" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#1f8a5b">calibration</text>
 </g>
 <!-- ev -->
 <g id="n-ev" class="node">
 <title>ev</title>
 <g id="a_n-ev"><a title="Click for how this looks in our data">
-<path fill="#edf7f2" stroke="#1f8a5b" stroke-width="2.2" d="M700.84,-236.34C700.84,-236.34 545.16,-236.34 545.16,-236.34 539.16,-236.34 533.16,-230.34 533.16,-224.34 533.16,-224.34 533.16,-198.06 533.16,-198.06 533.16,-192.06 539.16,-186.06 545.16,-186.06 545.16,-186.06 700.84,-186.06 700.84,-186.06 706.84,-186.06 712.84,-192.06 712.84,-198.06 712.84,-198.06 712.84,-224.34 712.84,-224.34 712.84,-230.34 706.84,-236.34 700.84,-236.34"></path>
-<text space="preserve" text-anchor="start" x="573.88" y="-216.35" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Expected value</text>
-<text space="preserve" text-anchor="start" x="605.75" y="-206.2" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">show iff</text>
-<text space="preserve" text-anchor="start" x="546.12" y="-196.2" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">p₁(margin − discount) &gt; p₀ × margin</text>
+<path fill="#edf7f2" stroke="#1f8a5b" stroke-width="2.2" d="M784.84,-333.87C784.84,-333.87 629.16,-333.87 629.16,-333.87 623.16,-333.87 617.16,-327.87 617.16,-321.87 617.16,-321.87 617.16,-295.59 617.16,-295.59 617.16,-289.59 623.16,-283.59 629.16,-283.59 629.16,-283.59 784.84,-283.59 784.84,-283.59 790.84,-283.59 796.84,-289.59 796.84,-295.59 796.84,-295.59 796.84,-321.87 796.84,-321.87 796.84,-327.87 790.84,-333.87 784.84,-333.87"></path>
+<text space="preserve" text-anchor="start" x="653.75" y="-313.88" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Offer Economics</text>
+<text space="preserve" text-anchor="start" x="689.75" y="-303.73" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">show iff</text>
+<text space="preserve" text-anchor="start" x="630.12" y="-293.73" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">p₁(margin − discount) &gt; p₀ × margin</text>
 </a>
 </g>
 </g>
-<!-- A&#45;&gt;ev -->
-<g id="edge14" class="edge">
-<title>A-&gt;ev</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M685.88,-467.66C673.56,-417.6 645.74,-304.59 631.6,-247.15"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="634.35,-246.58 629.72,-239.48 628.91,-247.92 634.35,-246.58"></polygon>
-<text space="preserve" text-anchor="middle" x="676.62" y="-343.37" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">P(inside)</text>
+<!-- stage2&#45;&gt;ev -->
+<g id="edge18" class="edge">
+<title>stage2-&gt;ev</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M650.97,-380.16C660.13,-368.64 671.12,-354.83 680.92,-342.51"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="683.06,-344.32 685.85,-336.32 678.67,-340.84 683.06,-344.32"></polygon>
 </g>
-<!-- B&#45;&gt;C -->
-<g id="edge15" class="edge">
-<title>B-&gt;C</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M514,-467.94C514,-456.99 514,-443.91 514,-431.97"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="516.8,-431.98 514,-423.98 511.2,-431.98 516.8,-431.98"></polygon>
-<text space="preserve" text-anchor="middle" x="541" y="-440.9" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">top category</text>
-</g>
-<!-- rank -->
-<g id="n-rank" class="node">
-<title>rank</title>
-<g id="a_n-rank"><a title="Click for how this looks in our data">
-<path fill="#fef5e9" stroke="#f59625" stroke-width="2" d="M588.96,-323.62C588.96,-323.62 497.04,-323.62 497.04,-323.62 491.04,-323.62 485.04,-317.62 485.04,-311.62 485.04,-311.62 485.04,-285.34 485.04,-285.34 485.04,-279.34 491.04,-273.34 497.04,-273.34 497.04,-273.34 588.96,-273.34 588.96,-273.34 594.96,-273.34 600.96,-279.34 600.96,-285.34 600.96,-285.34 600.96,-311.62 600.96,-311.62 600.96,-317.62 594.96,-323.62 588.96,-323.62"></path>
-<text space="preserve" text-anchor="start" x="517.88" y="-303.63" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Re-rank</text>
-<text space="preserve" text-anchor="start" x="511.88" y="-293.48" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">margin · stock</text>
-<text space="preserve" text-anchor="start" x="498" y="-283.48" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">who funds the offer</text>
-</a>
-</g>
-</g>
-<!-- C&#45;&gt;rank -->
-<g id="edge16" class="edge">
-<title>C-&gt;rank</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M521.47,-370.41C524.86,-359.24 528.92,-345.85 532.61,-333.72"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="535.2,-334.83 534.84,-326.36 529.84,-333.2 535.2,-334.83"></polygon>
-<text space="preserve" text-anchor="middle" x="557.49" y="-343.37" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">top 20 SKUs</text>
-</g>
-<!-- rank&#45;&gt;ev -->
-<g id="edge17" class="edge">
-<title>rank-&gt;ev</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M566.57,-272.35C574.79,-263.59 584.13,-253.64 592.81,-244.38"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="594.72,-246.44 598.15,-238.69 590.63,-242.61 594.72,-246.44"></polygon>
+<!-- stage2&#45;&gt;valid -->
+<g id="edge24" class="edge">
+<title>stage2-&gt;valid</title>
+<path fill="none" stroke="#1f8a5b" stroke-width="1.4" stroke-dasharray="5,2" d="M601.05,-380.16C586.78,-368.2 569.57,-353.78 554.44,-341.11"></path>
+<polygon fill="#1f8a5b" stroke="#1f8a5b" stroke-width="1.4" points="556.31,-339.01 548.38,-336.02 552.71,-343.31 556.31,-339.01"></polygon>
+<text space="preserve" text-anchor="middle" x="593.17" y="-353.62" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#1f8a5b">hit@10</text>
 </g>
 <!-- screen -->
 <g id="n-screen" class="node">
 <title>screen</title>
 <g id="a_n-screen"><a title="Click for how this looks in our data">
-<path fill="#022f4a" stroke="#022f4a" stroke-width="2" d="M679.46,-149.06C679.46,-149.06 566.54,-149.06 566.54,-149.06 560.54,-149.06 554.54,-143.06 554.54,-137.06 554.54,-137.06 554.54,-120.78 554.54,-120.78 554.54,-114.78 560.54,-108.78 566.54,-108.78 566.54,-108.78 679.46,-108.78 679.46,-108.78 685.46,-108.78 691.46,-114.78 691.46,-120.78 691.46,-120.78 691.46,-137.06 691.46,-137.06 691.46,-143.06 685.46,-149.06 679.46,-149.06"></path>
-<text space="preserve" text-anchor="start" x="567.5" y="-129.07" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="white">The pump screen</text>
-<text space="preserve" text-anchor="start" x="572.38" y="-118.92" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">one offer — or </text>
-<text space="preserve" text-anchor="start" x="637.62" y="-118.92" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">nothing</text>
+<path fill="#022f4a" stroke="#022f4a" stroke-width="2" d="M617.46,-149.06C617.46,-149.06 504.54,-149.06 504.54,-149.06 498.54,-149.06 492.54,-143.06 492.54,-137.06 492.54,-137.06 492.54,-120.78 492.54,-120.78 492.54,-114.78 498.54,-108.78 504.54,-108.78 504.54,-108.78 617.46,-108.78 617.46,-108.78 623.46,-108.78 629.46,-114.78 629.46,-120.78 629.46,-120.78 629.46,-137.06 629.46,-137.06 629.46,-143.06 623.46,-149.06 617.46,-149.06"></path>
+<text space="preserve" text-anchor="start" x="505.5" y="-129.07" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="white">The pump screen</text>
+<text space="preserve" text-anchor="start" x="510.38" y="-118.92" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">one offer — or </text>
+<text space="preserve" text-anchor="start" x="575.62" y="-118.92" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">nothing</text>
 </a>
 </g>
 </g>
 <!-- ev&#45;&gt;screen -->
-<g id="edge18" class="edge">
+<g id="edge19" class="edge">
 <title>ev-&gt;screen</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M623,-185.24C623,-177.28 623,-168.38 623,-160.09"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="625.8,-160.15 623,-152.15 620.2,-160.15 625.8,-160.15"></polygon>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M654.15,-282.64C646.53,-277.65 639.18,-271.96 633,-265.59 602.96,-234.65 582.14,-188.66 570.88,-158.98"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="573.55,-158.12 568.16,-151.57 568.29,-160.05 573.55,-158.12"></polygon>
+</g>
+<!-- second -->
+<g id="n-second" class="node">
+<title>second</title>
+<g id="a_n-second"><a title="Click for how this looks in our data">
+<path fill="#edf7f2" stroke="#1f8a5b" stroke-width="2" d="M529.84,-246.59C529.84,-246.59 410.17,-246.59 410.17,-246.59 404.17,-246.59 398.17,-240.59 398.17,-234.59 398.17,-234.59 398.17,-208.31 398.17,-208.31 398.17,-202.31 404.17,-196.31 410.17,-196.31 410.17,-196.31 529.84,-196.31 529.84,-196.31 535.84,-196.31 541.84,-202.31 541.84,-208.31 541.84,-208.31 541.84,-234.59 541.84,-234.59 541.84,-240.59 535.84,-246.59 529.84,-246.59"></path>
+<text space="preserve" text-anchor="start" x="417.12" y="-226.6" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">The second item</text>
+<text space="preserve" text-anchor="start" x="411.12" y="-216.45" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">the complement a discount</text>
+<text space="preserve" text-anchor="start" x="429.88" y="-206.45" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">could actually </text>
+<text space="preserve" text-anchor="start" x="492.88" y="-206.45" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">add</text>
+</a>
+</g>
+</g>
+<!-- pairs&#45;&gt;second -->
+<g id="edge21" class="edge">
+<title>pairs-&gt;second</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" d="M389.28,-282.83C401.58,-273.63 415.67,-263.09 428.61,-253.42"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="430.06,-255.83 434.78,-248.79 426.7,-251.34 430.06,-255.83"></polygon>
+</g>
+<!-- second&#45;&gt;screen -->
+<g id="edge22" class="edge">
+<title>second-&gt;screen</title>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M494.87,-195.71C506.92,-183.72 521.42,-169.29 533.77,-157.01"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="535.56,-159.18 539.26,-151.55 531.61,-155.21 535.56,-159.18"></polygon>
 </g>
 <!-- holdout -->
 <g id="n-holdout" class="node">
 <title>holdout</title>
 <g id="a_n-holdout"><a title="Click for how this looks in our data">
-<path fill="white" stroke="#c7352b" stroke-width="1.4" stroke-dasharray="5,2" d="M664.84,-50.28C664.84,-50.28 581.16,-50.28 581.16,-50.28 575.16,-50.28 569.16,-44.28 569.16,-38.28 569.16,-38.28 569.16,-12 569.16,-12 569.16,-6 575.16,0 581.16,0 581.16,0 664.84,0 664.84,0 670.84,0 676.84,-6 676.84,-12 676.84,-12 676.84,-38.28 676.84,-38.28 676.84,-44.28 670.84,-50.28 664.84,-50.28"></path>
-<text space="preserve" text-anchor="start" x="597.5" y="-30.29" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Holdout</text>
-<text space="preserve" text-anchor="start" x="590.75" y="-20.14" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">no offer shown</text>
-<text space="preserve" text-anchor="start" x="582.12" y="-10.14" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">does not exist yet</text>
+<path fill="white" stroke="#c7352b" stroke-width="1.4" stroke-dasharray="5,2" d="M602.84,-50.28C602.84,-50.28 519.16,-50.28 519.16,-50.28 513.16,-50.28 507.17,-44.28 507.17,-38.28 507.17,-38.28 507.17,-12 507.17,-12 507.17,-6 513.17,0 519.17,0 519.17,0 602.84,0 602.84,0 608.84,0 614.84,-6 614.84,-12 614.84,-12 614.84,-38.28 614.84,-38.28 614.84,-44.28 608.84,-50.28 602.84,-50.28"></path>
+<text space="preserve" text-anchor="start" x="535.5" y="-30.29" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Holdout</text>
+<text space="preserve" text-anchor="start" x="528.75" y="-20.14" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">no offer shown</text>
+<text space="preserve" text-anchor="start" x="520.12" y="-10.14" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="10.00" fill="#426a8a">does not exist yet</text>
 </a>
 </g>
 </g>
 <!-- screen&#45;&gt;holdout -->
-<g id="edge19" class="edge">
+<g id="edge25" class="edge">
 <title>screen-&gt;holdout</title>
-<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M623,-107.81C623,-94.41 623,-76.45 623,-60.78"></path>
-<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="625.8,-61 623,-53 620.2,-61 625.8,-61"></polygon>
-<text space="preserve" text-anchor="middle" x="644" y="-81.28" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">hold back</text>
-<text space="preserve" text-anchor="middle" x="644" y="-70.03" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">a slice</text>
+<path fill="none" stroke="#426a8a" stroke-width="1.4" stroke-dasharray="5,2" d="M561,-107.81C561,-94.41 561,-76.45 561,-60.78"></path>
+<polygon fill="#426a8a" stroke="#426a8a" stroke-width="1.4" points="563.8,-61 561,-53 558.2,-61 563.8,-61"></polygon>
+<text space="preserve" text-anchor="middle" x="582" y="-81.28" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">hold back</text>
+<text space="preserve" text-anchor="middle" x="582" y="-70.03" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">a slice</text>
 </g>
 <!-- holdout&#45;&gt;ev -->
-<g id="edge20" class="edge">
+<g id="edge26" class="edge">
 <title>holdout-&gt;ev</title>
-<path fill="none" stroke="#c7352b" stroke-width="1.4" stroke-dasharray="5,2" d="M660.49,-50.73C678.66,-65.13 698.39,-85.14 707,-108.78 713.12,-125.6 715.12,-133.11 707,-149.06 701.07,-160.72 691.76,-170.68 681.45,-178.96"></path>
-<polygon fill="#c7352b" stroke="#c7352b" stroke-width="1.4" points="679.85,-176.67 675.12,-183.7 683.2,-181.15 679.85,-176.67"></polygon>
-<text space="preserve" text-anchor="middle" x="745.74" y="-125.05" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#c7352b">measures uplift</text>
+<path fill="none" stroke="#c7352b" stroke-width="1.4" stroke-dasharray="5,2" d="M594.58,-50.84C612.31,-65.67 632.85,-86.05 645,-108.78 660.17,-137.17 655.81,-147.54 665.25,-178.31 675.14,-210.53 686.98,-247.06 695.52,-273.08"></path>
+<polygon fill="#c7352b" stroke="#c7352b" stroke-width="1.4" points="692.8,-273.77 697.96,-280.49 698.12,-272.02 692.8,-273.77"></polygon>
+<text space="preserve" text-anchor="middle" x="698.62" y="-168.81" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#c7352b">measures uplift</text>
 </g>
 <!-- did -->
 <g id="n-did" class="node">
 <title>did</title>
 <g id="a_n-did"><a title="Click for how this looks in our data">
-<path fill="white" stroke="#c7352b" stroke-width="1.4" stroke-dasharray="5,2" d="M849.34,-50.28C849.34,-50.28 720.66,-50.28 720.66,-50.28 714.66,-50.28 708.66,-44.28 708.66,-38.28 708.66,-38.28 708.66,-12 708.66,-12 708.66,-6 714.66,0 720.66,0 720.66,0 849.34,0 849.34,0 855.34,0 861.34,-6 861.34,-12 861.34,-12 861.34,-38.28 861.34,-38.28 861.34,-44.28 855.34,-50.28 849.34,-50.28"></path>
-<text space="preserve" text-anchor="start" x="721.62" y="-30.29" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Staggered adoption</text>
-<text space="preserve" text-anchor="start" x="735.88" y="-20.14" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">stores start promos on</text>
-<text space="preserve" text-anchor="start" x="731.75" y="-10.14" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">different dates — biased</text>
+<path fill="white" stroke="#c7352b" stroke-width="1.4" stroke-dasharray="5,2" d="M787.34,-50.28C787.34,-50.28 658.66,-50.28 658.66,-50.28 652.66,-50.28 646.66,-44.28 646.66,-38.28 646.66,-38.28 646.66,-12 646.66,-12 646.66,-6 652.66,0 658.66,0 658.66,0 787.34,0 787.34,0 793.34,0 799.34,-6 799.34,-12 799.34,-12 799.34,-38.28 799.34,-38.28 799.34,-44.28 793.34,-50.28 787.34,-50.28"></path>
+<text space="preserve" text-anchor="start" x="659.62" y="-30.29" font-family="Open Sans, Helvetica, sans-serif" font-weight="bold" font-size="13.00" fill="#111111">Staggered adoption</text>
+<text space="preserve" text-anchor="start" x="673.88" y="-20.14" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">stores start promos on</text>
+<text space="preserve" text-anchor="start" x="669.75" y="-10.14" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#426a8a">different dates — biased</text>
 </a>
 </g>
 </g>
 <!-- did&#45;&gt;ev -->
-<g id="edge21" class="edge">
+<g id="edge27" class="edge">
 <title>did-&gt;ev</title>
-<path fill="none" stroke="#c7352b" stroke-width="1.4" stroke-dasharray="5,2" d="M793.19,-50.73C800.45,-77.43 807.09,-120.13 787,-149.06 771.94,-170.75 748.21,-184.76 723.42,-193.8"></path>
-<polygon fill="#c7352b" stroke="#c7352b" stroke-width="1.4" points="722.58,-191.13 715.9,-196.35 724.37,-196.44 722.58,-191.13"></polygon>
-<text space="preserve" text-anchor="middle" x="826.54" y="-125.05" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#c7352b">second best</text>
+<path fill="none" stroke="#c7352b" stroke-width="1.4" stroke-dasharray="5,2" d="M729.37,-50.94C736.28,-81.08 745.63,-133.47 740,-178.31 735.88,-211.16 726.09,-247.62 718.24,-273.44"></path>
+<polygon fill="#c7352b" stroke="#c7352b" stroke-width="1.4" points="715.66,-272.3 715.97,-280.77 721.01,-273.96 715.66,-272.3"></polygon>
+<text space="preserve" text-anchor="middle" x="767.71" y="-168.81" font-family="Open Sans, Helvetica, sans-serif" font-size="10.00" fill="#c7352b">second best</text>
 </g>
 </g>
 </svg>
@@ -537,7 +627,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Example conclusions.</strong> Every figure comes from one run over the PDI extract — 940 stores in eight Intermountain West states, October 2024 to September 2026. Worked examples for class, not a finished analysis.</p>
+<p><strong>Where the figures come from.</strong> One run over the PDI extract — 940 stores in eight Intermountain West states, October 2024 to September 2026. The models themselves are fitted on a 24-store pilot subset; exploration figures are full-estate, and the two are not mixed.</p>
 </div>
 </div>
 </div>
@@ -777,105 +867,312 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  .withColumn(<span class="st">"prior_share"</span>,   F.avg(<span class="st">"bought"</span>).over(w))</span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  .withColumn(<span class="st">"days_since"</span>,    F.datediff(<span class="st">"ts"</span>, F.<span class="bu">max</span>(<span class="st">"ts"</span>).over(w))))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>rowsBetween(..., -1)</code> is the whole trick — it excludes the current row.</p>
-<p><strong>History barely predicts whether they come inside</strong> (12.6% with none, 12.5% with 10+), but it is the best signal for <em>what</em> they buy. That asymmetry is why there are three models instead of one.</p>
+<p><strong>History barely predicts whether they come inside</strong> (12.6% with none, 12.5% with 10+), but it is the best signal for <em>what</em> they buy. That asymmetry is why there are two models instead of one.</p>
 </section>
 </div>
-<div id="d-A" class="node-detail">
-<section id="model-a-will-they-come-inside" class="level3">
-<h3 class="anchored" data-anchor-id="model-a-will-they-come-inside">Model A · Will they come inside?</h3>
-<p>Binary classifier over all <strong>36.1M</strong> visits.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.classification <span class="im">import</span> GBTClassifier</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>gbt <span class="op">=</span> GBTClassifier(featuresCol<span class="op">=</span><span class="st">"features"</span>, labelCol<span class="op">=</span><span class="st">"bought"</span>, maxIter<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> gbt.fit(train)   <span class="co"># no rebalancing — see below</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Do not rebalance the 12.8% positive class.</strong> The output feeds an arithmetic in dollars, so a model trained 50/50 scores an average visit at 0.5 instead of 0.128 and inflates every expected value about 4×. If you must, use <code>weightCol</code> rather than resampling, and correct the odds back by the sampling fraction.</p>
-<p>Check calibration with a reliability curve; fix with isotonic regression on a held-out slice. <strong>Accuracy and F1 are irrelevant here — calibration is the whole job.</strong></p>
-<p><strong>The feature that matters most is the shopper’s own prior attach rate.</strong> How <em>many</em> times we have seen someone is worth +0.004 AUC; what <em>share</em> of those visits ended inside is worth +0.109, taking the model from 0.703 to 0.827 out of time. For the 22.2% we have never seen there is only context, and they are genuinely harder to call.</p>
-</section>
-</div>
-<div id="d-B" class="node-detail">
-<section id="model-b-which-category" class="level3">
-<h3 class="anchored" data-anchor-id="model-b-which-category">Model B · Which category?</h3>
-<p><strong>Six binary classifiers, not one multiclass model.</strong> A basket holds several categories at once — our six shares sum to 119%, so a softmax would force them to compete and return numbers we cannot price.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>TOP <span class="op">=</span> [<span class="st">"Packaged Beverages (Non-Alcoholic)"</span>, <span class="st">"Cigarettes"</span>, <span class="st">"Candy"</span>,</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>       <span class="st">"Salty Snacks"</span>, <span class="st">"Other Tobacco/Nicotine Products"</span>, <span class="st">"Beer"</span>]</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> {}</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat <span class="kw">in</span> TOP:                      <span class="co"># binary relevance</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> F.array_contains(<span class="st">"cats"</span>, cat).cast(<span class="st">"int"</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    models[cat] <span class="op">=</span> GBTClassifier(labelCol<span class="op">=</span><span class="st">"y"</span>).fit(converters.withColumn(<span class="st">"y"</span>, y))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Trained on the <strong>4.6M converting visits</strong> only. Shares of those visits:</p>
+<div id="d-relevance" class="node-detail">
+<section id="category-relevance" class="level3 teal-head">
+<h3 class="teal-head anchored" data-anchor-id="category-relevance">Category Relevance</h3>
+<p><strong>Will they buy category X on this fill?</strong> Classification — six calibrated binary classifiers (<code>HistGradientBoostingClassifier</code>), one per category, each scoring every visit.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat <span class="kw">in</span> TOP6:                       <span class="co"># six independent binaries</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> F.array_contains(<span class="st">"cats"</span>, cat).cast(<span class="st">"int"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    models[cat] <span class="op">=</span> GBTClassifier(labelCol<span class="op">=</span><span class="st">"y"</span>).fit(train.withColumn(<span class="st">"y"</span>, y))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Not a multiclass model.</strong> A basket holds several categories at once, so a softmax would force them to compete and return numbers we cannot price.</p>
+<p><strong>Not rebalanced.</strong> The output is multiplied by dollars; a model trained on a balanced sample scores an average visit at 0.5 instead of its base rate and inflates every expected value about 4×.</p>
+<p>The strongest single feature is the shopper’s own <strong>prior attach rate</strong>. How <em>many</em> times we have seen someone is worth +0.004 AUC; what <em>share</em> of those visits ended inside is worth +0.109.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Category</th>
-<th>Share</th>
+<th>Out-of-time AUC</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Packaged Beverages</td>
-<td><strong>54.5%</strong></td>
-</tr>
-<tr class="even">
 <td>Cigarettes</td>
-<td>14.7%</td>
-</tr>
-<tr class="odd">
-<td>Candy</td>
-<td>13.5%</td>
-</tr>
-<tr class="even">
-<td>Salty Snacks</td>
-<td>13.1%</td>
-</tr>
-<tr class="odd">
-<td>Other Tobacco</td>
-<td>12.6%</td>
+<td>0.899</td>
 </tr>
 <tr class="even">
 <td>Beer</td>
-<td>10.5%</td>
+<td>0.892</td>
+</tr>
+<tr class="odd">
+<td>Other Tobacco</td>
+<td>0.880</td>
+</tr>
+<tr class="even">
+<td>Packaged Beverages</td>
+<td>0.814</td>
+</tr>
+<tr class="odd">
+<td>Candy</td>
+<td>0.786</td>
+</tr>
+<tr class="even">
+<td>Salty Snacks</td>
+<td>0.783</td>
 </tr>
 </tbody>
 </table>
-<p>GBT rather than logistic regression, because this is where interactions live — <em>beer on a Friday evening</em>.</p>
 </section>
 </div>
-<div id="d-C" class="node-detail">
-<section id="model-c-which-sku" class="level3">
-<h3 class="anchored" data-anchor-id="model-c-which-sku">Model C · Which SKU?</h3>
-<p>A category is not an offer. <em>“Buy a beverage”</em> sells nothing; <em>“$1 off a 16oz Monster”</em> does. Inside Packaged Beverages there are <strong>4,049 SKUs</strong> and the top 100 cover only 45% — a real catalog with a long tail.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.recommendation <span class="im">import</span> ALS</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Three dayparts, wrapping overnight. Attach jumps at 5am and falls after</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 11pm; that tail is 3.2% of visits, so it rides with evening.</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>daypart <span class="op">=</span> (F.when(F.hour(<span class="st">"ts"</span>).between(<span class="dv">5</span>, <span class="dv">9</span>),   <span class="st">"morning"</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>            .when(F.hour(<span class="st">"ts"</span>).between(<span class="dv">10</span>, <span class="dv">14</span>), <span class="st">"midday"</span>)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>            .otherwise(<span class="st">"evening"</span>))</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># The clock goes in the key: ALS takes no features.</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.withColumn(<span class="st">"item"</span>, F.concat_ws(<span class="st">"@"</span>, <span class="st">"GTIN"</span>, daypart))</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>als <span class="op">=</span> ALS(userCol<span class="op">=</span><span class="st">"shopper_ix"</span>, itemCol<span class="op">=</span><span class="st">"item_ix"</span>, ratingCol<span class="op">=</span><span class="st">"n_purchases"</span>,</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>          implicitPrefs<span class="op">=</span><span class="va">True</span>, rank<span class="op">=</span><span class="dv">32</span>, regParam<span class="op">=</span><span class="fl">0.05</span>, alpha<span class="op">=</span><span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Why daypart belongs in the key.</strong> For shoppers with 2+ beverage purchases, pairs in the same daypart repeat the same SKU <strong>18.0%</strong> of the time versus <strong>10.0%</strong> across dayparts — 80% more likely.</p>
-<p><strong>Why it isn’t too sparse.</strong> 2.75M shoppers bought a beverage, 55% three or more times, averaging 16.2 purchases over 7.6 distinct SKUs. People repeat items.</p>
-<p>Apply it per category: beverages yes, <strong>cigarettes no</strong> (top 100 = 86%, nothing to learn). Train only on purchases <em>before</em> the scoring window — ALS feels like preprocessing, which is exactly why people forget.</p>
+<div id="d-affinity" class="node-detail">
+<section id="sku-affinity" class="level3 teal-head">
+<h3 class="teal-head anchored" data-anchor-id="sku-affinity">SKU Affinity</h3>
+<p><strong>Which item inside the category?</strong> Alternating least squares on implicit feedback — Hu, Koren &amp; Volinsky (2008).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>als <span class="op">=</span> ALS(userCol<span class="op">=</span><span class="st">"shopper_ix"</span>, itemCol<span class="op">=</span><span class="st">"item_ix"</span>, ratingCol<span class="op">=</span><span class="st">"n"</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>          implicitPrefs<span class="op">=</span><span class="va">True</span>,        <span class="co"># counts are confidence, not ratings</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>          rank<span class="op">=</span><span class="dv">32</span>, regParam<span class="op">=</span><span class="fl">0.05</span>, alpha<span class="op">=</span><span class="dv">20</span>, coldStartStrategy<span class="op">=</span><span class="st">"drop"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>The item key is <code>gtin@daypart</code>.</strong> ALS takes no features, so the only way to give it a clock is to put one in the key — and the clock matters: same-daypart purchase pairs repeat the same SKU 18.0% of the time against 10.0% across dayparts.</p>
+<p><strong>SKU, not brand.</strong> At brand level ALS scores <strong>0.88× popularity</strong> — worse than showing the best seller. With a handful of brands that matter there is nothing personal left to learn; the long tail of SKUs is what gives the model something to do.</p>
+<p>Measured on the held-out period, over the fills where ALS actually ran and the customer bought inside the offered category:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>hit@1</th>
+<th>hit@10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ALS, SKU level</td>
+<td><strong>9.1%</strong></td>
+<td>34.3%</td>
+</tr>
+<tr class="even">
+<td>Store best seller</td>
+<td>3.2%</td>
+<td>16.9%</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><strong>2.8×</strong></td>
+<td>2.0×</td>
+</tr>
+</tbody>
+</table>
+<p><strong>hit@1 is the operational number</strong> — the screen shows one offer. Over all fills, personalised and fallback together, it is 6.2% against 2.9%.</p>
+<p>Scores are normalised <strong>within a category</strong>, so the number means <em>given they buy this category, which item</em> — which is what the decision multiplies against <code>P(category)</code>.</p>
+<p><strong>This model only ever ranks inside one category.</strong> Category Relevance picks the category first, on probability alone, and SKU Affinity is confined to it. Ranking the whole catalog by expected value instead lets a narrow, high-margin category beat a wide, high-probability one on a technicality — its <code>p_sku</code> denominator is smaller — and offers candy to a customer we are 90.6% sure wants a beverage.</p>
 </section>
 </div>
-<div id="d-rank" class="node-detail">
-<section id="re-rank" class="level3 orange-head">
-<h3 class="orange-head anchored" data-anchor-id="re-rank">Re-rank</h3>
-<p>ALS hands you 20 plausible SKUs. This step picks among them on business terms, and it is <strong>the most important input in the pipeline</strong>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>candidates <span class="op">=</span> (als_top20</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    .join(margins, on<span class="op">=</span><span class="st">"GTIN"</span>)          <span class="co"># not in the data — ask for it</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    .join(in_stock, on<span class="op">=</span>[<span class="st">"STORE_ID"</span>, <span class="st">"GTIN"</span>])</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    .join(funded, on<span class="op">=</span><span class="st">"GTIN"</span>)           <span class="co"># vendor-funded promotions</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"our_cost"</span>,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        F.when(F.col(<span class="st">"vendor_funded"</span>), F.lit(<span class="fl">0.0</span>)).otherwise(F.col(<span class="st">"discount"</span>))))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Your <code>discounts</code> table is full of <strong>vendor-funded</strong> programs — Skupos, ZYN, Monster, Red Bull, Gatorade. When the brand pays the discount, your cost is zero and the offer is always worth showing.</p>
-<p>A category-level model cannot spend that money. This is the step that turns a better prediction into <strong>a new revenue line</strong>.</p>
+<div id="d-bestseller" class="node-detail">
+<section id="best-seller" class="level3 orange-head">
+<h3 class="orange-head anchored" data-anchor-id="best-seller">Best-Seller</h3>
+<p><strong>The popularity ranking — and the path for about 68% of fills.</strong></p>
+<p>You enter the ALS factor matrix only by having bought in that category before the cutoff. Most fuel customers never did:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Covered by ALS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Scored fills in the held-out period</td>
+<td><strong>31.6%</strong></td>
+</tr>
+<tr class="even">
+<td>…of the fills that converted in the offered category</td>
+<td>54.9%</td>
+</tr>
+</tbody>
+</table>
+<p>Measured, not assumed — <code>validate.py</code> fails if the published share drifts more than three points from what the scored table actually contains.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>raw <span class="op">=</span> popularity[daypart_items]        <span class="co"># no factors for this shopper</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is not a degraded path, it is <strong>the primary one</strong>. Build it first: the personalised tier is an improvement on top of a fallback you need anyway, and the vendor-funded revenue does not depend on ALS — it depends on going to SKU granularity at all.</p>
+</section>
+</div>
+<div id="d-stage1" class="node-detail">
+<section id="stage-one-the-category" class="level3 orange-head">
+<h3 class="orange-head anchored" data-anchor-id="stage-one-the-category">Stage one · the category</h3>
+<p><strong>Relevance decides this, on probability alone.</strong> Six calibrated models give six unconditional probabilities; we take the highest one we are <em>allowed</em> to show.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>allowed <span class="op">=</span> [c <span class="cf">for</span> c <span class="kw">in</span> categories</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>           <span class="cf">if</span> c <span class="kw">not</span> <span class="kw">in</span> NOT_OFFERABLE          <span class="co"># tobacco: a business rule</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>           <span class="kw">and</span> in_stock_and_offerable(c)]     <span class="co"># something to actually sell</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>category <span class="op">=</span> <span class="bu">max</span>(allowed, key<span class="op">=</span><span class="kw">lambda</span> c: p_category[c])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Margin does not get a vote here.</strong> Let expected value pick the category and a narrow, high-margin category beats a wide, high-probability one on nothing but a shorter SKU tail — <code>p_sku</code> is normalised <em>within</em> a category, so a four-SKU category concentrates its probability where a three-hundred-SKU one spreads it thin. That is how a customer we are 90% sure wants a beverage ends up being offered candy.</p>
+<p><strong>Ties go to the daypart’s best seller</strong>, not to the alphabet. Before that rule a shopper with every category at the probability floor — someone who has fuelled a thousand times and never walked in — was shown <strong>beer</strong>, because “Beer” sorts first.</p>
+</section>
+</div>
+<div id="d-stage2" class="node-detail">
+<section id="stage-two-the-sku" class="level3 orange-head">
+<h3 class="orange-head anchored" data-anchor-id="stage-two-the-sku">Stage two · the SKU</h3>
+<p>Rank the SKUs <strong>inside that one category</strong>. A SKU from any other category cannot appear, however profitable.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>p_sku  <span class="op">=</span> raw <span class="op">/</span> raw.<span class="bu">sum</span>()          <span class="co"># normalised within the category</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>p_buys <span class="op">=</span> p_category <span class="op">*</span> p_sku       <span class="co"># P(buys this exact SKU on this fill)</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>order  <span class="op">=</span> argsort(<span class="op">-</span>p_buys)[:<span class="dv">10</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Ranked on probability, not on expected value.</strong> The catalog’s margins are average price × an assumed 40% — the PDI extract has no cost column — so ranking on EV would let an assumption choose the item. The margin terms ride along for the funding conversation; they do not set the order.</p>
+<p><code>in_stock</code> and <code>offerable</code> filter the <em>candidates</em>; they do not change the denominator. <code>P(sku | category)</code> is a conditional over every SKU in the category, and excluding tobacco by business rule should not inflate what is left.</p>
+<p><span class="muted">The same function serves the live fill and the batch table — <code>scoring.py</code>. Two copies of this ranking drifted twice, and both times the written table disagreed with the live answer.</span></p>
+</section>
+</div>
+<div id="d-pairs" class="node-detail">
+<section id="pair-affinity" class="level3 teal-head">
+<h3 class="teal-head anchored" data-anchor-id="pair-affinity">Pair affinity</h3>
+<p>A different table answering a different question: not <em>what will they buy</em>, but <em>what SECOND thing could a discount add to the basket</em>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>What it is</th>
+<th>What it is for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>cohort_index</code></td>
+<td>B’s rate among A-regulars ÷ the rate among <strong>equally frequent</strong> others</td>
+<td><strong>Gating</strong></td>
+</tr>
+<tr class="even">
+<td><code>excess</code></td>
+<td>the same comparison as a difference, in attach points</td>
+<td><strong>Ranking</strong></td>
+</tr>
+<tr class="odd">
+<td><code>headroom</code></td>
+<td><code>1 −</code> this shopper’s own rate of B</td>
+<td>don’t discount what they already buy</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Controlling exposure is the whole trick.</strong> Every cohort is defined as “at least five purchase baskets”, so every cohort is a cohort of <em>heavy shoppers</em> and indexes high on nearly everything. The first cut had drink regulars over-indexing on frozen food at <strong>6.1×</strong> — pure visit frequency. Comparing against shoppers who buy just as often and do <em>not</em> buy the anchor divides that out.</p>
+<p><strong>Gate on the index, rank on the excess.</strong> Volume alone picks the popular item: Candy is 18.2% of every second item in a drink basket and looks obvious, but its index is <strong>1.07</strong> — not a complement, just everywhere. The index alone picks the tiny one.</p>
+</section>
+</div>
+<div id="d-second" class="node-detail">
+<section id="the-second-item" class="level3 green-head">
+<h3 class="green-head anchored" data-anchor-id="the-second-item">The second item</h3>
+<p>The anchor is what they buy <strong>anyway</strong>, which makes it the one promotion certain to cost margin and change nothing. This is the offer worth funding.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Second category</th>
+<th>Their rate</th>
+<th>Equally frequent others</th>
+<th>Index</th>
+<th>Excess</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Alternative Snacks</strong></td>
+<td>6.0%</td>
+<td>3.5%</td>
+<td><strong>1.74</strong></td>
+<td>2.6 pts</td>
+</tr>
+<tr class="even">
+<td>Packaged Sweet Snacks</td>
+<td>6.7%</td>
+<td>4.7%</td>
+<td>1.41</td>
+<td>2.0 pts</td>
+</tr>
+<tr class="odd">
+<td><strong>Salty Snacks</strong></td>
+<td>12.2%</td>
+<td>9.4%</td>
+<td>1.30</td>
+<td><strong>2.8 pts</strong></td>
+</tr>
+<tr class="even">
+<td>Candy</td>
+<td>12.2%</td>
+<td>11.4%</td>
+<td>1.07</td>
+<td>0.8 pts</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Alcohol is excluded on both sides</strong> as a policy, not a threshold: a beer anchor returns <em>no</em> second item, and alcohol is never offered as one. Beer’s only complement above 1.0 is Liquor at 1.08. Beer remains a legitimate <em>anchor</em> offer.</p>
+<p>It ships as <code>second_category</code> and <code>second_category_skus</code> in the scored table, populated on <strong>560,690 of 583,583</strong> rows — empty where nothing clears the gate, which is a real answer rather than a miss.</p>
+</section>
+</div>
+<div id="d-valid" class="node-detail">
+<section id="validation" class="level3 green-head">
+<h3 class="green-head anchored" data-anchor-id="validation">Validation</h3>
+<p>Two models, two different questions, two different checks.</p>
+<p><strong>Stage one is judged on calibration</strong>, because its output is multiplied by dollars. A model that ranks well but is scaled wrong prices every offer wrong, and AUC would never show it. All 583,583 held-out fills, by decile of predicted <code>P(beverage)</code>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Decile</th>
+<th>Predicted</th>
+<th>Actual</th>
+<th>Gap</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>0.0001</td>
+<td>0.0005</td>
+<td>+0.0004</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>0.0385</td>
+<td>0.0395</td>
+<td>+0.0009</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>0.1400</td>
+<td>0.1407</td>
+<td>+0.0008</td>
+</tr>
+<tr class="even">
+<td><strong>10</strong></td>
+<td><strong>0.3430</strong></td>
+<td><strong>0.3287</strong></td>
+<td><strong>−0.0144</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Calibrated to within a tenth of a point through the middle; <strong>mildly over-confident in the top decile</strong>, which is exactly where we spend.</p>
+<p><strong>Stage two is judged on whether it named the item they bought.</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>k</th>
+<th>SKU Affinity</th>
+<th>Store best seller</th>
+<th>Lift</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>9.1%</td>
+<td>3.2%</td>
+<td>2.8×</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td><strong>34.3%</strong></td>
+<td>16.9%</td>
+<td><strong>2.0×</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Both rankings scored <strong>on the same rows</strong> — comparing ALS rows against fallback rows would compare two different populations. On fallback rows the two agree 100.000% of the time, which is the control that says the harness works.</p>
+<p><span class="muted"><code>validate.py</code> — 116 checks. <code>validate_sku.py</code> prints the hit@k table.</span></p>
 </section>
 </div>
 <div id="d-ev" class="node-detail">
@@ -934,8 +1231,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="red-head anchored" data-anchor-id="holdout">Holdout</h3>
 <p><strong>This does not exist, and it is the single thing worth asking Murphy for.</strong></p>
 <p>A slice of pumps that show no offer, assigned at random. Without it you can measure what people <em>do</em>, never what an offer <em>changed</em>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random at the visit level, logged with the decision.</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>holdout <span class="op">=</span> F.<span class="bu">hash</span>(<span class="st">"fuel_tx"</span>) <span class="op">%</span> <span class="dv">100</span> <span class="op">&lt;</span> <span class="dv">5</span>     <span class="co"># 5% see nothing</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random at the visit level, logged with the decision.</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>holdout <span class="op">=</span> F.<span class="bu">hash</span>(<span class="st">"fuel_tx"</span>) <span class="op">%</span> <span class="dv">100</span> <span class="op">&lt;</span> <span class="dv">5</span>     <span class="co"># 5% see nothing</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Log the offer you showed <strong>and the probability you showed it with</strong>. Without logged propensities you cannot evaluate offline later, and that mistake is unrecoverable — the information was never captured.</p>
 <p>With a holdout you can finally model <strong>uplift</strong> rather than propensity, and separate the persuadable customers from the ones who would have bought anyway.</p>
 </section>
@@ -1006,7 +1303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p><strong>Don’t believe the +1.7 points.</strong> The store count jumps 49 → 280 at week 0, so almost nobody has a pre-period, and the apparent pre-trend is the sample growing from 24 to 49 stores rather than behaviour changing.</p>
-<p>The design is sound; this estimate is not. A balanced panel of late adopters would fix it — and it is a better argument for the holdout than any methodology lecture.</p>
+<p>The design is sound; this estimate is not. A balanced panel of late adopters would fix it — and it is a better argument for the holdout than any amount of methodology.</p>
 </section>
 </div>
 </div>

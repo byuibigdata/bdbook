@@ -1,6 +1,6 @@
 ---
 title: "One Customer, End to End"
-subtitle: "A real fill, traced through the data and the three models"
+subtitle: "A real fill, traced through the data and the two models"
 format:
   html:
     toc: true
@@ -11,25 +11,204 @@ format:
 ---
 
 [pipeline v1](pipeline.html) draws the reasoning. [pipeline v2](pipeline2.html)
-draws the tables. **This one follows a single customer** from the moment the
-card is read to the offer on the screen, with the numbers the models actually
-produced.
+draws the tables. **This page is the evidence** — ten real customers carried
+from the raw rows we trained on, through the prediction we wrote down, to
+what they actually did afterwards.
 
-Every figure below came out of `explain.py`, which prints this trace for any
-shopper:
-
-```bash
-uv run --with polars --with scikit-learn --with joblib --with implicit \
-    python explain.py --demo
-```
+It is written to be audited, not admired. Every number is reproducible from
+the repo, and the places where the evidence is thin say so.
 
 ::: {.callout-note appearance="simple"}
-**Example conclusions.** A 25-store build of the PDI extract. The columns and
-the code are real; the margins are assumed, because the data has no cost
-column.
+**How to read this page**
+
+1. **The headline** — one chart, every customer, predicted against actual.
+2. **The ten customers** — a tab each, with the raw data, the prediction and
+   the outcome collapsed inside. Open what you want to interrogate.
+3. **The mechanism** — how a single fill becomes an offer, step by step.
+4. **The check that carries weight** — 583,583 scored fills, not ten.
+5. **What this cannot show** — the gap no amount of data here closes.
+
+*Figures come from the 24-store pilot build (`config.PILOT_STORES`). The
+columns and the code are real; margins are assumed, because the extract has
+no cost column.*
 :::
 
-## 1 · A car pulls up
+## 1 · The headline
+
+Seven of the ten customers came back after the cutoff. For each one, what we
+predicted for their category against what they actually did:
+
+![](img/persona_overview.png)
+
+::: {.callout-tip appearance="simple"}
+**Read the gap, not the dots.** A short bar is a good prediction. The soda
+regular at 70 fills is a ring — predicted and actual land on the same point,
+**94.2% against 94.3%**. The cigarette regular's 22-point gap is on **8
+fills**, which is noise, and the chart says so by printing the count.
+:::
+
+## 2 · The ten customers, end to end
+
+Each tab is one real shopper: the **raw rows** we trained on, the
+**prediction** in `customer_scores.parquet`, **what actually happened**, and
+**what ALS believed** against what they bought. Sections start collapsed.
+
+Tabs read *archetype · held-out fills*. Two shoppers per archetype — the one
+`personas.py` picks for being **most typical** before the cutoff, and one
+that **also came back**.
+
+::: {.callout-warning appearance="simple"}
+**One customer cannot validate a probability.** `personas.py` selects for
+being typical and never asks whether the shopper reappears — so four of its
+five have *no* held-out record, and a fifth has two fills. That is why every
+tab also carries the whole **cohort** matching that archetype, from 433 to
+105,866 held-out fills.
+:::
+
+{{< include _personas_audit.qmd >}}
+
+## 3 · The check that carries weight
+
+Sections 1 and 2 are illustrations. **This is the section that decides
+whether any of it can be used**, and it is worth saying why.
+
+An offer is chosen by multiplying a probability by dollars. That makes
+*ranking* accuracy almost irrelevant and *scale* accuracy everything: a model
+that sorts customers perfectly but reports 0.34 where the truth is 0.20 will
+rank the right person first and then price the offer 70% too high. **AUC
+cannot see that error at all** — it is invariant to any monotone rescaling of
+the scores. Calibration is the only check that looks at it.
+
+Ten customers cannot answer that. Every scored row can. Taking all
+**583,583** held-out fills, sorting them by predicted `P(buys a beverage)` and
+cutting into ten equal buckets:
+
+![](img/calibration.png){width=62%}
+
+| Decile | Predicted | Actual | Gap |
+|---|---|---|---|
+| 1 (lowest) | 0.0001 | 0.0005 | +0.0004 |
+| 3 | 0.0119 | 0.0157 | +0.0038 |
+| 5 | 0.0385 | 0.0395 | +0.0009 |
+| 7 | 0.0678 | 0.0671 | −0.0007 |
+| 9 | 0.1400 | 0.1407 | +0.0008 |
+| **10 (highest)** | **0.3430** | **0.3287** | **−0.0144** |
+
+The middle of the distribution is calibrated to within a tenth of a point.
+**The top decile is the one to watch**: at a predicted 34.3% the observed rate
+is 32.9%, so the model is mildly *over*-confident exactly where it is most
+willing to spend money. That is the right direction to be wrong in for a
+sceptic and the wrong direction for a budget — an offer priced off the top
+decile is buying about 4% less attach than the arithmetic assumes.
+
+The bottom three deciles run slightly *under*-confident, which is the
+signature of isotonic calibration flattening at the floor.
+
+### What we can conclude from this
+
+**The probabilities can be used as probabilities.** Through the middle of the
+distribution predicted and observed agree to within a tenth of a point, so
+multiplying them by a margin is legitimate arithmetic rather than a
+rescaling of a score. That is the permission this whole pipeline needs.
+
+**Discount any budget built off the top decile by about 4%.** Predicted 34.3%
+against an observed 32.9% is a 1.4-point gap — small absolutely, but it sits
+precisely where we are most willing to spend, so it is the error that costs
+money. It is also the safe direction to be wrong in: we overestimate the
+value of the offers we are keenest on, rather than missing good ones.
+
+**The under-confidence at the bottom is harmless.** Those are customers we
+would not offer to anyway; being slightly pessimistic about someone we were
+going to show nothing to changes no decision.
+
+### What it does *not* let us conclude
+
+Calibration says our prediction of **what they do anyway** is accurate. It
+says nothing about what an offer *changes* — `p₁` appears nowhere in it. A
+perfectly calibrated model of the status quo is still no evidence that a
+discount moves anybody, which is why the holdout remains the ask.
+
+### And stage two: did it name the item they bought?
+
+Calibration says nothing about the SKU. The direct test, on the 25,894
+held-out fills where ALS ran and the customer bought inside the offered
+category:
+
+| k | SKU Affinity | Store best seller | Lift |
+|---|---|---|---|
+| **1** | **9.1%** | 3.2% | 2.8× |
+| 5 | 24.2% | 11.4% | 2.1× |
+| 10 | 34.3% | 16.9% | 2.0× |
+
+**`k = 1` is the row that matters, because the screen shows one offer.**
+Across *all* evaluable fills — personalised and fallback together — we name
+the exact item at **6.2%** against the best seller's 2.9%. Quoting hit@10 and
+stopping there would overstate what the product does: ten guesses is not the
+product, one is.
+
+Both rankings scored on the **same rows**. Scoring ALS rows against fallback
+rows would compare two different populations — the ALS path only exists for
+shoppers with history, who buy more anyway — and would flatter the model for
+reasons that have nothing to do with it.
+
+**The conclusion is narrower than it looks.** ALS doubles hit@10 *where it
+runs*, and it runs on **31.6%** of fills. Weight the two paths together and
+the personalised tier moves the overall hit rate from 16.9% to about 22% —
+real, and smaller than the 2× headline. The practical consequence: the
+quality of the **best-seller fallback** matters more to the product than the
+quality of ALS, because it answers two fills in three.
+
+[On fallback rows the two rankings agree **100.000%** of the time. They are
+the same ranking by construction, so that is the control that says the
+harness works. `validate_sku.py` prints the breakdown by
+category.]{.muted style="font-size:0.85em"}
+
+
+# How one fill becomes an offer
+
+Sections 1–3 are the evidence. These are the mechanism: a single customer
+carried through the pipeline, one step at a time, with the numbers the
+models actually produced at each step.
+
+### And the second item: the one bet we cannot settle
+
+The pair offer had never been scored. It has now, on the 43,850 held-out
+fills where the customer bought the anchor category and carried a
+second-item offer:
+
+| | Landed |
+|---|---|
+| Our pair offer | **10.8%** |
+| Most popular second category | **14.0%** |
+
+**We are 0.78× the naive baseline, and that is the design working.** The
+mechanism is visible when you split by what we offered:
+
+| We offered | Fills | They bought it | They bought Salty Snacks |
+|---|---|---|---|
+| Salty Snacks | 37,800 | 11.9% | 11.9% |
+| Alternative Snacks | 5,233 | **4.5%** | **26.0%** |
+
+On the fills where `headroom` steers us *away* from Salty Snacks — because
+this shopper already buys it constantly — they go on to buy Salty Snacks
+**26% of the time**, and the thing we offered instead **4.5%**.
+
+::: {.callout-important appearance="simple"}
+**That trade is the entire bet of the second-item idea, and it is unfalsifiable
+with this data.** We are giving up a 26% chance of being "right" about an item
+they would have bought anyway, for a 4.5% chance on one they rarely buy — on
+the theory that only the second is incremental. If the theory holds, the
+baseline's 14% is mostly margin given away to people already walking to the
+cooler. If it does not, we are simply worse.
+
+Nothing in a co-occurrence table can separate those two worlds. This is the
+same `p₁` gap as everywhere else, and it is the sharpest argument for the
+holdout on this page: the pairing idea is the one place where we are
+*deliberately* choosing the lower-probability offer, so it is the place where
+being unable to measure uplift costs the most.
+:::
+
+## 4 · A car pulls up
 
 A card is dipped at the pump. It is read **before the fuel flows**, so
 identity arrives at the *start* of the fill, not the end. Everything here is
@@ -43,10 +222,10 @@ known without touching a database:
 | dollars pumped | $38.82, live off the meter |
 | store | 8228 |
 
-**These are the gas features.** Seven columns, no history, and they are all
-Model A needs.
+**These are the gas features.** Seven columns, no history — enough on their
+own to score a customer we have never seen.
 
-## 2 · One lookup
+## 5 · One lookup
 
 A single read against a shopper-keyed table — precomputed nightly, not
 scanned live:
@@ -70,201 +249,249 @@ drink. **Every figure is computed strictly from visits before this one** — the
 window excludes the current row, which is the difference between a model that
 works and one that reads its own answer.
 
-## 3 · Model A — will they come inside?
+## 6 · Category Relevance (classification)
 
-```
-P(inside) = 0.0979        base rate across all visits 0.1411
-```
+Six calibrated gradient-boosted classifiers, one per category, each scoring
+**this fill directly**:
 
-**Below average** — 7:12 in the morning at this store is not a strong attach
-moment, and the model says so.
-
-The number that moves this is **the shopper's own prior attach rate**, not
-the number of visits behind it. Bucketed by visit count the attach rate is
-flat — 12.6% with no history, 12.5% with ten or more. Bucketed by their own
-attach rate it runs from 2.9% to 71.6%, a 25× spread, and adding it takes
-Model A from 0.703 to 0.827 out of time.
-
-For a shopper we have never seen there is only context, and the model says so.
-
-## 4 · Model B — which category?
-
-Six independent binary models, each answering one question:
-
-| Category | P(category given inside) | Offerable? |
+| Category | P(buys it on this fill) | Offerable? |
 |---|---|---|
-| **Packaged Beverages** | **0.970** | yes |
-| Cigarettes | 0.431 | **no — regulated** |
-| Candy | 0.063 | yes |
-| Salty Snacks | 0.031 | yes |
-| Other Tobacco / Nicotine | 0.009 | **no — regulated** |
-| Beer | 0.000 | yes |
+| **Packaged Beverages** | **0.6782** | yes |
+| Cigarettes | 0.3613 | **no — regulated** |
+| Salty Snacks | 0.2727 | yes |
+| Candy | 0.0852 | yes |
+| Other Tobacco / Nicotine | 0.0020 | **no — regulated** |
+| Beer | 0.0004 | yes |
 
-**Here the 57 visits do their work.** An 86% historical beverage rate drives
-the score near the top of its range, and the two categories this shopper has
-never touched sit at zero. Note that cigarettes score 0.431 and are still not
-offered — that is a business rule, not a model output. See §7. Against context alone, knowing the customer
-is worth **+0.08 to +0.22 AUC** depending on the category — the single
-largest effect measured anywhere in this project.
+**There is no separate "will they come inside" model.** These are
+unconditional — coming inside is already inside them. An earlier version
+multiplied an attach model in front; measured against scoring directly, the
+two matched to three decimals, so the stage was deleted.
+
+**What drives this shopper:** context, plus their own record — inside on 98%
+of 55 prior fills, with their category mix in the features. The single
+strongest feature is the prior attach *rate*: how many times we have seen
+someone is worth +0.004 AUC, what share of those visits ended inside is worth
++0.109.
+
+If you want `P(enters the store)` as a number, derive it:
+
+```
+P(enters) = 1 − Π(1 − pᵢ) = 0.78
+```
+
+AUC 0.822 against a dedicated attach model's 0.827. Report it — but keep it
+**out** of the expected value, or the category term counts twice.
 
 ::: {.callout-warning appearance="simple"}
 **Read saturated scores carefully.** Isotonic calibration is a step function,
-so for a shopper whose history is emphatic enough it will return the top or
-bottom step — 1.0 or 0.0 exactly. Both are clamped (to 1 − 1e-5 and 1e-5) so
-a zero cannot wipe out the arithmetic downstream, but a score at either rail
-means "as confident as the calibrator can express", not a certainty.
+so an emphatic history can push a category to the top or bottom step — 1.0 or
+0.0 exactly. Both are clamped, but a score at either rail means "as confident
+as the calibrator can express", not a certainty.
 :::
 
-## 5 · Model C — which SKU?
+## 7 · SKU Affinity (ALS)
+
+### Stage one has already settled the category
+
+The six probabilities above pick it: the most likely category we are
+**allowed** to show. For this shopper that is Packaged Beverages at 0.6782.
+Stage two may only look inside it.
+
+That restriction is deliberate. An earlier version ranked the whole catalog
+in one pass by expected value, and offered **candy** to a customer the model
+was 90.6% sure wanted a beverage. Not a coding bug — a denominator. `p_sku`
+is normalised within its category, so a four-SKU category concentrates its
+probability into four numbers while beverages spread theirs across hundreds.
+A 2% category with a short tail out-earns a 90% category with a long one, and
+the two expected values were never comparable in the first place.
+
+So: **relevance picks the category, economics picks the item inside it.**
+Margin cannot overrule relevance. Ties in stage one — a brand-new customer is
+at the probability floor in all six — go to the daypart's best-selling
+category, because otherwise the alphabet decides and "Beer" wins.
 
 This shopper **is** in the ALS factor matrix, so the ranking is personal
-rather than a best-seller list. That puts them in the minority: only 19% of
-next-period shoppers have enough category history to qualify.
+rather than a best-seller list. That puts them in the minority: **31.6%** of
+scored fills have enough category history to qualify. The other **68.4%** get
+the **Best-Seller Fallback**, which is the primary path, not a degraded one.
+
+Where ALS does run it earns the slot — **hit@10 of 34.3% against the best
+seller's 16.9%** on the same fills, a 2.0× lift. See `validate_sku.py`.
 
 | Brand | P(sku) | Margin | Brand funds | Our cost |
 |---|---|---|---|---|
-| **Monster** | 0.0075 | $1.60 | 100% | $0.00 |
-| Monster | 0.0071 | $1.68 | 100% | $0.00 |
-| Mountain Dew | 0.0037 | $3.83 | 0% | $0.90 |
-| Dr Pepper | 0.0031 | $4.30 | 0% | $0.90 |
+| **Red Bull** | 0.0055 | $2.48 | 100% | $0.00 |
+| Red Bull | 0.0027 | $4.44 | 100% | $0.00 |
+| Dasani | 0.0041 | $3.68 | 0% | $0.90 |
+| Red Bull | 0.0043 | $2.03 | 100% | $0.00 |
 
 `P(sku)` is normalised **within the category** — "given they buy a drink,
-which drink" — which is what the decision rule multiplies against
-`P(category)`.
+which drink" — which is what the decision multiplies against `P(category)`.
+**Ranked on `p_buys`, not on expected value.** Inside one category a fat
+margin on a less likely item would otherwise beat a thin margin on a likely
+one — and those margins are average price × an assumed 40%, so that ordering
+would be an assumption choosing the offer. `P(category)` is constant down
+this table, so it cannot change the order; it only converts `P(sku)` into a
+probability you can multiply by dollars later.
 
-Ranked by **expected value, not by P(sku)** — a thin margin on a likely item
-can lose to a fat margin on a less likely one, and a fully funded offer beats
-a self-funded one at equal probability because it costs us nothing.
+## 8 · Offer Economics
 
-## 6 · The decision
+### The arithmetic
 
 ```
-  P(inside)        0.0979
-x P(category)      0.9697
-x P(sku)           0.0075
+  P(category)      0.6782
+x P(sku)           0.0055
   ------------------------
-  P(buys this)     0.000708
-x effective margin $1.60 - $0.00 = $1.60
+  P(buys this)     0.003708
+x effective margin $2.48 - $0.00 = $2.48
   ------------------------
-  expected value   $0.00114 per fill
+  expected value   $0.00920 per fill
 ```
 
-> **Show: Monster.**
+> **Show: Red Bull.**
 
-Mountain Dew carries more than twice the margin, and still loses: it is
-self-funded, so $0.90 of that $3.83 is ours to give away.
+Dasani carries a bigger margin at $3.68 and still loses: it is self-funded, so
+$0.90 of that is ours to give away, while Red Bull's discount is covered in
+full by the brand.
 
 A tenth of a cent sounds like nothing. Across 36.1M fuel visits it is not —
 and more to the point, it is **positive**, which a self-funded version of the
 same offer would not be.
 
-## 7 · Five customers, one pump, one minute
+::: {.callout-note appearance="simple"}
+**These dollars do not leave this page.** `unit_margin` is average price times
+an assumed 40% — the PDI extract has no cost column — so the arithmetic above
+is a worked demonstration of the *rule*, not a measurement. The scored table
+(`customer_scores.parquet`) carries probabilities only: `affinity`, `p_sku`,
+`p_category`, `p_buys`. The margin terms live in `negotiate.py`, where the
+assumption is the subject rather than a hidden input.
+:::
 
-One trace shows the mechanism. Five show what the customer id is actually
-worth. These are **real shoppers** picked to typify an archetype, then run
-through the *identical* context — same store, same 07:12, same REGULAR fill —
-so the only thing that varies is who they are.
+## 9 · The pairing offer — the second item
 
-[`personas.py`](https://github.com/byuibigdata/bdbook) picks and runs them.
+Everything above answers *what will they buy*. That makes it the wrong thing
+to discount. A promotion on the item they had already decided to buy gives
+away margin and changes no behaviour; it is the one offer guaranteed to lose.
 
-### What they did before
+So the useful question is the second one. **46.5% of drink baskets are
+drink-only.** That is the addressable population: a customer who is going to
+buy a drink regardless, and might be persuaded to add something.
 
-| Persona | Fuel visits | Went inside | Soda | Cigs | Salty | Beer |
-|---|---|---|---|---|---|---|
-| Never bought | 858 | **0%** | 0% | 0% | 0% | 0% |
-| Soda regular | 16 | 100% | **100%** | 0% | 0% | 0% |
-| Cigarette regular | 9 | 100% | 0% | **100%** | 0% | 0% |
-| Salty snack regular | 13 | 100% | 0% | 0% | **100%** | 0% |
-| Beer regular | 8 | 100% | 0% | 0% | 0% | **100%** |
+### Three numbers, and all three are needed
 
-The first one is worth pausing on: **858 fills, never once walked inside.**
-That is a real customer type, and no amount of offer design changes it.
-
-### Model A separates them completely
-
-| Persona | Prior attach | P(inside) |
+| | What it is | What it is for |
 |---|---|---|
-| Never bought | 0% of 858 | **0.0000** |
-| Soda regular | 100% of 16 | 0.8693 |
-| Cigarette regular | 100% of 9 | 0.8320 |
-| Salty snack regular | 100% of 13 | 0.8942 |
-| Beer regular | 100% of 8 | **0.9291** |
+| `basket_lift` | `P(B` given `A in basket)` over `P(B)` | Basket co-occurrence. Symmetric |
+| `cohort_index` | B's attach rate among A-regulars ÷ the rate among **equally frequent** other shoppers | **Gating** |
+| `excess` | the same comparison as a difference, in attach points | **Ranking** |
+| `headroom` | `1 −` this shopper's own rate of B | Don't discount what they already buy |
 
-A spread of **0.93**, on identical context. The customer who has fuelled 858
-times and never once walked inside is scored as close to zero as the
-calibrator can express — which is the correct answer, and a cheaper one than
-any offer.
+::: {.callout-important appearance="simple"}
+**Controlling exposure is the whole trick.** Every cohort here is defined as
+"at least five purchase baskets", so every cohort is a cohort of *heavy
+shoppers* and indexes high on nearly everything. The first cut of this
+analysis had drink regulars over-indexing on frozen food at 6.1×, which was
+pure visit frequency. Comparing against shoppers who buy *just as often* and
+do not buy the anchor divides that out.
+:::
 
-### Model B does
+### Drink regulars vs equally frequent others
 
-| Persona | Soda | Cigs | Salty | Beer |
+| Pair category | Their rate | Others | Index | Excess |
 |---|---|---|---|---|
-| Never bought | 0.234 | 0.015 | 0.011 | 0.000 |
-| **Soda regular** | **0.885** | 0.000 | 0.000 | 0.000 |
-| **Cigarette regular** | 0.051 | **1.000** | 0.018 | 0.004 |
-| **Salty snack regular** | 0.331 | 0.025 | **0.800** | 0.000 |
-| **Beer regular** | 0.051 | 0.009 | 0.011 | **0.933** |
+| **Alternative Snacks** | 0.0602 | 0.0346 | **1.74** | 2.6pp |
+| Commissary | 0.0316 | 0.0193 | 1.64 | 1.2pp |
+| Packaged Sweet Snacks | 0.0669 | 0.0474 | 1.41 | 2.0pp |
+| **Salty Snacks** | 0.1218 | 0.0938 | 1.30 | **2.8pp** |
+| Candy | 0.1217 | 0.1142 | 1.07 | 0.8pp |
+| Cigarettes | 0.0995 | 0.2258 | 0.44 | — |
+| Beer | 0.0373 | 0.1893 | 0.20 | — |
 
-From 0.000 to 1.000 on cigarettes alone. **Both models want the customer id,
-but different facts about them** — A wants their overall attach habit, B wants
-their category mix. That is why they are separate models, not because one of
-them ignores identity.
+**Gate on the index, rank on the excess.** The failure modes are opposite.
+Volume alone picks the popular item — Candy is 18.2% of every second item in
+a drink basket and looks obvious, but at an index of 1.07 drink regulars buy
+it barely more than anyone else; it is not a complement, it is just
+everywhere. The index alone picks the tiny item — Other Dairy indexes 1.32 on
+a 0.55% attach rate. The excess is in attach points, so it ranks by how much
+extra business the pairing is associated with, and it puts candy fifth.
 
-### And the offers differ
+### There are two missions, and they repel each other
 
-| Persona | Offer | Expected value |
+| Anchor | Best complement | Verdict |
 |---|---|---|
-| Never bought | Red Bull | **$0.00000** |
-| Soda regular | Monster | $0.01352 |
-| Cigarette regular | **Monster** | $0.00278 |
-| Salty snack regular | Dot's Pretzels | $0.01311 |
-| Beer regular | **Modelo Especial** | **$0.06906** |
+| Packaged Beverages | Alternative Snacks 1.74 | Pairs well |
+| Salty Snacks | Alternative Snacks 1.97, Candy 1.56 | Pairs well |
+| **Beer** | Liquor 1.08 — nothing else above 0.63 | **Never paired** (by rule) |
+| **Cigarettes** | General Merchandise 2.46 — nothing else above 0.65 | **Do not pair** |
 
-Two of these deserve comment.
+The snack-and-drink categories are mutually complementary. The
+beer/tobacco/lottery categories are complementary with *each other* and
+strongly negative against the whole first group. A beer run is not a snack
+run. For a beer anchor the honest output is **no pair offer at all** — every
+candidate is something beer regulars buy *less* than average.
 
-**The cigarette regular is offered a drink.** The model is 94.9% sure they
-want cigarettes and we will not show them — tobacco is excluded as a business
-rule, because it carries the highest margin and the shortest SKU tail, so
-expected value alone would push it at *everyone*, including the customer who
-has never bought anything. Targeted tobacco promotion is restricted in most
-jurisdictions. The system knows the right answer and is correctly forbidden
-from acting on it, so it falls back to the next thing it believes.
+### Alcohol is out of the pairing question entirely
 
-**The never-bought customer is worth $0.00000.** 858 fills, never once inside,
-and the model prices the offer at nothing. It still *names* a best guess — the
-screen has to show something — but the arithmetic says this is not a customer
-to spend a funded discount on. The beer regular, at **$0.069**, is worth
-roughly seventy times more than the five-cent average.
+Beer and cigarettes sit at the bottom of that table for the same reason, but
+only one of them is a rule. `config.NOT_PAIRABLE` excludes **Beer, Wine and
+Liquor on both sides**: a beer anchor returns no pair offer, and alcohol is
+never offered as a second item. The measurement happens to agree — beer's
+only complement above 1.0 is Liquor at 1.08 — but the rule does not depend on
+that holding, and a pump screen answering "beer" with "and a bottle of
+liquor" is not a merchandising idea.
 
-## What the same trace says about the deal
+This is *narrower* than `NOT_OFFERABLE`. Beer remains a legitimate **anchor**
+offer; it simply neither takes nor becomes a second item.
 
-Read backwards, the rule prices the negotiation:
+### The catalog had to grow to answer this
 
-| If the offer lifts purchase by | Brand must fund at least |
-|---|---|
-| +25% | **64%** |
-| +50% | **41%** |
-| +100% | **11%** |
+The three strongest complements to a drink were not in `offer_catalog.csv` at
+all, because `TARGET_CATEGORIES` was chosen for the anchor question and these
+are categories almost nobody buys *anyway*. The engine could name a category
+and then shrug. So `SKU_MODEL_CATEGORIES` is now
+`TARGET_CATEGORIES + PAIR_CATEGORIES`:
 
-So: *"At the lift we think this offer produces, we need you at roughly half."*
-The arithmetic has a useful property — **the customer's purchase probability
-cancels out**. How likely they were to buy decides how much the deal is worth;
-the margin-to-discount ratio and the lift decide who should pay for it.
+| Added category | SKUs in catalog | Index vs a drink |
+|---|---|---|
+| Alternative Snacks | 468 | **1.74** |
+| Packaged Sweet Snacks | 251 | 1.41 |
+| Commissary & Other Packaged | 135 | 1.64 |
 
-## What this trace does not show
+Safe for the anchor path **by construction**: stage one only considers
+categories that have a Category Relevance model, and those are fitted over
+`TARGET_CATEGORIES` alone. The new categories reach the catalog and the ALS
+factors and nothing else — they can be the second item, never the first.
 
-**No p1.** Every number is a prediction of what this customer does anyway,
-not of what the offer *changes*. The expected value is priced at `p0` on both
-sides, which is why a self-funded discount can never win here. Fixing that
-needs a holdout — a slice of pumps that show nothing — and it does not exist.
+### It ships as a column
 
-**No logged propensity.** A production version would write what it showed
-**and the probability it showed it with**. Without that, no off-policy
-evaluation is possible later and the information cannot be reconstructed.
+`customer_scores.parquet` carries `second_category` and
+`second_category_skus` beside `offer_category` and `top_skus` — populated on
+**560,690 of 583,583 rows**, empty where nothing clears the gate.
 
-**Assumed margins.** `unit_margin` is average price times 40%. The PDI extract
-has no cost column, so the dollar figures move the moment someone supplies
-real ones.
+The struct deliberately has **no `p_category` and no `p_buys`**. The pair
+category usually sits outside the six, so it has no relevance model and there
+is no `P(category)` to multiply; a product built from a placeholder would
+read as a measurement. It carries `cohort_index`, `excess` and `headroom`
+instead — the gate, the rank, and the room left to grow.
+
+::: {.callout-warning appearance="simple"}
+**None of this is causal,** and this is the same gap as everywhere else.
+Co-occurrence says these things appear together; it does not say a discount
+on B *causes* a B purchase. That needs a holdout, and there is not one.
+:::
+
+## Two gaps this page cannot close
+
+**No logged propensity.** A production version must write down what it showed
+**and the probability it showed it with**. Without that, off-policy
+evaluation is impossible later and the information cannot be reconstructed
+after the fact — it is the cheapest thing on this list and the easiest to
+forget.
+
+**Assumed margins.** `unit_margin` is average price × 40%. The extract has no
+cost column, so every dollar figure here moves the moment someone supplies
+real ones. The probabilities do not.
 
 ## Run it yourself
 
@@ -278,5 +505,12 @@ $UV python explain.py --demo --json          # the same trace as a dict
 ```
 
 `serve.py` gives the answer; `explain.py` gives the reasoning;
-`negotiate.py` gives the funding floor. All three read the same artifacts and
-are covered by the 50 checks in `validate.py`.
+`negotiate.py` gives the funding floor; `score_table.py` writes the same
+answer for every fill in the held-out period. All four read the same
+artifacts, and all four rank through the single function in `scoring.py` —
+serving is just the one-row case. That matters more than it sounds: when the
+live path and the batch path each had their own copy of the ranking, the
+copies drifted twice, and both times the table on disk recommended beer to
+customers whose beer propensity was 0.004. Three of the 68 checks in
+`validate.py` now score the same twelve fills both ways and require the
+probabilities, the expected values and the chosen SKU to match exactly.

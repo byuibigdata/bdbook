@@ -3,6 +3,11 @@
 Give it a shopper, a time and a fuel grade; it returns the offer to show, or
 tells you to show nothing.
 
+The answer comes in two stages. Category Relevance picks the category -- the
+most likely one we are allowed to show, on probability alone. Then SKU
+Affinity and the margin pick the item inside that category. A SKU from any
+other category cannot appear, however profitable it is.
+
     uv run --with polars --with scikit-learn --with joblib python serve.py \
         --shopper 0a1b2c... --time "2026-06-15 07:30" --grade REGULAR
 
@@ -26,6 +31,11 @@ import numpy as np
 import polars as pl
 
 import config as C
+import scoring
+from scoring import SkuRanker
+
+# One source of truth for the probability floor, shared with the batch path.
+P_FLOOR = scoring.P_FLOOR
 
 
 def daypart_of(ts: datetime) -> str:
@@ -37,7 +47,6 @@ class Offer:
     gtin: str
     brand: str
     category: str
-    p_inside: float
     p_category: float
     p_sku: float
     unit_margin: float
@@ -48,7 +57,7 @@ class Offer:
 
     @property
     def p_buy(self) -> float:
-        return self.p_inside * self.p_category * self.p_sku
+        return self.p_category * self.p_sku
 
     def min_funded_share(self, rel_uplift: float) -> float:
         """Least the brand must fund for this offer to beat showing nothing.
@@ -80,8 +89,8 @@ class Offer:
             funder = f"split {self.funded_share:.0%}/{1 - self.funded_share:.0%}"
         return (f"{self.brand or '?':<16} {self.category[:26]:<26} "
                 f"EV ${self.expected_value:7.4f}  "
-                f"P(in)={self.p_inside:.3f} P(cat)={self.p_category:.3f} "
-                f"P(sku)={self.p_sku:.3f}  {funder}")
+                f"P(cat)={self.p_category:.4f} "
+                f"P(sku)={self.p_sku:.4f}  {funder}")
 
 
 @dataclass
@@ -91,8 +100,13 @@ class Decision:
     fuel_grade: str
     store_id: int
     known_shopper: bool
-    p_inside: float
+    prior_attach: float          # -1 when we have never seen them
     ranked: list[Offer] = field(default_factory=list)
+
+    @property
+    def category(self) -> str | None:
+        """The category stage one chose. Every ranked offer sits inside it."""
+        return self.ranked[0].category if self.ranked else None
 
     @property
     def show(self) -> Offer | None:
@@ -106,12 +120,13 @@ class OfferEngine:
     """Loads the artifacts once and scores a fill in milliseconds."""
 
     def __init__(self) -> None:
-        a = joblib.load(C.ART / "model_a.joblib")
-        b = joblib.load(C.ART / "model_b.joblib")
-        c = joblib.load(C.ART / "model_c.joblib")
-        self.model_a, self.cat_maps, self.cols_a = a["model"], a["cat_maps"], a["cols"]
-        self.models_b, self.cols_b = b["models"], b["cols"]
-        self.hist_cols = b["hist_cols"]
+        rel = joblib.load(C.ART / "model_category_relevance.joblib")
+        aff = joblib.load(C.ART / "model_sku_affinity.joblib")
+        self.relevance = rel["models"]          # category -> calibrated GBT
+        self.cols = rel["cols"]
+        self.cat_maps = rel["cat_maps"]
+        self.per_cat = rel["per_cat"]
+        c = aff
         self.als, self.shopper_ix = c["als"], c["shopper_ix"]
         self.items, self.popularity, self.matrix = c["items"], c["popularity"], c["matrix"]
 
@@ -127,19 +142,13 @@ class OfferEngine:
             columns=["shopper_id", "store_id", "ts", "cats", "bought", "fuel_spend"],
         )
         self.hist = pl.read_parquet(C.ART / "feat_history.parquet")
-        self.gtin_category = dict(
-            zip(self.catalog["gtin"].to_list(),
-                self.catalog["category"].to_list()))
+        # The ranker is the shared core. `score_table.py` builds the same
+        # object from the same two artifacts, so the two paths cannot drift.
+        self.ranker = SkuRanker(aff, self.catalog)
         # Median fill, used when the caller does not supply one.
         self.default_spend = float(self.visit["fuel_spend"].median())
 
     # -- features ---------------------------------------------------------
-    def _encode(self, row: dict) -> dict:
-        out = dict(row)
-        for col, mapping in self.cat_maps.items():
-            out[col] = mapping.get(str(row.get(col, "__NA__")), -1)
-        return out
-
     def _home_store(self, shopper_id: str) -> int | None:
         hit = self.visit.filter(pl.col("shopper_id") == shopper_id)
         if hit.height == 0:
@@ -154,8 +163,9 @@ class OfferEngine:
         )
         out = {}
         n = prior.height
-        # Model A's two: how often we have seen them, and how often that
-        # ended with them walking inside.
+        # The two that matter most: how often we have seen them, and what
+        # share of those visits ended with them walking inside. The count is
+        # worth +0.004 AUC; the share is worth +0.109.
         out["prior_n"] = n
         out["prior_attach"] = float(prior["bought"].mean()) if n else -1.0
         for cat in C.TARGET_CATEGORIES:
@@ -166,114 +176,90 @@ class OfferEngine:
             out[f"prior_share_{cat}"] = (hits / n) if n else 0.0
         return out
 
-    # -- the three models -------------------------------------------------
-    # Isotonic regression is a step function fitted on finite data, so its
-    # lowest step can sit at exactly 0 -- it means "no positives landed in
-    # this bin", not "this cannot happen". A hard zero would wipe out every
-    # expected value downstream, so floor it.
-    P_FLOOR = 1e-5
+    # -- the two models ---------------------------------------------------
+    def _row(self, shopper_id: str, ts, fuel_grade: str, store: int,
+             spend: float) -> tuple[pl.DataFrame, dict]:
+        """The one-row feature frame for this fill, plus the raw history.
 
-    def _p_inside(self, ctx: dict) -> float:
-        X = np.array([[ctx.get(c, 0) for c in self.cols_a]], dtype=float)
-        p = float(self.model_a.predict_proba(X)[0, 1])
-        return min(max(p, self.P_FLOOR), 1.0 - self.P_FLOOR)
-
-    def _p_categories(self, ctx: dict, hist: dict) -> dict[str, float]:
-        row = {**ctx, **hist}
-        X = np.array([[row.get(c, 0) for c in self.cols_b]], dtype=float)
-        return {cat: min(max(float(m.predict_proba(X)[0, 1]), self.P_FLOOR),
-                         1.0 - self.P_FLOOR)
-                for cat, m in self.models_b.items()}
-
-    def _sku_scores(self, shopper_id: str, daypart: str) -> dict[str, float]:
-        """Score this daypart's items for the shopper, using the ALS factors.
-
-        ALS gives a factor vector per shopper and per item; the affinity is
-        their dot product. Items are keyed `gtin@daypart`, so restricting to
-        one daypart is a filter on the item side -- which is how a model that
-        takes no features ends up knowing it is 6am.
-
-        An unseen shopper has no factor vector, so they fall back to overall
-        popularity. That is the honest answer, not a failure.
+        Built in exactly the shape `score_table.py` hands to the batch path,
+        so the shared core sees no difference between a live fill and a row
+        of the test period.
         """
-        suffix = "@" + daypart
-        idx = np.array([i for i, it in enumerate(self.items)
-                        if it.endswith(suffix)], dtype=np.int64)
-        if idx.size == 0:
-            return {}
-        ix = self.shopper_ix.get(shopper_id)
-        if ix is None:
-            raw = self.popularity[idx]
-        else:
-            user_vec = self.als.user_factors[ix]
-            raw = self.als.item_factors[idx] @ user_vec
-        raw = np.clip(np.asarray(raw, dtype=float), 0, None)
-        if raw.sum() <= 0:
-            return {}
+        hist = self._history(shopper_id, ts)
+        row = {
+            "daypart": daypart_of(ts), "fuel_grade": fuel_grade,
+            "store_id": str(store), "hour": ts.hour,
+            "weekday": ts.isoweekday(), "month": ts.month,
+            "fuel_spend": float(spend),
+            **{k: v for k, v in hist.items()},
+        }
+        frame = pl.DataFrame([{c: row.get(c, 0) for c in
+                               set(self.cols) | set(self.cat_maps)}])
+        return frame, hist
 
-        # Normalise WITHIN each category, so the number means "given they
-        # buy this category, how likely is this SKU" -- which is what the
-        # decision rule multiplies against P(category).
-        by_cat: dict[str, list[tuple[str, float]]] = {}
-        for i, v in zip(idx, raw):
-            gtin = self.items[i].split("@")[0]
-            cat = self.gtin_category.get(gtin)
-            if cat is not None:
-                by_cat.setdefault(cat, []).append((gtin, float(v)))
+    def category_probs(self, shopper_id: str, when, fuel_grade: str,
+                       store_id: int | None = None,
+                       fuel_spend: float | None = None) -> dict[str, float]:
+        """P(buys this category on this fill), per category. Unconditional.
 
-        out: dict[str, float] = {}
-        for pairs in by_cat.values():
-            total = sum(v for _, v in pairs)
-            if total <= 0:
-                continue
-            for gtin, v in pairs:
-                out[gtin] = v / total
-        return out
+        There is no separate "will they come inside" model. An earlier
+        version multiplied a P(inside) model into this one; measured against
+        a single direct model the two matched to three decimals, so the extra
+        stage was dropped. Coming inside is already inside these numbers.
+        """
+        ts = when if isinstance(when, datetime) else datetime.fromisoformat(when)
+        store, _ = self._resolve_store(shopper_id, store_id)
+        spend = fuel_spend if fuel_spend is not None else self.default_spend
+        frame, _ = self._row(shopper_id, ts, fuel_grade, store, spend)
+        X = scoring.design_matrix(frame, self.cat_maps, self.cols)
+        return {cat: float(p[0])
+                for cat, p in scoring.category_probs(self.relevance, X).items()}
+
+    def prob_entering(self, shopper_id: str, when, fuel_grade: str,
+                      store_id: int | None = None,
+                      fuel_spend: float | None = None) -> float:
+        """P(enters the store), recovered from the six categories.
+
+        The independence product, not a model. See `scoring.prob_entering`.
+        """
+        p = self.category_probs(shopper_id, when, fuel_grade, store_id, fuel_spend)
+        return float(scoring.prob_entering(
+            {k: np.array([v]) for k, v in p.items()})[0])
+
+    def _resolve_store(self, shopper_id: str,
+                       store_id: int | None) -> tuple[int, bool]:
+        """The store to score at, and whether we actually knew it."""
+        if store_id is not None:
+            return int(store_id), True
+        store = self._home_store(shopper_id)
+        if store is not None:
+            return store, True
+        busiest = int(self.visit.group_by("store_id").len()
+                      .sort("len", descending=True).row(0)[0])
+        return busiest, False
 
     # -- the decision -----------------------------------------------------
     def decide(self, shopper_id: str, when: str | datetime,
                fuel_grade: str, store_id: int | None = None,
                fuel_spend: float | None = None, top: int = 5) -> Decision:
         ts = when if isinstance(when, datetime) else datetime.fromisoformat(when)
-        store = store_id if store_id is not None else self._home_store(shopper_id)
-        known = store is not None
-        if store is None:                       # never seen: use the busiest store
-            store = int(self.visit.group_by("store_id").len()
-                        .sort("len", descending=True).row(0)[0])
+        store, known = self._resolve_store(shopper_id, store_id)
+        spend = fuel_spend if fuel_spend is not None else self.default_spend
 
-        ctx = self._encode({
-            "daypart": daypart_of(ts), "fuel_grade": fuel_grade,
-            "store_id": str(store), "hour": ts.hour,
-            "weekday": ts.isoweekday(), "month": ts.month,
-            "fuel_spend": fuel_spend if fuel_spend is not None else self.default_spend,
-        })
-        hist = self._history(shopper_id, ts)
-        p_in = self._p_inside({**ctx, **hist})
-        p_cat = self._p_categories(ctx, hist)
-        p_sku = self._sku_scores(shopper_id, daypart_of(ts))
+        frame, hist = self._row(shopper_id, ts, fuel_grade, store, spend)
+        X = scoring.design_matrix(frame, self.cat_maps, self.cols)
+        props = scoring.category_probs(self.relevance, X)
 
-        offers: list[Offer] = []
-        for r in self.catalog.iter_rows(named=True):
-            if not r["in_stock"] or not r.get("offerable", True):
-                continue
-            pc = p_cat.get(r["category"])
-            ps = p_sku.get(r["gtin"])
-            if pc is None or ps is None:
-                continue
-            funded = float(r["funded_share"])
-            discount = float(r["discount"])
-            our_cost = discount * (1.0 - funded)
-            margin = float(r["unit_margin"])
-            # Offer vs no offer. Without a holdout we have no measured p1,
-            # so this uses p0 for both -- which is exactly why a self-funded
-            # discount can never come out ahead here. See the holdout note.
-            p_buy = p_in * pc * ps
-            ev = p_buy * (margin - our_cost)
-            offers.append(Offer(r["gtin"], r["brand"], r["category"], p_in, pc,
-                                ps, margin, discount, funded, our_cost, ev))
-
-        offers.sort(key=lambda o: o.expected_value, reverse=True)
-        return Decision(shopper_id, ts, fuel_grade, store, known, p_in, offers[:top])
+        # The N = 1 case of the batch ranker: stage one picks the category by
+        # relevance, stage two ranks that category's SKUs by expected value.
+        # Same normalisation and same tie-breaking as the table on disk.
+        picks = self.ranker.rank([shopper_id], [daypart_of(ts)], props, top=top)[0]
+        offers = [Offer(c["gtin"], c["brand"], c["category"], c["p_category"],
+                        c["p_sku"], c["unit_margin"], c["discount"],
+                        c["funded_share"], c["our_cost"], c["expected_value"])
+                  for c in picks]
+        return Decision(shopper_id, ts, fuel_grade, store, known,
+                        hist["prior_attach"], offers)
 
 
 def main() -> None:
@@ -299,12 +285,15 @@ def main() -> None:
     print(f"shopper   {d.shopper_id}{'' if d.known_shopper else '   [unseen]'}")
     print(f"when      {d.when:%Y-%m-%d %H:%M}  ({daypart_of(d.when)})")
     print(f"grade     {d.fuel_grade}        store {d.store_id}")
-    print(f"P(comes inside) = {d.p_inside:.3f}\n")
+    pa = d.prior_attach
+    print("prior     " + ("never seen" if pa < 0
+                          else f"went inside {pa:.0%} of past fills") + "\n")
 
     if not d.ranked:
         print("no scorable candidates - check the catalog and the daypart")
         return
-    print("ranked candidates")
+    print(f"category  {d.category}   (stage one: highest P we may show)")
+    print("ranked candidates inside that category")
     for o in d.ranked:
         print("  " + str(o))
     print()

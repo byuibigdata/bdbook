@@ -11,7 +11,7 @@ format:
 
 **This page answers *what to build*** — every box is a table a team has to
 materialise, with a grain, a schema and a job that writes it. For ***why***
-each one looks the way it does — why the window is −15/+45, why three models,
+each one looks the way it does — why the window is −15/+45, why two models,
 why the decision is priced against a no-offer world — read
 [**pipeline v1 →**](pipeline.html) first, and for one customer walked all the
 way to an offer, [**v3 →**](pipeline3.html).
@@ -76,8 +76,8 @@ spans at most three buckets — then filter the exact minutes. That is the
 difference between minutes and never finishing.
 
 ::: {.callout-note appearance="simple"}
-**Example conclusions.** Row counts come from one run over the PDI extract —
-940 stores in eight Intermountain West states, October 2024 to September 2026.
+**Where the row counts come from.** One run over the PDI extract — 940 stores
+in eight Intermountain West states, October 2024 to September 2026.
 :::
 :::
 
@@ -299,8 +299,8 @@ the attach rate by seven points.
 | `fuel_tx` | string | Primary key |
 | `shopper_id`, `store_id`, `ts` | | From the anchor |
 | `fuel_spend`, `fuel_grade` | double, string | |
-| **`bought`** | boolean | **The Model A label.** 12.8% true |
-| `cats` | array\<string\> | **The Model B labels.** Null when `bought` is false |
+| **`bought`** | boolean | Did they come inside at all. 12.8% true — kept for diagnostics, not modelled directly |
+| `cats` | array\<string\> | **The six Category Relevance labels.** Null when `bought` is false |
 | `store_spend` | double | Median **$7.87** when they buy |
 
 ```python
@@ -422,46 +422,11 @@ no features, so the only way to give it a clock is to put one in the key.
 more times, averaging 16.2 purchases over 7.6 distinct SKUs.
 :::
 
-::: {#d-train_a .node-detail}
-### train_a
+::: {#d-train_relevance .node-detail}
+### train_relevance
 
-**Grain:** one row per visit. **36.1M rows, one binary label.** This is the
-table that goes into Model A.
-
-```python
-CAT_COLS = ["daypart", "fuel_grade", "store_id"]
-NUM_COLS = ["hour", "weekday", "month", "fuel_spend", "store_base_rate"]
-
-stages = [StringIndexer(inputCol=c, outputCol=f"{c}_ix", handleInvalid="keep")
-          for c in CAT_COLS]
-stages += [OneHotEncoder(inputCols=["daypart_ix", "fuel_grade_ix"],
-                         outputCols=["daypart_oh", "fuel_grade_oh"])]
-stages += [VectorAssembler(
-    inputCols=NUM_COLS + ["daypart_oh", "fuel_grade_oh", "store_id_ix"],
-    outputCol="features")]
-
-prep = Pipeline(stages=stages).fit(feat_ctx)
-train_a = prep.transform(feat_ctx).select("fuel_tx", "features",
-                                          F.col("bought").cast("int").alias("label"))
-```
-
-**Split on time, not at random.** A random split lets the model learn from
-next month to predict last month:
-
-```python
-cut = "2026-04-01"
-tr, te = train_a.filter(F.col("ts") < cut), train_a.filter(F.col("ts") >= cut)
-```
-
-`store_id` goes in indexed rather than one-hot — 940 levels is too many columns
-for a tree ensemble to spend splits on.
-:::
-
-::: {#d-train_b .node-detail}
-### train_b
-
-**Grain:** one row per converting visit. **4.6M rows, six binary labels** — not
-one six-way label.
+**Grain:** one row per fuel visit. **36.1M rows, six binary labels** — not one
+six-way label, and no longer restricted to converters.
 
 ```python
 TOP6 = ["Packaged Beverages (Non-Alcoholic)", "Cigarettes", "Candy",
@@ -470,11 +435,9 @@ TOP6 = ["Packaged Beverages (Non-Alcoholic)", "Cigarettes", "Candy",
 wide = feat_hist.groupBy("fuel_tx").pivot("category", TOP6).agg(
     F.first("prior_share"), F.first("days_since"), F.first("bought_before"))
 
-train_b = (visit.filter("bought")
-    .join(feat_ctx, "fuel_tx").join(wide, "fuel_tx"))
-
-for cat in TOP6:                       # one label column per category
-    train_b = train_b.withColumn(
+train_relevance = feat_ctx.join(wide, "fuel_tx")
+for cat in TOP6:
+    train_relevance = train_relevance.withColumn(
         f"y_{slug(cat)}", F.array_contains("cats", cat).cast("int"))
 ```
 
@@ -482,108 +445,90 @@ for cat in TOP6:                       # one label column per category
 once — the six shares sum to 119%, not 100%. A multiclass model would force
 them to compete and hand back numbers that cannot be priced.
 
-| Category | Share of converting visits |
+**Why every visit and not just converters.** An earlier version trained these
+on the 13% who came inside and multiplied an attach model in front. Measured
+against training directly on all visits, the two matched to three decimals,
+so the extra stage went.
+
+| Column group | Count |
 |---|---|
-| Packaged Beverages | 54.5% |
-| Cigarettes | 14.7% |
-| Candy | 13.5% |
-| Salty Snacks | 13.1% |
-| Other Tobacco | 12.6% |
-| Beer | 10.5% |
+| Context | 7 |
+| Shopper (`prior_n`, `prior_attach`) | 2 |
+| Per-category history | 18 |
+| Labels | 6 |
 :::
 
-::: {#d-m_a .node-detail}
-### model_a {.teal-head}
+::: {#d-m_relevance .node-detail}
+### category_relevance {.teal-head}
 
-**Will they come inside?** One `GBTClassifier` plus a calibrator.
+**Classification.** Six calibrated binary classifiers (GBT), each answering
+*will they buy this category on this fill*.
 
 ```python
 from pyspark.ml.classification import GBTClassifier
 
-gbt = GBTClassifier(featuresCol="features", labelCol="label",
-                    maxIter=120, maxDepth=6, stepSize=0.08,
-                    validationIndicatorCol="is_val")   # early stopping
-model_a = gbt.fit(tr)
-
-scored = model_a.transform(te)        # -> probability: vector[2]
-p_inside = F.udf(lambda v: float(v[1]), "double")
-scored = scored.withColumn("p_inside", p_inside("probability"))
-```
-
-**Do not rebalance the 12.8% positives.** The output feeds an arithmetic in
-dollars; trained 50/50 an average visit scores 0.5 instead of 0.128 and every
-expected value inflates about 4×. Use `weightCol` if you must, never SMOTE.
-
-Spark has no built-in calibrator, so fit isotonic regression on a holdout slice:
-
-```python
-from pyspark.ml.regression import IsotonicRegression
-
-cal = IsotonicRegression(featuresCol="p_vec", labelCol="label").fit(val)
-p_cal = cal.transform(scored)         # <- the number the decision rule uses
-```
-
-Judge it on a reliability curve, not accuracy or F1. **Calibration is the whole
-job.**
-:::
-
-::: {#d-m_b .node-detail}
-### model_b {.teal-head}
-
-**Which category?** Six independent binary models — binary relevance.
-
-```python
-models_b = {}
+models = {}
 for cat in TOP6:
-    y = f"y_{slug(cat)}"
-    models_b[cat] = GBTClassifier(featuresCol="features", labelCol=y,
-                                  maxIter=80, maxDepth=5).fit(train_b_prep)
-
-# Score every category for one visit, side by side.
-out = train_b_prep
-for cat, m in models_b.items():
-    out = (m.transform(out)
-            .withColumnRenamed("probability", f"p_{slug(cat)}")
-            .drop("rawPrediction", "prediction"))
+    models[cat] = GBTClassifier(featuresCol="features", labelCol=f"y_{slug(cat)}",
+                                maxIter=200, maxDepth=6).fit(train_relevance)
 ```
 
-Each model returns a real probability for **its** offer, which is exactly the
-shape the decision needs — we are scoring six candidates, not picking one
-label.
+**Do not rebalance.** Base rates run 1.3% to 7.4%; the output is multiplied by
+dollars, so a model trained 50/50 inflates every expected value. Use
+`weightCol` if you must, never SMOTE.
 
-GBT rather than logistic regression here because this is where the interactions
-live: *beer on a Friday evening*, *coffee at 6am on a weekday*.
+**Calibrate.** Spark has no built-in calibrator, so fit isotonic regression on
+a holdout slice. Judge on a reliability curve, not accuracy — calibration is
+the whole job. Watch for saturation: isotonic is a step function and its top
+and bottom steps sit at exactly 1 and 0, so clamp both.
+
+| Category | Base | Out-of-time AUC |
+|---|---|---|
+| Packaged Beverages | 7.37% | 0.814 |
+| Candy | 2.04% | 0.786 |
+| Salty Snacks | 1.89% | 0.783 |
+| Other Tobacco | 1.89% | 0.880 |
+| Cigarettes | 1.72% | 0.899 |
+| Beer | 1.34% | 0.892 |
+
+`P(inside)` is recoverable from these as `1 − Π(1 − pᵢ)` — AUC 0.822 against
+a dedicated model's 0.827. Report it; keep it **out** of the expected value or
+the category term counts twice.
 :::
 
-::: {#d-m_c .node-detail}
-### model_c {.teal-head}
+::: {#d-m_affinity .node-detail}
+### sku_affinity {.teal-head}
 
 **Which SKU inside the category?** `ALS` on implicit feedback.
 
 ```python
 from pyspark.ml.recommendation import ALS
 
-als = ALS(userCol="shopper_ix", itemCol="item_ix", ratingCol="n",
-          implicitPrefs=True,        # counts are confidence, not ratings
-          rank=32, regParam=0.05, alpha=20,
-          coldStartStrategy="drop", nonnegative=True)
-model_c = als.fit(als_interactions)
+# The clock goes in the key: ALS takes no features.
+daypart = (F.when(F.hour("ts").between(5, 9),   "morning")
+            .when(F.hour("ts").between(10, 14), "midday")
+            .otherwise("evening"))
+df = df.withColumn("item", F.concat_ws("@", "gtin", daypart))
 
-top = model_c.recommendForUserSubset(live_shoppers, 20)   # 20 item_ix per shopper
+als = ALS(userCol="shopper_ix", itemCol="item_ix", ratingCol="n",
+          implicitPrefs=True, rank=32, regParam=0.05, alpha=20,
+          coldStartStrategy="drop")
+sku_affinity = als.fit(als_interactions)
 ```
 
-Apply it **per category, where the tail justifies it**:
+**Measured against the baseline it has to beat:**
 
-| Category | SKUs | Top 100 covers | Worth ALS? |
-|---|---|---|---|
-| Packaged Beverages | 4,049 | 45.1% | **Yes** |
-| Candy | 3,902 | 43.3% | Yes |
-| Cigarettes | 1,311 | 85.9% | **No** — show the best seller |
+| | hit@10 | vs popularity |
+|---|---|---|
+| ALS, SKU level | 16.2% | **3.0×** |
+| ALS, brand level | 35.1% | **0.88× — worse** |
 
-**Two ways to get it wrong.** Fit only on interactions *before* the scoring
-window — ALS feels like preprocessing, which is why people forget. And
-`coldStartStrategy="drop"` silently removes unseen shoppers, so fall back to
-store-and-daypart popularity for them rather than returning nothing.
+Brand level loses because a handful of brands carry most of the volume, so
+the top-10 popularity list already contains the answer. The long tail of SKUs
+is what gives ALS something to learn.
+
+**Fit only on purchases before the scoring window.** ALS feels like
+preprocessing, which is exactly why this gets forgotten.
 :::
 
 ::: {#d-offer_cat .node-detail}
@@ -654,9 +599,70 @@ def score(req: dict) -> DataFrame:
     return feats
 ```
 
-The 90-second budget is the real constraint. Model A and the six Model B
-calls are cheap; the **feature-store lookup is the latency risk**, which is an
-argument for precomputing `prior_*` nightly per shopper.
+The 90-second budget is the real constraint. The six Category Relevance calls
+are cheap; the **feature-store lookup is the latency risk**, which is an
+argument for precomputing `prior_*` and `prior_attach` nightly per shopper.
+:::
+
+::: {#d-pair_affinity .node-detail}
+### pair_affinity {.teal-head}
+
+**Grain:** one row per (anchor category, pair category). Built from the
+**training-period** purchase baskets — measuring pair strength on the test
+period would measure it on the fills we later score.
+
+| Column | Type | Why it matters |
+|---|---|---|
+| `anchor`, `pair` | string | the two categories |
+| `basket_lift` | double | `P(B` given `A in basket)` over `P(B)`. **Symmetric** |
+| `cohort_rate` | double | B's per-basket rate among A-regulars |
+| `other_rate` | double | …among **equally frequent** non-anchor shoppers |
+| `cohort_index` | double | the ratio. **Gates** |
+| `cohort_support` | long | baskets behind it — guards against a ratio on nothing |
+
+```python
+# The comparison group is the whole trick. Every cohort is defined by
+# "at least N baskets", so every cohort is a cohort of heavy shoppers
+# and indexes high on everything. Hold visit count constant on both sides.
+eligible = baskets.groupBy("shopper_id").count().filter("count >= 5")
+members  = eligible.join(anchor_regulars, "shopper_id")          # buys A
+others   = eligible.join(anchor_regulars, "shopper_id", "left_anti")
+```
+
+796 pairs over 32 anchors. **Gate on `cohort_index`, rank on
+`cohort_rate − other_rate`** — the ratio alone picks tiny categories, the
+volume alone picks Candy, which at an index of 1.07 is popular rather than
+complementary.
+:::
+
+::: {#d-cust_scores .node-detail}
+### customer_scores {.green-head}
+
+**Grain:** one row per customer-moment in the held-out period. The batch twin
+of `decision` — same `scoring.py`, so the two cannot drift.
+
+```
+fuel_tx | shopper_id | store_id | ts | daypart | fuel_grade | prior_attach
+prob_entering | offer_category | personalised | <category>_propensity × 6
+top_skus              list[struct{rank, gtin, brand, category,
+                                  affinity, p_sku, p_category, p_buys}]
+second_category | second_category_skus
+                      list[struct{…, cohort_index, excess, headroom}]
+```
+
+**583,583 rows, 19 columns.** `fuel_tx` is the primary key: `(shopper_id, ts)`
+is *not* unique — a shopper can have two fuel transactions on one timestamp —
+and joining on the pair silently fans rows out.
+
+**`prob_entering` is derived, not modelled**: `1 − Π(1 − pᵢ)` over the six
+categories, AUC 0.822 against a dedicated attach model's 0.827. Report it; do
+**not** multiply it back into the expected value or the category term counts
+twice.
+
+**No dollar figures in `top_skus`.** The catalog's margins are average price ×
+an assumed 40%, so they stay in the negotiation code that says so out loud.
+The ranking is `p_buys`, which makes the order explainable from the columns
+beside it.
 :::
 
 ::: {#d-decision .node-detail}
@@ -664,11 +670,40 @@ argument for precomputing `prior_*` nightly per shopper.
 
 **Grain:** one row per candidate offer per fill. The arithmetic that picks one.
 
+Two stages, and the order matters. **Stage one picks the category** on
+`P(category)` alone — the most likely one we are allowed to show. **Stage two
+picks the SKU inside it** on expected value. Candidates from any other
+category never enter this table.
+
+Ranking the whole catalog in one pass looks simpler and is wrong: `p_sku` is
+normalised within its category, so a four-SKU category concentrates its
+probability where a three-hundred-SKU category spreads it thin, and a 2%
+category with a short tail beats a 90% category with a long one. Those
+expected values have different denominators and are not comparable.
+
+```python
+# Stage one: the category, by relevance. No margin in this step.
+allowed = candidates.filter(F.col("in_stock") & F.col("offerable"))
+chosen  = (allowed.groupBy("fuel_tx", "category")
+    .agg(F.first("p_category").alias("p_category"),
+         F.sum("units").alias("cat_units"))        # units break ties
+    .withColumn("r", F.row_number().over(
+        Window.partitionBy("fuel_tx")
+              .orderBy(F.desc("p_category"), F.desc("cat_units"))))
+    .filter(F.col("r") == 1).select("fuel_tx", "category"))
+
+# Stage two: the SKU, by economics -- inside that one category.
+candidates = allowed.join(chosen, ["fuel_tx", "category"])
+```
+
 ```python
 EPS = 0.01        # don't bother for less than a cent of expected margin
 
 dec = (candidates
-    .withColumn("p_buy",  F.col("p_inside") * F.col("p_category") * F.col("p_sku"))
+    # Two terms, not three. P(category) is already unconditional --
+    # walking inside is inside it -- so an extra p_inside factor
+    # would count the same thing twice.
+    .withColumn("p_buy", F.col("p_category") * F.col("p_sku"))
     .withColumn("ev_offer", F.col("p_buy_with_offer") *
                             (F.col("unit_margin") - F.col("our_cost")))
     .withColumn("ev_none",  F.col("p_buy") * F.col("unit_margin"))
@@ -687,6 +722,66 @@ there is no `p₁`, only `p₀`, so today this rule runs on an assumed lift and
 should be labelled as such.
 
 **Returning nothing is a valid answer** and costs nothing to execute.
+
+### The second item
+
+Everything above finds what they buy **anyway** — the one offer certain to
+cost margin and change nothing. The pair offer is a third stage against a
+different table: `pair_affinity`, built from basket co-occurrence rather than
+from either model.
+
+```python
+# Stage three: the complement. Gate on the ratio, rank on the difference.
+pair = (chosen.join(pair_affinity, chosen.category == F.col("anchor"))
+    .filter((F.col("cohort_support") >= 200)
+            & (F.col("cohort_index") >= 1.05)          # a complement,
+            & ~F.col("pair").isin(NOT_OFFERABLE + NOT_PAIRABLE))
+    .withColumn("excess", F.col("cohort_rate") - F.col("other_rate"))
+    # headroom: don't discount what this shopper already buys every visit
+    .join(own_share, ["shopper_id", "pair"], "left")
+    .withColumn("headroom", F.lit(1.0) - F.coalesce("own_rate", F.lit(0.0)))
+    .withColumn("r", F.row_number().over(
+        Window.partitionBy("fuel_tx")
+              .orderBy(F.desc(F.col("excess") * F.col("headroom")))))
+    .filter(F.col("r") == 1))
+```
+
+`cohort_index` **gates** and `excess` **ranks**, and both are needed. Volume
+alone picks the popular item; the ratio alone picks the tiny one. Alcohol is
+excluded on both sides, so a beer anchor yields no second item — an empty
+result here is the answer, not a miss.
+:::
+
+::: {#d-validation .node-detail}
+### validation {.green-head}
+
+**Grain:** not a table you serve — a report you must be able to regenerate.
+Two models, two different questions, two different checks.
+
+**Stage one is judged on calibration**, because its output is multiplied by
+dollars. A model that ranks well but is scaled wrong prices every offer
+wrong, and AUC would never reveal it.
+
+| Decile of predicted `P(beverage)` | Predicted | Actual |
+|---|---|---|
+| 1 | 0.0001 | 0.0005 |
+| 5 | 0.0385 | 0.0395 |
+| 9 | 0.1400 | 0.1407 |
+| **10** | **0.3430** | **0.3287** |
+
+**Stage two is judged on whether it named the item they bought** — hit@10 of
+**34.3%** against the best seller's **16.9%**, both scored on the *same*
+rows. Comparing ALS rows against fallback rows would compare two different
+populations.
+
+```python
+# The control that says the harness works: on fallback rows the two
+# rankings are the same ranking by construction, so they must agree.
+assert (hit[~personalised] == popularity_hit[~personalised]).all()
+```
+
+`validate.py` runs 116 of these and exits non-zero on any failure;
+`validate_sku.py` prints the hit@k breakdown by category.
 :::
 
 ::: {#d-dec_log .node-detail}

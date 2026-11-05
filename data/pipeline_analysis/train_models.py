@@ -1,26 +1,32 @@
-"""Fit the three models with scikit-learn, and save them for serving.
+"""Fit the two models and save them for serving.
 
-    model_a.joblib   will they come inside?      calibrated binary GBT
-    model_b.joblib   which category, given in?   six binary GBTs
-    model_c.joblib   which SKU in the category?  implicit-feedback ALS
+    model_category_relevance.joblib   which category, if any?   six binary GBTs
+    model_sku_affinity.joblib         which SKU inside it?      ALS
+
+There used to be a third -- an attach model answering "will they come inside
+at all" -- fitted first and multiplied into the others. It was dropped after
+measuring it: P(category) = P(inside) x P(category | inside) is an identity,
+so two stages and one direct model score the same to three decimals. The
+split cost an extra moving part and bought no accuracy.
 
 Everything is split on time, never at random: a random split lets a model
 learn from next month to predict last month, and the score it reports is a
 number nobody can collect on.
 
-Run:  uv run --with polars --with scikit-learn python train_models.py
+Run:  uv run --with polars --with scikit-learn --with implicit python train_models.py
 """
 
 from __future__ import annotations
 
 import json
+import re
 import time
 
 import joblib
 import numpy as np
 import polars as pl
-from scipy.sparse import csr_matrix
 from implicit.als import AlternatingLeastSquares
+from scipy.sparse import csr_matrix
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.frozen import FrozenEstimator
@@ -28,13 +34,17 @@ from sklearn.metrics import brier_score_loss, roc_auc_score
 
 import config as C
 
-CTX_NUM = ["hour", "weekday", "month", "fuel_spend"]
-# Model A gets the shopper's own prior attach rate. An earlier version was
-# context-only, justified by a table bucketed on prior visit COUNT -- the
-# wrong variable. Count is worth +0.004 AUC; the rate is worth +0.109.
-A_HIST = ["prior_n", "prior_attach"]
+# Categoricals first: HistGradientBoosting takes their positions by index.
 CTX_CAT = ["daypart", "fuel_grade", "store_id"]
-HIST_NUM = ["prior_n", "bought_before", "prior_share"]
+CTX_NUM = ["hour", "weekday", "month", "fuel_spend"]
+# The shopper's own attach habit. How MANY times we have seen them is worth
+# +0.004 AUC; what SHARE of those visits ended inside is worth +0.109.
+SHOPPER = ["prior_n", "prior_attach"]
+PER_CAT = ("prior_n_", "bought_before_", "prior_share_")
+
+
+def slug(name: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_")
 
 
 def log(msg: str, t0: float | None = None) -> float:
@@ -43,16 +53,15 @@ def log(msg: str, t0: float | None = None) -> float:
     return now
 
 
-def encode(df: pl.DataFrame, cols_cat: list[str], maps: dict | None = None):
-    """Integer-encode categoricals so HistGradientBoosting can use them natively.
+def encode(df: pl.DataFrame, cols: list[str], maps: dict | None = None):
+    """Integer-encode categoricals, returning the maps so serving matches.
 
-    Returns the matrix and the fitted maps, so serving encodes identically.
     Unseen levels become -1, which the estimator treats as its own category.
     """
     fit = maps is None
     maps = {} if fit else maps
     out = {}
-    for c in cols_cat:
+    for c in cols:
         vals = df[c].fill_null("__NA__").cast(pl.Utf8)
         if fit:
             maps[c] = {v: i for i, v in enumerate(sorted(vals.unique().to_list()))}
@@ -60,33 +69,25 @@ def encode(df: pl.DataFrame, cols_cat: list[str], maps: dict | None = None):
     return df.with_columns(**out), maps
 
 
-def fit_binary(X, y, Xc, yc, label: str) -> tuple:
-    """Fit a GBT, then calibrate it on held-out rows.
+def fit_calibrated(X, y, Xc, yc):
+    """A gradient-boosted classifier, then calibrated on held-out rows.
 
-    No resampling. The output feeds an arithmetic in dollars, so a model
-    trained on a balanced sample would score an average visit at 0.5 instead
-    of its true base rate and inflate every expected value.
+    No resampling. The output is multiplied by dollars, so a model trained on
+    a balanced sample would score an average visit at 0.5 instead of its true
+    base rate and inflate every expected value.
     """
     base = HistGradientBoostingClassifier(
-        max_iter=200,
-        learning_rate=0.08,
-        max_depth=6,
-        categorical_features=[i for i, _ in enumerate(CTX_CAT)],
-        early_stopping=True,
-        validation_fraction=0.1,
+        max_iter=200, learning_rate=0.08, max_depth=6,
+        categorical_features=list(range(len(CTX_CAT))),
+        early_stopping=True, validation_fraction=0.1,
         random_state=C.RANDOM_SEED,
     )
     base.fit(X, y)
-    # Isotonic needs enough rows per bin; fall back to sigmoid when thin.
-    method = "isotonic" if len(yc) > 20_000 else "sigmoid"
     # sklearn >= 1.8 replaced cv="prefit" with an explicit frozen wrapper.
+    method = "isotonic" if len(yc) > 20_000 else "sigmoid"
     cal = CalibratedClassifierCV(FrozenEstimator(base), method=method)
     cal.fit(Xc, yc)
-    p = cal.predict_proba(Xc)[:, 1]
-    auc = roc_auc_score(yc, p) if len(set(yc)) > 1 else float("nan")
-    print(f"        {label:<34} base {y.mean():6.3%}  "
-          f"AUC {auc:.3f}  Brier {brier_score_loss(yc, p):.4f}")
-    return cal, {"auc": float(auc), "base_rate": float(y.mean())}
+    return cal
 
 
 def main() -> None:
@@ -95,6 +96,12 @@ def main() -> None:
     hist = pl.read_parquet(C.ART / "feat_history.parquet")
     t = log(f"visit {visit.height:,}  feat_history {hist.height:,}", t)
 
+    wide = hist.pivot(
+        on="category", index="fuel_tx",
+        values=["prior_n", "bought_before", "prior_share"],
+        aggregate_function="first")
+    visit = visit.join(wide, on="fuel_tx", how="left")
+
     cut = pl.lit(C.TRAIN_CUTOFF).str.to_datetime()
     visit = visit.with_columns(is_train=pl.col("ts") < cut)
     n_tr, n_te = visit["is_train"].sum(), (~visit["is_train"]).sum()
@@ -102,65 +109,49 @@ def main() -> None:
     if n_tr == 0 or n_te == 0:
         raise SystemExit("time split produced an empty side; check TRAIN_CUTOFF")
 
-    # ---------------------------------------------------------------- A
-    t = log("Model A - will they come inside?")
-    a = visit.filter("is_train")
-    if a.height > C.SAMPLE_VISITS:
-        a = a.sample(C.SAMPLE_VISITS, seed=C.RANDOM_SEED)
-    a, cat_maps = encode(a, CTX_CAT)
-    a = a.sample(fraction=1.0, shuffle=True, seed=C.RANDOM_SEED)
-    k = int(a.height * (1 - C.CALIB_FRACTION))
-    cols = CTX_CAT + CTX_NUM + A_HIST              # categoricals first
-    Xa = a.select(cols).fill_null(0).to_numpy()
-    ya = a["bought"].cast(pl.Int8).to_numpy()
-    model_a, stats_a = fit_binary(Xa[:k], ya[:k], Xa[k:], ya[k:], "model_a")
+    # ------------------------------------------- Category Relevance (GBT)
+    t = log("Category Relevance — six binary classifiers, one per category")
+    tr = visit.filter("is_train")
+    if tr.height > C.SAMPLE_VISITS:
+        tr = tr.sample(C.SAMPLE_VISITS, seed=C.RANDOM_SEED)
+    tr, cat_maps = encode(tr, CTX_CAT)
+    te, _ = encode(visit.filter(~pl.col("is_train")), CTX_CAT, cat_maps)
 
-    # The numbers above are out-of-SAMPLE but still in-PERIOD. The honest
-    # test is the data after the cutoff, which the model has never seen at
-    # any point in time.
-    te = visit.filter(~pl.col("is_train"))
-    te, _ = encode(te, CTX_CAT, cat_maps)
-    Xt = te.select(cols).fill_null(0).to_numpy()
-    yt = te["bought"].cast(pl.Int8).to_numpy()
-    pt = model_a.predict_proba(Xt)[:, 1]
-    stats_a["oot_auc"] = float(roc_auc_score(yt, pt))
-    stats_a["oot_brier"] = float(brier_score_loss(yt, pt))
-    stats_a["oot_predicted_rate"] = float(pt.mean())
-    stats_a["oot_actual_rate"] = float(yt.mean())
-    print(f"        {'model_a OUT OF TIME':<34} actual {yt.mean():6.3%}  "
-          f"AUC {stats_a['oot_auc']:.3f}  Brier {stats_a['oot_brier']:.4f}  "
-          f"predicted {pt.mean():.3%}")
-    t = log("model_a fitted", t)
+    per_cat = [c for c in visit.columns if c.startswith(PER_CAT)]
+    cols = CTX_CAT + CTX_NUM + SHOPPER + per_cat
+    tr = tr.sample(fraction=1.0, shuffle=True, seed=C.RANDOM_SEED)
+    k = int(tr.height * (1 - C.CALIB_FRACTION))
+    X = tr.select(cols).fill_null(0).to_numpy()
+    Xte = te.select(cols).fill_null(0).to_numpy()
 
-    # ---------------------------------------------------------------- B
-    t = log("Model B - which category, given they came inside?")
-    conv = visit.filter(pl.col("is_train") & pl.col("bought"))
-    wide = (
-        hist.join(conv.select("fuel_tx"), on="fuel_tx", how="inner")
-        .pivot(on="category", index="fuel_tx",
-               values=["prior_n", "bought_before", "prior_share"],
-               aggregate_function="first")
-    )
-    b = conv.join(wide, on="fuel_tx", how="left")
-    b, _ = encode(b, CTX_CAT, cat_maps)
-    b = b.sample(fraction=1.0, shuffle=True, seed=C.RANDOM_SEED)
-    kb = int(b.height * (1 - C.CALIB_FRACTION))
-    hist_cols = [c for c in b.columns if c.startswith(tuple(HIST_NUM))]
-    cols_b = CTX_CAT + CTX_NUM + hist_cols
-    Xb = b.select(cols_b).fill_null(0).to_numpy()
-
-    models_b, stats_b = {}, {}
+    models, stats = {}, {}
+    print(f"        {'category':<34}{'base':>8}{'AUC':>7}{'oot AUC':>9}"
+          f"{'oot Brier':>11}")
     for cat in C.TARGET_CATEGORIES:
-        y = b["cats"].list.contains(cat).fill_null(False).cast(pl.Int8).to_numpy()
-        if y[:kb].sum() < 200:
-            print(f"        {cat[:34]:<34} skipped - too few positives")
+        y = tr["cats"].list.contains(cat).fill_null(False).cast(pl.Int8).to_numpy()
+        y_te = te["cats"].list.contains(cat).fill_null(False).cast(pl.Int8).to_numpy()
+        if y[:k].sum() < 200 or len(set(y_te)) < 2:
+            print(f"        {cat[:33]:<34}  too few positives — skipped")
             continue
-        m, st = fit_binary(Xb[:kb], y[:kb], Xb[kb:], y[kb:], cat[:34])
-        models_b[cat], stats_b[cat] = m, st
-    t = log(f"model_b fitted for {len(models_b)} categories", t)
+        m = fit_calibrated(X[:k], y[:k], X[k:], y[k:])
+        p_in = m.predict_proba(X[k:])[:, 1]
+        p_oot = m.predict_proba(Xte)[:, 1]
+        stats[cat] = {
+            "base_rate": float(y.mean()),
+            "auc": float(roc_auc_score(y[k:], p_in)),
+            "oot_auc": float(roc_auc_score(y_te, p_oot)),
+            "oot_brier": float(brier_score_loss(y_te, p_oot)),
+            "oot_predicted": float(p_oot.mean()),
+            "oot_actual": float(y_te.mean()),
+        }
+        models[cat] = m
+        s = stats[cat]
+        print(f"        {cat[:33]:<34}{s['base_rate']:>8.2%}{s['auc']:>7.3f}"
+              f"{s['oot_auc']:>9.3f}{s['oot_brier']:>11.4f}")
+    t = log(f"fitted {len(models)} category models", t)
 
-    # ---------------------------------------------------------------- C
-    t = log("Model C - which SKU, via implicit-feedback ALS")
+    # ------------------------------------------------ SKU Affinity (ALS)
+    t = log("SKU Affinity — implicit-feedback ALS")
     inter = pl.read_parquet(C.ART / "als_interactions.parquet")
     shoppers = inter["shopper_id"].unique().sort().to_list()
     items = inter["item"].unique().sort().to_list()
@@ -171,34 +162,31 @@ def main() -> None:
     # Raw counts: ALS turns them into confidence itself via alpha, so
     # pre-damping them here would apply the transform twice.
     vals = inter["n"].to_numpy().astype(np.float32)
-    X = csr_matrix((vals, (rows, cols_)), shape=(len(shoppers), len(items)))
+    Xals = csr_matrix((vals, (rows, cols_)), shape=(len(shoppers), len(items)))
 
-    k = min(C.ALS_FACTORS, min(X.shape) - 1)
+    factors = min(C.ALS_FACTORS, min(Xals.shape) - 1)
     als = AlternatingLeastSquares(
-        factors=k,
-        regularization=C.ALS_REGULARIZATION,
-        alpha=C.ALS_ALPHA,
-        iterations=C.ALS_ITERATIONS,
-        random_state=C.RANDOM_SEED,
-    )
-    als.fit(X, show_progress=False)
-    popularity = np.asarray(X.sum(axis=0)).ravel()      # cold-start fallback
-    t = log(f"model_c: {X.shape[0]:,} shoppers x {X.shape[1]:,} items, "
-            f"{k} factors, {C.ALS_ITERATIONS} iterations, {X.nnz:,} nonzero", t)
+        factors=factors, regularization=C.ALS_REGULARIZATION,
+        alpha=C.ALS_ALPHA, iterations=C.ALS_ITERATIONS,
+        random_state=C.RANDOM_SEED)
+    als.fit(Xals, show_progress=False)
+    popularity = np.asarray(Xals.sum(axis=0)).ravel()   # the fallback for 76%
+    t = log(f"{Xals.shape[0]:,} shoppers x {Xals.shape[1]:,} items, "
+            f"{factors} factors, {Xals.nnz:,} nonzero", t)
 
     # ------------------------------------------------------------- save
-    joblib.dump({"model": model_a, "cat_maps": cat_maps, "cols": cols}, C.ART / "model_a.joblib")
-    joblib.dump({"models": models_b, "cols": cols_b, "cat_maps": cat_maps,
-                 "hist_cols": hist_cols}, C.ART / "model_b.joblib")
+    joblib.dump({"models": models, "cols": cols, "cat_maps": cat_maps,
+                 "per_cat": per_cat},
+                C.ART / "model_category_relevance.joblib")
     joblib.dump({"als": als, "shopper_ix": s_ix, "item_ix": i_ix,
-                 "items": items, "popularity": popularity,
-                 "matrix": X}, C.ART / "model_c.joblib")
-    (C.ART / "train_report.json").write_text(json.dumps(
-        {"cutoff": C.TRAIN_CUTOFF, "n_train": int(n_tr), "n_test": int(n_te),
-         "model_a": stats_a, "model_b": stats_b,
-         "model_c": {"shoppers": X.shape[0], "items": X.shape[1],
-                     "factors": k, "iterations": C.ALS_ITERATIONS,
-                     "nnz": int(X.nnz)}}, indent=2))
+                 "items": items, "popularity": popularity, "matrix": Xals},
+                C.ART / "model_sku_affinity.joblib")
+    (C.ART / "train_report.json").write_text(json.dumps({
+        "cutoff": C.TRAIN_CUTOFF, "n_train": int(n_tr), "n_test": int(n_te),
+        "category_relevance": stats,
+        "sku_affinity": {"shoppers": Xals.shape[0], "items": Xals.shape[1],
+                         "factors": factors, "iterations": C.ALS_ITERATIONS,
+                         "nnz": int(Xals.nnz)}}, indent=2))
     log("saved. next: validate.py, then serve.py")
 
 

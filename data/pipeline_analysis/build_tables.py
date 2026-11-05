@@ -9,7 +9,10 @@ Reads the five bronze PDI folders and writes parquet artifacts:
     offer_catalog.csv         the candidate offers (margins are ASSUMED)
 
 Run:  uv run --with polars python build_tables.py
-      uv run --with polars python build_tables.py --stores 120   # a subset
+      uv run --with polars python build_tables.py --pilot        # the
+          # reproducible 24-store subset the models and every published
+          # figure are fitted on. --stores N takes the first N instead,
+          # which is fast but draws a different set on each rebuild.
 """
 
 from __future__ import annotations
@@ -38,7 +41,8 @@ def daypart_expr(ts: pl.Expr) -> pl.Expr:
     )
 
 
-def build_line_clean(store_limit: int | None) -> pl.DataFrame:
+def build_line_clean(store_limit: int | None,
+                     store_ids: list[str] | None = None) -> pl.DataFrame:
     """Clean, categorised, shopper-attributed line items."""
     gtin = (
         pl.scan_parquet(C.SRC["gtin"])
@@ -76,7 +80,13 @@ def build_line_clean(store_limit: int | None) -> pl.DataFrame:
             .otherwise(None),
         )
     )
-    if store_limit:
+    if store_ids:
+        # Pinned subset. `head(n)` over a parquet scan is not reproducible,
+        # and every published model figure depends on getting the same
+        # stores back. See config.PILOT_STORES.
+        want = [int(s) for s in store_ids]
+        lf = lf.filter(pl.col("store_id").is_in(want))
+    elif store_limit:
         keep = (
             lf.select("store_id").unique().head(store_limit).collect(engine="streaming")
         )
@@ -281,11 +291,19 @@ def build_offer_catalog(lines: pl.DataFrame) -> pl.DataFrame:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--stores", type=int, default=None,
-                    help="build from a subset of stores, for a fast dry run")
+                    help="build from the first N stores (NOT reproducible)")
+    ap.add_argument("--pilot", action="store_true",
+                    help="build from config.PILOT_STORES -- the reproducible "
+                         "subset every published model figure comes from")
     args = ap.parse_args()
+    if args.pilot and args.stores:
+        raise SystemExit("--pilot and --stores are alternatives")
 
     t = log("reading bronze and cleaning lines")
-    lines = build_line_clean(args.stores)
+    lines = build_line_clean(args.stores,
+                             C.PILOT_STORES if args.pilot else None)
+    if args.pilot:
+        log(f"pilot subset: {len(C.PILOT_STORES)} pinned stores")
     t = log(f"line_clean: {lines.height:,} rows", t)
     lines.write_parquet(C.ART / "line_clean.parquet")
 

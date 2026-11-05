@@ -9,12 +9,12 @@ format:
     css: pipeline.css
 ---
 
-This is the end-to-end workflow behind [Day 16](day16_pump_screen_offers.html) —
-from the raw PDI tables to a single offer on the pump screen. **Scroll inside
+This is the end-to-end workflow behind [the pitch](day16_pump_screen_offers.html)
+— from the raw PDI tables to a single offer on the pump screen. **Scroll inside
 the diagram** to move through the pipeline, and **click any box** — the detail
 appears underneath.
 
-**This page answers *why*** — why the label looks like that, why three models,
+**This page answers *why*** — why the label looks like that, why two models,
 why the decision is priced the way it is. For ***what to build*** — table
 schemas, grains and the PySpark that feeds each one to the model — see
 [**pipeline v2 →**](pipeline2.html). Every column in the source data is
@@ -55,9 +55,10 @@ The scripts behind every figure live in `data/` in the course repo:
 `uplift_feasibility.py`, `promo_event_study.py` and `data-dict.yaml`.
 
 ::: {.callout-note appearance="simple"}
-**Example conclusions.** Every figure comes from one run over the PDI extract
-— 940 stores in eight Intermountain West states, October 2024 to September
-2026. Worked examples for class, not a finished analysis.
+**Where the figures come from.** One run over the PDI extract — 940 stores in
+eight Intermountain West states, October 2024 to September 2026. The models
+themselves are fitted on a 24-store pilot subset; exploration figures are
+full-estate, and the two are not mixed.
 :::
 :::
 
@@ -293,126 +294,252 @@ df = (df
 
 **History barely predicts whether they come inside** (12.6% with none, 12.5%
 with 10+), but it is the best signal for *what* they buy. That asymmetry is why
-there are three models instead of one.
+there are two models instead of one.
 :::
 
-::: {#d-A .node-detail}
-### Model A · Will they come inside?
+::: {#d-relevance .node-detail}
+### Category Relevance {.teal-head}
 
-Binary classifier over all **36.1M** visits.
-
-```python
-from pyspark.ml.classification import GBTClassifier
-
-gbt = GBTClassifier(featuresCol="features", labelCol="bought", maxIter=100)
-model = gbt.fit(train)   # no rebalancing — see below
-```
-
-**Do not rebalance the 12.8% positive class.** The output feeds an arithmetic in
-dollars, so a model trained 50/50 scores an average visit at 0.5 instead of
-0.128 and inflates every expected value about 4×. If you must, use `weightCol`
-rather than resampling, and correct the odds back by the sampling fraction.
-
-Check calibration with a reliability curve; fix with isotonic regression on a
-held-out slice. **Accuracy and F1 are irrelevant here — calibration is the
-whole job.**
-
-**The feature that matters most is the shopper's own prior attach rate.** How
-*many* times we have seen someone is worth +0.004 AUC; what *share* of those
-visits ended inside is worth +0.109, taking the model from 0.703 to 0.827 out
-of time. For the 22.2% we have never seen there is only context, and they are
-genuinely harder to call.
-:::
-
-::: {#d-B .node-detail}
-### Model B · Which category?
-
-**Six binary classifiers, not one multiclass model.** A basket holds several
-categories at once — our six shares sum to 119%, so a softmax would force them
-to compete and return numbers we cannot price.
+**Will they buy category X on this fill?** Classification — six calibrated
+binary classifiers (`HistGradientBoostingClassifier`), one per category, each
+scoring every visit.
 
 ```python
-TOP = ["Packaged Beverages (Non-Alcoholic)", "Cigarettes", "Candy",
-       "Salty Snacks", "Other Tobacco/Nicotine Products", "Beer"]
-
-models = {}
-for cat in TOP:                      # binary relevance
+for cat in TOP6:                       # six independent binaries
     y = F.array_contains("cats", cat).cast("int")
-    models[cat] = GBTClassifier(labelCol="y").fit(converters.withColumn("y", y))
+    models[cat] = GBTClassifier(labelCol="y").fit(train.withColumn("y", y))
 ```
 
-Trained on the **4.6M converting visits** only. Shares of those visits:
+**Not a multiclass model.** A basket holds several categories at once, so a
+softmax would force them to compete and return numbers we cannot price.
 
-| Category | Share |
+**Not rebalanced.** The output is multiplied by dollars; a model trained on a
+balanced sample scores an average visit at 0.5 instead of its base rate and
+inflates every expected value about 4×.
+
+The strongest single feature is the shopper's own **prior attach rate**. How
+*many* times we have seen someone is worth +0.004 AUC; what *share* of those
+visits ended inside is worth +0.109.
+
+| Category | Out-of-time AUC |
 |---|---|
-| Packaged Beverages | **54.5%** |
-| Cigarettes | 14.7% |
-| Candy | 13.5% |
-| Salty Snacks | 13.1% |
-| Other Tobacco | 12.6% |
-| Beer | 10.5% |
-
-GBT rather than logistic regression, because this is where interactions live —
-*beer on a Friday evening*.
+| Cigarettes | 0.899 |
+| Beer | 0.892 |
+| Other Tobacco | 0.880 |
+| Packaged Beverages | 0.814 |
+| Candy | 0.786 |
+| Salty Snacks | 0.783 |
 :::
 
-::: {#d-C .node-detail}
-### Model C · Which SKU?
+::: {#d-affinity .node-detail}
+### SKU Affinity {.teal-head}
 
-A category is not an offer. *"Buy a beverage"* sells nothing; *"$1 off a 16oz
-Monster"* does. Inside Packaged Beverages there are **4,049 SKUs** and the top
-100 cover only 45% — a real catalog with a long tail.
+**Which item inside the category?** Alternating least squares on implicit
+feedback — Hu, Koren & Volinsky (2008).
 
 ```python
-from pyspark.ml.recommendation import ALS
-
-# Three dayparts, wrapping overnight. Attach jumps at 5am and falls after
-# 11pm; that tail is 3.2% of visits, so it rides with evening.
-daypart = (F.when(F.hour("ts").between(5, 9),   "morning")
-            .when(F.hour("ts").between(10, 14), "midday")
-            .otherwise("evening"))
-
-# The clock goes in the key: ALS takes no features.
-df = df.withColumn("item", F.concat_ws("@", "GTIN", daypart))
-
-als = ALS(userCol="shopper_ix", itemCol="item_ix", ratingCol="n_purchases",
-          implicitPrefs=True, rank=32, regParam=0.05, alpha=20)
+als = ALS(userCol="shopper_ix", itemCol="item_ix", ratingCol="n",
+          implicitPrefs=True,        # counts are confidence, not ratings
+          rank=32, regParam=0.05, alpha=20, coldStartStrategy="drop")
 ```
 
-**Why daypart belongs in the key.** For shoppers with 2+ beverage purchases,
-pairs in the same daypart repeat the same SKU **18.0%** of the time versus
-**10.0%** across dayparts — 80% more likely.
+**The item key is `gtin@daypart`.** ALS takes no features, so the only way to
+give it a clock is to put one in the key — and the clock matters: same-daypart
+purchase pairs repeat the same SKU 18.0% of the time against 10.0% across
+dayparts.
 
-**Why it isn't too sparse.** 2.75M shoppers bought a beverage, 55% three or more
-times, averaging 16.2 purchases over 7.6 distinct SKUs. People repeat items.
+**SKU, not brand.** At brand level ALS scores **0.88× popularity** — worse
+than showing the best seller. With a handful of brands that matter there is
+nothing personal left to learn; the long tail of SKUs is what gives the model
+something to do.
 
-Apply it per category: beverages yes, **cigarettes no** (top 100 = 86%, nothing
-to learn). Train only on purchases *before* the scoring window — ALS feels like
-preprocessing, which is exactly why people forget.
+Measured on the held-out period, over the fills where ALS actually ran and
+the customer bought inside the offered category:
+
+| | hit@1 | hit@10 |
+|---|---|---|
+| ALS, SKU level | **9.1%** | 34.3% |
+| Store best seller | 3.2% | 16.9% |
+| | **2.8×** | 2.0× |
+
+**hit@1 is the operational number** — the screen shows one offer. Over all
+fills, personalised and fallback together, it is 6.2% against 2.9%.
+
+Scores are normalised **within a category**, so the number means *given they
+buy this category, which item* — which is what the decision multiplies
+against `P(category)`.
+
+**This model only ever ranks inside one category.** Category Relevance picks
+the category first, on probability alone, and SKU Affinity is confined to it.
+Ranking the whole catalog by expected value instead lets a narrow,
+high-margin category beat a wide, high-probability one on a technicality —
+its `p_sku` denominator is smaller — and offers candy to a customer we are
+90.6% sure wants a beverage.
 :::
 
-::: {#d-rank .node-detail}
-### Re-rank {.orange-head}
+::: {#d-bestseller .node-detail}
+### Best-Seller {.orange-head}
 
-ALS hands you 20 plausible SKUs. This step picks among them on business terms,
-and it is **the most important input in the pipeline**.
+**The popularity ranking — and the path for about 68% of fills.**
+
+You enter the ALS factor matrix only by having bought in that category before
+the cutoff. Most fuel customers never did:
+
+| | Covered by ALS |
+|---|---|
+| Scored fills in the held-out period | **31.6%** |
+| …of the fills that converted in the offered category | 54.9% |
+
+Measured, not assumed — `validate.py` fails if the published share drifts
+more than three points from what the scored table actually contains.
 
 ```python
-candidates = (als_top20
-    .join(margins, on="GTIN")          # not in the data — ask for it
-    .join(in_stock, on=["STORE_ID", "GTIN"])
-    .join(funded, on="GTIN")           # vendor-funded promotions
-    .withColumn("our_cost",
-        F.when(F.col("vendor_funded"), F.lit(0.0)).otherwise(F.col("discount"))))
+raw = popularity[daypart_items]        # no factors for this shopper
 ```
 
-Your `discounts` table is full of **vendor-funded** programs — Skupos, ZYN,
-Monster, Red Bull, Gatorade. When the brand pays the discount, your cost is zero
-and the offer is always worth showing.
-
-A category-level model cannot spend that money. This is the step that turns a
-better prediction into **a new revenue line**.
+This is not a degraded path, it is **the primary one**. Build it first: the
+personalised tier is an improvement on top of a fallback you need anyway, and
+the vendor-funded revenue does not depend on ALS — it depends on going to SKU
+granularity at all.
 :::
+
+::: {#d-stage1 .node-detail}
+### Stage one · the category {.orange-head}
+
+**Relevance decides this, on probability alone.** Six calibrated models give
+six unconditional probabilities; we take the highest one we are *allowed* to
+show.
+
+```python
+allowed = [c for c in categories
+           if c not in NOT_OFFERABLE          # tobacco: a business rule
+           and in_stock_and_offerable(c)]     # something to actually sell
+category = max(allowed, key=lambda c: p_category[c])
+```
+
+**Margin does not get a vote here.** Let expected value pick the category and
+a narrow, high-margin category beats a wide, high-probability one on nothing
+but a shorter SKU tail — `p_sku` is normalised *within* a category, so a
+four-SKU category concentrates its probability where a three-hundred-SKU one
+spreads it thin. That is how a customer we are 90% sure wants a beverage ends
+up being offered candy.
+
+**Ties go to the daypart's best seller**, not to the alphabet. Before that
+rule a shopper with every category at the probability floor — someone who has
+fuelled a thousand times and never walked in — was shown **beer**, because
+"Beer" sorts first.
+:::
+
+::: {#d-stage2 .node-detail}
+### Stage two · the SKU {.orange-head}
+
+Rank the SKUs **inside that one category**. A SKU from any other category
+cannot appear, however profitable.
+
+```python
+p_sku  = raw / raw.sum()          # normalised within the category
+p_buys = p_category * p_sku       # P(buys this exact SKU on this fill)
+order  = argsort(-p_buys)[:10]
+```
+
+**Ranked on probability, not on expected value.** The catalog's margins are
+average price × an assumed 40% — the PDI extract has no cost column — so
+ranking on EV would let an assumption choose the item. The margin terms ride
+along for the funding conversation; they do not set the order.
+
+`in_stock` and `offerable` filter the *candidates*; they do not change the
+denominator. `P(sku | category)` is a conditional over every SKU in the
+category, and excluding tobacco by business rule should not inflate what is
+left.
+
+[The same function serves the live fill and the batch table — `scoring.py`.
+Two copies of this ranking drifted twice, and both times the written table
+disagreed with the live answer.]{.muted}
+:::
+
+::: {#d-pairs .node-detail}
+### Pair affinity {.teal-head}
+
+A different table answering a different question: not *what will they buy*,
+but *what SECOND thing could a discount add to the basket*.
+
+| | What it is | What it is for |
+|---|---|---|
+| `cohort_index` | B's rate among A-regulars ÷ the rate among **equally frequent** others | **Gating** |
+| `excess` | the same comparison as a difference, in attach points | **Ranking** |
+| `headroom` | `1 −` this shopper's own rate of B | don't discount what they already buy |
+
+**Controlling exposure is the whole trick.** Every cohort is defined as "at
+least five purchase baskets", so every cohort is a cohort of *heavy shoppers*
+and indexes high on nearly everything. The first cut had drink regulars
+over-indexing on frozen food at **6.1×** — pure visit frequency. Comparing
+against shoppers who buy just as often and do *not* buy the anchor divides
+that out.
+
+**Gate on the index, rank on the excess.** Volume alone picks the popular
+item: Candy is 18.2% of every second item in a drink basket and looks
+obvious, but its index is **1.07** — not a complement, just everywhere. The
+index alone picks the tiny one.
+:::
+
+::: {#d-second .node-detail}
+### The second item {.green-head}
+
+The anchor is what they buy **anyway**, which makes it the one promotion
+certain to cost margin and change nothing. This is the offer worth funding.
+
+| Second category | Their rate | Equally frequent others | Index | Excess |
+|---|---|---|---|---|
+| **Alternative Snacks** | 6.0% | 3.5% | **1.74** | 2.6 pts |
+| Packaged Sweet Snacks | 6.7% | 4.7% | 1.41 | 2.0 pts |
+| **Salty Snacks** | 12.2% | 9.4% | 1.30 | **2.8 pts** |
+| Candy | 12.2% | 11.4% | 1.07 | 0.8 pts |
+
+**Alcohol is excluded on both sides** as a policy, not a threshold: a beer
+anchor returns *no* second item, and alcohol is never offered as one. Beer's
+only complement above 1.0 is Liquor at 1.08. Beer remains a legitimate
+*anchor* offer.
+
+It ships as `second_category` and `second_category_skus` in the scored table,
+populated on **560,690 of 583,583** rows — empty where nothing clears the
+gate, which is a real answer rather than a miss.
+:::
+
+::: {#d-valid .node-detail}
+### Validation {.green-head}
+
+Two models, two different questions, two different checks.
+
+**Stage one is judged on calibration**, because its output is multiplied by
+dollars. A model that ranks well but is scaled wrong prices every offer
+wrong, and AUC would never show it. All 583,583 held-out fills, by decile of
+predicted `P(beverage)`:
+
+| Decile | Predicted | Actual | Gap |
+|---|---|---|---|
+| 1 | 0.0001 | 0.0005 | +0.0004 |
+| 5 | 0.0385 | 0.0395 | +0.0009 |
+| 9 | 0.1400 | 0.1407 | +0.0008 |
+| **10** | **0.3430** | **0.3287** | **−0.0144** |
+
+Calibrated to within a tenth of a point through the middle; **mildly
+over-confident in the top decile**, which is exactly where we spend.
+
+**Stage two is judged on whether it named the item they bought.**
+
+| k | SKU Affinity | Store best seller | Lift |
+|---|---|---|---|
+| 1 | 9.1% | 3.2% | 2.8× |
+| 10 | **34.3%** | 16.9% | **2.0×** |
+
+Both rankings scored **on the same rows** — comparing ALS rows against
+fallback rows would compare two different populations. On fallback rows the
+two agree 100.000% of the time, which is the control that says the harness
+works.
+
+[`validate.py` — 116 checks. `validate_sku.py` prints the hit@k table.]{.muted}
+:::
+
 
 ::: {#d-ev .node-detail}
 ### Expected value {.green-head}
@@ -518,8 +645,8 @@ almost nobody has a pre-period, and the apparent pre-trend is the sample growing
 from 24 to 49 stores rather than behaviour changing.
 
 The design is sound; this estimate is not. A balanced panel of late adopters
-would fix it — and it is a better argument for the holdout than any methodology
-lecture.
+would fix it — and it is a better argument for the holdout than any amount of
+methodology.
 :::
 
 :::

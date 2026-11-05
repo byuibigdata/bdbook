@@ -18,6 +18,7 @@ import argparse
 import json
 from datetime import datetime
 
+import numpy as np
 import polars as pl
 
 import config as C
@@ -105,52 +106,46 @@ def trace(eng: OfferEngine, shopper: str, when: datetime, grade: str,
                    top=10_000)
 
     # ---------------------------------------------------------------- 3
+    cats = eng.category_probs(shopper, when, grade, store_id=store,
+                              fuel_spend=spend)
     if not quiet:
-        head(3, "Model A — will they come inside at all?")
-        base = float(eng.visit["bought"].mean())
-        print(f"   P(inside) = {d.p_inside:.4f}        base rate across all "
-              f"visits {base:.4f}")
-        verdict = "above" if d.p_inside > base else "below"
-        pa = hist["prior_attach"]
-        print(f"   This fill is {verdict} average.")
-        print(f"   Context — hour, weekday, store, grade, dollars pumped —")
-        if pa < 0:
-            print("   and NO personal history: this shopper is new to us, so the")
-            print("   model has only context to go on.")
-        else:
-            print(f"   plus this shopper's own attach rate, {pa:.1%} over "
-                  f"{hist['prior_n']} prior visits.")
-            print("   That single feature is worth +0.11 AUC; how MANY times we")
-            print("   have seen them is worth +0.004.")
-    out["model_a"] = {"p_inside": round(d.p_inside, 5),
-                      "base_rate": round(float(eng.visit["bought"].mean()), 5)}
-
-    # ---------------------------------------------------------------- 4
-    ctx = eng._encode({
-        "daypart": dp, "fuel_grade": grade, "store_id": str(store),
-        "hour": when.hour, "weekday": when.isoweekday(), "month": when.month,
-        "fuel_spend": spend})
-    cats = eng._p_categories(ctx, hist)
-    offered = {o.category for o in d.ranked}
-    if not quiet:
-        head(4, "Model B — if they come in, which category?")
+        head(3, "Category Relevance (Binary Relevance) — what will they buy?")
+        print("   Six calibrated gradient-boosted classifiers, one per")
+        print("   category, each scoring THIS fill directly.\n")
         for cat, p in sorted(cats.items(), key=lambda kv: -kv[1]):
-            bar = "█" * int(p * 40)
-            flag = "" if cat in offered else "   (no SKUs in catalog)"
-            print(f"   {cat[:34]:<36}{p:6.3f}  {bar}{flag}")
-        print("\n   Six independent binary models, not one softmax: a basket")
-        print("   holds several categories at once. This is where knowing the")
-        print("   customer pays — up to +0.22 AUC against context alone.")
-    out["model_b"] = {k: round(v, 4) for k, v in cats.items()}
+            bar = "█" * int(p * 300)
+            mark = "" if cat not in C.NOT_OFFERABLE else "   [not offerable]"
+            print(f"   {cat[:34]:<36}{p:7.4f}  {bar}{mark}")
+        pa = hist["prior_attach"]
+        print()
+        if pa < 0:
+            print("   This shopper is new to us, so only context is driving these.")
+        else:
+            print(f"   Driven by context plus this shopper's own record: they went")
+            print(f"   inside on {pa:.0%} of {hist['prior_n']} prior fills, and their")
+            print("   category mix is in the features too.")
+        print("\n   There is no separate 'will they come inside' model. These")
+        print("   probabilities are unconditional — coming inside is already")
+        print("   inside them. Combined under independence they put this")
+        print(f"   customer's chance of walking in at "
+              f"{1 - np.prod([1 - p for p in cats.values()]):.1%}.")
+    out["category_relevance"] = {k: round(v, 5) for k, v in cats.items()}
+    out["prob_entering"] = round(
+        float(1 - np.prod([1 - p for p in cats.values()])), 5)
 
     # ---------------------------------------------------------------- 5
     personal = shopper in eng.shopper_ix
     if not quiet:
-        head(5, "Model C — which SKU inside that category?")
-        print(f"   ALS factors for this shopper: "
+        head(4, "SKU Affinity (ALS) — which item inside that category?")
+        print(f"   Stage one chose: {d.category}")
+        print("   Stage two may only look inside it. A fatter margin in a")
+        print("   different category cannot reach the screen — relevance picks")
+        print("   the category, economics picks the item.\n")
+        print(f"   ALS factor vector for this shopper: "
               f"{'yes' if personal else 'NO — falling back to popularity'}")
-        print("   Ranked by expected value, not by P(sku) — a thin margin on a"
-              "\n   likely item can lose to a fat margin on a less likely one.\n")
+        print("   Ranked by expected value, not by P(sku) — inside one category"
+              "\n   a thin margin on a likely item can lose to a fat margin on"
+              "\n   a less likely one.\n")
         print(f"   {'brand':<16}{'P(sku)':>9}{'margin':>9}{'brand funds':>13}"
               f"{'our cost':>10}")
         for o in d.ranked[:5]:
@@ -159,7 +154,7 @@ def trace(eng: OfferEngine, shopper: str, when: datetime, grade: str,
         if not personal:
             print("\n   This is the 81% case. The ranking is the store's best")
             print("   sellers for this daypart — a real offer, just not a personal one.")
-    out["model_c"] = {"personalised": personal,
+    out["sku_affinity"] = {"personalised": personal, "category": d.category,
                       "top": [{"brand": o.brand, "p_sku": round(o.p_sku, 5),
                                "margin": o.unit_margin,
                                "funded_share": o.funded_share,
@@ -169,10 +164,9 @@ def trace(eng: OfferEngine, shopper: str, when: datetime, grade: str,
     # ---------------------------------------------------------------- 6
     best = d.show
     if not quiet:
-        head(6, "The decision — three probabilities become one number")
+        head(5, "Offer Economics — two probabilities become one number")
         o = d.ranked[0]
-        print(f"   P(inside)    {o.p_inside:.4f}")
-        print(f" × P(category)  {o.p_category:.4f}")
+        print(f"   P(category)  {o.p_category:.4f}")
         print(f" × P(sku)       {o.p_sku:.4f}")
         print(f"   {'':=<34}")
         print(f"   P(buys this) {o.p_buy:.6f}")

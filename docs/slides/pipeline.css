@@ -157,3 +157,49 @@
   }
   .node-detail h3 { font-size: 1.35rem; }
 }
+
+/* --------------------------------------------------------------- scroll
+   Raw rows and outcomes are evidence: an auditor wants to see all of them,
+   not the first six. A capped, scrollable box shows the whole table without
+   letting one customer's history push the rest of the page off screen.    */
+.scroll-table {
+  max-height: 22rem;
+  overflow-y: auto;
+  overflow-x: auto;
+  border: 1px solid var(--ds-sky, #bdd3e5);
+  border-radius: 6px;
+  margin: 0.9rem 0;
+  /* Fading edges hint that there is more above/below. `local` keeps the
+     white caps pinned to the content so they disappear at the ends; the
+     shadows are `scroll`, so they stay at the frame. */
+  background:
+    linear-gradient(white 30%, rgba(255, 255, 255, 0)) top / 100% 2rem no-repeat,
+    linear-gradient(rgba(255, 255, 255, 0), white 70%) bottom / 100% 2rem no-repeat,
+    linear-gradient(rgba(2, 47, 74, 0.10), rgba(2, 47, 74, 0)) top / 100% 0.5rem no-repeat,
+    linear-gradient(rgba(2, 47, 74, 0), rgba(2, 47, 74, 0.10)) bottom / 100% 0.5rem no-repeat;
+  background-attachment: local, local, scroll, scroll;
+}
+
+.scroll-table table {
+  margin: 0;
+  font-size: 0.86rem;
+  width: 100%;
+}
+
+/* The header has to survive scrolling or the columns stop meaning anything. */
+.scroll-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--ds-cloud, #f4f7f9);
+  box-shadow: inset 0 -1px 0 var(--ds-sky, #bdd3e5);
+}
+
+.scroll-table tbody td { white-space: nowrap; }
+
+.scroll-table + .scroll-note {
+  display: block;
+  margin-top: -0.5rem;
+  font-size: 0.8rem;
+  color: var(--ds-ridge, #426a8a);
+}

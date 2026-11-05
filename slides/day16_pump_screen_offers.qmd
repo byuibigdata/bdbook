@@ -1,34 +1,8 @@
 ---
 title: "One Prediction on the Pump Screen"
-subtitle: "Day 16: Designing the model from the data up"
+subtitle: "What to show a customer while the tank fills — and how we would know it worked"
 author: "J. Hathaway"
-# Update these each semester.
-class-repo: "https://github.com/byuibigdata/FA26_hathaway"
 ---
-
-## Today
-
-We build one thing, end to end: **a prediction we can put on the pump screen.**
-
-::: {.cards}
-::: {.card}
-[Step 1]{.card-title}
-
-**Build a label that doesn't exist.** No column says *"did they come inside?"*
-:::
-::: {.card}
-[Step 2]{.card-title}
-
-**Read what the data says** — and what it refuses to say.
-:::
-::: {.card}
-[Step 3]{.card-title}
-
-**Three models**, then turn a probability into an offer in dollars.
-:::
-:::
-
-And at the end, the one thing we have to ask the client for.
 
 ## The ask {.dark background-color="#022F4A"}
 
@@ -66,48 +40,53 @@ Whatever that shopper did on previous visits — if there were any.
 
 ## Where we are going {.smaller}
 
-- [1]{.step} **The visit table.** Anchor on fuel, sweep −15/+45, drop the card fees. Everything below depends on this being right.
-- [2]{.step} **Model A.** Context plus their own attach rate. A calibrated `P(inside)`.
-- [3]{.step} **Model B on converters.** Six binary models, six categories.
-- [4]{.step} **Model C where the tail justifies it.** ALS inside beverages first.
-- [5]{.step} **The expected value rule** — including the decision to show nothing.
-- [6]{.step} **Ask for the holdout**, then measure uplift in dollars.
+- [1]{.step} **The label.** Anchor on fuel, sweep −15/+45, drop the card fees. There is no column for *"did they come inside?"* — we have to build one.
+- [2]{.step} **What the data says.** Where the signal is, and where it is not. This decides what the models are even allowed to be.
+- [3]{.step} **Two models.** *Which category* on probability, then *which item* inside it — plus the checks that say both are working.
+- [4]{.step} **The economics.** Who funds the discount, and when the answer is to show nothing.
+- [5]{.step} **The second item**, which is the one actually worth discounting.
 
 ::: {.takeaway}
-Steps 1 and 2 are a semester's worth of real work. **Today is step 1** — and it is the one everything else inherits.
+Step 1 is the one everything else inherits. Get the label wrong and every number after it is confident and false.
 :::
 
-[Reference: [**pipeline**](pipeline.html) · [**tables and model code**](pipeline2.html) · [**data dictionary**](data-dict.html)]{.muted style="font-size:0.7em"}
+## Three pages, three different questions {.smaller}
 
-# Step 1 · The label
+This deck is the argument. Everything behind it is written up, and each page answers a different question — so you can check the part you care about without reading the other two.
 
-## There is no label in the data
+::: {.cards}
+::: {.card}
+[[**pipeline**](pipeline.html)]{.card-title}
 
-We want to predict *"will this person come inside and buy something?"*
+**Why does it work this way?**
 
-**No column says that.** The pump and the counter are two separate transactions, minutes apart, tied together only by the shopper id and the clock.
+The reasoning, end to end — raw tables, the window we chose, the two models, the two-stage decision. **Click any box** in the diagram for the detail behind it.
+:::
+::: {.card}
+[[**pipeline v2**](pipeline2.html)]{.card-title}
 
-::: {.flow}
-::: {.box}
-**10:41**
+**What would we have to build?**
 
-[fuel, $43.10]{.muted}
+Every table a team has to materialise, with its grain, its schema and the job that writes it — plus the one table that **does not exist** and has to come from you.
+:::
+::: {.card .good}
+[[**pipeline v3**](pipeline3.html)]{.card-title}
+
+**Does it actually work?**
+
+Ten real customers, each carried from the raw rows we trained on, to the prediction we wrote down, to **what they actually did** afterwards. Plus the calibration on all 583,583 held-out fills.
+:::
 :::
 
-[→]{.arrow}
+[The [**data dictionary**](data-dict.html) covers the five source tables column by column — types, null rates and join keys.]{.muted style="font-size:0.7em"}
 
-::: {.box .hl}
-**10:46**
+# Part 1 · The label
 
-[coffee, $2.19]{.muted}
-:::
-:::
+## The label does not exist. We build it. {.smaller}
 
-Same person, same store, five minutes apart, **two rows that never meet**. Our first job is to join them.
+We want to predict *"will this person come inside and buy something?"* **No column says that.** The pump and the counter are two separate transactions — fuel at 10:41, coffee at 10:46 — tied together only by the shopper id and the clock.
 
-## Defining the joint basket
-
-We anchor a window on the **fuel transaction** and sweep up everything that shopper bought nearby.
+So we anchor a window on the **fuel transaction** and sweep up everything that shopper bought nearby:
 
 ::: {.flow}
 ::: {.box}
@@ -133,9 +112,7 @@ We anchor a window on the **fuel transaction** and sweep up everything that shop
 :::
 :::
 
-Asymmetric on purpose: a few people buy first and fuel second, but most fuel first. Forty-five minutes after leaves room for a queue.
-
-[This is a **unit of analysis** decision, and it is ours to defend.]{.orange}
+Asymmetric on purpose: most people fuel first, and 45 minutes after leaves room for a queue. **This is a unit-of-analysis decision, and it is ours to defend** — every number in this deck inherits it.
 
 ## A trap in the label {.smaller}
 
@@ -152,8 +129,6 @@ The fuel transaction was leaking into its own label. A model trained on that lea
 ::: {.takeaway}
 **Look at what our positive class is made of before we train on it.** Removing the fees moved the answer by seven points.
 :::
-
-[**Example conclusions.**]{.muted style="font-size:0.65em"}
 
 ## The label, honestly {.smaller}
 
@@ -174,26 +149,9 @@ median in-store spend when they do
 
 About **1 in 8**. That is the number every model below has to beat, and the number that sets how much a discount can be worth.
 
-[**Example conclusions** — 940 stores, 8 states, 10/2024 to 9/2026.]{.muted style="font-size:0.65em"}
+[940 stores across 8 states, October 2024 to September 2026 — that is the **exploration** set. The **models** are fitted on a pinned 24-store pilot (2.4M visits); scaling to all 940 needs the store identifier re-encoded, because gradient boosting caps a categorical at 255 levels. Every figure comes from that extract unless labelled an assumption.]{.muted style="font-size:0.65em"}
 
-## What is a point worth? {.smaller}
-
-Before building anything, price the ceiling. One point of attach rate, across the panel:
-
-| | Per point of attach |
-|---|---|
-| Extra baskets, 2 years | 361,426 |
-| Revenue at the **$7.87** median | $2.84M |
-| Margin at an assumed 40% | $1.14M |
-| **Per store, per year** | **$605** |
-
-::: {.takeaway}
-Six hundred dollars a store. **That is the whole in-store prize**, and it is why a self-funded discount can never pay for itself — a conclusion we will reach again the hard way in Step 3.
-:::
-
-[Using the $11.84 mean basket instead gives $910. Margin is **assumed** — the data has no cost column. **Example conclusions.**]{.muted style="font-size:0.65em"}
-
-# Step 2 · What the data says
+# Part 2 · What the data says
 
 ## The sale happens fast {.smaller}
 
@@ -204,75 +162,11 @@ Six hundred dollars a store. **That is the whole in-store prize**, and it is why
 | 5 to 15 min | 5.3% |
 | 15 to 45 min | 1.3% |
 
-Two things follow, and both constrain the product:
+Two things follow, and both shape the product:
 
 - The offer must appear **during the fill**. Three in four decisions are made within five minutes of the nozzle going back.
-- The 16.2% who shopped first are **not addressable** — they were already inside. But that is 16.2% of *conversions*, which is only **2.1% of visits**, so we can still reach **97.9%** of fills.
-
-[**Example conclusions.**]{.muted style="font-size:0.65em"}
-
-## How often we've seen them tells us nothing {.smaller}
-
-[**Attach rate** — of the fuel visits in this group, the share where the shopper also made a real in-store purchase inside the window. Our label, as a percentage.]{.muted}
-
-| Prior fuel visits | Share of visits | Attach rate |
-|---|---|---|
-| None — never seen before | 22.2% | 12.6% |
-| 1–2 | 17.7% | 13.0% |
-| 3–9 | 24.0% | **13.2%** |
-| 10+ | 36.1% | 12.5% |
-
-**Flat.** Two years of knowing someone, and the attach rate does not move.
-
-[**Example conclusions.**]{.muted style="font-size:0.65em"}
-
-## But what they did tells us everything {.smaller}
-
-That table asked the wrong question. It bucketed on **how many** visits, never on **what happened** on them:
-
-| Their own prior attach rate | Visits | Attach on this visit |
-|---|---|---|
-| 0% | 571,908 | **2.9%** |
-| 1–25% | 180,774 | 12.3% |
-| 25–50% | 121,023 | 30.2% |
-| 50–75% | 69,098 | 50.0% |
-| **75–100%** | 39,212 | **71.6%** |
-
-::: {.takeaway}
-**A 25× spread.** Frequency is worth **+0.004 AUC**; their own attach rate is worth **+0.109**. People are creatures of habit, and the habit is the feature.
-:::
-
-[**Example conclusions.** A lesson in choosing the variable: the first table is true and almost useless.]{.muted style="font-size:0.65em"}
-
-## Context does predict it {.smaller}
-
-::: {.columns}
-::: {.column width="50%"}
-**By hour** (store wall clock)
-
-| Hour | Attach |
-|---|---|
-| 2am | 7.5% |
-| 6am | **15.1%** |
-| noon | 12.7% |
-| 5pm | 13.4% |
-| 11pm | 9.7% |
-:::
-::: {.column width="50%"}
-**By fuel grade**
-
-| Grade | Attach |
-|---|---|
-| Diesel | 13.3% |
-| Regular | 12.7% |
-| Premium | 12.8% |
-| Mid/Plus | 12.2% |
-:::
-:::
-
-Hour gives a **2× spread**. Grade barely moves among the four that matter — a reminder that a variable being *available* doesn't make it *useful*.
-
-[**Example conclusions.**]{.muted style="font-size:0.65em"}
+- **Attach runs 7.5% at 2am and 15.1% at 6am** — a 2× spread on the clock alone, which is why the hour is in every model below.
+- The 16.2% who shopped first have **already converted** — an offer on the screen cannot cause a basket they bought ten minutes ago. We **keep** those visits: the basket is real evidence about what goes with a tank of gas, and it is the training signal either way. What an offer can win there is a *second* trip inside, which happens on under 5% of those fills — upside, not the core of the case.
 
 ## But what they buy is concentrated {.smaller}
 
@@ -289,118 +183,45 @@ Of the visits that do convert:
 
 Six categories cover almost everything. **This is a small problem, not a 35-class one** — and it is the part of the question where a person's past actually matters.
 
-[**Example conclusions.**]{.muted style="font-size:0.65em"}
+# Part 3 · The models
 
-# Step 3 · The models
-
-## Three questions, three models {.smaller}
-
-The data told us something structural: **whether** they come in, **what kind** of thing they buy, and **which exact item** are driven by different signals.
+## Two models, named for the method {.smaller}
 
 ::: {.cards}
 ::: {.card}
-[Model A]{.card-title}
+[Category Relevance]{.card-title}
 
-*Will they come inside?*
+*Will they buy a drink on this fill?*
 
-Context **+ their own attach rate.**
-:::
-::: {.card}
-[Model B]{.card-title}
-
-*Which category?*
-
-**The person**, plus context.
+**Classification** — six calibrated binary classifiers (GBT).
 :::
 ::: {.card .hl}
-[Model C]{.card-title}
+[SKU Affinity]{.card-title}
 
-*Which SKU in it?*
+*Which drink?*
 
-**Who else buys like them.**
+**ALS** matrix factorisation on implicit feedback.
 :::
-:::
-
-All three want the customer id. They want **different facts** about the person: A their attach habit, B their category mix, C who else buys like them.
-
-## Is the split worth it? {.smaller}
-
-`P(category) = P(inside) × P(category | inside)` is an **identity**, not a modelling choice. So we tested it — two stages against one direct model, same features, same split:
-
-| Category | Two-stage | One-stage | Diff |
-|---|---|---|---|
-| Packaged Beverages | 0.815 | 0.815 | +0.000 |
-| Cigarettes | 0.901 | 0.901 | −0.000 |
-| Beer | 0.895 | 0.893 | −0.002 |
-| Candy | 0.789 | 0.786 | −0.003 |
-
-::: {.card .bad}
-[The split buys no accuracy]{.card-title}
-
-Identical to three decimals. Anyone claiming a decomposition like this *predicts better* should be asked for this table.
-:::
-
-**What it does buy:** roughly **3.4× cheaper training** — B fits on the 13% who convert — plus an explicit `P(inside)` to gate the show-nothing call, and a failure you can locate. Engineering and communication, not accuracy.
-
-## Model A · Will they come inside? {.smaller}
-
-**Binary classifier over all 36.1M visits.**
-
-::: {.columns}
-::: {.column width="50%"}
-**Features**, all known at the pump
-
-- Hour, weekday, month
-- Store, fuel grade
-- Dollars pumped so far
-- **Their own prior attach rate**
-:::
-::: {.column width="50%"}
-**Choices**
-
-- `GBTClassifier`; logistic regression as the baseline
-- 12.8% positive — **don't rebalance**
-- **Calibrate it**
-:::
-:::
-
-::: {.takeaway}
-Out-of-time AUC **0.703 → 0.827** when the attach rate goes in. For the **22% we have never seen**, context is all there is — and they genuinely are harder.
-:::
-
-## Why we don't rebalance {.smaller}
-
-12.8% positive looks like class imbalance. The reflex is to resample to 50/50.
-
-::: {.card .bad}
-[It would break the arithmetic]{.card-title}
-
-Trained 50/50, an average visit scores **0.5 instead of 0.128** — every expected value inflates about 4×, and we'd show discounts that lose money.
 :::
 
 ::: {.cards}
 ::: {.card}
-[Do nothing]{.card-title}
+[Best-Seller]{.card-title}
 
-One in eight is not severe. A GBT handles it.
+The popularity fallback — and the path for **~68% of fills**.
 :::
-::: {.card}
-[Or weight]{.card-title}
+::: {.card .good}
+[Offer Economics]{.card-title}
 
-`weightCol` changes the loss without touching the data.
-:::
-::: {.card .bad}
-[Never SMOTE]{.card-title}
-
-It invents customers who don't exist.
+Not a model. The two above find the item they buy **anyway**, which needs no discount — so the money goes on the **second** item, priced under a funding share.
 :::
 :::
 
-[We aren't classifying, we're **pricing**. Accuracy doesn't matter; calibration is the whole job.]{.orange}
+[**Relevance picks the category. Affinity picks the item inside it** — on probability, never on margin, because an assumed 40% should not get to choose what we show.]{.orange}
 
-## Model B · What will they buy? {.smaller}
+## Category Relevance · What will they buy? {.smaller}
 
-**Six binary classifiers — one per category.** Trained on the 4.6M converting visits.
+**Six binary classifiers — one per category**, fitted over every fuel visit, not only the ones that converted.
 
 ::: {.card .bad}
 [Not a multiclass model]{.card-title}
@@ -412,7 +233,7 @@ A basket holds several categories at once; our six shares sum to 119%, not 100%.
 ::: {.column width="50%"}
 **Each model answers one question**
 
-`P(beer | inside)`, `P(coffee | inside)`, … — independently, so each is a real probability for *its* offer.
+`P(buys beer on this fill)`, `P(buys a drink on this fill)`, … — independently, so each is a real probability for *its* offer. Walking inside is already inside that number.
 :::
 ::: {.column width="50%"}
 **Where the person enters**
@@ -437,273 +258,140 @@ Fit every category twice — context alone, then context plus **who they are** �
 | Candy | 0.643 | 0.726 | +0.083 |
 
 ::: {.takeaway}
-**This is why A and B are separate models.** Identity does nothing for *whether* they come in and almost everything for *what* they buy — most of all for the habitual categories.
+**Identity does almost nothing for *whether* they come in, and almost everything for *what* they buy** — most of all for the habitual categories. That asymmetry is why the customer id is worth the engineering it costs.
 :::
 
-[Out-of-time AUC, 218,657 train / 78,259 test converting visits. **Example conclusions.**]{.muted style="font-size:0.65em"}
+[Out-of-time AUC from an ablation on converting visits, 218,657 train / 78,259 test.]{.muted style="font-size:0.65em"}
 
-## Model C · Which SKU? {.smaller}
+## SKU Affinity · which item inside the category? {.smaller}
 
-A category is not an offer. *"Buy a beverage"* sells nothing; *"$1 off a 16oz Monster"* does.
+A category is not an offer. *"Buy a beverage"* sells nothing; *"$1 off a 16oz Monster"* does. But only where the tail is long enough to be worth narrowing:
 
 | Category | SKUs | Top 100 covers |
 |---|---|---|
 | Packaged Beverages | **4,049** | 45.1% |
 | Candy | 3,902 | 43.3% |
-| Salty Snacks | 2,681 | 51.9% |
 | Cigarettes | 1,311 | **85.9%** |
 
-**Now there is a catalog worth narrowing.** Beverages has a long tail, so the store best-seller leaves most of the distribution on the table. Cigarettes does not — show the top seller and move on.
+Beverages leaves most of the distribution on the table if you show only the best seller. Cigarettes does not — **decide per category by looking at the tail.**
 
-[Decide per category by looking at the tail. Don't apply one answer to all six.]{.orange}
-
-[**The baseline to beat is the store's own best seller** — not random. Given those top-100 numbers it is a strong baseline, and ALS has to earn its place against it.]{.muted style="font-size:0.7em"}
-
-## Why ALS works here {.smaller}
-
-Earlier the objection was sparsity: the median shopper has two transactions. **Conditioning on the category fixes that.**
-
-::: {.cards}
-::: {.card}
-[2.75M]{.stat}
-shoppers bought a beverage
-:::
-::: {.card .good}
-[55%]{.stat}
-bought three or more
-:::
-::: {.card}
-[16.2 / 7.6]{.stat}
-purchases per distinct SKU, for those
-:::
+::: {.takeaway}
+The objection to a recommender here is sparsity: the median shopper has two transactions. **Conditioning on the category fixes it.** Of the 2.75M who bought a beverage, **55% bought three or more** — people repeat items rather than sampling, and a repeated choice is a preference worth factoring.
 :::
 
-Two purchases per SKU means people **repeat items** rather than sampling. That is a latent preference `ALS` can factor — implicit feedback, counts as confidence, not ratings.
+[The baseline to beat is the store's **own best seller**, not random.]{.muted style="font-size:0.7em"}
 
-[**Example conclusions.**]{.muted style="font-size:0.65em"}
+## ALS has no clock, so we put the time in the key {.smaller}
 
-## Giving ALS a clock {.smaller}
+`ALS` takes no features — it cannot know it is 6am. But the **item** can carry the hour: *"Red Bull@morning"* becomes its own item.
 
-`ALS` takes no features, so it can't know it's 6am. **But we can put the time in the key.**
+::: {.columns}
+::: {.column width="54%"}
+**Daypart changes what sells** — share of beverage purchases:
 
-Share of beverage purchases, on the three dayparts we settle on two slides from now:
-
-| Brand | Morning 5–10 | Midday 10–3 | Evening 3–5 |
+| Brand | Morning | Midday | Evening |
 |---|---|---|---|
 | Red Bull | **37.9%** | 30.3% | 25.1% |
 | Monster | **32.0%** | 22.3% | 18.6% |
 | Coca-Cola | 6.2% | 12.5% | **15.6%** |
-| Gatorade | 12.1% | 16.7% | **18.5%** |
+:::
+::: {.column width="46%"}
+**And it holds inside one person** — every pair of purchases by the same shopper:
 
-Energy drinks are a morning product. Coke **two and a half times** its morning share by evening.
-
-[**Example conclusions.**]{.muted style="font-size:0.65em"}
-
-## It holds inside one person {.smaller}
-
-That table could just be different people shopping at different times. So test the individual: take every pair of purchases by the same shopper.
-
-| The pair | Same SKU | Same brand |
-|---|---|---|
-| **Same daypart** | **18.0%** | **32.4%** |
-| Different daypart | 10.0% | 20.7% |
-
-::: {.takeaway}
-Same-daypart pairs are **80% more likely to be the same item**. Knowing the hour nearly doubles what we can say about a known shopper.
+| The pair | Same SKU |
+|---|---|
+| **Same daypart** | **18.0%** |
+| Different daypart | 10.0% |
+:::
 :::
 
-[1.96M shoppers, 154M pairs, on the same three dayparts. **Example conclusions.**]{.muted style="font-size:0.65em"}
+::: {.takeaway}
+The left table alone could just be *different people* shopping at different times. The right one is the control: hold the person fixed and same-daypart pairs are still **80% more likely to be the same item**.
+:::
 
-## Putting the clock in the key {.smaller}
+[Three dayparts, not four — morning 5–10 (21.8% of visits), midday 10–3 (35.2%), evening 3–5am (43.1%). Afternoon and night behave almost identically, so a fourth bucket would fragment the data for nothing.]{.muted style="font-size:0.7em"}
+
+## Does it work? Two models, two different checks {.smaller}
+
+We said calibration is the whole job, so here is the calibration. Every
+**583,583** fill in the held-out period, sorted by predicted `P(buys a
+beverage)` and cut into ten equal buckets:
+
+| Decile | Predicted | Actual | Gap |
+|---|---|---|---|
+| 1 (lowest) | 0.0001 | 0.0005 | +0.0004 |
+| 5 | 0.0385 | 0.0395 | +0.0009 |
+| 9 | 0.1400 | 0.1407 | +0.0008 |
+| **10 (highest)** | **0.3430** | **0.3287** | **−0.0144** |
+
+The middle is calibrated to within a tenth of a point. **The top decile is the
+one to watch** — the model says 34.3%, the customers deliver 32.9%, so it is
+mildly over-confident exactly where we are most willing to spend. An offer
+priced off that decile buys about **4% less attach than the arithmetic
+assumes**.
+
+::: {.takeaway}
+Stage one is judged on calibration because its output is **multiplied by
+dollars**. A model that ranks well but is scaled wrong prices every offer
+wrong, and AUC would never show it.
+:::
+
+[**The full audit — ten real customers, raw data to prediction to outcome — is at [One Customer, End to End](pipeline3.html).**]{.orange}
+
+## And did stage two name the right item? {.smaller}
+
+Calibration says nothing about the SKU. The direct test: **when a customer
+bought something in the category we offered, was the item they bought in our
+top k?**
+
+| k | SKU Affinity | Store best seller | Lift |
+|---|---|---|---|
+| **1 — what the screen shows** | **9.1%** | 3.2% | **2.8×** |
+| 5 | 24.2% | 11.4% | 2.1× |
+| 10 | 34.3% | 16.9% | 2.0× |
+
+[25,894 held-out fills where ALS ran. **Both rankings scored on the same rows** — comparing ALS rows against fallback rows would compare two populations and flatter ALS for reasons unrelated to the model. Across *all* fills, personalised and fallback together, hit@1 is **6.2%** against 2.9%.]{.muted style="font-size:0.7em"}
 
 ::: {.cards}
 ::: {.card .good}
-[Item = SKU × daypart]{.card-title}
+[Where it earns most]{.card-title}
 
-*"Red Bull@morning"* is its own item. 4,049 → ~16k, still ~1,600 interactions each. **Start here.**
+Beer **3.1×**, Candy 2.3×, Beverages 1.9×. The longer the tail, the more ALS is worth.
 :::
 ::: {.card}
-[User = shopper × daypart]{.card-title}
+[The control that matters]{.card-title}
 
-*"Me in the morning."* Better semantics, but splits 2.75M users into 11M. Only for the heavy 20%.
-:::
-::: {.card .bad}
-[Both — tensor factorization]{.card-title}
-
-The principled version. Not in Spark ML. Don't.
+On fallback rows the two rankings agree **100.000%** of the time — they are the same ranking by construction. If that ever drifts, the harness is broken.
 :::
 :::
 
-**Use three dayparts, not four** — afternoon and night behave almost identically, so splitting them fragments the data for nothing:
+## The offer worth funding is the second item {.smaller}
 
-| Daypart | Hours | Share of visits | Why it's its own bucket |
-|---|---|---|---|
-| **Morning** | 5am – 10am | 21.8% | The outlier. Energy drinks peak, colas bottom out |
-| **Midday** | 10am – 3pm | 35.2% | Sits between the two |
-| **Evening** | 3pm – 5am | 43.1% | Colas and Gatorade peak; afternoon and night match |
+The model above finds what they were going to buy **anyway**. Discounting that is the one promotion certain to cost margin and change nothing.
 
-[Attach jumps from 9.8% to 13.2% at **5am** and falls back after **11pm**. That overnight tail is only 3.2% of visits, so it rides with evening rather than earning a fourth bucket.]{.muted style="font-size:0.7em"}
+So ask the other question. **46.5% of drink baskets are drink-only** — that is the addressable population: someone buying a drink regardless, who might add something.
 
-## Two ways to still get it wrong
-
-::: {.cards}
-::: {.card .bad}
-[It leaks quietly]{.card-title}
-
-Factor only on purchases **before** our scoring window. ALS feels like preprocessing, which is exactly why people forget — a model fit on all two years has already seen the answer.
-:::
-::: {.card .bad}
-[Daypart is partly a proxy]{.card-title}
-
-Same-daypart pairs are often same-store, same-routine. Some of that 80% is *"same mission"*, not time. Fine to use — but we shouldn't claim we measured a clock effect.
-:::
-:::
-
-## The full stack {.smaller}
-
-::: {.flow}
-::: {.box}
-**A** · GBT
-
-[come inside?]{.muted}
-:::
-
-[→]{.arrow}
-
-::: {.box}
-**B** · 6 × GBT
-
-[which category?]{.muted}
-:::
-
-[→]{.arrow}
-
-::: {.box .hl}
-**C** · ALS
-
-[**which SKU?**]{.muted}
-:::
-
-[→]{.arrow}
-
-::: {.box}
-**Decide**
-
-[margin · stock · who funds it]{.muted}
-:::
-:::
-
-::: {.cards}
-::: {.card .good}
-[Going SKU-level is the revenue line]{.card-title}
-
-Brand-funded promotions — ZYN, Monster, Red Bull — are priced per SKU. A category model cannot spend that money.
-:::
-::: {.card}
-[ALS is a refinement on top]{.card-title}
-
-**2× better than a best-seller list** — but only for the **19%** of shoppers with history in that category.
-:::
-:::
-
-[Build the best-seller fallback **first**: it is the primary path for four fills in five, not a degraded one.]{.orange}
-
-[**Serving budget:** all four stages must return inside the fill. The models are cheap; the risk is the history lookup, which argues for precomputing each shopper's `prior_*` features nightly.]{.muted style="font-size:0.7em"}
-
-[Reference: [**pipeline**](pipeline.html) · [**tables and model code**](pipeline2.html) · [**data dictionary**](data-dict.html)]{.muted style="font-size:0.7em"}
-
-## The decision rule {.smaller}
-
-The naive version, and why it's wrong:
+| Second category | Their rate | Equally frequent others | Index | Excess |
+|---|---|---|---|---|
+| **Alternative Snacks** | 6.0% | 3.5% | **1.74** | 2.6 pts |
+| Commissary | 3.2% | 1.9% | 1.64 | 1.2 pts |
+| Packaged Sweet Snacks | 6.7% | 4.7% | 1.41 | 2.0 pts |
+| **Salty Snacks** | 12.2% | 9.4% | 1.30 | **2.8 pts** |
+| Candy | 12.2% | 11.4% | 1.07 | 0.8 pts |
 
 ::: {.card .bad}
-[`P(buys) × margin − cost`]{.card-title}
+[Candy is the trap]{.card-title}
 
-This never goes negative while margin beats the discount. It also never asks the real question: **what would have happened if we'd shown nothing?**
+Candy is **18.2%** of every second item in a drink basket, which makes it look like the obvious pair. Drink regulars buy it **1.07×** as often as shoppers who come in just as much and don't buy drinks. It is not a complement — it is just everywhere.
 :::
 
-The comparison that matters is between two worlds:
-
-::: {.statement}
-show the offer iff  p₁ × (margin − discount)  >  p₀ × margin
-:::
-
-[p₀ = they buy anyway · p₁ = they buy when shown the offer]{.muted}
-
-## Show the math {.smaller}
-
-**Per 1,000 fuel visits at 2am.** A packaged beverage averages **$3.25** — assume 40% margin and a **$0.90** discount, the going rate in our own discounts table.
-
-| | No offer | Offer shown |
-|---|---|---|
-| Buy | 75 *(7.5%)* | 90 *(assume +1.5 pts)* |
-| Margin each | $1.30 | $0.40 |
-| **Total** | **$97.50** | **$36.00** |
-
-::: {.takeaway}
-**−$61.50.** We paid 90 people $0.90 each to win 15 extra buyers worth $1.30.
-:::
+[Compared against shoppers who come in **just as often** but don't buy the anchor — without that control every cohort indexes high on everything, because every cohort is a cohort of heavy shoppers.]{.muted style="font-size:0.7em"}
 
 ::: {.card .bad}
-[How wrong could the assumption be?]{.card-title}
+[And this is the one claim we cannot settle]{.card-title}
 
-We assumed **+1.5 points**. Break-even needs `p₁/p₀ > margin ÷ (margin − discount)` = **3.25×** — at 2am that is **+16.9 points**, not 1.5. The conclusion is not sensitive to the guess.
+Scored on held-out data, our pair offer lands **10.8%** against **14.0%** for simply picking the most popular second category. That is **by design** — where a shopper already buys salty snacks constantly we steer elsewhere — but it means we trade a **26%** chance of naming something they'd have bought anyway for a **4.5%** chance on something incremental. **Only a holdout can say which is worth more.**
 :::
-
-[Margin and lift are **assumptions** — the data has no cost column. The $3.25 and the $0.90 are real.]{.muted style="font-size:0.65em"}
-
-## It gets worse when business is good {.smaller}
-
-Same offer at 6am, where attach runs **15.1%**:
-
-| | No offer | Offer shown |
-|---|---|---|
-| Buy | 151 | 166 |
-| **Total** | **$196.30** | **$66.40** |
-
-**−$129.90.** The busy hour loses *more*, because the discount goes to more people who were already buying.
-
-::: {.card .bad}
-[Traffic does not decide this]{.card-title}
-
-`net = uplift × margin − (p₀ + uplift) × discount` gets **more** negative as traffic rises. Under a constant *relative* lift, p₀ cancels out entirely. **The margin-to-discount ratio decides, not the hour.**
-:::
-
-## Funding is a dial, not a switch {.smaller}
-
-The brand often pays most or all of the discount. Sometimes the retailer and the brand **split** it. That share decides everything:
-
-::: {.statement}
-our cost = discount × (1 − funded share)
-:::
-
-| Brand funds | Our cost | Effective margin | Uplift needed to break even |
-|---|---|---|---|
-| **100%** | $0.00 | **$1.30** | **any** — margin per unit is untouched |
-| 75% | $0.23 | $1.07 | +21% |
-| 50% | $0.45 | $0.85 | +53% |
-| 25% | $0.68 | $0.62 | +108% |
-| 0% | $0.90 | $0.40 | +225% |
-
-[At full funding we are not buying volume *with* margin — we keep the same margin per unit and simply sell more of them.]{.orange}
-
-## The model is a negotiating tool {.smaller}
-
-Read the decision rule backwards and it answers a commercial question instead:
-
-::: {.statement}
-minimum funded share = 1 − (margin ÷ discount) × r ÷ (1 + r)
-:::
-
-[r = the relative lift we think the offer produces]{.muted}
-
-::: {.takeaway}
-**p₀ cancels out.** How likely this customer was to buy decides *how much the deal is worth* — not *who should pay for it*. The floor depends only on the margin-to-discount ratio and how far the offer moves people.
-:::
-
-So we can walk into the brand conversation with a number: *"at the lift we observe for Monster in the morning, we need you at 51% or better."*
-
-[`negotiate.py` prints that table per SKU and daypart.]{.muted style="font-size:0.7em"}
 
 ## What we cannot claim
 
@@ -711,9 +399,9 @@ Every number above is a **prediction**, not a **causal effect**. We have shown w
 
 ::: {.cards}
 ::: {.card .bad}
-[The trap]{.card-title}
+[The gap]{.card-title}
 
-Our best-scoring offer is usually the thing they were **already** going to buy. Discounting it just gives away margin.
+A high score says *this person buys drinks*. It does not say *a discount makes them buy one*. Nothing in our data separates the two.
 :::
 ::: {.card}
 [What exists]{.card-title}
@@ -727,82 +415,35 @@ Assignment wasn't random. Stores promoted what they expected to sell, so the com
 :::
 :::
 
-[**The ask for Murphy: a holdout.** Some pumps show no offer. Without it, uplift is unmeasurable.]{.orange}
+[**The one thing we need from you: a holdout.** Some pumps show no offer. Without it, uplift is not measurable — by us or by anyone.]{.orange}
 
-## Could we measure it anyway? {.smaller}
+## Could we measure it from what we have? {.smaller}
 
-The discounts table records **redemptions, not impressions.**
+The discounts table records **redemptions, not impressions** — 9.2M discounts applied, and **zero** records of an offer shown and declined. `P(buy | offered)` has no denominator.
 
-::: {.cards}
-::: {.card}
-[9,215,074]{.stat}
-transactions with a discount applied
-:::
+Stores switched promotions on at different dates, though, and that stagger is a natural experiment. Monster's share of beverage lines gives a clean **+1.7 points** for treated stores.
+
 ::: {.card .bad}
-[0]{.stat}
-records of an offer shown and **declined**
-:::
-:::
+[We should not believe it]{.card-title}
 
-`P(buy | offered)` has no denominator. But stores switch promotions on at **different dates**, and that stagger is a natural experiment:
-
-| Promotion | Stores | First start | Median | Last |
-|---|---|---|---|---|
-| `loyaltyDiscount` | 188 | 10/2024 | **01/2026** | 09/2026 |
-| `Skupos` | 167 | 10/2024 | 11/2024 | 07/2026 |
-
-## A difference-in-differences {.smaller}
-
-Monster's share of beverage lines, by week relative to each store's promo start:
-
-| Weeks from start | Stores | Monster share |
-|---|---|---|
-| −12 | 24 | 8.82% |
-| −6 | 30 | 10.77% |
-| −1 | 49 | 10.95% |
-| **0** | **280** | 11.55% |
-| +6 | 279 | 12.21% |
-| +12 | 273 | 11.79% |
-
-Treated **10.37% → 12.06%**, a gain of 1.7 points. Never-treated stores sit at 10.01%.
-
-[**Example conclusions.**]{.muted style="font-size:0.65em"}
-
-## Why not to believe it yet {.smaller}
-
-::: {.cards}
-::: {.card .bad}
-[Look at the store count]{.card-title}
-
-49 → **280** at week 0. Most stores were already running the promo when our data starts, so almost nobody has a pre-period.
-:::
-::: {.card .bad}
-[The pre-trend is composition]{.card-title}
-
-The sample grows from 24 to 49 stores across those weeks. The rising line may be **different stores entering the average**, not behaviour changing.
-:::
-::: {.card .bad}
-[Parallel trends fails]{.card-title}
-
-Share was climbing *before* the promo and plateaus after — the opposite of the shape a causal effect makes.
-:::
+Store count goes **49 → 280** at week zero: almost nobody has a pre-period. The rising pre-trend is **different stores entering the average**, not behaviour changing — and the share was climbing *before* the promo and plateaus after, the opposite of the shape a causal effect makes.
 :::
 
 ::: {.takeaway}
-The design is sound. **This estimate is not.** Fixing it means a balanced panel of late adopters — a real project, and a better argument for the holdout than any methodology lecture.
+The design is sound. **This estimate is not.** A balanced panel of late adopters would fix it — and that is a better argument for the holdout than any amount of methodology.
 :::
 
 ## The build order {.smaller}
 
 - [1]{.step} **The visit table.** Anchor on fuel, sweep −15/+45, drop the card fees. Everything below depends on this being right.
-- [2]{.step} **Model A.** Context plus their own attach rate. A calibrated `P(inside)`.
-- [3]{.step} **Model B on converters.** Six binary models, six categories.
-- [4]{.step} **Model C where the tail justifies it.** ALS inside beverages first.
-- [5]{.step} **The expected value rule** — including the decision to show nothing.
-- [6]{.step} **Ask for the holdout**, then measure uplift in dollars.
+- [2]{.step} **Category Relevance.** Six calibrated models. The best-seller fallback ships with it, because it carries ~68% of fills.
+- [3]{.step} **SKU Affinity** where the tail justifies it.
+- [4]{.step} **The expected value rule**, priced against showing nothing — and the funding share that decides who pays.
+- [5]{.step} **The second item.** The complement table, which is where a discount can actually change a basket.
+- [6]{.step} **The holdout**, then uplift in dollars.
 
 ::: {.takeaway}
-Steps 1 and 2 are a semester's worth of real work. Steps 4 to 6 are where the money is.
+Steps 1 to 3 are the engineering. **Steps 4 to 6 are where the money is** — and step 6 is the one we cannot do without you.
 :::
 
 [Reference: [**pipeline**](pipeline.html) · [**tables and model code**](pipeline2.html) · [**data dictionary**](data-dict.html)]{.muted style="font-size:0.7em"}
